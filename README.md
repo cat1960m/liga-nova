@@ -3,3 +3,6 @@
 
 9 chapter
 pnpm install next@canary
+
+11 chapter
+pnpm i use-debounce
