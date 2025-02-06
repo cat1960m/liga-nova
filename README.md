@@ -13,3 +13,6 @@ package.json
 ...
 "lint": "next lint"
 },
+
+15 chapter
+pnpm i next-auth@beta
