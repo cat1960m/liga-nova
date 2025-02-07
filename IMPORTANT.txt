@@ -1,0 +1,33 @@
+1) routing
+
+The layout.txt in "app" is a root layout . 
+The root layout is required and must contain html and body tags.
+
+2) dynamic segment ([blog])
+
+Wrapping a folder name in square brackets (e.g. [slug]) creates a special 
+dynamic route segment used to generate multiple pages from data
+
+3) navigate between routes (Link)
+
+<Link href={`/blog/${post.slug}`}>{post.title}</Link>
+<Link> is the primary and recommended way to navigate between routes in your Next.js application. 
+However, you can also use the useRouter hook for more advanced navigation.
+
+4) Image
+
+The Next.js <Image> component extends the HTML <img>
+
+<Image
+      src="https://s3.amazonaws.com/my-bucket/profile.png"
+      alt="Picture of the author"
+      width={500}
+      height={500}
+/>
+Since Next.js does not have access to remote files during the build process, you'll need to provide the width, height
+
+to safely allow images from remote servers, you need to define a list of supported URL patterns in next.config.js
+
+5) Fonts
+
+The next/font module automatically optimizes your fonts and removes external network requests for improved privacy and performance.
