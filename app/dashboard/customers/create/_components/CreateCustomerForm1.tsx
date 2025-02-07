@@ -1,20 +1,22 @@
 "use client";
 
 import { createCustomer1, State } from "@/app/lib/actions_customers";
-import { Button } from "@/app/ui/button";
 import Link from "next/link";
 import { useActionState } from "react";
 import { ButtonForm } from "./ButtonForm";
 
-export const CreateCustomerForm = () => {
+export const CreateCustomerForm1 = () => {
   const initialState: State = { message: null, errors: {} };
 
-  const [state, formAction] = useActionState(createCustomer1, initialState);
+  const [state, formAction, isPending] = useActionState(
+    createCustomer1,
+    initialState
+  );
 
   console.log("state", state);
 
   return (
-    <form action={formAction}>
+    <form>
       <div>
         <p> Name:</p>
         <input name="name" aria-label="Name" />
@@ -30,7 +32,9 @@ export const CreateCustomerForm = () => {
         >
           Cancel
         </Link>
-        <ButtonForm />
+        <button formAction={formAction} disabled={isPending}>
+          {isPending ? "...Submitting..." : "Submit"}
+        </button>
       </div>
     </form>
   );

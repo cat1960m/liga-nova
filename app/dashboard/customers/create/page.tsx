@@ -1,10 +1,13 @@
+import { CreateCustomerForm1 } from "./_components/CreateCustomerForm1";
 import { CreateCustomerForm } from "./_components/CreateCustomerForm";
+
+const isNumber1 = true;
 
 export default function CreateCustomerPage() {
   return (
     <>
       <div>Create Customer</div>
-      <CreateCustomerForm />
+      {isNumber1 ? <CreateCustomerForm1 /> : <CreateCustomerForm />}
     </>
   );
 }

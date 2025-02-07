@@ -75,3 +75,17 @@ export async function createCustomer1(prevState: State, formData: FormData) {
   revalidatePath("/dashboard/customers");
   redirect("/dashboard/customers");
 }
+
+export async function removeCustomer(customerId: string) {
+  try {
+    await sql`
+        DELETE FROM customers WHERE id = ${customerId.toString()}
+      `;
+  } catch (error) {
+    // If a database error occurs, return a more specific error.
+    return {
+      message: "Database Error: Failed to remove customer.",
+    };
+  }
+  revalidatePath("/dashboard/customers");
+}
