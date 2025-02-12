@@ -10,14 +10,41 @@ export const metadata: Metadata = {
   description: "The official Next.js Learn Dashboard built with App Router.",
   metadataBase: new URL("https://next-learn-dashboard.vercel.sh"),
 };
-export default function RootLayout({
+
+export default async function RootLayout({
   children,
+  params,
 }: {
   children: React.ReactNode;
+  params: Promise<{ lang: "en" | "ua" }>;
 }) {
+  const pars = await params;
+  const language = pars?.lang;
+  console.log("language", language, pars);
+
   return (
-    <html lang="en">
-      <body className={`${inter.className} antialiased`}>{children}</body>
+    <html lang={language ?? "en"}>
+      <link
+        rel="icon"
+        href="/icon?<generated>"
+        type="image/png"
+        sizes="32x32"
+      />
+      <body className={`${inter.className} antialiased`}>
+        <div
+          style={{
+            height: "100%",
+            display: "flex",
+            flexDirection: "column",
+            border: "10px solid gray",
+          }}
+        >
+          <div style={{ border: "2px solid cyan" }}>layout!!!---</div>
+          <div style={{ border: "12px solid pink", flexGrow: 2 }}>
+            {children}
+          </div>
+        </div>
+      </body>
     </html>
   );
 }

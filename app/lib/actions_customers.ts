@@ -5,13 +5,16 @@ import { Customer } from "./definitions";
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { auth } from "@/app/auth";
 
 export type State = {
   errors?: {
     name?: string[];
     email?: string[];
+    image_url?: string[];
   };
   message?: string | null;
+  lastData?: FormData;
 };
 
 const CustomerFormSchema = z.object({
@@ -22,14 +25,19 @@ const CustomerFormSchema = z.object({
     })
     .min(1),
   email: z.string({ invalid_type_error: "Please enter email" }).min(1),
-  image_url: z.string(),
+  image_url: z.string({ invalid_type_error: "Please enter image" }).min(1),
 });
 
-const CreateCustomer = CustomerFormSchema.omit({ id: true, image_url: true });
+const CreateCustomer = CustomerFormSchema.omit({ id: true });
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: "require" });
 
 export const getCustomers = async () => {
+  const session = await auth();
+  if (!session?.user) {
+    throw new Error("You must be signed in to perform this action");
+  }
+
   try {
     return await sql<Customer[]>`select * from customers`;
   } catch (error) {
@@ -39,10 +47,15 @@ export const getCustomers = async () => {
 };
 
 export async function createCustomer1(prevState: State, formData: FormData) {
+  //throw new Error("Failed to fetch user.");
+
+  console.log("-------formData", formData);
+
   // Validate form using Zod
   const validatedFields = CreateCustomer.safeParse({
     name: formData.get("name"),
     email: formData.get("email"),
+    image_url: formData.get("image_url"),
   });
 
   // If form validation fails, return errors early. Otherwise, continue.
@@ -50,13 +63,12 @@ export async function createCustomer1(prevState: State, formData: FormData) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
       message: "Missing Fields. Failed to Create customer.",
+      lastData: formData,
     };
   }
 
   // Prepare data for insertion into the database
-  const { name, email } = validatedFields.data;
-
-  const image_url = ``;
+  const { name, email, image_url } = validatedFields.data;
 
   // Insert data into the database
   try {
@@ -68,12 +80,13 @@ export async function createCustomer1(prevState: State, formData: FormData) {
     // If a database error occurs, return a more specific error.
     return {
       message: "Database Error: Failed to Create customer.",
+      lastData: formData,
     };
   }
 
   // Revalidate the cache for the invoices page and redirect the user.
   revalidatePath("/dashboard/customers");
-  redirect("/dashboard/customers");
+  redirect("/dashboard/customers_old");
 }
 
 export async function removeCustomer(customerId: string) {

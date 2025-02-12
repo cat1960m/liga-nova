@@ -9,6 +9,8 @@ import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import { Button } from "@/app/ui/button";
 import styles from "./styles.module.css";
+import { PencilIcon, PlusIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { ModalEditName } from "./modal";
 
 export const Customers = ({
   customers: customersPromise,
@@ -20,6 +22,7 @@ export const Customers = ({
   const router = useRouter();
   const pathname = usePathname();
   const [disabledIds, setDisabledIds] = useState<string[]>([]);
+  const [editId, setEditId] = useState<string | null>(null);
 
   if (!customers) {
     return <p>Customers Page error</p>;
@@ -82,12 +85,27 @@ export const Customers = ({
                 </td>
 
                 <td>
-                  <p
-                    className={clsx({
-                      "text-sm text-red-500": selectedIds.includes(id),
-                    })}
-                    onClick={() => handleClick(id)}
-                  >{`${name}`}</p>
+                  <div
+                    style={{
+                      display: "flex",
+                      width: "100%",
+                      justifyContent: "space-between",
+                      paddingRight: "20px",
+                    }}
+                  >
+                    <p
+                      className={clsx({
+                        "text-sm text-red-500": selectedIds.includes(id),
+                      })}
+                      onClick={() => handleClick(id)}
+                    >{`${name}`}</p>
+
+                    <PencilIcon
+                      style={{ width: "24px", height: "24px" }}
+                      title="Edit customer"
+                      onClick={() => setEditId(id)}
+                    />
+                  </div>
                 </td>
 
                 <td>
@@ -114,6 +132,14 @@ export const Customers = ({
           })}
         </tbody>
       </table>
+
+      {editId ? (
+        <ModalEditName
+          name={
+            customers.find((customer) => customer.id === editId)?.name ?? "N/A"
+          }
+        />
+      ) : null}
     </>
   );
 };

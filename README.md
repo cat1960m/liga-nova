@@ -1,5 +1,6 @@
 1. nvm use 18
-2. npm run dev
+2. npm install
+3. npm run dev
 
 9 chapter
 pnpm install next@canary
@@ -16,3 +17,11 @@ package.json
 
 15 chapter
 pnpm i next-auth@beta
+
+## rendering
+
+npm install server-only
+
+# translator DEEPL
+
+npm install axios

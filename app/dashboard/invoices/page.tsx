@@ -7,6 +7,8 @@ import { InvoicesTableSkeleton } from "@/app/ui/skeletons";
 import { Suspense } from "react";
 import { fetchInvoicesPages } from "@/app/lib/data";
 import { Metadata } from "next";
+import { auth } from "@/app/auth";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: {
@@ -25,6 +27,11 @@ export default async function Page(props: {
   const query = searchParams?.query || "";
   const currentPage = Number(searchParams?.page) || 1;
   const totalPages = await fetchInvoicesPages(query);
+
+  const session = await auth();
+  if (!session?.user) {
+    redirect("/login");
+  }
 
   return (
     <div className="w-full">
