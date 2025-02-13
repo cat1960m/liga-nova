@@ -10,9 +10,9 @@ import Image from "next/image";
 import { Button } from "@/app/ui/button";
 import styles from "./styles.module.css";
 import { PencilIcon, PlusIcon, TrashIcon } from "@heroicons/react/24/outline";
-import { ModalEditName } from "./modal";
+import { ChangeText } from "./ChangeText";
 
-export const Customers = ({
+export const CustomersClient = ({
   customers: customersPromise,
 }: {
   customers: Promise<postgres.RowList<Customer[]> | null>;
@@ -134,10 +134,11 @@ export const Customers = ({
       </table>
 
       {editId ? (
-        <ModalEditName
+        <ChangeText
           name={
             customers.find((customer) => customer.id === editId)?.name ?? "N/A"
           }
+          onClose={() => setEditId(null)}
         />
       ) : null}
     </>

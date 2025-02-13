@@ -30,21 +30,7 @@ export default async function RootLayout({
         type="image/png"
         sizes="32x32"
       />
-      <body className={`${inter.className} antialiased`}>
-        <div
-          style={{
-            height: "100%",
-            display: "flex",
-            flexDirection: "column",
-            border: "10px solid gray",
-          }}
-        >
-          <div style={{ border: "2px solid cyan" }}>layout!!!---</div>
-          <div style={{ border: "12px solid pink", flexGrow: 2 }}>
-            {children}
-          </div>
-        </div>
-      </body>
+      <body className={`${inter.className} antialiased`}>{children}</body>
     </html>
   );
 }

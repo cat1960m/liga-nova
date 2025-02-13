@@ -20,8 +20,10 @@ pnpm i next-auth@beta
 
 ## rendering
 
+============
+
 npm install server-only
 
 # translator DEEPL
 
-npm install axios
+pnpm install axios

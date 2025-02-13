@@ -1,7 +1,9 @@
 "use server";
 
 import { getCustomers } from "@/app/lib/actions_customers";
-import { Customers } from "./_components/customers";
+import { CustomersClient } from "./_components/customersClient";
+import { CustomersServer } from "./_components/customersServer";
+
 import { Suspense } from "react";
 import Link from "next/link";
 
@@ -19,9 +21,9 @@ export default async function Page() {
           Create Customer
         </Link>
 
-        <Customers customers={customers} />
+        {/*  <CustomersClient customers={customers} /> */}
+        <CustomersServer customers={customers} />
       </Suspense>
-      {/*  <Customers customers={customers} /> */}
     </>
   );
 }
