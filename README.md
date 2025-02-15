@@ -22,7 +22,7 @@ pnpm i next-auth@beta
 
 ============
 
-npm install server-only
+pnpm install server-only
 
 # translator DEEPL
 
