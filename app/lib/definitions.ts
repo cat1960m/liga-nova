@@ -86,3 +86,20 @@ export type InvoiceForm = {
   amount: number;
   status: "pending" | "paid";
 };
+
+export type Feature = {
+  id: string;
+  feature_id: string;
+  type: string;
+  subtype: string;
+  name: string;
+  updated_by: number;
+  last_edit: Date;
+};
+
+export type PageData = {
+  id: string;
+  text_content: string;
+  subtype: string;
+  name: string;
+};
