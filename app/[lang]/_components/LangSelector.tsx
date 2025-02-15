@@ -9,7 +9,10 @@ export const LangSelector = () => {
 
   const handleSelect: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
     const newLang = event.target.value;
-    router.push(`/${newLang}/${params.pageName}`);
+    const newpath = params.pageName
+      ? `/${newLang}/${params.pageName}`
+      : `/${newLang}`;
+    router.push(newpath);
   };
 
   return (
