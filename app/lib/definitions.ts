@@ -87,9 +87,10 @@ export type InvoiceForm = {
   status: "pending" | "paid";
 };
 
+//table in db features
 export type Feature = {
   id: string;
-  feature_id: string;
+  parent_feature_id: string;
   type: string;
   subtype: string;
   name: string;
@@ -97,9 +98,78 @@ export type Feature = {
   last_edit: Date;
 };
 
-export type PageData = {
-  id: string;
+//table in db text_descriptions
+export type TextDescription = {
+  id: number;
+  feature_id: string;
+  text_type: string;
+  price?: number;
+  can_delete?: boolean;
+};
+
+//table in db text_contents
+export type TextContent = {
+  id: number;
+  text_description_id: number;
+  language: string;
   text_content: string;
+  updated_by: number;
+  last_edit: Date;
+};
+
+/* export type FeatureChildWithText = {
+  text_description_id: number;
+  id: number;
+  text_content: string;
+  subtype: string;
+  language: string;
+}; */
+
+/* export type FeatureChildExtended = {
+  id: number;
+  feature_id: number;
+  text_type: string;
+  can_delete?: boolean;
+  price?: number;
+  //from feature
+  type: string;
+  subtype: string;
+  name: string;
+}; */
+
+/* export type FeatureChildText = {
+  //from text_contents
+  id: number;
+  text_description_id: number;
+  text_content: string;
+  language: string;
+
+  //from text_descriptions
+  feature_id: number;
+  text_type: string;
+  can_delete?: boolean;
+  price?: number;
+  //from features
+  type: string;
+  subtype: string;
+  name: string;
+}; */
+
+export type PageData = {
+  id: number;
+  text_content: string;
+  subtype: string;
+  name: string;
+};
+
+export type TabType = {
+  lang: string;
+  value: string;
+};
+
+export type FeatureChild = {
+  id: number;
+  type: string;
   subtype: string;
   name: string;
 };

@@ -6,7 +6,6 @@ export default async function Page({
   params: Promise<{ lang: "en" | "ua" }>;
 }) {
   const data = await fetch("https://api.vercel.app/blog");
-  const posts = await data.json();
 
   const lang = (await params).lang;
   if (!lang) {
@@ -15,6 +14,6 @@ export default async function Page({
   const dict = await getDictionary(lang); // en
 
   return (
-    <div style={{ minHeight: "500px", height: "500px" }}>{posts?.length}</div>
+    <div style={{ border: "2px solid magenta", padding: "40px" }}>8888888</div>
   );
 }

@@ -21,7 +21,6 @@ export default async function Layout({
     return;
   }
 
-  console.log("pages", pages);
   const mainPages = pages?.filter((page) => page.subtype === "header1");
   const basePages = pages?.filter((page) => page.subtype === "header2");
 
@@ -88,8 +87,12 @@ export default async function Layout({
           );
         })}
       </div>
-
-      {children}
+      <div
+        id="parentModal"
+        style={{ position: "relative", minHeight: "300px" }}
+      >
+        {children}
+      </div>
     </div>
   );
 }

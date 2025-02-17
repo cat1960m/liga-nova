@@ -20,7 +20,6 @@ export default async function RootLayout({
 }) {
   const pars = await params;
   const language = pars?.lang;
-  console.log("language", language, pars);
 
   return (
     <html lang={language ?? "en"}>
