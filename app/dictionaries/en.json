@@ -1,5 +1,11 @@
 {
-  "products": {
-    "cart": "Add to Cart !!!!"
+  "common": {
+    "save": "save",
+    "edit": "edit",
+    "cancel": "cancel",
+    "updateTranslate": "Update and translate ",
+    "translate": "translate",
+    "delete": "delete",
+    "addColumnItem": "Add column item"
   }
 }

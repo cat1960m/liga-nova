@@ -1,5 +1,5 @@
 import { getChildren, getPageTitles } from "@/app/lib/actions_fitness";
-import { AddChildFeatureToPage } from "./_components/AddChildFeatureToPage";
+import { AddChildFeature } from "./_components/AddChildFeatureToPage";
 import { DrawChild } from "./_components/DrawChild";
 import { FeatureChild } from "@/app/lib/definitions";
 
@@ -36,7 +36,7 @@ export default async function PageName({
         return <DrawChild child={child} lang={lang} key={child.id} />;
       })}
 
-      <AddChildFeatureToPage pageId={currentPage?.id} lang={lang} />
+      <AddChildFeature parentFeatureId={currentPage?.id} />
     </div>
   );
 }

@@ -115,6 +115,13 @@ export type TextContent = {
   text_content: string;
   updated_by: number;
   last_edit: Date;
+  content_type?: string;
+};
+
+export type TextDescriptionContent = TextContent & {
+  text_type: string;
+  price?: number;
+  can_delete?: boolean;
 };
 
 /* export type FeatureChildWithText = {

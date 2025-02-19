@@ -11,34 +11,34 @@ import {
   HEADER2,
   ITEM_COLUMN1,
   ITEM_COLUMN2,
+  SERVICE_ITEM,
+  SERVICES,
   SIMPLE_GROUP_ITEM,
 } from "@/app/lib/constants";
 import { usePathname } from "next/navigation";
-import { ChangeEventHandler, useMemo, useState } from "react";
+import { ChangeEventHandler, useMemo } from "react";
 
-export const AddChildFeatureToPage = ({
-  pageId,
-  lang,
+export const AddChildFeature = ({
+  parentFeatureId,
 }: {
-  pageId: number | undefined;
-  lang: string;
+  parentFeatureId: number | undefined;
 }) => {
   const pathName = usePathname();
 
   const options = useMemo(() => {
-    return [...FeatureTypes.GROUP, ...FeatureTypes.tabs];
+    return [...FeatureTypes.GROUP, ...FeatureTypes.TABS];
   }, []);
 
   const handleChange: ChangeEventHandler<HTMLSelectElement> = async (event) => {
     const newValue = event.target.value;
 
-    if (!pageId) {
+    if (!parentFeatureId) {
       return;
     }
 
     if (newValue === GROUP1 || newValue === GROUP2) {
       await addFeatureGroup({
-        parentId: pageId,
+        parentId: parentFeatureId,
         type: GROUP,
         subtype: newValue,
         name: "",
@@ -49,11 +49,22 @@ export const AddChildFeatureToPage = ({
 
     if (newValue === GROUP_2COLUMNS_2HEADERS) {
       await addFeatureGroup({
-        parentId: pageId,
+        parentId: parentFeatureId,
         type: GROUP,
         subtype: newValue,
         name: "",
         text_types: [HEADER1, HEADER2, ITEM_COLUMN1, ITEM_COLUMN2],
+        pathName,
+      });
+    }
+
+    if (newValue === SERVICES) {
+      await addFeatureGroup({
+        parentId: parentFeatureId,
+        type: GROUP,
+        subtype: newValue,
+        name: "",
+        text_types: [SERVICE_ITEM],
         pathName,
       });
     }
