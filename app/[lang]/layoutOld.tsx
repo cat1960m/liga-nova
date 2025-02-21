@@ -16,12 +16,13 @@ export default async function Layout({
   params: Promise<{ lang: "en" | "ua"; pageName: string }>;
 }) {
   const paramsData = await params;
+
+  console.log("----Layout params", paramsData);
   const lang = paramsData.lang ?? "ua";
   const dict = await getDictionary(lang); // en
   const pages = await getPageTitles(lang);
   const res = await auth();
   const iaAuthenticated = !!res?.user;
-  console.log("--layout params= ", paramsData);
 
   if (!pages) {
     return;
@@ -62,6 +63,7 @@ export default async function Layout({
                     pageName={page.name}
                     isMain
                     pageTitle={page.text_content}
+                    params={paramsData}
                   />
                 </div>
               </Link>
@@ -111,7 +113,11 @@ export default async function Layout({
           return (
             <Link href={`/${lang}/${page.name}`} key={page.id}>
               <div key={page.id}>
-                <LinkBody pageName={page.name} pageTitle={page.text_content} />
+                <LinkBody
+                  pageName={page.name}
+                  pageTitle={page.text_content}
+                  params={paramsData}
+                />
               </div>
             </Link>
           );

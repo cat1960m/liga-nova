@@ -1,5 +1,5 @@
 import { getFeatureChildren } from "@/app/lib/actions_fitness";
-import { Feature } from "@/app/lib/definitions";
+import { Feature, MainParams } from "@/app/lib/definitions";
 import { DrawChildFeature } from "./DrawChildFeatures";
 import { AddChildFeatureToContainer } from "./_clientComponents/AddChildFeatureToContainer";
 
@@ -7,12 +7,16 @@ export type Props = {
   featureId: number;
   lang: string;
   title?: string;
+  params: MainParams;
+  tabLevel: number;
 };
 
 export const DrawFeatureContainer = async ({
   featureId,
   lang,
   title,
+  params,
+  tabLevel,
 }: Props) => {
   const pageChildren: Feature[] | null = await getFeatureChildren({
     parentFeatureId: featureId,
@@ -33,7 +37,13 @@ export const DrawFeatureContainer = async ({
       {title ?? null}
       {pageChildren?.map((child) => {
         return (
-          <DrawChildFeature childFeature={child} lang={lang} key={child.id} />
+          <DrawChildFeature
+            childFeature={child}
+            lang={lang}
+            key={child.id}
+            params={params}
+            tabLevel={tabLevel}
+          />
         );
       })}
 

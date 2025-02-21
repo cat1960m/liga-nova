@@ -1,18 +1,25 @@
 "use client";
 
 import { getTextContents } from "@/app/lib/actions_fitness";
-import { TextContent, TextDescription } from "@/app/lib/definitions";
+import {
+  MainParams,
+  TextContent,
+  TextDescription,
+} from "@/app/lib/definitions";
 import { getLocalizedText } from "@/app/lib/utils";
 import { CommonButton } from "./_clientComponents/CommonButton";
 import { UpdateTextDescriptionData } from "./_clientComponents/UpdateTextDescriptionData";
 import { useCallback, useEffect, useState } from "react";
 import { DeleteFeatureButton } from "./_clientComponents/DeleteFeatureButton";
+import { useParams, usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export type Props = {
   tabTitleTextDescription: TextDescription;
   lang: string;
   tabIndex: number;
   staticTexts: any;
+  params: MainParams;
 };
 
 export const ShowTabTitleAdmin = ({
@@ -20,8 +27,12 @@ export const ShowTabTitleAdmin = ({
   lang,
   tabIndex,
   staticTexts,
+  params,
 }: Props) => {
   const [textContents, setTextContents] = useState<TextContent[] | null>(null);
+  const path = usePathname();
+  const pathParams = useParams();
+  const router = useRouter();
 
   const readTextContents = useCallback(async () => {
     const textContents = await getTextContents({
@@ -35,15 +46,20 @@ export const ShowTabTitleAdmin = ({
     readTextContents();
   }, [readTextContents]);
 
+  if (!textContents) {
+    return;
+  }
+
   const text = getLocalizedText({ textContents, lang });
 
   const handleUpdateFinished = () => {
     readTextContents();
   };
 
-  if (!textContents) {
-    return;
-  }
+  const handleTabClick = () => {
+    const pageNameParts = params.pageName.split("_");
+    const [pageName, ...pageTabFeatureIds] = pageNameParts;
+  };
 
   const backgroundColor = "lightgray";
 
@@ -58,7 +74,11 @@ export const ShowTabTitleAdmin = ({
         padding: "10px",
       }}
     >
-      <CommonButton backgroundColor={backgroundColor} text={text} />
+      <CommonButton
+        backgroundColor={backgroundColor}
+        text={text}
+        onClick={handleTabClick}
+      />
       <div style={{ display: "flex", gap: "20px" }}>
         <UpdateTextDescriptionData
           textContents={textContents ?? []}
@@ -68,14 +88,12 @@ export const ShowTabTitleAdmin = ({
           key={1}
         />
         {tabIndex > 0 ? (
-          <>
-            <DeleteFeatureButton
-              featureId={tabTitleTextDescription.feature_id}
-              deleteText={staticTexts["delete"]}
-              onDeleteFInished={handleUpdateFinished}
-              key={2}
-            />
-          </>
+          <DeleteFeatureButton
+            featureId={tabTitleTextDescription.feature_id}
+            deleteText={staticTexts["delete"]}
+            onDeleteFInished={handleUpdateFinished}
+            key={2}
+          />
         ) : null}
       </div>
     </div>

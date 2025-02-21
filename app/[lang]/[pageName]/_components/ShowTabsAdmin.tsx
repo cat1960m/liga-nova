@@ -1,4 +1,4 @@
-import { TextDescription } from "@/app/lib/definitions";
+import { MainParams, TextDescription } from "@/app/lib/definitions";
 import { ShowTabTitleAdmin } from "./ShowTabTitleAdmin";
 
 import { DeleteTabsButton } from "./_clientComponents/DeleteTabsButton";
@@ -10,6 +10,7 @@ export type Props = {
   staticTexts: any;
   tabsFeatureId: number;
   children: React.ReactNode;
+  params: MainParams;
 };
 
 export const ShowTabsAdmin = ({
@@ -18,6 +19,7 @@ export const ShowTabsAdmin = ({
   staticTexts,
   tabsFeatureId,
   children,
+  params,
 }: Props) => {
   return (
     <div style={{ border: "4px dashed magenta" }}>
@@ -40,6 +42,7 @@ export const ShowTabsAdmin = ({
                   lang={lang}
                   tabIndex={index}
                   staticTexts={staticTexts}
+                  params={params}
                 />
               </div>
             );
