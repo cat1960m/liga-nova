@@ -1,20 +1,28 @@
 import { GROUP, GROUP1, GROUP2, TABS } from "@/app/lib/constants";
-import { Feature } from "@/app/lib/definitions";
+import { Feature, MainParams } from "@/app/lib/definitions";
 import { ShowSimpleGroup } from "./ShowSimpleGroup";
 import { getTabsTitles, getTextDescriptions } from "@/app/lib/actions_fitness";
 import { ShowComplexGroup } from "./ShowComplexGroup";
 import { ShowTabsAdmin } from "./ShowTabsAdmin";
 import { getDictionary } from "../../dictionaries";
 import { DrawFeatureContainer } from "./DrawFeatureContainer";
+import { redirect } from "next/navigation";
+
+export type Props = {
+  childFeature: Feature;
+  lang: string;
+  params: MainParams;
+  tabLevel: number;
+};
 
 export const DrawChildFeature = async ({
   childFeature,
   lang,
-}: {
-  childFeature: Feature;
-  lang: string;
-}) => {
+  params,
+  tabLevel,
+}: Props) => {
   const dict = await getDictionary(lang as "en" | "ua");
+
   if (childFeature.type === GROUP) {
     const textDescriptions = await getTextDescriptions({
       featureId: childFeature.id,
@@ -41,11 +49,21 @@ export const DrawChildFeature = async ({
 
   if (childFeature.type === TABS) {
     console.log("-----tabs");
+    const pageNameParts = params.pageName.split("_");
+    const [pageName, ...pageTabFeatureIds] = pageNameParts;
 
     const tabTitles = await getTabsTitles({ tabsFeatureId: childFeature.id });
     console.log("-----tabTitles count", tabTitles?.length ?? 0);
+
     if (!tabTitles?.length) {
       return;
+    }
+
+    const selectedLevelTabFeatureId = pageTabFeatureIds[tabLevel];
+
+    if (!selectedLevelTabFeatureId) {
+      const newPageName = `${pageName}_${tabTitles[0].feature_id}`;
+      redirect(`/${params.lang}/${newPageName}`);
     }
 
     return (
@@ -54,6 +72,7 @@ export const DrawChildFeature = async ({
         lang={lang}
         staticTexts={dict.common}
         tabsFeatureId={childFeature.id}
+        params={params}
       >
         {tabTitles.map((tabTitle, index) => {
           return (
@@ -62,6 +81,8 @@ export const DrawChildFeature = async ({
               featureId={tabTitle.feature_id}
               key={tabTitle.id}
               title={`Tab ${index}`}
+              params={params}
+              tabLevel={tabLevel + 1}
             />
           );
         })}

@@ -16,6 +16,8 @@ export default async function Layout({
   params: Promise<{ lang: "en" | "ua"; pageName: string }>;
 }) {
   const paramsData = await params;
+
+  console.log("----Layout params", paramsData);
   const lang = paramsData.lang ?? "ua";
   const dict = await getDictionary(lang); // en
   const pages = await getPageTitles(lang);

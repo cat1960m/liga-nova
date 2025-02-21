@@ -9,9 +9,12 @@ export const LinkBody = ({
   isMain?: boolean;
   params: { lang: "en" | "ua"; pageName: string };
 }) => {
+  console.log("-------LinkBody params", params, pageName);
+  const [pageNameOnly, ...parts] = (params.pageName ?? "")?.split("_");
+
   const style = {
     fontWeight: isMain ? 700 : 400,
-    color: pageName === params.pageName ? "blue" : "black",
+    color: pageName === pageNameOnly ? "blue" : "black",
   };
 
   return <div style={style}>{pageTitle}</div>;

@@ -173,3 +173,8 @@ export type TabType = {
   lang: string;
   value: string;
 };
+
+export type MainParams = {
+  pageName: string;
+  lang: string;
+};
