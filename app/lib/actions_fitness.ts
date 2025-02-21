@@ -1,14 +1,15 @@
 "use server";
 
 import postgres from "postgres";
-import {
-  PageData,
-  FeatureChild,
-  TextDescription,
-  TextContent,
-} from "./definitions";
+import { PageData, Feature, TextDescription, TextContent } from "./definitions";
 import { revalidatePath } from "next/cache";
-import { CAN_NOT_DELETE, SERVICE_ITEM } from "./constants";
+import {
+  CAN_NOT_DELETE,
+  SERVICE_ITEM,
+  TAB,
+  TAB_TITLE,
+  TABS,
+} from "./constants";
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: "require" });
 
@@ -77,16 +78,16 @@ export const getPageTitles = async (lang: string) => {
   }
 }; */
 
-export const getChildren = async ({
+export const getFeatureChildren = async ({
   parentFeatureId,
 }: {
   parentFeatureId: number;
 }) => {
   try {
-    return await sql<FeatureChild[]>`SELECT
-               a.subtype, a.type, a.name, a.id
-               FROM features a
-               WHERE a.parent_feature_id=${parentFeatureId}`;
+    return await sql<Feature[]>`SELECT
+               *
+               FROM features
+               WHERE features.parent_feature_id=${parentFeatureId}`;
   } catch (error) {
     // If a database error occurs, return a more specific error.
     return null;
@@ -260,7 +261,7 @@ export const addText = async ({
   }
 };
 
-export const addFeatureGroup = async ({
+export const addChildFeature = async ({
   type,
   parentId,
   subtype,
@@ -274,7 +275,7 @@ export const addFeatureGroup = async ({
   name: string;
   text_types: string[];
   pathName: string;
-}) => {
+}): Promise<number | null> => {
   try {
     const newFeatures = await sql`
           INSERT INTO features (parent_feature_id, type, subtype, name)
@@ -282,7 +283,7 @@ export const addFeatureGroup = async ({
           RETURNING id;
         `;
 
-    const newFeatureId = newFeatures[0]?.id;
+    const newFeatureId: number = newFeatures[0]?.id;
 
     if (newFeatureId) {
       const promises: any[] = [];
@@ -294,18 +295,20 @@ export const addFeatureGroup = async ({
         promises.push(sql`
           INSERT INTO text_descriptions (feature_id, text_type, price, can_delete)
           VALUES (${newFeatureId}, ${textType}, ${price}, ${can_delete})
-          RETURNING id;
-        `);
+          RETURNING id;`);
       });
 
       await Promise.all(promises);
 
       revalidatePath(pathName);
+
+      return newFeatureId;
     }
   } catch (error) {
     // If a database error occurs, return a more specific error.
     return null;
   }
+  return null;
 };
 
 export const addTextDescription = async ({
@@ -354,6 +357,25 @@ export const getTextDescriptions = async ({
                *
                FROM text_descriptions b
                WHERE b.feature_id = ${featureId}`;
+  } catch (error) {
+    // If a database error occurs, return a more specific error.
+    return null;
+  }
+};
+
+export const getTabsTitles = async ({
+  tabsFeatureId,
+}: {
+  tabsFeatureId: number;
+}) => {
+  const text_type = TAB_TITLE;
+  try {
+    return await sql<TextDescription[]>`SELECT
+               b.id, b.feature_id,b.text_type, b.price, b.can_delete
+               FROM text_descriptions b, features a
+               WHERE b.feature_id = a.id
+               AND a.parent_feature_id = ${tabsFeatureId}
+               AND b.text_type = ${text_type};`;
   } catch (error) {
     // If a database error occurs, return a more specific error.
     return null;

@@ -1,20 +1,22 @@
-import { FeatureChild, TextContent } from "@/app/lib/definitions";
+import { Feature, TextContent } from "@/app/lib/definitions";
 import { GROUP1 } from "@/app/lib/constants";
-import { UpdateTextDescriptionData } from "./UpdateTextDescriptionData";
-import { DeleteFeatureButton } from "./DeleteFeatureButton";
+import { UpdateTextDescriptionData } from "./_clientComponents/UpdateTextDescriptionData";
+import { DeleteFeatureButton } from "./_clientComponents/DeleteFeatureButton";
 import { getTextContents } from "@/app/lib/actions_fitness";
 import { getDictionary } from "../../dictionaries";
 import { getLocalizedText } from "@/app/lib/utils";
+
+export type Props = {
+  featureChild: Feature;
+  lang: string;
+  textDescriptionId: number;
+};
 
 export const ShowSimpleGroup = async ({
   featureChild,
   lang,
   textDescriptionId,
-}: {
-  featureChild: FeatureChild;
-  lang: string;
-  textDescriptionId: number;
-}) => {
+}: Props) => {
   const textContents: TextContent[] | null = await getTextContents({
     text_description_id: textDescriptionId,
   });

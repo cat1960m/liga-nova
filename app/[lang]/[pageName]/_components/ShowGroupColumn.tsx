@@ -1,5 +1,5 @@
 import { getDictionary } from "../../dictionaries";
-import { AddColumnItemButton } from "./AddColumnItemButton";
+import { AddColumnItemButton } from "./_clientComponents/AddColumnItemButton";
 import { GroupItemEditDelete } from "./GroupItemEditDelete";
 import { getTextDescriptions } from "@/app/lib/actions_fitness";
 
@@ -11,7 +11,7 @@ export type Props = {
   groupType: string;
 };
 
-export const GroupColumn = async ({
+export const ShowGroupColumn = async ({
   featureId,
   lang,
   headerType,

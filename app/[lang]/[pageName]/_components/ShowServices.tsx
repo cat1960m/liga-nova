@@ -1,6 +1,6 @@
 import { SERVICE_ITEM } from "@/app/lib/constants";
 import { getDictionary } from "../../dictionaries";
-import { AddColumnItemButton } from "./AddColumnItemButton";
+import { AddColumnItemButton } from "./_clientComponents/AddColumnItemButton";
 import { GroupItemEditDelete } from "./GroupItemEditDelete";
 import { getTextDescriptions } from "@/app/lib/actions_fitness";
 

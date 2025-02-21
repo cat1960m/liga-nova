@@ -89,8 +89,8 @@ export type InvoiceForm = {
 
 //table in db features
 export type Feature = {
-  id: string;
-  parent_feature_id: string;
+  id: number;
+  parent_feature_id: number;
   type: string;
   subtype: string;
   name: string;
@@ -101,7 +101,7 @@ export type Feature = {
 //table in db text_descriptions
 export type TextDescription = {
   id: number;
-  feature_id: string;
+  feature_id: number;
   text_type: string;
   price?: number;
   can_delete?: boolean;
@@ -172,11 +172,4 @@ export type PageData = {
 export type TabType = {
   lang: string;
   value: string;
-};
-
-export type FeatureChild = {
-  id: number;
-  type: string;
-  subtype: string;
-  name: string;
 };

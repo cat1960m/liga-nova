@@ -30,7 +30,8 @@
     ".next/types/**/*.ts",
     "app/lib/placeholder-data.ts",
     "scripts/seed.js",
-    "app/dashboard/error.tsx"
+    "app/dashboard/error.tsx",
+    "app/[lang]/[pageName]/_components/_clientComponents/AddChildFeatureToContainer.tsx"
   ],
   "exclude": ["node_modules"]
 }

@@ -1,6 +1,6 @@
 import { TextDescription } from "@/app/lib/definitions";
-import { UpdateTextDescriptionData } from "./UpdateTextDescriptionData";
-import { DeleteTextDescriptionButton } from "./DeleteTextDescriptionButton";
+import { UpdateTextDescriptionData } from "./_clientComponents/UpdateTextDescriptionData";
+import { DeleteTextDescriptionButton } from "./_clientComponents/DeleteTextDescriptionButton";
 import {
   GROUP_2COLUMNS_2HEADERS,
   GROUP_TYPES_WITH_TOOLTIP,

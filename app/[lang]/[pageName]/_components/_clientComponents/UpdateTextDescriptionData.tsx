@@ -15,6 +15,7 @@ export const UpdateTextDescriptionData = ({
   staticTexts,
   currentPrice,
   isTooltipUsed,
+  onUpdateFinished,
 }: {
   textContents: TextContent[];
   textContentsTooltip?: TextContent[] | null;
@@ -22,6 +23,7 @@ export const UpdateTextDescriptionData = ({
   staticTexts: any;
   currentPrice?: number;
   isTooltipUsed?: boolean;
+  onUpdateFinished?: () => void;
 }) => {
   const [isEditModalShown, setIsEditModalShown] = useState(false);
 
@@ -44,24 +46,21 @@ export const UpdateTextDescriptionData = ({
   }) => {
     const textUpdated = text; //!!text ? text : null;
     if (id) {
-      await updateText({
+      return updateText({
         id,
         text: textUpdated,
         pathName,
         contentType,
       });
-      return;
     }
 
-    try {
-      await addText({
-        textDescriptionId,
-        lang: tabLang,
-        text: textUpdated,
-        pathName,
-        contentType,
-      });
-    } catch {}
+    return addText({
+      textDescriptionId,
+      lang: tabLang,
+      text: textUpdated,
+      pathName,
+      contentType,
+    });
   };
 
   const saveTabs = async ({
@@ -73,18 +72,22 @@ export const UpdateTextDescriptionData = ({
     price?: number;
     tabsTooltip: TabType[];
   }) => {
+    const promises: Promise<any>[] = [];
+
     tabs.forEach((tab) => {
       const tabLang = tab.lang.toLocaleLowerCase();
       const textContent = textContents.find(
         ({ language }) => language === tabLang
       );
 
-      saveTab({
-        text: tab.value,
-        id: textContent?.id,
-        tabLang,
-        contentType: "main",
-      });
+      promises.push(
+        saveTab({
+          text: tab.value,
+          id: textContent?.id,
+          tabLang,
+          contentType: "main",
+        })
+      );
     });
 
     if (isTooltipUsed) {
@@ -95,18 +98,23 @@ export const UpdateTextDescriptionData = ({
           ({ language }) => language === tabLang
         );
 
-        saveTab({
-          text: tab.value,
-          id: textContent?.id,
-          tabLang,
-          contentType: TOOLTIP,
-        });
+        promises.push(
+          saveTab({
+            text: tab.value,
+            id: textContent?.id,
+            tabLang,
+            contentType: TOOLTIP,
+          })
+        );
       });
     }
 
     if (price) {
-      await updatePrice({ price, textDescriptionId, pathName });
+      promises.push(updatePrice({ price, textDescriptionId, pathName }));
     }
+
+    await Promise.all(promises);
+    onUpdateFinished?.();
   };
 
   return (

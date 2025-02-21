@@ -1,4 +1,4 @@
-import { FeatureChild } from "@/app/lib/definitions";
+import { Feature } from "@/app/lib/definitions";
 import {
   GROUP_2COLUMNS_2HEADERS,
   HEADER1,
@@ -7,18 +7,17 @@ import {
   ITEM_COLUMN2,
   SERVICES,
 } from "@/app/lib/constants";
-import { DeleteFeatureButton } from "./DeleteFeatureButton";
-import { GroupColumn } from "./GroupColumn";
+import { DeleteFeatureButton } from "./_clientComponents/DeleteFeatureButton";
+import { ShowGroupColumn } from "./ShowGroupColumn";
 import { getDictionary } from "../../dictionaries";
 import { ShowServices } from "./ShowServices";
 
-export const ShowComplexGroup = async ({
-  featureChild,
-  lang,
-}: {
-  featureChild: FeatureChild;
+export type Props = {
+  featureChild: Feature;
   lang: string;
-}) => {
+};
+
+export const ShowComplexGroup = async ({ featureChild, lang }: Props) => {
   const dict = await getDictionary(lang as "en" | "ua"); // en
 
   const is2headers2columns = featureChild.subtype === GROUP_2COLUMNS_2HEADERS;
@@ -45,7 +44,7 @@ export const ShowComplexGroup = async ({
               gap: "10px",
             }}
           >
-            <GroupColumn
+            <ShowGroupColumn
               featureId={featureChild.id}
               groupType={featureChild.subtype}
               lang={lang}
@@ -61,7 +60,7 @@ export const ShowComplexGroup = async ({
               gap: "10px",
             }}
           >
-            <GroupColumn
+            <ShowGroupColumn
               featureId={featureChild.id}
               groupType={featureChild.subtype}
               lang={lang}

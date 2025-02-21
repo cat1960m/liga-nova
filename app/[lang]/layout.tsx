@@ -3,6 +3,8 @@ import { getPageTitles } from "../lib/actions_fitness";
 import Link from "next/link";
 import { LangSelector } from "./_components/LangSelector";
 import { LinkBody } from "./_components/LInkBody";
+import { ArrowRightIcon, PowerIcon } from "@heroicons/react/24/outline";
+import { auth, signOut } from "@/app/auth";
 
 export const experimental_ppr = true;
 
@@ -11,11 +13,14 @@ export default async function Layout({
   params,
 }: {
   children: React.ReactNode;
-  params: Promise<{ lang: "en" | "ua" }>;
+  params: Promise<{ lang: "en" | "ua"; pageName: string }>;
 }) {
-  const lang = (await params).lang ?? "ua";
+  const paramsData = await params;
+  const lang = paramsData.lang ?? "ua";
   const dict = await getDictionary(lang); // en
   const pages = await getPageTitles(lang);
+  const res = await auth();
+  const iaAuthenticated = !!res?.user;
 
   if (!pages) {
     return;
@@ -35,6 +40,7 @@ export default async function Layout({
           alignItems: "center",
           borderBottom: "1px solid black",
           padding: "20px",
+          gap: "10px",
         }}
       >
         <div
@@ -55,13 +61,37 @@ export default async function Layout({
                     pageName={page.name}
                     isMain
                     pageTitle={page.text_content}
+                    params={paramsData}
                   />
                 </div>
               </Link>
             );
           })}
         </div>
-        <LangSelector />
+        <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+          <LangSelector />
+          {iaAuthenticated ? (
+            <form
+              action={async () => {
+                "use server";
+                await signOut();
+                //  await signOut({ redirectTo: "/" });
+              }}
+            >
+              <button className="flex h-[48px] w-full grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3">
+                <PowerIcon className="w-6" />
+                <div className="hidden md:block">Sign Out</div>
+              </button>
+            </form>
+          ) : (
+            <Link
+              href="/login"
+              className="flex items-center gap-5 self-start rounded-lg bg-blue-500 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-blue-400 md:text-base"
+            >
+              <span>Log in</span> <ArrowRightIcon className="w-5 md:w-6" />
+            </Link>
+          )}
+        </div>
       </div>
 
       <div
@@ -81,7 +111,11 @@ export default async function Layout({
           return (
             <Link href={`/${lang}/${page.name}`} key={page.id}>
               <div key={page.id}>
-                <LinkBody pageName={page.name} pageTitle={page.text_content} />
+                <LinkBody
+                  pageName={page.name}
+                  pageTitle={page.text_content}
+                  params={paramsData}
+                />
               </div>
             </Link>
           );

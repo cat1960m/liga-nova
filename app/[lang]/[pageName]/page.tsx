@@ -1,7 +1,6 @@
-import { getChildren, getPageTitles } from "@/app/lib/actions_fitness";
-import { AddChildFeature } from "./_components/AddChildFeatureToPage";
-import { DrawChild } from "./_components/DrawChild";
-import { FeatureChild } from "@/app/lib/definitions";
+import { getFeatureChildren, getPageTitles } from "@/app/lib/actions_fitness";
+import { Feature } from "@/app/lib/definitions";
+import { DrawFeatureContainer } from "./_components/DrawFeatureContainer";
 
 export default async function PageName({
   params,
@@ -19,24 +18,5 @@ export default async function PageName({
     return null;
   }
 
-  const pageChildren: FeatureChild[] | null = await getChildren({
-    parentFeatureId: currentPage?.id ?? 0,
-  });
-
-  return (
-    <div
-      style={{
-        padding: "40px",
-        display: "flex",
-        flexDirection: "column",
-        gap: "20px",
-      }}
-    >
-      {pageChildren?.map((child) => {
-        return <DrawChild child={child} lang={lang} key={child.id} />;
-      })}
-
-      <AddChildFeature parentFeatureId={currentPage?.id} />
-    </div>
-  );
+  return <DrawFeatureContainer lang={lang} featureId={currentPage?.id} />;
 }
