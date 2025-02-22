@@ -12,9 +12,12 @@ export const LinkBody = ({
   pageTitle: string;
   isMain?: boolean;
 }) => {
-  const params = useParams<MainParams>();
-  console.log("-------LinkBody params", params, pageName);
-  const [pageNameOnly, ...parts] = params.pageName?.split("_");
+  const params = useParams();
+  //console.log("-------LinkBody params", params, pageName);
+
+  const [pageNameOnly, ...parts] = (params.pageName?.toString() ?? "").split(
+    "_"
+  );
 
   const style = {
     fontWeight: isMain ? 700 : 400,

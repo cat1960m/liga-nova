@@ -1,3 +1,5 @@
+"use client";
+
 import { Feature } from "@/app/lib/definitions";
 import {
   GROUP_2COLUMNS_2HEADERS,
@@ -7,23 +9,17 @@ import {
   ITEM_COLUMN2,
   SERVICES,
 } from "@/app/lib/constants";
-import { DeleteFeatureButton } from "./_clientComponents/DeleteFeatureButton";
-import { ShowGroupColumn } from "./ShowGroupColumn";
-import { getDictionary } from "../../dictionaries";
-import { ShowServices } from "./ShowServices";
-import { auth } from "@/app/auth";
+import { ShowGroupColumn_Client } from "./ShowGroupColumn_Client";
+import { DeleteFeatureButton } from "./DeleteFeatureButton";
+import { ShowServices_Client } from "./ShowServices_Client";
+import { StaticTexts } from "@/app/dictionaries/definitions";
 
 export type Props = {
   featureChild: Feature;
   lang: string;
 };
 
-export const ShowComplexGroup = async ({ featureChild, lang }: Props) => {
-  const res = await auth();
-  const iaAuthenticated = !!res?.user;
-
-  const dict = await getDictionary(lang as "en" | "ua"); // en
-
+export const ShowComplexGroup_Client = ({ featureChild, lang }: Props) => {
   const is2headers2columns = featureChild.subtype === GROUP_2COLUMNS_2HEADERS;
   const isServices = featureChild.subtype === SERVICES;
 
@@ -48,7 +44,7 @@ export const ShowComplexGroup = async ({ featureChild, lang }: Props) => {
               gap: "10px",
             }}
           >
-            <ShowGroupColumn
+            <ShowGroupColumn_Client
               featureId={featureChild.id}
               groupType={featureChild.subtype}
               lang={lang}
@@ -64,7 +60,7 @@ export const ShowComplexGroup = async ({ featureChild, lang }: Props) => {
               gap: "10px",
             }}
           >
-            <ShowGroupColumn
+            <ShowGroupColumn_Client
               featureId={featureChild.id}
               groupType={featureChild.subtype}
               lang={lang}
@@ -76,28 +72,11 @@ export const ShowComplexGroup = async ({ featureChild, lang }: Props) => {
       ) : null}
 
       {isServices ? (
-        <ShowServices
+        <ShowServices_Client
           featureId={featureChild.id}
           lang={lang}
           groupType={featureChild.subtype}
         />
-      ) : null}
-
-      {iaAuthenticated ? (
-        <div
-          style={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            marginTop: "30px",
-          }}
-        >
-          <DeleteFeatureButton
-            featureId={featureChild.id}
-            deleteText={dict.common.delete ?? "N/A"}
-          />
-        </div>
       ) : null}
     </div>
   );

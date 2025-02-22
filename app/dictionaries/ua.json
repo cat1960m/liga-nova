@@ -6,6 +6,11 @@
     "updateTranslate": "Редагувати та перекласти ",
     "translate": "перекласти",
     "delete": "видалити",
-    "addColumnItem": "Додати елемент в колонку"
+    "addColumnItem": "додати елемент в колонку",
+    "addItemToPage": "додати елемент на сторінку",
+    "addItemToTab": "додати елемент в TAB",
+    "addTab": "додати TAB",
+    "deleteTab": "видалити TAB",
+    "deleteTabs": "видалити TABs"
   }
 }

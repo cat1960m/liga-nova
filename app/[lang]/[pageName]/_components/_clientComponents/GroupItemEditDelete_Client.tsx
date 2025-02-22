@@ -1,6 +1,6 @@
-import { TextDescription } from "@/app/lib/definitions";
-import { UpdateTextDescriptionData } from "./_clientComponents/UpdateTextDescriptionData";
-import { DeleteTextDescriptionButton } from "./_clientComponents/DeleteTextDescriptionButton";
+"use client";
+
+import { TextContent, TextDescription } from "@/app/lib/definitions";
 import {
   GROUP_2COLUMNS_2HEADERS,
   GROUP_TYPES_WITH_TOOLTIP,
@@ -8,10 +8,12 @@ import {
   TOOLTIP,
 } from "@/app/lib/constants";
 import { getTextContents } from "@/app/lib/actions_fitness";
-import { getDictionary } from "../../dictionaries";
-import { ShowGroupColumnText } from "./ShowGroupColumnText";
-import { ShowGroupServicesText } from "./ShowGroupServicesText";
-import { auth } from "@/app/auth";
+import { useEffect, useState } from "react";
+import { ShowGroupColumnText } from "../ShowGroupColumnText";
+import { ShowGroupServicesText } from "../ShowGroupServicesText";
+import { UpdateTextDescriptionData } from "./UpdateTextDescriptionData";
+import { DeleteTextDescriptionButton } from "./DeleteTextDescriptionButton";
+import { StaticTexts } from "@/app/dictionaries/definitions";
 
 export type Props = {
   textDescription: TextDescription;
@@ -20,19 +22,33 @@ export type Props = {
   groupType: string;
 };
 
-export const GroupItemEditDelete = async ({
+export const GroupItemEditDelete_Client = ({
   textDescription,
   lang,
   textType,
   groupType,
 }: Props) => {
-  const res = await auth();
-  const iaAuthenticated = !!res?.user;
+  const [textContentsAll, setTextContentsAll] = useState<TextContent[] | null>(
+    null
+  );
+
+  useEffect(() => {
+    const getContents = async () => {
+      const textContentsAll = await getTextContents({
+        text_description_id: textDescription.id,
+      });
+
+      setTextContentsAll(textContentsAll ?? []);
+    };
+
+    getContents();
+  }, []);
+
+  if (!textContentsAll) {
+    return null;
+  }
 
   const isTooltipUsed = GROUP_TYPES_WITH_TOOLTIP.includes(groupType);
-  const textContentsAll = await getTextContents({
-    text_description_id: textDescription.id,
-  });
 
   const textContents =
     textContentsAll?.filter(
@@ -45,9 +61,6 @@ export const GroupItemEditDelete = async ({
       ) ?? null
     : null;
 
-  const dict = await getDictionary(lang as "en" | "ua"); // en
-
-  const canDelete = iaAuthenticated && textDescription.can_delete;
   const isGroupColumns = groupType === GROUP_2COLUMNS_2HEADERS;
   const isServices = groupType === SERVICES;
 
@@ -70,24 +83,6 @@ export const GroupItemEditDelete = async ({
           lang={lang}
           textType={textType}
           price={textDescription.price ?? 0}
-        />
-      ) : null}
-
-      {iaAuthenticated ? (
-        <UpdateTextDescriptionData
-          textContents={textContents ?? []}
-          textContentsTooltip={textContentsTooltip}
-          textDescriptionId={textDescription.id}
-          staticTexts={dict.common}
-          currentPrice={textDescription.price}
-          isTooltipUsed={isTooltipUsed}
-        />
-      ) : null}
-
-      {canDelete ? (
-        <DeleteTextDescriptionButton
-          textDescriptionId={textDescription.id}
-          deleteText={dict.common.delete ?? "N/A"}
         />
       ) : null}
     </div>

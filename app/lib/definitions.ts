@@ -178,3 +178,15 @@ export type MainParams = {
   pageName: string;
   lang: string;
 };
+
+export type FullData = {
+  id: number;
+  parent_feature_id: number;
+  type: string;
+  subtype: string;
+  name: string;
+  text_type?: string;
+  price?: number;
+  text_content?: string;
+  content_type?: string;
+};

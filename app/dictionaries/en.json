@@ -6,6 +6,11 @@
     "updateTranslate": "Update and translate ",
     "translate": "translate",
     "delete": "delete",
-    "addColumnItem": "Add column item"
+    "addColumnItem": "Add column item",
+    "addItemToPage": "Add Item to Page",
+    "addItemToTab": "Add Item to Tab",
+    "addTab": "Add TAB",
+    "deleteTab": "Delete TAB",
+    "deleteTabs": "Delete TABs"
   }
 }

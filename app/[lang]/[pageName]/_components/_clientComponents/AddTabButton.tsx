@@ -4,7 +4,13 @@ import { addChildFeature } from "@/app/lib/actions_fitness";
 import { CommonButton } from "./CommonButton";
 import { TAB, TAB_TITLE } from "@/app/lib/constants";
 
-export const AddTabButton = ({ tabsFeatureId }: { tabsFeatureId: number }) => {
+export const AddTabButton = ({
+  tabsFeatureId,
+  text,
+}: {
+  tabsFeatureId: number;
+  text: string;
+}) => {
   const handleAddTab = async (pathName: string) => {
     await addChildFeature({
       parentId: tabsFeatureId,
@@ -16,5 +22,5 @@ export const AddTabButton = ({ tabsFeatureId }: { tabsFeatureId: number }) => {
     });
   };
 
-  return <CommonButton text="Add tab" onClick={handleAddTab} />;
+  return <CommonButton text={text} onClick={handleAddTab} />;
 };

@@ -5,6 +5,7 @@ import { DeleteFeatureButton } from "./_clientComponents/DeleteFeatureButton";
 import { getTextContents } from "@/app/lib/actions_fitness";
 import { getDictionary } from "../../dictionaries";
 import { getLocalizedText } from "@/app/lib/utils";
+import { auth } from "@/app/auth";
 
 export type Props = {
   featureChild: Feature;
@@ -17,6 +18,9 @@ export const ShowSimpleGroup = async ({
   lang,
   textDescriptionId,
 }: Props) => {
+  const res = await auth();
+  const iaAuthenticated = !!res?.user;
+
   const textContents: TextContent[] | null = await getTextContents({
     text_description_id: textDescriptionId,
   });
@@ -45,17 +49,19 @@ export const ShowSimpleGroup = async ({
         />
       ) : null}
       {text}
-      <div style={{ display: "flex", gap: "20px", marginTop: "20px" }}>
-        <UpdateTextDescriptionData
-          textContents={textContents ?? []}
-          textDescriptionId={textDescriptionId}
-          staticTexts={dict.common}
-        />
-        <DeleteFeatureButton
-          featureId={featureChild.id}
-          deleteText={dict.common.delete}
-        />
-      </div>
+      {iaAuthenticated ? (
+        <div style={{ display: "flex", gap: "20px", marginTop: "20px" }}>
+          <UpdateTextDescriptionData
+            textContents={textContents ?? []}
+            textDescriptionId={textDescriptionId}
+            staticTexts={dict.common}
+          />
+          <DeleteFeatureButton
+            featureId={featureChild.id}
+            deleteText={dict.common.delete ?? "N/A"}
+          />
+        </div>
+      ) : null}
     </div>
   );
 };

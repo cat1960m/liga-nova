@@ -7,6 +7,7 @@ import { addText, updatePrice, updateText } from "@/app/lib/actions_fitness";
 import { usePathname } from "next/navigation";
 import { TOOLTIP } from "@/app/lib/constants";
 import { CommonButton } from "./CommonButton";
+import { StaticTexts } from "@/app/dictionaries/definitions";
 
 export const UpdateTextDescriptionData = ({
   textContents,
@@ -20,7 +21,7 @@ export const UpdateTextDescriptionData = ({
   textContents: TextContent[];
   textContentsTooltip?: TextContent[] | null;
   textDescriptionId: number;
-  staticTexts: any;
+  staticTexts: StaticTexts;
   currentPrice?: number;
   isTooltipUsed?: boolean;
   onUpdateFinished?: () => void;
@@ -119,7 +120,7 @@ export const UpdateTextDescriptionData = ({
 
   return (
     <>
-      <CommonButton onClick={handleEdit} text={staticTexts["edit"]} />
+      <CommonButton onClick={handleEdit} text={staticTexts.edit ?? "N/A"} />
 
       {isEditModalShown ? (
         <UpdateTextDescriptionDataModal

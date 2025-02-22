@@ -1,9 +1,10 @@
+"use client";
+
 import { SERVICE_ITEM } from "@/app/lib/constants";
-import { getDictionary } from "../../dictionaries";
-import { AddColumnItemButton } from "./_clientComponents/AddColumnItemButton";
-import { GroupItemEditDelete } from "./GroupItemEditDelete";
 import { getTextDescriptions } from "@/app/lib/actions_fitness";
-import { auth } from "@/app/auth";
+import { GroupItemEditDelete_Client } from "./GroupItemEditDelete_Client";
+import { TextDescription } from "@/app/lib/definitions";
+import { useEffect, useState } from "react";
 
 export type Props = {
   featureId: number;
@@ -11,14 +12,22 @@ export type Props = {
   groupType: string;
 };
 
-export const ShowServices = async ({ featureId, lang, groupType }: Props) => {
-  const featureTextDescriptions = await getTextDescriptions({
-    featureId: featureId,
-  });
-  const res = await auth();
-  const iaAuthenticated = !!res?.user;
+export const ShowServices_Client = ({ featureId, lang, groupType }: Props) => {
+  const [featureTextDescriptions, setFeatureTextDescriptions] = useState<
+    TextDescription[] | null
+  >(null);
 
-  const dict = await getDictionary(lang as "en" | "ua"); // en
+  useEffect(() => {
+    const getDescriptions = async () => {
+      const featureDescriptions = await getTextDescriptions({
+        featureId: featureId,
+      });
+
+      setFeatureTextDescriptions(featureDescriptions);
+    };
+
+    getDescriptions();
+  }, []);
 
   if (!featureTextDescriptions) {
     return null;
@@ -51,7 +60,7 @@ export const ShowServices = async ({ featureId, lang, groupType }: Props) => {
               }}
               key={textDescription.id}
             >
-              <GroupItemEditDelete
+              <GroupItemEditDelete_Client
                 textDescription={textDescription}
                 lang={lang}
                 textType={SERVICE_ITEM}
@@ -61,24 +70,6 @@ export const ShowServices = async ({ featureId, lang, groupType }: Props) => {
           );
         })}
       </div>
-      {iaAuthenticated ? (
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            width: "100%",
-            padding: "20px",
-          }}
-        >
-          <AddColumnItemButton
-            featureId={featureId}
-            textType={SERVICE_ITEM}
-            buttonText={dict.common.addColumnItem ?? "N/A"}
-            price={0}
-          />
-        </div>
-      ) : null}
     </div>
   );
 };

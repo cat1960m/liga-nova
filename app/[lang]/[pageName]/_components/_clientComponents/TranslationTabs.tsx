@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import { ChangeEventHandler, useState } from "react";
 import axios from "axios";
 import { CommonButton } from "./CommonButton";
+import { StaticTexts } from "@/app/dictionaries/definitions";
 
 export const TranslationTabs = ({
   textContents,
@@ -17,7 +18,7 @@ export const TranslationTabs = ({
   tabs: TabType[];
   setTabs: (tabs: TabType[]) => void;
   textContents: TextContent[];
-  staticTexts: any;
+  staticTexts: StaticTexts;
   onChange: () => void;
   title: string;
 }) => {
@@ -25,7 +26,7 @@ export const TranslationTabs = ({
   const { lang } = params;
 
   const startText =
-    textContents?.find((item) => item.language === lang)?.text_content ?? "";
+    textContents?.find((item) => item.language === lang)?.text_content ?? "N/A";
 
   const [selectedTab, setSelectedTab] = useState(lang.toUpperCase());
 
@@ -147,7 +148,7 @@ export const TranslationTabs = ({
         <CommonButton
           onClick={handleTranslate}
           isDisabled={isTranslateDisabled}
-          text={staticTexts["translate"]}
+          text={staticTexts.translate ?? "N/A"}
         />
       </div>
     </div>

@@ -1,7 +1,13 @@
 "use server";
 
 import postgres from "postgres";
-import { PageData, Feature, TextDescription, TextContent } from "./definitions";
+import {
+  PageData,
+  Feature,
+  TextDescription,
+  TextContent,
+  FullData,
+} from "./definitions";
 import { revalidatePath } from "next/cache";
 import {
   CAN_NOT_DELETE,
@@ -376,6 +382,20 @@ export const getTabsTitles = async ({
                WHERE b.feature_id = a.id
                AND a.parent_feature_id = ${tabsFeatureId}
                AND b.text_type = ${text_type};`;
+  } catch (error) {
+    // If a database error occurs, return a more specific error.
+    return null;
+  }
+};
+
+export const getFullData = async ({ lang }: { lang: string }) => {
+  try {
+    return await sql<FullData[]>`Select features.id, 
+        parent_feature_id, type, subtype, name, 
+        text_type, price,  text_content , content_type, language from features left join text_descriptions 
+        on features.id = text_descriptions.feature_id 
+        left join text_contents on text_descriptions.id = text_contents.text_description_id 
+        and text_contents.language = ${lang};`;
   } catch (error) {
     // If a database error occurs, return a more specific error.
     return null;

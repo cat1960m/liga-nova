@@ -6,8 +6,10 @@ import { usePathname } from "next/navigation";
 
 export const DeleteTabsButton = ({
   tabsFeatureId,
+  text,
 }: {
   tabsFeatureId: number;
+  text: string;
 }) => {
   const pathName = usePathname();
 
@@ -15,5 +17,5 @@ export const DeleteTabsButton = ({
     RemoveFeature({ id: tabsFeatureId, pathName });
   };
 
-  return <CommonButton text="Remove tabs" onClick={onRemoveTabs} />;
+  return <CommonButton text={text} onClick={onRemoveTabs} />;
 };

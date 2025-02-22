@@ -1,8 +1,11 @@
-import { auth } from "@/app/auth";
-import { getDictionary } from "../../dictionaries";
-import { AddColumnItemButton } from "./_clientComponents/AddColumnItemButton";
-import { GroupItemEditDelete } from "./GroupItemEditDelete";
+"use client";
+
 import { getTextDescriptions } from "@/app/lib/actions_fitness";
+import { useEffect, useState } from "react";
+import { TextDescription } from "@/app/lib/definitions";
+import { AddColumnItemButton } from "./AddColumnItemButton";
+import { GroupItemEditDelete_Client } from "./GroupItemEditDelete_Client";
+import { StaticTexts } from "@/app/dictionaries/definitions";
 
 export type Props = {
   featureId: number;
@@ -12,27 +15,35 @@ export type Props = {
   groupType: string;
 };
 
-export const ShowGroupColumn = async ({
+export const ShowGroupColumn_Client = ({
   featureId,
   lang,
   headerType,
   columnItemType,
   groupType,
 }: Props) => {
-  const featureTextDescriptions = await getTextDescriptions({
-    featureId: featureId,
-  });
-  const res = await auth();
-  const iaAuthenticated = !!res?.user;
+  const [featureTextDescriptions, setFeatureTextDescriptions] = useState<
+    TextDescription[] | null
+  >(null);
 
-  const dict = await getDictionary(lang as "en" | "ua"); // en
+  useEffect(() => {
+    const getDescriptions = async () => {
+      const featureDescriptions = await getTextDescriptions({
+        featureId: featureId,
+      });
+
+      setFeatureTextDescriptions(featureDescriptions);
+    };
+
+    getDescriptions();
+  }, []);
 
   if (!featureTextDescriptions) {
     return null;
   }
 
   const getTypeTextDescriptions = (type: string) => {
-    return featureTextDescriptions?.filter((item) => item.text_type === type);
+    return featureTextDescriptions.filter((item) => item.text_type === type);
   };
 
   const headerTextDescriptions = getTypeTextDescriptions(headerType);
@@ -41,7 +52,7 @@ export const ShowGroupColumn = async ({
   return (
     <>
       {headerTextDescriptions.length ? (
-        <GroupItemEditDelete
+        <GroupItemEditDelete_Client
           textDescription={headerTextDescriptions[0]}
           lang={lang}
           textType={headerType}
@@ -51,7 +62,7 @@ export const ShowGroupColumn = async ({
 
       {columnTextDescriptions.map((textDescription) => {
         return (
-          <GroupItemEditDelete
+          <GroupItemEditDelete_Client
             textDescription={textDescription}
             lang={lang}
             key={textDescription.id}
@@ -60,23 +71,6 @@ export const ShowGroupColumn = async ({
           />
         );
       })}
-      {iaAuthenticated ? (
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            width: "100%",
-          }}
-        >
-          <AddColumnItemButton
-            featureId={featureId}
-            textType={columnItemType}
-            buttonText={dict.common.addColumnItem ?? "N/A"}
-            price={null}
-          />
-        </div>
-      ) : null}
     </>
   );
 };

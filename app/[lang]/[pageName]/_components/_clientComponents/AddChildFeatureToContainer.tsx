@@ -23,8 +23,10 @@ import { ChangeEventHandler, useMemo, useState } from "react";
 
 export const AddChildFeatureToContainer = ({
   parentFeatureId,
+  text,
 }: {
   parentFeatureId: number | undefined;
+  text: string;
 }) => {
   const pathName = usePathname();
   const [selectedValue, setSelectedValue] = useState<string>("");
@@ -106,12 +108,12 @@ export const AddChildFeatureToContainer = ({
         justifyContent: "center",
         alignItems: "center",
         padding: "20px",
-        border: "1px solid lightgray",
+        // border: "1px solid lightgray",
       }}
     >
       <select value={selectedValue} onChange={handleChange}>
         <option value="" disabled>
-          Add an item
+          {text}
         </option>
         {options.map((option, index) => (
           <option value={option} key={option}>

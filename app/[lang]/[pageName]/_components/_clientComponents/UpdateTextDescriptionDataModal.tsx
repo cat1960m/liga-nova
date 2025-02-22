@@ -5,6 +5,7 @@ import { useState, ChangeEventHandler } from "react";
 import { TabType, TextContent } from "@/app/lib/definitions";
 import { TranslationTabs } from "./TranslationTabs";
 import { CommonButton } from "./CommonButton";
+import { StaticTexts } from "@/app/dictionaries/definitions";
 
 export const UpdateTextDescriptionDataModal = ({
   textContents,
@@ -22,7 +23,7 @@ export const UpdateTextDescriptionDataModal = ({
   textContents: TextContent[];
   textContentsTooltip?: TextContent[] | null;
   currentPrice?: number;
-  staticTexts: any;
+  staticTexts: StaticTexts;
   isTooltipUsed?: boolean;
 }) => {
   const [priceValue, setPriceValue] = useState<number>(currentPrice ?? 0);
@@ -33,7 +34,7 @@ export const UpdateTextDescriptionDataModal = ({
   }
 
   const getLanguageValue = (lang: string) =>
-    textContents?.find((item) => item.language === lang)?.text_content ?? "";
+    textContents?.find((item) => item.language === lang)?.text_content ?? "N/A";
 
   const [tabs, setTabs] = useState<TabType[]>([
     {
@@ -176,12 +177,12 @@ export const UpdateTextDescriptionDataModal = ({
             >
               <CommonButton
                 onClick={() => onClose()}
-                text={staticTexts["cancel"]}
+                text={staticTexts.cancel ?? "N/A"}
               />
               <CommonButton
                 onClick={handleSave}
                 isDisabled={isSaveDisabled}
-                text={staticTexts["save"]}
+                text={staticTexts.save ?? "N/A"}
               />
             </div>
           </div>

@@ -2,25 +2,34 @@ import { getFeatureChildren } from "@/app/lib/actions_fitness";
 import { Feature, MainParams } from "@/app/lib/definitions";
 import { DrawChildFeature } from "./DrawChildFeatures";
 import { AddChildFeatureToContainer } from "./_clientComponents/AddChildFeatureToContainer";
+import { auth } from "@/app/auth";
+import { StaticTexts } from "@/app/dictionaries/definitions";
 
 export type Props = {
   featureId: number;
-  lang: string;
   title?: string;
   params: MainParams;
   tabLevel: number;
+  staticTexts: StaticTexts;
 };
 
 export const DrawFeatureContainer = async ({
   featureId,
-  lang,
   title,
   params,
   tabLevel,
+  staticTexts,
 }: Props) => {
+  const res = await auth();
+  const iaAuthenticated = !!res?.user;
+
   const pageChildren: Feature[] | null = await getFeatureChildren({
     parentFeatureId: featureId,
   });
+
+  const buttonText = title
+    ? staticTexts.addItemToTab
+    : staticTexts.addItemToPage;
 
   return (
     <div
@@ -29,7 +38,7 @@ export const DrawFeatureContainer = async ({
         display: "flex",
         flexDirection: "column",
         gap: "20px",
-        border: "2px dotted magenta",
+        border: title ? "4px dotted green" : undefined,
         width: "100%",
         minHeight: "40px",
       }}
@@ -39,7 +48,6 @@ export const DrawFeatureContainer = async ({
         return (
           <DrawChildFeature
             childFeature={child}
-            lang={lang}
             key={child.id}
             params={params}
             tabLevel={tabLevel}
@@ -47,7 +55,12 @@ export const DrawFeatureContainer = async ({
         );
       })}
 
-      <AddChildFeatureToContainer parentFeatureId={featureId} />
+      {iaAuthenticated ? (
+        <AddChildFeatureToContainer
+          parentFeatureId={featureId}
+          text={buttonText ?? "N/A"}
+        />
+      ) : null}
     </div>
   );
 };

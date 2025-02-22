@@ -63,7 +63,6 @@ export default async function Layout({
                     pageName={page.name}
                     isMain
                     pageTitle={page.text_content}
-                    params={paramsData}
                   />
                 </div>
               </Link>
@@ -113,11 +112,7 @@ export default async function Layout({
           return (
             <Link href={`/${lang}/${page.name}`} key={page.id}>
               <div key={page.id}>
-                <LinkBody
-                  pageName={page.name}
-                  pageTitle={page.text_content}
-                  params={paramsData}
-                />
+                <LinkBody pageName={page.name} pageTitle={page.text_content} />
               </div>
             </Link>
           );

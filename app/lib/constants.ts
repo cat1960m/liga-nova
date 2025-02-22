@@ -22,3 +22,6 @@ export const FeatureTypes = {
 };
 
 export const DEFAULT_TEXT = "Please enter text";
+export const DEFAULT_TEXT_CLIENT = "N/A";
+
+export const SHOW_TABS_WITH_SELECTION = true;
