@@ -11,7 +11,7 @@ export type Props = {
   price: number | null;
 };
 
-export const AddColumnItemButton = (props: Props) => {
+export const AddGroupItemButton = (props: Props) => {
   const pathName = usePathname();
   const handleAddColumnItem = async () => {
     await addTextDescription({ ...props, pathName, canDelete: true });

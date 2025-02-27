@@ -3,7 +3,12 @@
 import { TabType, TextContent } from "@/app/lib/definitions";
 import { useState } from "react";
 import { UpdateTextDescriptionDataModal } from "./UpdateTextDescriptionDataModal";
-import { addText, updatePrice, updateText } from "@/app/lib/actions_fitness";
+import {
+  addText,
+  revalidate,
+  updatePrice,
+  updateText,
+} from "@/app/lib/actions_fitness";
 import { usePathname } from "next/navigation";
 import { TOOLTIP } from "@/app/lib/constants";
 import { CommonButton } from "./CommonButton";
@@ -76,7 +81,7 @@ export const UpdateTextDescriptionData = ({
     const promises: Promise<any>[] = [];
 
     tabs.forEach((tab) => {
-      const tabLang = tab.lang.toLocaleLowerCase();
+      const tabLang = tab.langUpperCase.toLocaleLowerCase();
       const textContent = textContents.find(
         ({ language }) => language === tabLang
       );
@@ -93,7 +98,7 @@ export const UpdateTextDescriptionData = ({
 
     if (isTooltipUsed) {
       tabsTooltip.forEach((tab) => {
-        const tabLang = tab.lang.toLocaleLowerCase();
+        const tabLang = tab.langUpperCase.toLocaleLowerCase();
 
         const textContent = textContentsTooltip?.find(
           ({ language }) => language === tabLang
@@ -115,6 +120,7 @@ export const UpdateTextDescriptionData = ({
     }
 
     await Promise.all(promises);
+    await revalidate(pathName);
     onUpdateFinished?.();
   };
 

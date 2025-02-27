@@ -9,11 +9,15 @@ export const DeleteFeatureButton = ({
   deleteText,
   onDeleteFInished,
 }: {
-  featureId: number;
+  featureId?: number;
   deleteText: string;
   onDeleteFInished?: () => void;
 }) => {
   const pathName = usePathname();
+
+  if (!featureId) {
+    return null;
+  }
 
   const handleDelete = async () => {
     await RemoveFeature({ id: featureId, pathName: pathName });

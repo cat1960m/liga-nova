@@ -1,76 +1,83 @@
-"use client";
-
-import { getTextDescriptions } from "@/app/lib/actions_fitness";
-import { useEffect, useState } from "react";
-import { TextDescription } from "@/app/lib/definitions";
-import { AddColumnItemButton } from "./AddColumnItemButton";
-import { GroupItemEditDelete_Client } from "./GroupItemEditDelete_Client";
+import { FullData } from "@/app/lib/definitions";
+import { ShowGroupColumnText_Client } from "./ShowGroupColumnText_Client";
 import { StaticTexts } from "@/app/dictionaries/definitions";
+import { AddGroupItemButton } from "./AddGroupItemButton";
 
 export type Props = {
-  featureId: number;
-  lang: string;
   headerType: string;
   columnItemType: string;
-  groupType: string;
+  groupData: FullData[];
+  isEdit: boolean;
+  staticTexts: StaticTexts;
 };
 
 export const ShowGroupColumn_Client = ({
-  featureId,
-  lang,
   headerType,
   columnItemType,
-  groupType,
+  groupData,
+  isEdit,
+  staticTexts,
 }: Props) => {
-  const [featureTextDescriptions, setFeatureTextDescriptions] = useState<
-    TextDescription[] | null
-  >(null);
+  const featureId = groupData[0]?.id;
+  const headerData = groupData.find((data) => data.text_type === headerType);
+  const bodyData = groupData.filter(
+    (data) => data.text_type === columnItemType
+  );
 
-  useEffect(() => {
-    const getDescriptions = async () => {
-      const featureDescriptions = await getTextDescriptions({
-        featureId: featureId,
-      });
-
-      setFeatureTextDescriptions(featureDescriptions);
-    };
-
-    getDescriptions();
-  }, []);
-
-  if (!featureTextDescriptions) {
+  if (!featureId) {
     return null;
   }
 
-  const getTypeTextDescriptions = (type: string) => {
-    return featureTextDescriptions.filter((item) => item.text_type === type);
-  };
-
-  const headerTextDescriptions = getTypeTextDescriptions(headerType);
-  const columnTextDescriptions = getTypeTextDescriptions(columnItemType);
-
   return (
-    <>
-      {headerTextDescriptions.length ? (
-        <GroupItemEditDelete_Client
-          textDescription={headerTextDescriptions[0]}
-          lang={lang}
-          textType={headerType}
-          groupType={groupType}
+    <div
+      style={{
+        display: "flex",
+        flexGrow: 2,
+        flexDirection: "column",
+        gap: "10px",
+        padding: isEdit ? "10px" : 0,
+        border: isEdit ? "1px dotted magenta" : undefined,
+      }}
+    >
+      {headerData ? (
+        <ShowGroupColumnText_Client
+          isEdit={isEdit}
+          currentData={headerData}
+          staticTexts={staticTexts}
         />
       ) : null}
 
-      {columnTextDescriptions.map((textDescription) => {
-        return (
-          <GroupItemEditDelete_Client
-            textDescription={textDescription}
-            lang={lang}
-            key={textDescription.id}
+      {bodyData
+        ? bodyData.map((data, index) => {
+            return (
+              <ShowGroupColumnText_Client
+                key={data.id + "_" + index}
+                isEdit={isEdit}
+                currentData={data}
+                staticTexts={staticTexts}
+              />
+            );
+          })
+        : null}
+
+      {isEdit ? (
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            width: "100%",
+            paddingTop: "10px",
+          }}
+        >
+          <AddGroupItemButton
+            featureId={featureId}
             textType={columnItemType}
-            groupType={groupType}
+            buttonText={staticTexts.addColumnItem ?? "N/A"}
+            price={null}
           />
-        );
-      })}
-    </>
+        </div>
+      ) : null}
+    </div>
   );
 };

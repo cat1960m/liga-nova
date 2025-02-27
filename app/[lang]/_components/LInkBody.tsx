@@ -13,7 +13,6 @@ export const LinkBody = ({
   isMain?: boolean;
 }) => {
   const params = useParams();
-  //console.log("-------LinkBody params", params, pageName);
 
   const [pageNameOnly, ...parts] = (params.pageName?.toString() ?? "").split(
     "_"

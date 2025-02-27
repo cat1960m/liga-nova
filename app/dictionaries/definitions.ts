@@ -6,6 +6,7 @@ export type StaticTexts = {
   translate?: string;
   delete?: string;
   addColumnItem?: string;
+  addGroupItem?: string;
   addItemToPage?: string;
   addItemToTab?: string;
   addTab?: string;

@@ -1,37 +1,24 @@
-"use client";
-
-import { SERVICE_ITEM } from "@/app/lib/constants";
-import { getTextDescriptions } from "@/app/lib/actions_fitness";
-import { GroupItemEditDelete_Client } from "./GroupItemEditDelete_Client";
-import { TextDescription } from "@/app/lib/definitions";
-import { useEffect, useState } from "react";
+import { TOOLTIP } from "@/app/lib/constants";
+import { FullData } from "@/app/lib/definitions";
+import { ShowGroupServicesText_Client } from "./ShowGroupServicesText_Client";
+import { StaticTexts } from "@/app/dictionaries/definitions";
+import { UpdateTextDescriptionData } from "./UpdateTextDescriptionData";
+import { UpdateTextDescriptionData_new } from "./UpdateTextDescriptionData_new";
+import { DeleteTextDescriptionButton } from "./DeleteTextDescriptionButton";
+import { UpdateDeleteText } from "./UpdateDeleteTexr";
 
 export type Props = {
-  featureId: number;
-  lang: string;
-  groupType: string;
+  groupData: FullData[];
+  isEdit: boolean;
+  staticTexts: StaticTexts;
 };
 
-export const ShowServices_Client = ({ featureId, lang, groupType }: Props) => {
-  const [featureTextDescriptions, setFeatureTextDescriptions] = useState<
-    TextDescription[] | null
-  >(null);
-
-  useEffect(() => {
-    const getDescriptions = async () => {
-      const featureDescriptions = await getTextDescriptions({
-        featureId: featureId,
-      });
-
-      setFeatureTextDescriptions(featureDescriptions);
-    };
-
-    getDescriptions();
-  }, []);
-
-  if (!featureTextDescriptions) {
-    return null;
-  }
+export const ShowServices_Client = ({
+  groupData,
+  isEdit,
+  staticTexts,
+}: Props) => {
+  const texts = groupData.filter((data) => data.content_type !== TOOLTIP);
 
   return (
     <div
@@ -50,22 +37,35 @@ export const ShowServices_Client = ({ featureId, lang, groupType }: Props) => {
           width: "100%",
         }}
       >
-        {featureTextDescriptions.map((textDescription, index) => {
+        {texts.map((data, index) => {
+          const title = groupData.find(
+            (item) =>
+              item.text_description_id === data.text_description_id &&
+              item.content_type === TOOLTIP
+          );
           return (
             <div
               style={{
                 width: "100%",
                 backgroundColor: !(index % 2) ? "pink" : "white",
-                padding: "5px 20px",
+                padding: "5px 10px",
+                display: "flex",
+                gap: "10px",
               }}
-              key={textDescription.id}
+              key={data.id + "_" + index}
             >
-              <GroupItemEditDelete_Client
-                textDescription={textDescription}
-                lang={lang}
-                textType={SERVICE_ITEM}
-                groupType={groupType}
+              <ShowGroupServicesText_Client
+                text={data.text_content ?? "N/A"}
+                title={title?.text_content ?? ""}
+                price={data.price ?? 0}
               />
+
+              {isEdit ? (
+                <UpdateDeleteText
+                  currentData={data}
+                  staticTexts={staticTexts}
+                />
+              ) : null}
             </div>
           );
         })}

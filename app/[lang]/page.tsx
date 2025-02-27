@@ -1,3 +1,4 @@
+import { getAllFeatures, UpdateFeatureOrder } from "../lib/actions_fitness";
 import { getDictionary } from "./dictionaries";
 
 export default async function Page({

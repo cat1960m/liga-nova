@@ -7,8 +7,7 @@ import axios from "axios";
 import { CommonButton } from "./CommonButton";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 
-export const TranslationTabs = ({
-  textContents,
+export const TranslationTabs_new = ({
   staticTexts,
   onChange,
   tabs,
@@ -17,7 +16,6 @@ export const TranslationTabs = ({
 }: {
   tabs: TabType[];
   setTabs: (tabs: TabType[]) => void;
-  textContents: TextContent[];
   staticTexts: StaticTexts;
   onChange: () => void;
   title: string;
@@ -25,8 +23,9 @@ export const TranslationTabs = ({
   const params = useParams<{ lang: string; pageName: string }>();
   const { lang } = params;
 
-  const startText =
-    textContents?.find((item) => item.language === lang)?.text_content ?? "N/A";
+  const startText = tabs.find(
+    (tab) => tab.langUpperCase === lang.toUpperCase()
+  )?.value;
 
   const [selectedTab, setSelectedTab] = useState(lang.toUpperCase());
 

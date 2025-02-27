@@ -13,12 +13,23 @@ export const TOOLTIP = "tooltip";
 export const TABS = "tabs";
 export const TAB = "tab";
 export const TAB_TITLE = "tab_title";
+export const INFO = "info";
+export const INFO_TITLE = "infoTitle";
+export const INFO_TELEPHONE = "infoTelephone";
+export const INFO_ADDRESS = "infoAddress";
+export const INFO_BODY = "infoBody";
 
-export const CAN_NOT_DELETE = [HEADER1, HEADER2];
+export const CAN_NOT_DELETE = [
+  HEADER1,
+  HEADER2,
+  INFO_TITLE,
+  INFO_TELEPHONE,
+  INFO_ADDRESS,
+];
 export const GROUP_TYPES_WITH_TOOLTIP = [SERVICES];
 
 export const FeatureTypes = {
-  GROUP: [GROUP1, GROUP2, GROUP_2COLUMNS_2HEADERS, SERVICES],
+  GROUP: [GROUP1, GROUP2, GROUP_2COLUMNS_2HEADERS, SERVICES, INFO],
 };
 
 export const DEFAULT_TEXT = "Please enter text";

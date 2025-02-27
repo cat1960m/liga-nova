@@ -17,9 +17,7 @@ export default async function Layout({
 }) {
   const paramsData = await params;
 
-  console.log("----Layout params", paramsData);
   const lang = paramsData.lang ?? "ua";
-  const dict = await getDictionary(lang); // en
   const pages = await getPageTitles(lang);
   const res = await auth();
   const iaAuthenticated = !!res?.user;

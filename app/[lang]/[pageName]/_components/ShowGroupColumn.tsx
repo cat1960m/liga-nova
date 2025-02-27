@@ -1,6 +1,6 @@
 import { auth } from "@/app/auth";
 import { getDictionary } from "../../dictionaries";
-import { AddColumnItemButton } from "./_clientComponents/AddColumnItemButton";
+import { AddGroupItemButton } from "./_clientComponents/AddGroupItemButton";
 import { GroupItemEditDelete } from "./GroupItemEditDelete";
 import { getTextDescriptions } from "@/app/lib/actions_fitness";
 
@@ -69,7 +69,7 @@ export const ShowGroupColumn = async ({
             width: "100%",
           }}
         >
-          <AddColumnItemButton
+          <AddGroupItemButton
             featureId={featureId}
             textType={columnItemType}
             buttonText={dict.common.addColumnItem ?? "N/A"}

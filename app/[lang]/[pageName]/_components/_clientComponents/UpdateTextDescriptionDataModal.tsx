@@ -38,15 +38,15 @@ export const UpdateTextDescriptionDataModal = ({
 
   const [tabs, setTabs] = useState<TabType[]>([
     {
-      lang: "EN",
+      langUpperCase: "EN",
       value: getLanguageValue("en"),
     },
     {
-      lang: "UA",
+      langUpperCase: "UA",
       value: getLanguageValue("ua"),
     },
     {
-      lang: "DE",
+      langUpperCase: "DE",
       value: getLanguageValue("de"),
     },
   ]);
@@ -57,15 +57,15 @@ export const UpdateTextDescriptionDataModal = ({
 
   const [tabsTooltip, setTabsTooltip] = useState<TabType[]>([
     {
-      lang: "EN",
+      langUpperCase: "EN",
       value: getLanguageValueTooltip("en"),
     },
     {
-      lang: "UA",
+      langUpperCase: "UA",
       value: getLanguageValueTooltip("ua"),
     },
     {
-      lang: "DE",
+      langUpperCase: "DE",
       value: getLanguageValueTooltip("de"),
     },
   ]);

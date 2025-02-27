@@ -1,9 +1,14 @@
-import { getFeatureChildren, getPageTitles } from "@/app/lib/actions_fitness";
+import {
+  getFeatureChildren,
+  getPageFullData,
+  getPageTitles,
+} from "@/app/lib/actions_fitness";
 import { DrawFeatureContainer } from "./_components/DrawFeatureContainer";
-import { Feature, MainParams } from "@/app/lib/definitions";
+import { Feature, FullData, MainParams } from "@/app/lib/definitions";
 import { DrawFeatureContainer_Client } from "./_components/_clientComponents/DrawFeatureContainer_Client";
 import { auth } from "@/app/auth";
 import { getDictionary } from "../dictionaries";
+import { getContainerData } from "@/app/lib/utils";
 
 export default async function Page({
   params,
@@ -14,7 +19,6 @@ export default async function Page({
   const isAuthenticated = !!res?.user;
 
   const pars = await params;
-  console.log("=======page params", pars);
   const { pageName, lang } = pars;
   const dict = await getDictionary(lang as "en" | "ua");
 
@@ -28,23 +32,34 @@ export default async function Page({
     return null;
   }
 
-  /* return (
-    <DrawFeatureContainer
-      lang={lang}
-      featureId={currentPage?.id}
-      params={pars}
-      tabLevel={0}
-    />
-  ); */
+  const pageFullData: FullData[] | null = await getPageFullData({
+    lang,
+    pageName: currentPage.name,
+  });
+
+  const containerFullData = currentPage?.id
+    ? getContainerData({
+        pageFullData: pageFullData ?? [],
+        featureId: currentPage?.id,
+      })
+    : null;
+
+  if (!containerFullData || !pageFullData) {
+    return null;
+  }
+  const isEdit = false;
 
   return (
     <>
       {!isAuthenticated ? (
         <DrawFeatureContainer_Client
-          lang={lang}
-          featureId={currentPage?.id}
           params={pars}
-          tabLevel={0}
+          featureId={currentPage?.id}
+          pageFullDataList={pageFullData}
+          containerFullData={containerFullData}
+          isEdit={isEdit}
+          staticTexts={dict.common}
+          isPageContainer
         />
       ) : (
         <DrawFeatureContainer

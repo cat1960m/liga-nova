@@ -1,41 +1,63 @@
-"use client";
-
-import { GROUP, GROUP1, GROUP2, TABS } from "@/app/lib/constants";
-import { Feature, MainParams } from "@/app/lib/definitions";
-import { ShowSimpleGroup_Client } from "./ShowSimpleGroup_Client";
+import { GROUP, GROUP1, GROUP2, INFO, TABS } from "@/app/lib/constants";
+import { FullData, MainParams } from "@/app/lib/definitions";
 import { ShowComplexGroup_Client } from "./ShowComplexGroup_Client";
-import { ShowTabsAdmin_Client } from "./ShowTabsAdmin_Client";
+import { ShowTabs_Client } from "./ShowTabs_Client";
+import { StaticTexts } from "@/app/dictionaries/definitions";
+import { ShowSimpleGroup_Client } from "./ShowSimpleGroup_Client";
 
 export type Props = {
-  childFeature: Feature;
-  lang: string;
+  childFeatureDataList: FullData[];
   params: MainParams;
-  tabLevel: number;
+  pageFullDataList: FullData[];
+  isEdit: boolean;
+  staticTexts: StaticTexts;
 };
 
 export const DrawChildFeature_Client = ({
-  childFeature,
-  lang,
+  childFeatureDataList,
   params,
-  tabLevel,
+  pageFullDataList,
+  isEdit,
+  staticTexts,
 }: Props) => {
-  if (childFeature.type === GROUP) {
-    if ([GROUP1, GROUP2].includes(childFeature.subtype)) {
-      return <ShowSimpleGroup_Client featureChild={childFeature} lang={lang} />;
-    } else {
-      return (
-        <ShowComplexGroup_Client featureChild={childFeature} lang={lang} />
-      );
-    }
+  const childFeatureFirstItem = childFeatureDataList[0];
+
+  if (!childFeatureFirstItem) {
+    return null;
   }
 
-  if (childFeature.type === TABS) {
+  const isSimpleGroup =
+    childFeatureFirstItem.type === GROUP &&
+    [GROUP1, GROUP2].includes(childFeatureFirstItem.subtype);
+
+  if (isSimpleGroup) {
     return (
-      <ShowTabsAdmin_Client
-        lang={lang}
-        tabsFeatureId={childFeature.id}
+      <ShowSimpleGroup_Client
+        data={childFeatureFirstItem}
+        isEdit={isEdit}
+        staticTexts={staticTexts}
+      />
+    );
+  }
+
+  if (childFeatureFirstItem.type === GROUP) {
+    return (
+      <ShowComplexGroup_Client
+        groupData={childFeatureDataList}
+        isEdit={isEdit}
+        staticTexts={staticTexts}
+      />
+    );
+  }
+
+  if (childFeatureFirstItem.type === TABS) {
+    return (
+      <ShowTabs_Client
+        tabsData={childFeatureFirstItem}
+        pageFullDataList={pageFullDataList}
         params={params}
-        tabLevel={tabLevel}
+        isEdit={isEdit}
+        staticTexts={staticTexts}
       />
     );
   }

@@ -10,7 +10,6 @@ export type Props = {
   tabTitles: TextDescription[];
   staticTexts: StaticTexts;
   tabsFeatureId: number;
-  // children: React.ReactNode;
   params: MainParams;
   tabLevel: number;
 };
@@ -57,6 +56,7 @@ export const ShowTabsAdmin = async ({
           <AddTabButton
             tabsFeatureId={tabsFeatureId}
             text={staticTexts.addTab ?? "N/A"}
+            params={params}
           />
         ) : null}
       </div>

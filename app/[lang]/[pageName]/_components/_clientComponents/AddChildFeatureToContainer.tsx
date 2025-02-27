@@ -9,6 +9,11 @@ import {
   GROUP_2COLUMNS_2HEADERS,
   HEADER1,
   HEADER2,
+  INFO,
+  INFO_ADDRESS,
+  INFO_BODY,
+  INFO_TELEPHONE,
+  INFO_TITLE,
   ITEM_COLUMN1,
   ITEM_COLUMN2,
   SERVICE_ITEM,
@@ -18,15 +23,18 @@ import {
   TAB_TITLE,
   TABS,
 } from "@/app/lib/constants";
+import { MainParams } from "@/app/lib/definitions";
 import { usePathname } from "next/navigation";
 import { ChangeEventHandler, useMemo, useState } from "react";
 
 export const AddChildFeatureToContainer = ({
   parentFeatureId,
   text,
+  params,
 }: {
   parentFeatureId: number | undefined;
   text: string;
+  params: MainParams;
 }) => {
   const pathName = usePathname();
   const [selectedValue, setSelectedValue] = useState<string>("");
@@ -48,8 +56,19 @@ export const AddChildFeatureToContainer = ({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: newValue,
-        name: "",
+        name: params.pageName,
         text_types: [SIMPLE_GROUP_ITEM],
+        pathName,
+      });
+    }
+
+    if (newValue === INFO) {
+      await addChildFeature({
+        parentId: parentFeatureId,
+        type: GROUP,
+        subtype: newValue,
+        name: params.pageName,
+        text_types: [INFO_TITLE, INFO_TELEPHONE, INFO_ADDRESS, INFO_BODY],
         pathName,
       });
     }
@@ -59,7 +78,7 @@ export const AddChildFeatureToContainer = ({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: newValue,
-        name: "",
+        name: params.pageName,
         text_types: [HEADER1, HEADER2, ITEM_COLUMN1, ITEM_COLUMN2],
         pathName,
       });
@@ -70,7 +89,7 @@ export const AddChildFeatureToContainer = ({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: newValue,
-        name: "",
+        name: params.pageName,
         text_types: [SERVICE_ITEM],
         pathName,
       });
@@ -81,7 +100,7 @@ export const AddChildFeatureToContainer = ({
         parentId: parentFeatureId,
         type: TABS,
         subtype: TABS,
-        name: "",
+        name: params.pageName,
         text_types: [],
         pathName,
       });
@@ -91,7 +110,7 @@ export const AddChildFeatureToContainer = ({
           parentId: tabsFeatureId,
           type: TAB,
           subtype: "1",
-          name: "",
+          name: params.pageName,
           text_types: [TAB_TITLE],
           pathName,
         });

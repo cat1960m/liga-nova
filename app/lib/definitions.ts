@@ -170,7 +170,7 @@ export type PageData = {
 };
 
 export type TabType = {
-  lang: string;
+  langUpperCase: string;
   value: string;
 };
 
@@ -182,11 +182,16 @@ export type MainParams = {
 export type FullData = {
   id: number;
   parent_feature_id: number;
+  text_description_id: number;
+  text_content_id: number;
   type: string;
   subtype: string;
   name: string;
-  text_type?: string;
+  text_type: string;
+  can_delete?: boolean;
   price?: number;
   text_content?: string;
   content_type?: string;
+  language?: string;
+  feature_order: number;
 };

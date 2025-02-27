@@ -1,65 +1,29 @@
-"use client";
-
-import { Feature, TextContent, TextDescription } from "@/app/lib/definitions";
-import { GROUP1 } from "@/app/lib/constants";
-import {
-  getTextContents,
-  getTextDescriptions,
-} from "@/app/lib/actions_fitness";
-import { getLocalizedText } from "@/app/lib/utils";
-import { useEffect, useState } from "react";
+import { FullData } from "@/app/lib/definitions";
+import { DEFAULT_TEXT, GROUP1 } from "@/app/lib/constants";
+import { StaticTexts } from "@/app/dictionaries/definitions";
+import { DeleteFeatureButton } from "./DeleteFeatureButton";
+import { UpdateTextDescriptionData_new } from "./UpdateTextDescriptionData_new";
 
 export type Props = {
-  featureChild: Feature;
-  lang: string;
+  data: FullData;
+  isEdit: boolean;
+  staticTexts: StaticTexts;
 };
 
-export const ShowSimpleGroup_Client = ({ featureChild, lang }: Props) => {
-  const [textDescriptions, setTextDescriptions] = useState<
-    TextDescription[] | null
-  >(null);
-
-  const [textContents, setTextContents] = useState<TextContent[] | null>(null);
-
-  useEffect(() => {
-    const getTextDescriptionsInner = async () => {
-      const textDescriptionsInner = await getTextDescriptions({
-        featureId: featureChild.id,
-      });
-
-      setTextDescriptions(textDescriptionsInner);
-
-      if (!textDescriptionsInner?.length) {
-        return null;
-      }
-
-      const textDescription = textDescriptionsInner[0]; //only 1 text in group
-
-      const textContentsInner: TextContent[] | null = await getTextContents({
-        text_description_id: textDescription.id,
-      });
-
-      setTextContents(textContentsInner ?? []);
-    };
-
-    getTextDescriptionsInner();
-  }, []);
-
-  const textDescription = textDescriptions?.[0]; //only 1 text in group
-
-  if (!textDescription || !textContents) {
-    return null;
-  }
-
-  const isLarge = featureChild.subtype === GROUP1;
+export const ShowSimpleGroup_Client = ({
+  data,
+  isEdit,
+  staticTexts,
+}: Props) => {
+  const isLarge = data.subtype === GROUP1;
   const style = {
     fontSize: isLarge ? "xx-large" : "large",
     fontWeight: isLarge ? 700 : 400,
     padding: "20px",
-    border: "1px dotted gray",
+    border: isEdit ? "1px dotted magenta" : undefined,
   };
 
-  const text = getLocalizedText({ textContents, lang });
+  const text = data.text_content ?? DEFAULT_TEXT + "!!";
 
   return (
     <div style={style}>
@@ -74,6 +38,20 @@ export const ShowSimpleGroup_Client = ({ featureChild, lang }: Props) => {
         />
       ) : null}
       {text}
+
+      {isEdit ? (
+        <div style={{ display: "flex", gap: "20px", marginTop: "20px" }}>
+          <UpdateTextDescriptionData_new
+            currentData={data}
+            staticTexts={staticTexts}
+          />
+
+          <DeleteFeatureButton
+            featureId={data.id}
+            deleteText={staticTexts.delete ?? "N/A"}
+          />
+        </div>
+      ) : null}
     </div>
   );
 };

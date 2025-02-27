@@ -1,6 +1,6 @@
 import { SERVICE_ITEM } from "@/app/lib/constants";
 import { getDictionary } from "../../dictionaries";
-import { AddColumnItemButton } from "./_clientComponents/AddColumnItemButton";
+import { AddGroupItemButton } from "./_clientComponents/AddGroupItemButton";
 import { GroupItemEditDelete } from "./GroupItemEditDelete";
 import { getTextDescriptions } from "@/app/lib/actions_fitness";
 import { auth } from "@/app/auth";
@@ -71,7 +71,7 @@ export const ShowServices = async ({ featureId, lang, groupType }: Props) => {
             padding: "20px",
           }}
         >
-          <AddColumnItemButton
+          <AddGroupItemButton
             featureId={featureId}
             textType={SERVICE_ITEM}
             buttonText={dict.common.addColumnItem ?? "N/A"}

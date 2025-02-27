@@ -59,6 +59,7 @@ export const DrawFeatureContainer = async ({
         <AddChildFeatureToContainer
           parentFeatureId={featureId}
           text={buttonText ?? "N/A"}
+          params={params}
         />
       ) : null}
     </div>
