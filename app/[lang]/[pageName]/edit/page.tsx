@@ -1,15 +1,19 @@
 import { getPageFullData } from "@/app/lib/actions_fitness";
 import { FullData, MainParams } from "@/app/lib/definitions";
-import { DrawFeatureContainer_Client } from "./_components/DrawFeatureContainer_Client";
-import { getDictionary } from "../dictionaries";
+import { auth } from "@/app/auth";
 import { getContainerData } from "@/app/lib/utils";
 import { PAGE, TITLE } from "@/app/lib/constants";
+import { getDictionary } from "../../dictionaries";
+import { DrawFeatureContainer_Client } from "../_components/DrawFeatureContainer_Client";
 
 export default async function Page({
   params,
 }: {
   params: Promise<MainParams>;
 }) {
+  const res = await auth();
+  const isAuthenticated = !!res?.user;
+
   const pars = await params;
   const { pageName, lang } = pars;
   const dict = await getDictionary(lang as "en" | "ua");
@@ -38,14 +42,28 @@ export default async function Page({
   }
 
   return (
-    <DrawFeatureContainer_Client
-      params={pars}
-      featureId={currentPageData?.id}
-      pageFullDataList={pageFullData}
-      containerFullData={containerFullData}
-      isEdit={false}
-      staticTexts={dict.common}
-      isPageContainer
-    />
+    <>
+      {!isAuthenticated ? (
+        <DrawFeatureContainer_Client
+          params={pars}
+          featureId={currentPageData?.id}
+          pageFullDataList={pageFullData}
+          containerFullData={containerFullData}
+          isEdit={false}
+          staticTexts={dict.common}
+          isPageContainer
+        />
+      ) : (
+        <DrawFeatureContainer_Client
+          params={pars}
+          featureId={currentPageData?.id}
+          pageFullDataList={pageFullData}
+          containerFullData={containerFullData}
+          isEdit={true}
+          staticTexts={dict.common}
+          isPageContainer
+        />
+      )}
+    </>
   );
 }

@@ -67,6 +67,29 @@ export const updateText = async ({
   }
 };
 
+export const updateFeatureSubtypeFilterIds = async ({
+  id,
+  subtype,
+  pathName,
+  filterIds,
+}: {
+  id: number;
+  subtype: string;
+  pathName: string;
+  filterIds: string;
+}) => {
+  try {
+    await sql`Update  features
+               SET  subtype = ${subtype}, filter_ids= ${filterIds}
+               WHERE id = ${id}`;
+    revalidatePath(pathName);
+    return;
+  } catch (error) {
+    // If a database error occurs, return a more specific error.
+    return null;
+  }
+};
+
 export const updatePrice = async ({
   price,
   textDescriptionId,
@@ -99,6 +122,26 @@ export const RemoveFeature = async ({
   try {
     await sql`DELETE  FROM features
                WHERE features.id = ${id} OR features.parent_feature_id =${id}`;
+    if (pathName) {
+      revalidatePath(pathName);
+    }
+    return true;
+  } catch (error) {
+    // If a database error occurs, return a more specific error.
+    return null;
+  }
+};
+
+export const RemoveFeatureBySubtype = async ({
+  subtype,
+  pathName,
+}: {
+  subtype: string;
+  pathName?: string;
+}) => {
+  try {
+    await sql`DELETE  FROM features
+               WHERE features.subtype = ${subtype}`;
     if (pathName) {
       revalidatePath(pathName);
     }
@@ -283,7 +326,7 @@ export const getTabsTitles = async ({
   }
 };
 
-export const getFullData = async ({
+/* export const getFullData = async ({
   lang,
   parentId,
 }: {
@@ -307,18 +350,20 @@ export const getFullData = async ({
     // If a database error occurs, return a more specific error.
     return null;
   }
-};
+}; */
 
 export const getPageFullData = async ({
   lang,
   pageName,
+  additionalName,
 }: {
   lang: string;
   pageName: string;
+  additionalName: string;
 }) => {
   try {
     return await sql<FullData[]>`SELECT features.id, 
-        parent_feature_id, text_descriptions.id as text_description_id,type, subtype, name, feature_order, 
+        parent_feature_id, text_descriptions.id as text_description_id,type, subtype, name, feature_order, filter_ids,
         text_type, price, can_delete,
         language, text_content, content_type
         FROM features 
@@ -326,13 +371,37 @@ export const getPageFullData = async ({
         ON features.id = text_descriptions.feature_id 
         LEFT JOIN text_contents 
         ON text_descriptions.id = text_contents.text_description_id 
-        WHERE  name=${pageName} AND (language = ${lang} or language is null)
+        WHERE  (name = ${pageName} OR name = ${additionalName}) AND (language = ${lang} or language is null)
         ORDER BY feature_order, text_description_order`;
   } catch (error) {
     // If a database error occurs, return a more specific error.
     return null;
   }
 };
+
+export const addFilterTextDescriptionIdsToFeatureId = async ({
+  featureId,
+  textDescriptionIds,
+  pathName,
+}: {
+  featureId: number;
+  textDescriptionIds: number[];
+  pathName: string;
+}) => {
+  const promises: Promise<any>[] = [];
+
+  textDescriptionIds.forEach((textDescriptionId) => {
+    promises.push(
+      sql`INSERT INTO filter_to_feature (text_description_id, feature_id) VALUES(${textDescriptionId}, ${featureId})`
+    );
+  });
+
+  await Promise.all(promises);
+
+  await revalidatePath(pathName);
+};
+
+//////
 
 export const getAllFeatures = async () => {
   try {

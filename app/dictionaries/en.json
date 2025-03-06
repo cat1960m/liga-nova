@@ -8,10 +8,20 @@
     "delete": "delete",
     "addColumnItem": "Add column item",
     "addGroupItem": "Add group item",
+    "addGroup": "Add group",
+    "addSubscription": "Add subscription",
+    "editSubscription": "Edit subscription",
     "addItemToPage": "Add Item to Page",
     "addItemToTab": "Add Item to Tab",
     "addTab": "Add TAB",
+    "addImportantDescription": "Add Important Description",
+    "addDescription": "Add Description",
     "deleteTab": "Delete TAB",
-    "deleteTabs": "Delete TABs"
+    "deleteTabs": "Delete TABs",
+    "name": "Name",
+    "price": "Price",
+    "share": "Share",
+    "oldPrice": "Old price",
+    "descriptions": "Descriptions"
   }
 }

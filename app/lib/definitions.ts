@@ -194,4 +194,5 @@ export type FullData = {
   content_type?: string;
   language?: string;
   feature_order: number;
+  filter_ids?: string;
 };

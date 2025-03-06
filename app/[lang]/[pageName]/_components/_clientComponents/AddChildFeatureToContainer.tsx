@@ -3,6 +3,9 @@
 import { addChildFeature } from "@/app/lib/actions_fitness";
 import {
   FeatureTypes,
+  SUBSCRIPTIONS_FILTER,
+  SUBSCRIPTIONS_FILTER_GROUP,
+  SUBSCRIPTIONS_FILTER_GROUP_TITLE,
   GROUP,
   GROUP1,
   GROUP2,
@@ -16,12 +19,21 @@ import {
   INFO_TITLE,
   ITEM_COLUMN1,
   ITEM_COLUMN2,
+  SCHEDULE,
+  SCHEDULE_ITEM1,
+  SCHEDULE_ITEM2,
+  SCHEDULE_ITEM3,
+  SCHEDULE_ITEM4,
+  SCHEDULE_ITEM5,
+  SCHEDULE_ITEM6,
   SERVICE_ITEM,
   SERVICES,
   SIMPLE_GROUP_ITEM,
+  SUBSCRIPTIONS,
   TAB,
   TAB_TITLE,
   TABS,
+  PAGE_SUBSCRIPTIONS,
 } from "@/app/lib/constants";
 import { MainParams } from "@/app/lib/definitions";
 import { usePathname } from "next/navigation";
@@ -91,6 +103,57 @@ export const AddChildFeatureToContainer = ({
         subtype: newValue,
         name: params.pageName,
         text_types: [SERVICE_ITEM],
+        pathName,
+      });
+    }
+
+    if (newValue === SCHEDULE) {
+      await addChildFeature({
+        parentId: parentFeatureId,
+        type: GROUP,
+        subtype: newValue,
+        name: params.pageName,
+        text_types: [
+          SCHEDULE_ITEM1,
+          SCHEDULE_ITEM2,
+          SCHEDULE_ITEM3,
+          SCHEDULE_ITEM4,
+          SCHEDULE_ITEM5,
+          SCHEDULE_ITEM6,
+        ],
+        pathName,
+      });
+    }
+
+    if (newValue === SUBSCRIPTIONS) {
+      const subscriptionsId = await addChildFeature({
+        parentId: parentFeatureId,
+        type: GROUP,
+        subtype: newValue,
+        name: params.pageName,
+        text_types: [],
+        pathName,
+      });
+
+      if (subscriptionsId) {
+        await addChildFeature({
+          parentId: subscriptionsId,
+          type: GROUP,
+          subtype: SUBSCRIPTIONS_FILTER_GROUP,
+          name: params.pageName,
+          text_types: [SUBSCRIPTIONS_FILTER_GROUP_TITLE, SUBSCRIPTIONS_FILTER],
+          pathName,
+        });
+      }
+    }
+
+    if (newValue === PAGE_SUBSCRIPTIONS) {
+      await addChildFeature({
+        parentId: parentFeatureId,
+        type: GROUP,
+        subtype: newValue,
+        name: params.pageName,
+        text_types: [],
         pathName,
       });
     }

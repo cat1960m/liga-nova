@@ -8,10 +8,21 @@
     "delete": "видалити",
     "addColumnItem": "додати елемент в колонку",
     "addGroupItem": "додати елемент в групу",
+    "addGroup": "додати групу",
+    "addSubscription": "Додати абонемент",
+    "editSubscription": "Редагувати абонемент",
+
     "addItemToPage": "додати елемент на сторінку",
     "addItemToTab": "додати елемент в TAB",
     "addTab": "додати TAB",
+    "addImportantDescription": "додати важливий опис",
+    "addDescription": "додати опис",
     "deleteTab": "видалити TAB",
-    "deleteTabs": "видалити TABs"
+    "deleteTabs": "видалити TABs",
+    "name": "Назва",
+    "price": "Вартість",
+    "share": "Акція",
+    "oldPrice": "Стара вартість",
+    "descriptions": "Послуги"
   }
 }

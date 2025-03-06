@@ -5,6 +5,7 @@ import { LangSelector } from "./_components/LangSelector";
 import { LinkBody } from "./_components/LInkBody";
 import { ArrowRightIcon, PowerIcon } from "@heroicons/react/24/outline";
 import { auth, signOut } from "@/app/auth";
+import { IsEditRegime } from "./[pageName]/_components/_clientComponents/IsEditRegime";
 
 export const experimental_ppr = true;
 
@@ -20,7 +21,7 @@ export default async function Layout({
   const lang = paramsData.lang ?? "ua";
   const pages = await getPageTitles(lang);
   const res = await auth();
-  const iaAuthenticated = !!res?.user;
+  const isAuthenticated = !!res?.user;
 
   if (!pages) {
     return;
@@ -69,7 +70,7 @@ export default async function Layout({
         </div>
         <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
           <LangSelector />
-          {iaAuthenticated ? (
+          {isAuthenticated ? (
             <form
               action={async () => {
                 "use server";
@@ -92,7 +93,6 @@ export default async function Layout({
           )}
         </div>
       </div>
-
       <div
         style={{
           display: "flex",
@@ -116,6 +116,9 @@ export default async function Layout({
           );
         })}
       </div>
+
+      {isAuthenticated ? <IsEditRegime /> : null}
+
       <div
         id="parentModal"
         style={{ position: "relative", minHeight: "300px" }}
