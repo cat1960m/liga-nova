@@ -9,7 +9,7 @@ import {
 } from "@/app/lib/constants";
 import { FullData } from "@/app/lib/definitions";
 import { useMemo, useState } from "react";
-import { ShowFilterGroup } from "../ShowFilterGroup";
+import { FilterGroup } from "../FilterGroup";
 import { getContainerData, getFilterIds } from "@/app/lib/utils";
 import { CommonButton } from "../_clientComponents/CommonButton";
 import { updateFeatureSubtypeFilterIds } from "@/app/lib/actions_fitness";
@@ -106,7 +106,7 @@ export const PageSubscriptionsGroupEdit = ({
           const filterGroupData = data[filterGroupId];
           return (
             <div key={filterGroupId}>
-              <ShowFilterGroup
+              <FilterGroup
                 isEdit={false}
                 staticTexts={staticTexts}
                 groupData={filterGroupData}

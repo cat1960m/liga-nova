@@ -116,6 +116,7 @@ export type TextContent = {
   updated_by: number;
   last_edit: Date;
   content_type?: string;
+  value?: string;
 };
 
 export type TextDescriptionContent = TextContent & {
@@ -190,6 +191,7 @@ export type FullData = {
   text_type: string;
   can_delete?: boolean;
   price?: number;
+  value?: string;
   text_content?: string;
   content_type?: string;
   language?: string;

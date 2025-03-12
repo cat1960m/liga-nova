@@ -27,3 +27,7 @@ pnpm install server-only
 # translator DEEPL
 
 pnpm install axios
+
+=======
+User name,Password,Console sign-in URL
+cat1960m,k+E5L'9$,https://872515266060.signin.aws.amazon.com/console

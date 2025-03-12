@@ -11,6 +11,8 @@
     "addGroup": "Add group",
     "addSubscription": "Add subscription",
     "editSubscription": "Edit subscription",
+    "addTrainer": "Add trainer",
+    "editTrainer": "Edit trainer",
     "addItemToPage": "Add Item to Page",
     "addItemToTab": "Add Item to Tab",
     "addTab": "Add TAB",
@@ -22,6 +24,10 @@
     "price": "Price",
     "share": "Share",
     "oldPrice": "Old price",
-    "descriptions": "Descriptions"
+    "descriptions": "Descriptions",
+    "isPremium": "iPremium trainer",
+    "photo": "Photo",
+    "uploadFile": "Upload file",
+    "updateFile": "Upload file content"
   }
 }

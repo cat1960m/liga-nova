@@ -32,11 +32,6 @@ export const PageSubscriptionsGroup = ({
           pageFullDataList={pageFullDataList}
         />
       )}
-
-      <img
-        src="https://fitness-5fc8d921.s3.us-east-1.amazonaws.com/avatar+(1)+(1)+(1)+(4).png"
-        alt="Image 1"
-      />
     </>
   );
 };

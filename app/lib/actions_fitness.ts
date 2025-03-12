@@ -112,6 +112,28 @@ export const updatePrice = async ({
   }
 };
 
+export const updateTextDescriptionValue = async ({
+  value,
+  textDescriptionId,
+  pathName,
+}: {
+  textDescriptionId: number;
+  value: string;
+  pathName: string;
+}) => {
+  try {
+    await sql`Update  text_descriptions
+               SET  value = ${value}
+               WHERE id = ${textDescriptionId}`;
+
+    revalidatePath(pathName);
+    return;
+  } catch (error) {
+    // If a database error occurs, return a more specific error.
+    return null;
+  }
+};
+
 export const RemoveFeature = async ({
   id,
   pathName,
@@ -363,8 +385,8 @@ export const getPageFullData = async ({
 }) => {
   try {
     return await sql<FullData[]>`SELECT features.id, 
-        parent_feature_id, text_descriptions.id as text_description_id,type, subtype, name, feature_order, filter_ids,
-        text_type, price, can_delete,
+        parent_feature_id, type, subtype, name, feature_order, filter_ids,
+        text_descriptions.id as text_description_id, text_type, price, can_delete, value,
         language, text_content, content_type
         FROM features 
         LEFT JOIN text_descriptions 

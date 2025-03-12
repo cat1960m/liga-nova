@@ -29,36 +29,39 @@ export const DrawFeatureContainer_Client = ({
     : staticTexts.addItemToPage;
 
   return (
-    <div
-      style={{
-        padding: "20px",
-        display: "flex",
-        flexDirection: "column",
-        gap: isEdit ? "20px" : 0,
-        width: "100%",
-        minHeight: "40px",
-      }}
-    >
-      {keys.map((id) => {
-        return (
-          <DrawChildFeature_Client
-            childFeatureDataList={data[id]}
-            pageFullDataList={pageFullDataList}
-            params={params}
-            key={id}
-            isEdit={isEdit}
-            staticTexts={staticTexts}
-          />
-        );
-      })}
+    <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
+      <div
+        style={{
+          padding: "20px",
+          display: "flex",
+          flexDirection: "column",
+          gap: isEdit ? "20px" : 0,
+          width: "100%",
+          minHeight: "40px",
+          maxWidth: "1075px",
+        }}
+      >
+        {keys.map((id) => {
+          return (
+            <DrawChildFeature_Client
+              childFeatureDataList={data[id]}
+              pageFullDataList={pageFullDataList}
+              params={params}
+              key={id}
+              isEdit={isEdit}
+              staticTexts={staticTexts}
+            />
+          );
+        })}
 
-      {isEdit ? (
-        <AddChildFeatureToContainer
-          parentFeatureId={featureId}
-          text={buttonText ?? "N/A"}
-          params={params}
-        />
-      ) : null}
+        {isEdit ? (
+          <AddChildFeatureToContainer
+            parentFeatureId={featureId}
+            text={buttonText ?? "N/A"}
+            params={params}
+          />
+        ) : null}
+      </div>
     </div>
   );
 };

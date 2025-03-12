@@ -1,25 +1,27 @@
 "use client";
 
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import { SubscriptionFilterGroups } from "./SubscriptionFilterGroups";
+import { TrainerFilterGroups } from "./TrainerFilterGroups";
 import { FullData, MainParams } from "@/app/lib/definitions";
-import { useEffect, useState } from "react";
+import { ChangeEventHandler, useEffect, useState } from "react";
 import { CommonButton } from "../_clientComponents/CommonButton";
 import {
-  SUBSCRIPTION_ITEM,
-  SUBSCRIPTION_ITEM_DESCRIPTION,
-  SUBSCRIPTION_ITEM_IMPORTANT_DESCRIPTION,
-  SUBSCRIPTION_ITEM_NAME,
-  SUBSCRIPTION_ITEM_OLD_PRICE,
-  SUBSCRIPTION_ITEM_PRICE,
-  SUBSCRIPTION_ITEM_SHARE,
+  TRAINER_ITEM,
+  TRAINER_ITEM_DESCRIPTION,
+  TRAINER_ITEM_IMAGE,
+  TRAINER_ITEM_IS_PREMIUM,
+  TRAINER_ITEM_NAME,
 } from "@/app/lib/constants";
 import { usePathname } from "next/navigation";
 import { TextItemField } from "../TextItemField";
 import { AddTextDescriptionButton } from "../_clientComponents/AddTextDescriptionButton";
-import { SubscriptionItem } from "./SubscriptionItem";
-import { updateFeatureSubtypeFilterIds } from "@/app/lib/actions_fitness";
+import { TrainerItem } from "./TrainerItem";
+import {
+  updateFeatureSubtypeFilterIds,
+  updateTextDescriptionValue,
+} from "@/app/lib/actions_fitness";
 import { getFilterIds } from "@/app/lib/utils/getFilterIds";
+import { UploadComponent } from "../_clientComponents/UploadComponent";
 
 export type Props = {
   staticTexts: StaticTexts;
@@ -28,28 +30,30 @@ export type Props = {
   groupData: FullData[];
   onCancel: () => void;
   onSave: () => void;
-  subscriptionItemFeatureId: number;
+  trainerItemFeatureId: number;
 };
 
-export const ShowAddEditSubscription = ({
+export const ShowAddEditTrainer = ({
   staticTexts,
   pageFullDataList,
   params,
   groupData,
   onCancel,
   onSave,
-  subscriptionItemFeatureId,
+  trainerItemFeatureId,
 }: Props) => {
   const pathName = usePathname();
 
   const currentData = pageFullDataList.filter(
-    (data) => data.id === subscriptionItemFeatureId
+    (data) => data.id === trainerItemFeatureId
   );
 
   const [
     selectedFilterTextDescriptionIds,
     setSelectedFilterTextDescriptionIds,
   ] = useState<number[]>(getFilterIds(currentData[0]?.filter_ids));
+
+  const [isSaveDisabled, setIsSaveDisabled] = useState<boolean>(false);
 
   useEffect(() => {
     const newSelectedFilterTextDescriptionIds =
@@ -92,42 +96,56 @@ export const ShowAddEditSubscription = ({
     }
   };
 
-  const name = currentData.find(
-    (item) => item.text_type === SUBSCRIPTION_ITEM_NAME
+  const name = currentData.find((item) => item.text_type === TRAINER_ITEM_NAME);
+  const isPremium = currentData.find(
+    (item) => item.text_type === TRAINER_ITEM_IS_PREMIUM
   );
-  const share = currentData.find(
-    (item) => item.text_type === SUBSCRIPTION_ITEM_SHARE
-  );
-  const price = currentData.find(
-    (item) => item.text_type === SUBSCRIPTION_ITEM_PRICE
-  );
-  const oldPrice = currentData.find(
-    (item) => item.text_type === SUBSCRIPTION_ITEM_OLD_PRICE
+  const photo = currentData.find(
+    (item) => item.text_type === TRAINER_ITEM_IMAGE
   );
   const descriptions = currentData.filter((item) =>
-    [
-      SUBSCRIPTION_ITEM_DESCRIPTION,
-      SUBSCRIPTION_ITEM_IMPORTANT_DESCRIPTION,
-    ].includes(item.text_type)
+    [TRAINER_ITEM_DESCRIPTION].includes(item.text_type)
   );
 
-  if (!name || !price || !share || !oldPrice) {
+  if (!name || !isPremium || !photo || !isPremium) {
     return null;
   }
 
   const handleSave = async () => {
     await updateFeatureSubtypeFilterIds({
-      id: subscriptionItemFeatureId,
+      id: trainerItemFeatureId,
       pathName,
-      subtype: SUBSCRIPTION_ITEM,
+      subtype: TRAINER_ITEM,
       filterIds: selectedFilterTextDescriptionIds.join(","),
     });
 
     onSave();
   };
 
-  const subscriptionFeatureId = groupData[0]?.id;
-  const importantDescriptionType = SUBSCRIPTION_ITEM_IMPORTANT_DESCRIPTION;
+  const handleIsPremiumChange: ChangeEventHandler<HTMLInputElement> = async (
+    event
+  ) => {
+    const value = event.target.checked ? "yes" : "no";
+    setIsSaveDisabled(true);
+    await updateTextDescriptionValue({
+      value,
+      textDescriptionId: isPremium.text_description_id,
+      pathName,
+    });
+    setIsSaveDisabled(false);
+  };
+
+  const handlePhotoUploaded = async (value: string) => {
+    setIsSaveDisabled(true);
+    await updateTextDescriptionValue({
+      value,
+      textDescriptionId: photo.text_description_id,
+      pathName,
+    });
+    setIsSaveDisabled(false);
+  };
+
+  const trainerFeatureId = groupData[0]?.id;
 
   return (
     <div
@@ -157,26 +175,42 @@ export const ShowAddEditSubscription = ({
           fieldData={name}
           staticTexts={staticTexts}
           title={staticTexts.name}
-          importantDescriptionType={importantDescriptionType}
+          importantDescriptionType=""
         />
-        <TextItemField
-          fieldData={price}
-          staticTexts={staticTexts}
-          title={staticTexts.price}
-          importantDescriptionType={importantDescriptionType}
-        />
-        <TextItemField
-          fieldData={share}
-          staticTexts={staticTexts}
-          title={staticTexts.share}
-          importantDescriptionType={importantDescriptionType}
-        />
-        <TextItemField
-          fieldData={oldPrice}
-          staticTexts={staticTexts}
-          title={staticTexts.oldPrice}
-          importantDescriptionType={importantDescriptionType}
-        />
+
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "5px",
+          }}
+        >
+          <div style={{ fontWeight: 700 }}>
+            {staticTexts.isPremium ?? "N/A"}:{" "}
+          </div>
+
+          <input
+            type="checkbox"
+            checked={isPremium.value === "yes"}
+            onChange={handleIsPremiumChange}
+          />
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "5px",
+          }}
+        >
+          <div style={{ fontWeight: 700 }}>{staticTexts.photo ?? "N/A"}: </div>
+
+          <UploadComponent
+            onUploaded={handlePhotoUploaded}
+            isUpdate={!!photo.value}
+            staticTexts={staticTexts}
+          />
+        </div>
 
         <div style={{ fontWeight: 700 }}>{staticTexts.descriptions}: </div>
 
@@ -186,7 +220,7 @@ export const ShowAddEditSubscription = ({
               fieldData={description}
               staticTexts={staticTexts}
               key={description.text_description_id}
-              importantDescriptionType={importantDescriptionType}
+              importantDescriptionType=""
             />
           );
         })}
@@ -203,34 +237,27 @@ export const ShowAddEditSubscription = ({
           }}
         >
           <AddTextDescriptionButton
-            featureId={subscriptionItemFeatureId}
-            textType={SUBSCRIPTION_ITEM_DESCRIPTION}
+            featureId={trainerItemFeatureId}
+            textType={TRAINER_ITEM_DESCRIPTION}
             buttonText={staticTexts.addDescription ?? "N/A"}
-            price={null}
-          />
-
-          <AddTextDescriptionButton
-            featureId={subscriptionItemFeatureId}
-            textType={SUBSCRIPTION_ITEM_IMPORTANT_DESCRIPTION}
-            buttonText={staticTexts.addImportantDescription ?? "N/A"}
             price={null}
           />
         </div>
       </div>
 
       <div style={{ width: "30%", minWidth: "190px" }}>
-        <SubscriptionItem currentData={currentData} />
+        <TrainerItem currentData={currentData} />
       </div>
 
-      {subscriptionFeatureId ? (
-        <SubscriptionFilterGroups
+      {trainerFeatureId ? (
+        <TrainerFilterGroups
           isEdit={false}
           staticTexts={staticTexts}
           pageFullDataList={pageFullDataList}
           params={params}
           onFilterSelectionChanged={handleFilterSelectionChanged}
           selectedFilterTextDescriptionIds={selectedFilterTextDescriptionIds}
-          parentFeatureId={subscriptionFeatureId}
+          parentFeatureId={trainerFeatureId}
         />
       ) : null}
 
@@ -244,7 +271,11 @@ export const ShowAddEditSubscription = ({
         }}
       >
         <CommonButton text="Cancel" onClick={onCancel} />
-        <CommonButton text="Save" onClick={handleSave} />
+        <CommonButton
+          text="Save"
+          onClick={handleSave}
+          isDisabled={isSaveDisabled}
+        />
       </div>
     </div>
   );

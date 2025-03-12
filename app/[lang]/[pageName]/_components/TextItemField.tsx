@@ -1,21 +1,21 @@
 import { FullData } from "@/app/lib/definitions";
-import { UpdateDeleteText } from "../UpdateDeleteText";
+import { UpdateDeleteText } from "./UpdateDeleteText";
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import { SUBSCRIPTION_ITEM_IMPORTANT_DESCRIPTION } from "@/app/lib/constants";
 
 export type Props = {
   fieldData: FullData;
   staticTexts: StaticTexts;
   title?: string;
+  importantDescriptionType: string;
 };
 
-export const SubscriptionItemField = ({
+export const TextItemField = ({
   fieldData,
   staticTexts,
   title,
+  importantDescriptionType,
 }: Props) => {
-  const isImportant =
-    fieldData.text_type === SUBSCRIPTION_ITEM_IMPORTANT_DESCRIPTION;
+  const isImportant = fieldData.text_type === importantDescriptionType;
   return (
     <div
       style={{

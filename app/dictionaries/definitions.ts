@@ -10,6 +10,9 @@ export type StaticTexts = {
   addGroup?: string;
   addSubscription?: string;
   editSubscription?: string;
+  addTrainer?: string;
+  editTrainer?: string;
+
   addItemToPage?: string;
   addItemToTab?: string;
   addTab?: string;
@@ -22,4 +25,8 @@ export type StaticTexts = {
   share?: string;
   oldPrice?: string;
   descriptions?: string;
+  isPremium?: boolean;
+  photo?: string;
+  uploadFile?: string;
+  updateFile?: string;
 };

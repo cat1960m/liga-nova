@@ -21,7 +21,7 @@ export type Props = {
   selectedFilterTextDescriptionIds: number[];
 };
 
-export const ShowFilterGroup = ({
+export const FilterGroup = ({
   groupData,
   isEdit,
   staticTexts,

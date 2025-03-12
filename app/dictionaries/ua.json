@@ -11,7 +11,8 @@
     "addGroup": "додати групу",
     "addSubscription": "Додати абонемент",
     "editSubscription": "Редагувати абонемент",
-
+    "addTrainer": "Додати тренера",
+    "editTrainer": "Редагувати тренера",
     "addItemToPage": "додати елемент на сторінку",
     "addItemToTab": "додати елемент в TAB",
     "addTab": "додати TAB",
@@ -23,6 +24,10 @@
     "price": "Вартість",
     "share": "Акція",
     "oldPrice": "Стара вартість",
-    "descriptions": "Послуги"
+    "descriptions": "Опис",
+    "isPremium": "Преміум тренер",
+    "photo": "Фото",
+    "uploadFile": "Завантажити файл",
+    "updateFile": "Змінити файл"
   }
 }

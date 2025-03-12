@@ -27,6 +27,7 @@ export const SCHEDULE_ITEM3 = "scheduleItem3";
 export const SCHEDULE_ITEM4 = "scheduleItem4";
 export const SCHEDULE_ITEM5 = "scheduleItem5";
 export const SCHEDULE_ITEM6 = "scheduleItem6";
+
 export const SUBSCRIPTIONS = "subscriptions";
 export const SUBSCRIPTIONS_FILTER_GROUP = "subscriptionsFilterGroup";
 export const SUBSCRIPTIONS_FILTER_GROUP_TITLE = "subscriptionsFilterGroupTitle";
@@ -40,7 +41,19 @@ export const SUBSCRIPTION_ITEM_SHARE = "subscription_item_share";
 export const SUBSCRIPTION_ITEM_DESCRIPTION = "subscription_item_description";
 export const SUBSCRIPTION_ITEM_IMPORTANT_DESCRIPTION =
   "subscription_item_important_description";
+
 export const PAGE_SUBSCRIPTIONS = "page_subscriptions";
+
+export const TRAINERS = "trainers";
+export const TRAINERS_FILTER_GROUP = "trainersFilterGroup";
+export const TRAINERS_FILTER_GROUP_TITLE = "trainersFilterGroupTitle";
+export const TRAINERS_FILTER = "trainersFilter";
+export const TRAINER_ITEM = "trainer_item";
+export const TEMP_TRAINER_ITEM = "temp_trainer_item";
+export const TRAINER_ITEM_NAME = "trainer_item_name";
+export const TRAINER_ITEM_IS_PREMIUM = "trainer_item_is_premium";
+export const TRAINER_ITEM_IMAGE = "trainer_item_image";
+export const TRAINER_ITEM_DESCRIPTION = "trainer_item_description";
 
 export const CAN_NOT_DELETE = [
   HEADER1,
@@ -72,6 +85,7 @@ export const FeatureTypes = {
     SCHEDULE,
     SUBSCRIPTIONS,
     PAGE_SUBSCRIPTIONS,
+    TRAINERS,
   ],
 };
 

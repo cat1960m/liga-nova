@@ -3,24 +3,23 @@
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { useState } from "react";
-import { ShowAddEditSubscription } from "./ShowAddEditSubscription";
-import { SubscriptionFilterGroups } from "./SubscriptionFilterGroups";
+import { ShowAddEditTrainer } from "./ShowAddEditTrainer";
+import { TrainerFilterGroups } from "./TrainerFilterGroups";
 import {
   addChildFeature,
   RemoveFeature,
   RemoveFeatureBySubtype,
 } from "@/app/lib/actions_fitness";
-import {
-  SUBSCRIPTION_ITEM,
-  SUBSCRIPTION_ITEM_DESCRIPTION,
-  SUBSCRIPTION_ITEM_NAME,
-  SUBSCRIPTION_ITEM_OLD_PRICE,
-  SUBSCRIPTION_ITEM_PRICE,
-  SUBSCRIPTION_ITEM_SHARE,
-  TEMP_SUBSCRIPTION_ITEM,
-} from "@/app/lib/constants";
 import { usePathname } from "next/navigation";
 import { WrappingContainerItems } from "../WrappingContainerItems";
+import {
+  TEMP_TRAINER_ITEM,
+  TRAINER_ITEM,
+  TRAINER_ITEM_DESCRIPTION,
+  TRAINER_ITEM_IMAGE,
+  TRAINER_ITEM_IS_PREMIUM,
+  TRAINER_ITEM_NAME,
+} from "@/app/lib/constants";
 
 export type Props = {
   groupData: FullData[];
@@ -30,25 +29,27 @@ export type Props = {
   params: MainParams;
 };
 
-export const SubscriptionGroup = ({
+export const TrainersGroup = ({
   groupData,
   pageFullDataList,
   isEdit,
   staticTexts,
   params,
 }: Props) => {
-  const subscriptionGroupFeatureId = groupData[0]?.id;
-  const [addingSubscriptionFeatureId, setAddingSubscriptionFeatureId] =
-    useState<number | null>(null);
-  const [editingSubscriptionFeatureId, setEditingSubscriptionFeatureId] =
-    useState<number | null>(null);
+  const trainerGroupFeatureId = groupData[0]?.id;
+  const [addingTrainerFeatureId, setAddingTrainerFeatureId] = useState<
+    number | null
+  >(null);
+  const [editingTrainerFeatureId, setEditingTrainerFeatureId] = useState<
+    number | null
+  >(null);
   const [
     selectedFilterTextDescriptionIds,
     setSelectedFilterTextDescriptionIds,
   ] = useState<number[]>([]);
   const pathName = usePathname();
 
-  if (!subscriptionGroupFeatureId) {
+  if (!trainerGroupFeatureId) {
     return null;
   }
 
@@ -74,65 +75,64 @@ export const SubscriptionGroup = ({
     }
   };
 
-  const handleAddSubscription = async () => {
-    await RemoveFeatureBySubtype({ subtype: TEMP_SUBSCRIPTION_ITEM, pathName });
+  const handleAddTrainer = async () => {
+    await RemoveFeatureBySubtype({ subtype: TEMP_TRAINER_ITEM, pathName });
 
     const resultId = await addChildFeature({
-      parentId: subscriptionGroupFeatureId,
-      type: SUBSCRIPTION_ITEM,
-      subtype: TEMP_SUBSCRIPTION_ITEM,
+      parentId: trainerGroupFeatureId,
+      type: TRAINER_ITEM,
+      subtype: TEMP_TRAINER_ITEM,
       name: params.pageName,
       text_types: [
-        SUBSCRIPTION_ITEM_NAME,
-        SUBSCRIPTION_ITEM_PRICE,
-        SUBSCRIPTION_ITEM_OLD_PRICE,
-        SUBSCRIPTION_ITEM_SHARE,
-        SUBSCRIPTION_ITEM_DESCRIPTION,
+        TRAINER_ITEM_NAME,
+        TRAINER_ITEM_IS_PREMIUM,
+        TRAINER_ITEM_IMAGE,
+        TRAINER_ITEM_DESCRIPTION,
       ],
       pathName,
     });
 
-    setAddingSubscriptionFeatureId(resultId);
+    setAddingTrainerFeatureId(resultId);
   };
 
   const handleAddEditCancel = async () => {
-    if (addingSubscriptionFeatureId) {
-      await RemoveFeature({ id: addingSubscriptionFeatureId, pathName });
-      setAddingSubscriptionFeatureId(null);
+    if (addingTrainerFeatureId) {
+      await RemoveFeature({ id: addingTrainerFeatureId, pathName });
+      setAddingTrainerFeatureId(null);
     }
 
-    if (editingSubscriptionFeatureId) {
-      setEditingSubscriptionFeatureId(null);
+    if (editingTrainerFeatureId) {
+      setEditingTrainerFeatureId(null);
     }
   };
 
   const handleAddEditSave = () => {
-    if (addingSubscriptionFeatureId) {
-      setAddingSubscriptionFeatureId(null);
+    if (addingTrainerFeatureId) {
+      setAddingTrainerFeatureId(null);
     }
 
-    if (editingSubscriptionFeatureId) {
-      setEditingSubscriptionFeatureId(null);
+    if (editingTrainerFeatureId) {
+      setEditingTrainerFeatureId(null);
     }
   };
 
-  const isSubscriptionItemsShown =
-    !addingSubscriptionFeatureId && !editingSubscriptionFeatureId;
-  const subscriptionItemFeatureId =
-    editingSubscriptionFeatureId || addingSubscriptionFeatureId;
-  const addEditTitle = addingSubscriptionFeatureId
-    ? staticTexts.addSubscription
-    : staticTexts.editSubscription;
+  const isTrainerItemsShown =
+    !addingTrainerFeatureId && !editingTrainerFeatureId;
+  const trainerItemFeatureId =
+    editingTrainerFeatureId || addingTrainerFeatureId;
+  const addEditTitle = addingTrainerFeatureId
+    ? staticTexts.addTrainer
+    : staticTexts.editTrainer;
 
-  const subscriptionFeatureId = groupData[0]?.id;
+  const trainerFeatureId = groupData[0]?.id;
 
   return (
     <div style={{ display: "flex", gap: "20px" }}>
-      {subscriptionFeatureId ? (
-        <SubscriptionFilterGroups
+      {trainerFeatureId ? (
+        <TrainerFilterGroups
           isEdit={isEdit}
           staticTexts={staticTexts}
-          parentFeatureId={subscriptionFeatureId}
+          parentFeatureId={trainerFeatureId}
           pageFullDataList={pageFullDataList}
           params={params}
           onFilterSelectionChanged={handleFilterSelectionChanged}
@@ -146,7 +146,7 @@ export const SubscriptionGroup = ({
           flexGrow: 2,
         }}
       >
-        {subscriptionItemFeatureId ? (
+        {trainerItemFeatureId ? (
           <div
             style={{
               width: "100%",
@@ -167,31 +167,31 @@ export const SubscriptionGroup = ({
               {addEditTitle ?? "N/A"}
             </div>
 
-            <ShowAddEditSubscription
+            <ShowAddEditTrainer
               staticTexts={staticTexts}
               pageFullDataList={pageFullDataList}
               params={params}
               groupData={groupData}
               onCancel={handleAddEditCancel}
               onSave={handleAddEditSave}
-              subscriptionItemFeatureId={subscriptionItemFeatureId}
+              trainerItemFeatureId={trainerItemFeatureId}
             />
           </div>
         ) : null}
 
-        {isSubscriptionItemsShown ? (
+        {isTrainerItemsShown ? (
           <WrappingContainerItems
             isEdit={isEdit}
             staticTexts={staticTexts}
             pageFullDataList={pageFullDataList}
-            onAddItemClick={handleAddSubscription}
-            setEditingItemFeatureId={setEditingSubscriptionFeatureId}
-            parentFeatureId={subscriptionGroupFeatureId}
+            onAddItemClick={handleAddTrainer}
+            setEditingItemFeatureId={setEditingTrainerFeatureId}
+            parentFeatureId={trainerGroupFeatureId}
             selectedFilterTextDescriptionIds={selectedFilterTextDescriptionIds}
             params={params}
-            itemTypeSubtype={SUBSCRIPTION_ITEM}
-            editTextButton={staticTexts.editSubscription ?? "N/A"}
-            addTextButton={staticTexts.addSubscription ?? "N/A"}
+            itemTypeSubtype={TRAINER_ITEM}
+            editTextButton={staticTexts.editTrainer ?? "N/A"}
+            addTextButton={staticTexts.addTrainer ?? "N/A"}
           />
         ) : null}
       </div>

@@ -11,6 +11,7 @@ import {
   SERVICE_ITEM,
   SERVICES,
   SUBSCRIPTIONS,
+  TRAINERS,
 } from "@/app/lib/constants";
 import { ShowGroupColumn_Client } from "./_columnsGroup/ShowGroupColumn_Client";
 import { ShowServices_Client } from "./_service/ShowServices_Client";
@@ -21,6 +22,7 @@ import { ShowInfoGroup_Client } from "./_info/ShowInfoGroup_Client";
 import { ShowScheduleGroup_Client } from "./_schedule/ShowScheduleGroup_Client";
 import { SubscriptionGroup } from "./_subscription/SubscriptionGroup";
 import { PageSubscriptionsGroup } from "./_pageSubscription/PageSubscriptionsGroup";
+import { TrainersGroup } from "./_trainers/TrainersGroup";
 
 export type Props = {
   groupData: FullData[];
@@ -46,6 +48,7 @@ export const ShowComplexGroup_Client = ({
   const isScheduleGroup = firstData?.subtype === SCHEDULE;
   const isSubscriptionsGroup = firstData?.subtype === SUBSCRIPTIONS;
   const isPageSubscriptions = firstData.subtype === PAGE_SUBSCRIPTIONS;
+  const isTrainersGroup = firstData?.subtype === TRAINERS;
 
   return (
     <div
@@ -121,6 +124,16 @@ export const ShowComplexGroup_Client = ({
           isEdit={isEdit}
           staticTexts={staticTexts}
           pageFullDataList={pageFullDataList}
+        />
+      ) : null}
+
+      {isTrainersGroup ? (
+        <TrainersGroup
+          isEdit={isEdit}
+          staticTexts={staticTexts}
+          groupData={groupData}
+          pageFullDataList={pageFullDataList}
+          params={params}
         />
       ) : null}
 

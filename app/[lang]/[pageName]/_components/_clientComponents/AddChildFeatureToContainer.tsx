@@ -34,6 +34,10 @@ import {
   TAB_TITLE,
   TABS,
   PAGE_SUBSCRIPTIONS,
+  TRAINERS,
+  TRAINERS_FILTER_GROUP,
+  TRAINERS_FILTER_GROUP_TITLE,
+  TRAINERS_FILTER,
 } from "@/app/lib/constants";
 import { MainParams } from "@/app/lib/definitions";
 import { usePathname } from "next/navigation";
@@ -156,6 +160,28 @@ export const AddChildFeatureToContainer = ({
         text_types: [],
         pathName,
       });
+    }
+
+    if (newValue === TRAINERS) {
+      const trainersId = await addChildFeature({
+        parentId: parentFeatureId,
+        type: GROUP,
+        subtype: newValue,
+        name: params.pageName,
+        text_types: [],
+        pathName,
+      });
+
+      if (trainersId) {
+        await addChildFeature({
+          parentId: trainersId,
+          type: GROUP,
+          subtype: TRAINERS_FILTER_GROUP,
+          name: params.pageName,
+          text_types: [TRAINERS_FILTER_GROUP_TITLE, TRAINERS_FILTER],
+          pathName,
+        });
+      }
     }
 
     if (newValue === TABS) {

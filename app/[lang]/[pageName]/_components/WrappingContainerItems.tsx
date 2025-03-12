@@ -1,57 +1,60 @@
 "use client";
 
 import { FullData, MainParams } from "@/app/lib/definitions";
-import { CommonButton } from "../_clientComponents/CommonButton";
-import { SubscriptionItem } from "./SubscriptionItem";
+import { CommonButton } from "./_clientComponents/CommonButton";
+import { SubscriptionItem } from "./_subscription/SubscriptionItem";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { getContainerData } from "@/app/lib/utils";
-import { SUBSCRIPTION_ITEM } from "@/app/lib/constants";
 import { useMemo } from "react";
-import { DeleteFeatureButton } from "../_clientComponents/DeleteFeatureButton";
+import { DeleteFeatureButton } from "./_clientComponents/DeleteFeatureButton";
+import { SUBSCRIPTION_ITEM, TRAINER_ITEM } from "@/app/lib/constants";
+import { TrainerItem } from "./_trainers/TrainerItem";
 
 export type Props = {
   isEdit: boolean;
   staticTexts: StaticTexts;
   pageFullDataList: FullData[];
-  setEditingSubscriptionFeatureId: (id: number | null) => void;
-  onAddSubscriptionClick: () => void;
-  subscriptionGroupFeatureId: number;
+  setEditingItemFeatureId: (id: number | null) => void;
+  onAddItemClick: () => void;
+  parentFeatureId: number;
   selectedFilterTextDescriptionIds: number[];
   params: MainParams;
+  itemTypeSubtype: string;
+  editTextButton: string;
+  addTextButton: string;
 };
 
-export const SubscriptionItems = ({
+export const WrappingContainerItems = ({
   isEdit,
   staticTexts,
   pageFullDataList,
-  setEditingSubscriptionFeatureId,
-  onAddSubscriptionClick,
-  subscriptionGroupFeatureId,
+  setEditingItemFeatureId,
+  onAddItemClick,
+  parentFeatureId,
   selectedFilterTextDescriptionIds,
   params,
+  itemTypeSubtype,
+  editTextButton,
+  addTextButton,
 }: Props) => {
   const containerFullData = useMemo(
     () =>
       getContainerData({
         pageName: params.pageName,
         pageFullData: pageFullDataList,
-        parentFeatureId: subscriptionGroupFeatureId,
-        type: SUBSCRIPTION_ITEM,
-        subtype: SUBSCRIPTION_ITEM,
+        parentFeatureId,
+        type: itemTypeSubtype,
+        subtype: itemTypeSubtype,
         selectedFilterTextDescriptionIds,
       }),
-    [
-      pageFullDataList,
-      subscriptionGroupFeatureId,
-      selectedFilterTextDescriptionIds,
-    ]
+    [pageFullDataList, parentFeatureId, selectedFilterTextDescriptionIds]
   );
 
   if (!containerFullData) {
     return null;
   }
 
-  const [data, subscriptionItemIds] = containerFullData;
+  const [data, itemIds] = containerFullData;
 
   return (
     <div
@@ -73,24 +76,32 @@ export const SubscriptionItems = ({
           justifyContent: "center",
           justifyItems: "center",
           alignContent: "center",
+          //  gap: "20px",
         }}
       >
-        {subscriptionItemIds.map((subscriptionItemId) => {
+        {itemIds.map((itemId) => {
           return (
             <div
-              key={subscriptionItemId}
+              key={itemId}
               style={{
                 display: "flex",
                 flexDirection: "column",
                 gap: "10px",
                 width: "33.3%",
                 minWidth: "190px",
-                padding: "10px",
                 flexGrow: 2,
-                maxWidth: "50%",
+                maxWidth: "33.3%", //"50%",
+                border: isEdit ? "1px dotted magenta" : undefined,
+                padding: "10px",
               }}
             >
-              <SubscriptionItem currentData={data[subscriptionItemId]} />
+              {itemTypeSubtype === SUBSCRIPTION_ITEM ? (
+                <SubscriptionItem currentData={data[itemId]} />
+              ) : null}
+
+              {itemTypeSubtype === TRAINER_ITEM ? (
+                <TrainerItem currentData={data[itemId]} />
+              ) : null}
 
               {isEdit ? (
                 <div
@@ -103,16 +114,14 @@ export const SubscriptionItems = ({
                   }}
                 >
                   <CommonButton
-                    text={staticTexts.editSubscription ?? "N/A"}
+                    text={editTextButton}
                     onClick={() =>
-                      setEditingSubscriptionFeatureId(
-                        data[subscriptionItemId][0]?.id ?? null
-                      )
+                      setEditingItemFeatureId(data[itemId][0]?.id ?? null)
                     }
                   />
 
                   <DeleteFeatureButton
-                    featureId={data[subscriptionItemId][0]?.id}
+                    featureId={data[itemId][0]?.id}
                     deleteText={staticTexts.delete ?? "N/A"}
                   />
                 </div>
@@ -131,10 +140,7 @@ export const SubscriptionItems = ({
             justifyContent: "center",
           }}
         >
-          <CommonButton
-            text={staticTexts.addSubscription ?? "N/A"}
-            onClick={onAddSubscriptionClick}
-          />
+          <CommonButton text={addTextButton} onClick={onAddItemClick} />
         </div>
       ) : null}
     </div>
