@@ -32,7 +32,7 @@ export const DrawFeatureContainer_Client = ({
     <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
       <div
         style={{
-          padding: "20px",
+          padding: "10px",
           display: "flex",
           flexDirection: "column",
           gap: isEdit ? "20px" : 0,

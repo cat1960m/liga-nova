@@ -3,9 +3,9 @@
 import { addChildFeature } from "@/app/lib/actions_fitness";
 import {
   FeatureTypes,
-  SUBSCRIPTIONS_FILTER,
-  SUBSCRIPTIONS_FILTER_GROUP,
-  SUBSCRIPTIONS_FILTER_GROUP_TITLE,
+  FILTER,
+  FILTER_GROUP,
+  FILTER_GROUP_TITLE,
   GROUP,
   GROUP1,
   GROUP2,
@@ -29,15 +29,12 @@ import {
   SERVICE_ITEM,
   SERVICES,
   SIMPLE_GROUP_ITEM,
-  SUBSCRIPTIONS,
   TAB,
   TAB_TITLE,
   TABS,
-  PAGE_SUBSCRIPTIONS,
-  TRAINERS,
-  TRAINERS_FILTER_GROUP,
-  TRAINERS_FILTER_GROUP_TITLE,
-  TRAINERS_FILTER,
+  ADDITIONAL_PAGE_DATA_GROUP,
+  FILTER_GROUPS_LIST_ITEMS,
+  PAGE_NAMES_TO_LIST_ITEMS_DATA,
 } from "@/app/lib/constants";
 import { MainParams } from "@/app/lib/definitions";
 import { usePathname } from "next/navigation";
@@ -56,7 +53,13 @@ export const AddChildFeatureToContainer = ({
   const [selectedValue, setSelectedValue] = useState<string>("");
 
   const options = useMemo(() => {
-    return [...FeatureTypes.GROUP, TABS];
+    const data = [...FeatureTypes.GROUP, TABS];
+
+    if (!!PAGE_NAMES_TO_LIST_ITEMS_DATA[params.pageName]) {
+      data.push(FILTER_GROUPS_LIST_ITEMS);
+    }
+
+    return data;
   }, []);
 
   const handleChange: ChangeEventHandler<HTMLSelectElement> = async (event) => {
@@ -129,29 +132,7 @@ export const AddChildFeatureToContainer = ({
       });
     }
 
-    if (newValue === SUBSCRIPTIONS) {
-      const subscriptionsId = await addChildFeature({
-        parentId: parentFeatureId,
-        type: GROUP,
-        subtype: newValue,
-        name: params.pageName,
-        text_types: [],
-        pathName,
-      });
-
-      if (subscriptionsId) {
-        await addChildFeature({
-          parentId: subscriptionsId,
-          type: GROUP,
-          subtype: SUBSCRIPTIONS_FILTER_GROUP,
-          name: params.pageName,
-          text_types: [SUBSCRIPTIONS_FILTER_GROUP_TITLE, SUBSCRIPTIONS_FILTER],
-          pathName,
-        });
-      }
-    }
-
-    if (newValue === PAGE_SUBSCRIPTIONS) {
+    if (newValue === ADDITIONAL_PAGE_DATA_GROUP) {
       await addChildFeature({
         parentId: parentFeatureId,
         type: GROUP,
@@ -162,8 +143,8 @@ export const AddChildFeatureToContainer = ({
       });
     }
 
-    if (newValue === TRAINERS) {
-      const trainersId = await addChildFeature({
+    if (newValue === FILTER_GROUPS_LIST_ITEMS) {
+      const filterGroupsListItemsId = await addChildFeature({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: newValue,
@@ -172,13 +153,13 @@ export const AddChildFeatureToContainer = ({
         pathName,
       });
 
-      if (trainersId) {
+      if (filterGroupsListItemsId) {
         await addChildFeature({
-          parentId: trainersId,
+          parentId: filterGroupsListItemsId,
           type: GROUP,
-          subtype: TRAINERS_FILTER_GROUP,
+          subtype: FILTER_GROUP,
           name: params.pageName,
-          text_types: [TRAINERS_FILTER_GROUP_TITLE, TRAINERS_FILTER],
+          text_types: [FILTER_GROUP_TITLE, FILTER],
           pathName,
         });
       }

@@ -96,6 +96,7 @@ export type Feature = {
   name: string;
   updated_by: number;
   last_edit: Date;
+  additional_page_name?: string;
 };
 
 //table in db text_descriptions
@@ -188,6 +189,7 @@ export type FullData = {
   type: string;
   subtype: string;
   name: string;
+  additional_page_name?: string;
   text_type: string;
   can_delete?: boolean;
   price?: number;

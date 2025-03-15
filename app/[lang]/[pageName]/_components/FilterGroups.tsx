@@ -4,7 +4,12 @@ import { StaticTexts } from "@/app/dictionaries/definitions";
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { getContainerData } from "@/app/lib/utils";
 import { FilterGroup } from "./FilterGroup";
-import { GROUP } from "@/app/lib/constants";
+import {
+  FILTER,
+  FILTER_GROUP,
+  FILTER_GROUP_TITLE,
+  GROUP,
+} from "@/app/lib/constants";
 import { useMemo } from "react";
 import { AddChildFeatureButton } from "./_clientComponents/AddChildFeatureButton";
 
@@ -19,9 +24,7 @@ export type Props = {
   }) => void;
   selectedFilterTextDescriptionIds: number[];
   parentFeatureId: number;
-  subtype: string;
-  titleTextType: string;
-  itemTextType: string;
+  width?: string;
 };
 
 export const FilterGroups = ({
@@ -32,9 +35,7 @@ export const FilterGroups = ({
   onFilterSelectionChanged,
   selectedFilterTextDescriptionIds,
   parentFeatureId,
-  subtype,
-  titleTextType,
-  itemTextType,
+  width,
 }: Props) => {
   const containerFullData = useMemo(
     () =>
@@ -44,7 +45,7 @@ export const FilterGroups = ({
             pageFullData: pageFullDataList,
             parentFeatureId: parentFeatureId,
             type: GROUP,
-            subtype,
+            subtype: FILTER_GROUP,
           })
         : null,
     [pageFullDataList, parentFeatureId]
@@ -56,6 +57,8 @@ export const FilterGroups = ({
 
   const [data, filterGroupIds] = containerFullData;
 
+  const currentWidth = width ?? "238px";
+
   return (
     <div
       style={{
@@ -64,8 +67,8 @@ export const FilterGroups = ({
         backgroundColor: "#f8f8f8",
         border: "1px solid lightgray",
         borderRadius: "10px",
-        width: isEdit ? undefined : "238px",
-        minWidth: "238px",
+        width: isEdit ? undefined : currentWidth,
+        minWidth: currentWidth,
       }}
     >
       {filterGroupIds.map((filterGroupId, index) => {
@@ -81,8 +84,6 @@ export const FilterGroups = ({
               isEdit={isEdit}
               staticTexts={staticTexts}
               groupData={filterGroupData}
-              titleTextType={titleTextType}
-              itemTextType={itemTextType}
               onFilterSelectionChanged={onFilterSelectionChanged}
               selectedFilterTextDescriptionIds={
                 selectedFilterTextDescriptionIds
@@ -108,9 +109,9 @@ export const FilterGroups = ({
             parentFeatureId={parentFeatureId}
             text={staticTexts.addGroup ?? "N/A"}
             params={params}
-            textTypes={[titleTextType, itemTextType]}
+            textTypes={[FILTER_GROUP_TITLE, FILTER]}
             type={GROUP}
-            subtype={subtype}
+            subtype={FILTER_GROUP}
           />
         </div>
       ) : null}

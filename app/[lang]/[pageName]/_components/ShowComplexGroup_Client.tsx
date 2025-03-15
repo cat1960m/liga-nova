@@ -6,12 +6,11 @@ import {
   INFO,
   ITEM_COLUMN1,
   ITEM_COLUMN2,
-  PAGE_SUBSCRIPTIONS,
+  ADDITIONAL_PAGE_DATA_GROUP,
   SCHEDULE,
   SERVICE_ITEM,
   SERVICES,
-  SUBSCRIPTIONS,
-  TRAINERS,
+  FILTER_GROUPS_LIST_ITEMS,
 } from "@/app/lib/constants";
 import { ShowGroupColumn_Client } from "./_columnsGroup/ShowGroupColumn_Client";
 import { ShowServices_Client } from "./_service/ShowServices_Client";
@@ -20,9 +19,8 @@ import { DeleteFeatureButton } from "./_clientComponents/DeleteFeatureButton";
 import { AddTextDescriptionButton } from "./_clientComponents/AddTextDescriptionButton";
 import { ShowInfoGroup_Client } from "./_info/ShowInfoGroup_Client";
 import { ShowScheduleGroup_Client } from "./_schedule/ShowScheduleGroup_Client";
-import { SubscriptionGroup } from "./_subscription/SubscriptionGroup";
-import { PageSubscriptionsGroup } from "./_pageSubscription/PageSubscriptionsGroup";
-import { TrainersGroup } from "./_trainers/TrainersGroup";
+import { AdditionalPageDataGroup } from "./_additionalPageData/AdditionalPageDataGroup";
+import { FilterGroupsListItemsGroup } from "./_listItem/FilterGroupsListItemsGroup";
 
 export type Props = {
   groupData: FullData[];
@@ -46,15 +44,16 @@ export const ShowComplexGroup_Client = ({
   const isAddButtonShown = isServices;
   const isInfoGroup = firstData?.subtype === INFO;
   const isScheduleGroup = firstData?.subtype === SCHEDULE;
-  const isSubscriptionsGroup = firstData?.subtype === SUBSCRIPTIONS;
-  const isPageSubscriptions = firstData.subtype === PAGE_SUBSCRIPTIONS;
-  const isTrainersGroup = firstData?.subtype === TRAINERS;
+  const isAdditionalPageDataGroup =
+    firstData.subtype === ADDITIONAL_PAGE_DATA_GROUP;
+  const isFilterGroupsListItemsGroup =
+    firstData?.subtype === FILTER_GROUPS_LIST_ITEMS;
 
   return (
     <div
       style={{
         width: "100%",
-        padding: "20px",
+        padding: "10px",
         border: isEdit ? "1px dotted magenta" : undefined,
       }}
     >
@@ -108,18 +107,8 @@ export const ShowComplexGroup_Client = ({
         />
       ) : null}
 
-      {isSubscriptionsGroup ? (
-        <SubscriptionGroup
-          isEdit={isEdit}
-          staticTexts={staticTexts}
-          groupData={groupData}
-          pageFullDataList={pageFullDataList}
-          params={params}
-        />
-      ) : null}
-
-      {isPageSubscriptions ? (
-        <PageSubscriptionsGroup
+      {isAdditionalPageDataGroup ? (
+        <AdditionalPageDataGroup
           currentData={firstData}
           isEdit={isEdit}
           staticTexts={staticTexts}
@@ -127,8 +116,8 @@ export const ShowComplexGroup_Client = ({
         />
       ) : null}
 
-      {isTrainersGroup ? (
-        <TrainersGroup
+      {isFilterGroupsListItemsGroup ? (
+        <FilterGroupsListItemsGroup
           isEdit={isEdit}
           staticTexts={staticTexts}
           groupData={groupData}

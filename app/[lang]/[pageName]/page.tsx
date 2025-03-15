@@ -17,7 +17,6 @@ export default async function Page({
   const pageFullData: FullData[] | null = await getPageFullData({
     lang,
     pageName,
-    additionalName: "tickets",
   });
 
   const currentPageData = pageFullData?.find(

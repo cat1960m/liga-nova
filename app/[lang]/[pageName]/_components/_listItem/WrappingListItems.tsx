@@ -1,14 +1,13 @@
 "use client";
 
 import { FullData, MainParams } from "@/app/lib/definitions";
-import { CommonButton } from "./_clientComponents/CommonButton";
-import { SubscriptionItem } from "./_subscription/SubscriptionItem";
+import { CommonButton } from "../_clientComponents/CommonButton";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { getContainerData } from "@/app/lib/utils";
 import { useMemo } from "react";
-import { DeleteFeatureButton } from "./_clientComponents/DeleteFeatureButton";
-import { SUBSCRIPTION_ITEM, TRAINER_ITEM } from "@/app/lib/constants";
-import { TrainerItem } from "./_trainers/TrainerItem";
+import { DeleteFeatureButton } from "../_clientComponents/DeleteFeatureButton";
+import { ListItem } from "./ListItem";
+import { LIST_ITEM } from "@/app/lib/constants";
 
 export type Props = {
   isEdit: boolean;
@@ -19,12 +18,11 @@ export type Props = {
   parentFeatureId: number;
   selectedFilterTextDescriptionIds: number[];
   params: MainParams;
-  itemTypeSubtype: string;
   editTextButton: string;
   addTextButton: string;
 };
 
-export const WrappingContainerItems = ({
+export const WrappingListItems = ({
   isEdit,
   staticTexts,
   pageFullDataList,
@@ -33,7 +31,6 @@ export const WrappingContainerItems = ({
   parentFeatureId,
   selectedFilterTextDescriptionIds,
   params,
-  itemTypeSubtype,
   editTextButton,
   addTextButton,
 }: Props) => {
@@ -43,8 +40,8 @@ export const WrappingContainerItems = ({
         pageName: params.pageName,
         pageFullData: pageFullDataList,
         parentFeatureId,
-        type: itemTypeSubtype,
-        subtype: itemTypeSubtype,
+        type: LIST_ITEM,
+        subtype: LIST_ITEM,
         selectedFilterTextDescriptionIds,
       }),
     [pageFullDataList, parentFeatureId, selectedFilterTextDescriptionIds]
@@ -95,13 +92,7 @@ export const WrappingContainerItems = ({
                 padding: "10px",
               }}
             >
-              {itemTypeSubtype === SUBSCRIPTION_ITEM ? (
-                <SubscriptionItem currentData={data[itemId]} />
-              ) : null}
-
-              {itemTypeSubtype === TRAINER_ITEM ? (
-                <TrainerItem currentData={data[itemId]} />
-              ) : null}
+              <ListItem currentData={data[itemId]} pageName={params.pageName} />
 
               {isEdit ? (
                 <div

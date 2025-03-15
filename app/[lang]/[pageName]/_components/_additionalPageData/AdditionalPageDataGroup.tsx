@@ -2,8 +2,8 @@
 
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { FullData } from "@/app/lib/definitions";
-import { PageSubscriptionsGroupEdit } from "./PageSubscriptionsGroupEdit";
-import { PageSubscriptionsGroupShow } from "./PageSubscriptionsGroupShow";
+import { AdditionalPageDataGroupEdit } from "./AdditionalPageDataGroupEdit";
+import { AdditionalPageDataGroupShow } from "./AdditionalPageDataGroupShow";
 
 export type Props = {
   currentData: FullData;
@@ -12,24 +12,32 @@ export type Props = {
   pageFullDataList: FullData[];
 };
 
-export const PageSubscriptionsGroup = ({
+export const AdditionalPageDataGroup = ({
   currentData,
   isEdit,
   staticTexts,
   pageFullDataList,
 }: Props) => {
+  const pageId = currentData.parent_feature_id;
+  const pageData = pageFullDataList.find((data) => data.id === pageId);
+  const additionalPageName = pageData?.additional_page_name ?? "";
+
+  console.log("------additionalPageName", additionalPageName);
+
   return (
     <>
       {isEdit ? (
-        <PageSubscriptionsGroupEdit
+        <AdditionalPageDataGroupEdit
           currentData={currentData}
           staticTexts={staticTexts}
           pageFullDataList={pageFullDataList}
+          additionalPageName={additionalPageName}
         />
       ) : (
-        <PageSubscriptionsGroupShow
+        <AdditionalPageDataGroupShow
           currentData={currentData}
           pageFullDataList={pageFullDataList}
+          pageName={additionalPageName}
         />
       )}
     </>

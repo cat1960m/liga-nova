@@ -1,3 +1,5 @@
+import { StaticTexts } from "../dictionaries/definitions";
+
 export const TITLE = "title";
 export const PAGE = "page";
 export const GROUP1 = "group1";
@@ -28,12 +30,12 @@ export const SCHEDULE_ITEM4 = "scheduleItem4";
 export const SCHEDULE_ITEM5 = "scheduleItem5";
 export const SCHEDULE_ITEM6 = "scheduleItem6";
 
-export const SUBSCRIPTIONS = "subscriptions";
-export const SUBSCRIPTIONS_FILTER_GROUP = "subscriptionsFilterGroup";
-export const SUBSCRIPTIONS_FILTER_GROUP_TITLE = "subscriptionsFilterGroupTitle";
-export const SUBSCRIPTIONS_FILTER = "subscriptionsFilter";
-export const SUBSCRIPTION_ITEM = "subscription_item";
-export const TEMP_SUBSCRIPTION_ITEM = "temp_subscription_item";
+//export const SUBSCRIPTIONS = "subscriptions";
+export const FILTER_GROUP = "FilterGroup";
+export const FILTER_GROUP_TITLE = "FilterGroupTitle";
+export const FILTER = "Filter";
+export const LIST_ITEM = "list_item";
+export const TEMP_LIST_ITEM = "temp_list_item";
 export const SUBSCRIPTION_ITEM_NAME = "subscription_item_name";
 export const SUBSCRIPTION_ITEM_PRICE = "subscription_item_price";
 export const SUBSCRIPTION_ITEM_OLD_PRICE = "subscription_item_old_price";
@@ -42,18 +44,15 @@ export const SUBSCRIPTION_ITEM_DESCRIPTION = "subscription_item_description";
 export const SUBSCRIPTION_ITEM_IMPORTANT_DESCRIPTION =
   "subscription_item_important_description";
 
-export const PAGE_SUBSCRIPTIONS = "page_subscriptions";
+export const ADDITIONAL_PAGE_DATA_GROUP = "additional_page_data_group";
 
-export const TRAINERS = "trainers";
-export const TRAINERS_FILTER_GROUP = "trainersFilterGroup";
-export const TRAINERS_FILTER_GROUP_TITLE = "trainersFilterGroupTitle";
-export const TRAINERS_FILTER = "trainersFilter";
-export const TRAINER_ITEM = "trainer_item";
-export const TEMP_TRAINER_ITEM = "temp_trainer_item";
+//export const TRAINERS = "trainers";
 export const TRAINER_ITEM_NAME = "trainer_item_name";
 export const TRAINER_ITEM_IS_PREMIUM = "trainer_item_is_premium";
 export const TRAINER_ITEM_IMAGE = "trainer_item_image";
 export const TRAINER_ITEM_DESCRIPTION = "trainer_item_description";
+
+export const FILTER_GROUPS_LIST_ITEMS = "filter_groups_list_items";
 
 export const CAN_NOT_DELETE = [
   HEADER1,
@@ -67,7 +66,7 @@ export const CAN_NOT_DELETE = [
   SCHEDULE_ITEM4,
   SCHEDULE_ITEM5,
   SCHEDULE_ITEM6,
-  SUBSCRIPTIONS_FILTER_GROUP_TITLE,
+  FILTER_GROUP_TITLE,
   SUBSCRIPTION_ITEM_NAME,
   SUBSCRIPTION_ITEM_PRICE,
   SUBSCRIPTION_ITEM_OLD_PRICE,
@@ -83,9 +82,7 @@ export const FeatureTypes = {
     SERVICES,
     INFO,
     SCHEDULE,
-    SUBSCRIPTIONS,
-    PAGE_SUBSCRIPTIONS,
-    TRAINERS,
+    ADDITIONAL_PAGE_DATA_GROUP,
   ],
 };
 
@@ -93,3 +90,34 @@ export const DEFAULT_TEXT = "Please enter text";
 export const DEFAULT_TEXT_CLIENT = "N/A";
 
 export const SHOW_TABS_WITH_SELECTION = true;
+
+export const PAGE_NAMES_TO_LIST_ITEMS_DATA: Record<
+  string,
+  {
+    addText: keyof StaticTexts;
+    editText: keyof StaticTexts;
+    textTypes: string[];
+  }
+> = {
+  tickets: {
+    addText: "addSubscription",
+    editText: "editSubscription",
+    textTypes: [
+      SUBSCRIPTION_ITEM_NAME,
+      SUBSCRIPTION_ITEM_PRICE,
+      SUBSCRIPTION_ITEM_OLD_PRICE,
+      SUBSCRIPTION_ITEM_SHARE,
+      SUBSCRIPTION_ITEM_DESCRIPTION,
+    ],
+  },
+  trainers: {
+    addText: "addTrainer",
+    editText: "editTrainer",
+    textTypes: [
+      TRAINER_ITEM_NAME,
+      TRAINER_ITEM_IS_PREMIUM,
+      TRAINER_ITEM_IMAGE,
+      TRAINER_ITEM_DESCRIPTION,
+    ],
+  },
+};

@@ -8,7 +8,7 @@ import {
   TRAINER_ITEM_NAME,
 } from "@/app/lib/constants";
 import { useState } from "react";
-import { CommonButton } from "../_clientComponents/CommonButton";
+import { CommonButton } from "../../_clientComponents/CommonButton";
 
 export type Props = {
   currentData: FullData[];

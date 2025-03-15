@@ -1,12 +1,7 @@
 "use client";
 
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import {
-  GROUP,
-  SUBSCRIPTIONS_FILTER,
-  SUBSCRIPTIONS_FILTER_GROUP,
-  SUBSCRIPTIONS_FILTER_GROUP_TITLE,
-} from "@/app/lib/constants";
+import { GROUP, FILTER_GROUP } from "@/app/lib/constants";
 import { FullData } from "@/app/lib/definitions";
 import { useMemo, useState } from "react";
 import { FilterGroup } from "../FilterGroup";
@@ -19,12 +14,14 @@ export type Props = {
   currentData: FullData;
   staticTexts: StaticTexts;
   pageFullDataList: FullData[];
+  additionalPageName: string;
 };
 
-export const PageSubscriptionsGroupEdit = ({
+export const AdditionalPageDataGroupEdit = ({
   currentData,
   staticTexts,
   pageFullDataList,
+  additionalPageName,
 }: Props) => {
   const filterTextDescriptionIds = getFilterIds(currentData.filter_ids);
 
@@ -35,20 +32,20 @@ export const PageSubscriptionsGroupEdit = ({
 
   const pathName = usePathname();
 
-  const pageSubscriptionFeatureId = currentData.id;
+  const pageFeatureId = currentData.id;
 
   const containerFullData = useMemo(
     () =>
-      pageSubscriptionFeatureId
+      pageFeatureId
         ? getContainerData({
-            pageName: "tickets",
+            pageName: additionalPageName,
             pageFullData: pageFullDataList,
-            parentFeatureId: null, //pageSubscriptionFeatureId,
+            parentFeatureId: null,
             type: GROUP,
-            subtype: SUBSCRIPTIONS_FILTER_GROUP,
+            subtype: FILTER_GROUP,
           })
         : null,
-    [pageFullDataList, pageSubscriptionFeatureId]
+    [pageFullDataList, pageFeatureId]
   );
 
   if (!containerFullData) {
@@ -81,7 +78,7 @@ export const PageSubscriptionsGroupEdit = ({
 
   const handleSave = async () => {
     await updateFeatureSubtypeFilterIds({
-      id: pageSubscriptionFeatureId,
+      id: pageFeatureId,
       pathName,
       subtype: currentData.subtype,
       filterIds: selectedFilterTextDescriptionIds.join(","),
@@ -110,8 +107,6 @@ export const PageSubscriptionsGroupEdit = ({
                 isEdit={false}
                 staticTexts={staticTexts}
                 groupData={filterGroupData}
-                titleTextType={SUBSCRIPTIONS_FILTER_GROUP_TITLE}
-                itemTextType={SUBSCRIPTIONS_FILTER}
                 onFilterSelectionChanged={handleFilterSelectionChanged}
                 selectedFilterTextDescriptionIds={
                   selectedFilterTextDescriptionIds

@@ -21,13 +21,16 @@ export default async function Page({
   const pageFullData: FullData[] | null = await getPageFullData({
     lang,
     pageName,
-    additionalName: "tickets",
   });
+
+  console.log("pageFullData", pageFullData);
 
   const currentPageData = pageFullData?.find(
     (data) =>
       data.name === pageName && data.text_type === TITLE && data.type === PAGE
   );
+
+  console.log("currentPageData", currentPageData);
 
   const containerFullData = currentPageData?.id
     ? getContainerData({
@@ -36,6 +39,8 @@ export default async function Page({
         parentFeatureId: currentPageData?.id,
       })
     : null;
+
+  console.log("containerFullData", containerFullData);
 
   if (!containerFullData || !pageFullData || !currentPageData) {
     return null;

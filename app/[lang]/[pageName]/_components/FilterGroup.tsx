@@ -7,13 +7,12 @@ import { AddTextDescriptionButton } from "./_clientComponents/AddTextDescription
 import { ChevronUpIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { DeleteFeatureButton } from "./_clientComponents/DeleteFeatureButton";
+import { FILTER, FILTER_GROUP_TITLE } from "@/app/lib/constants";
 
 export type Props = {
   groupData: FullData[];
   isEdit: boolean;
   staticTexts: StaticTexts;
-  titleTextType: string;
-  itemTextType: string;
   onFilterSelectionChanged: (data: {
     filter: FullData;
     value: boolean;
@@ -25,8 +24,6 @@ export const FilterGroup = ({
   groupData,
   isEdit,
   staticTexts,
-  titleTextType,
-  itemTextType,
   onFilterSelectionChanged,
   selectedFilterTextDescriptionIds,
 }: Props) => {
@@ -37,9 +34,11 @@ export const FilterGroup = ({
     return null;
   }
 
-  const titleData = groupData.find((item) => item.text_type === titleTextType);
+  const titleData = groupData.find(
+    (item) => item.text_type === FILTER_GROUP_TITLE
+  );
 
-  const filters = groupData.filter((item) => item.text_type === itemTextType);
+  const filters = groupData.filter((item) => item.text_type === FILTER);
 
   return (
     <div
@@ -145,7 +144,7 @@ export const FilterGroup = ({
         >
           <AddTextDescriptionButton
             featureId={featureId}
-            textType={itemTextType}
+            textType={FILTER}
             buttonText={staticTexts.addGroupItem ?? "N/A"}
             price={null}
           />

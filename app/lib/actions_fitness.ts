@@ -377,15 +377,13 @@ export const getTabsTitles = async ({
 export const getPageFullData = async ({
   lang,
   pageName,
-  additionalName,
 }: {
   lang: string;
   pageName: string;
-  additionalName: string;
 }) => {
   try {
     return await sql<FullData[]>`SELECT features.id, 
-        parent_feature_id, type, subtype, name, feature_order, filter_ids,
+        parent_feature_id, type, subtype, name, feature_order, filter_ids, additional_page_name,
         text_descriptions.id as text_description_id, text_type, price, can_delete, value,
         language, text_content, content_type
         FROM features 
@@ -393,7 +391,9 @@ export const getPageFullData = async ({
         ON features.id = text_descriptions.feature_id 
         LEFT JOIN text_contents 
         ON text_descriptions.id = text_contents.text_description_id 
-        WHERE  (name = ${pageName} OR name = ${additionalName}) AND (language = ${lang} or language is null)
+        WHERE  (name = ${pageName} OR 
+        name = (SELECT additional_page_name FROM features WHERE name=${pageName} AND type='page')) 
+        AND (language = ${lang} or language is null)
         ORDER BY feature_order, text_description_order`;
   } catch (error) {
     // If a database error occurs, return a more specific error.

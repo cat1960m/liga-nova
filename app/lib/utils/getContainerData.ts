@@ -68,10 +68,10 @@ export const getContainerData = ({
     }
   });
 
-  const filterGroupIds: string[] = Object.keys(data);
-  filterGroupIds.sort((id1, id2) =>
+  const itemIds: string[] = Object.keys(data);
+  itemIds.sort((id1, id2) =>
     data[id1][0]?.feature_order > data[id2][0]?.feature_order ? 1 : -1
   );
 
-  return [data, filterGroupIds];
+  return [data, itemIds];
 };

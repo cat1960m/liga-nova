@@ -1,11 +1,4 @@
-import {
-  GROUP,
-  GROUP1,
-  GROUP2,
-  INFO,
-  PAGE_SUBSCRIPTIONS,
-  TABS,
-} from "@/app/lib/constants";
+import { GROUP, GROUP1, GROUP2, TABS } from "@/app/lib/constants";
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { ShowComplexGroup_Client } from "./ShowComplexGroup_Client";
 import { ShowTabs_Client } from "./_tabs/ShowTabs_Client";
