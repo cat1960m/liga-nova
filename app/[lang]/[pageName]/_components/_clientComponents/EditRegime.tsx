@@ -6,7 +6,7 @@ import { ChangeEvent } from "react";
 
 const EDIT = "edit";
 
-export const IsEditRegime = () => {
+export const EditRegime = () => {
   const pathName = usePathname();
   const router = useRouter();
   const isEdit = pathName.endsWith(EDIT);
@@ -22,7 +22,7 @@ export const IsEditRegime = () => {
   return (
     <div
       style={{
-        width: "100%",
+        // width: "100%",
         display: "flex",
         justifyContent: "flex-end",
         gap: "10px",

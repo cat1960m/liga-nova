@@ -30,7 +30,11 @@ export const SCHEDULE_ITEM4 = "scheduleItem4";
 export const SCHEDULE_ITEM5 = "scheduleItem5";
 export const SCHEDULE_ITEM6 = "scheduleItem6";
 
-//export const SUBSCRIPTIONS = "subscriptions";
+export const IMAGE = "image";
+export const ICON = "icon";
+export const IMAGE_LIST = "image_list";
+
+export const TICKETS = "tickets";
 export const FILTER_GROUP = "FilterGroup";
 export const FILTER_GROUP_TITLE = "FilterGroupTitle";
 export const FILTER = "Filter";
@@ -46,13 +50,16 @@ export const SUBSCRIPTION_ITEM_IMPORTANT_DESCRIPTION =
 
 export const ADDITIONAL_PAGE_DATA_GROUP = "additional_page_data_group";
 
-//export const TRAINERS = "trainers";
+export const TRAINERS = "trainers";
 export const TRAINER_ITEM_NAME = "trainer_item_name";
 export const TRAINER_ITEM_IS_PREMIUM = "trainer_item_is_premium";
 export const TRAINER_ITEM_IMAGE = "trainer_item_image";
 export const TRAINER_ITEM_DESCRIPTION = "trainer_item_description";
 
 export const FILTER_GROUPS_LIST_ITEMS = "filter_groups_list_items";
+export const ACTION_BANNER_GROUP = "action_banner_group";
+export const ACTION_BANNER_TITLE = "action_banner_title";
+export const ACTION_BANNER_IMAGE = "action_banner_image";
 
 export const CAN_NOT_DELETE = [
   HEADER1,
@@ -60,6 +67,7 @@ export const CAN_NOT_DELETE = [
   INFO_TITLE,
   INFO_TELEPHONE,
   INFO_ADDRESS,
+  INFO_BODY,
   SCHEDULE_ITEM1,
   SCHEDULE_ITEM2,
   SCHEDULE_ITEM3,
@@ -71,6 +79,8 @@ export const CAN_NOT_DELETE = [
   SUBSCRIPTION_ITEM_PRICE,
   SUBSCRIPTION_ITEM_OLD_PRICE,
   SUBSCRIPTION_ITEM_SHARE,
+  ACTION_BANNER_TITLE,
+  ACTION_BANNER_IMAGE,
 ];
 export const GROUP_TYPES_WITH_TOOLTIP = [SERVICES];
 
@@ -83,6 +93,8 @@ export const FeatureTypes = {
     INFO,
     SCHEDULE,
     ADDITIONAL_PAGE_DATA_GROUP,
+    IMAGE_LIST,
+    ACTION_BANNER_GROUP,
   ],
 };
 
@@ -121,3 +133,7 @@ export const PAGE_NAMES_TO_LIST_ITEMS_DATA: Record<
     ],
   },
 };
+
+export const S3_TYPES = [TRAINER_ITEM_IMAGE, IMAGE, ICON];
+
+export const MAX_PAGE_WIDTH = 1075;

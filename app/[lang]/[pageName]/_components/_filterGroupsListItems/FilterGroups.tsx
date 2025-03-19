@@ -11,7 +11,7 @@ import {
   GROUP,
 } from "@/app/lib/constants";
 import { useMemo } from "react";
-import { AddChildFeatureButton } from "./_clientComponents/AddChildFeatureButton";
+import { AddChildFeatureButton } from "../_clientComponents/AddChildFeatureButton";
 
 export type Props = {
   isEdit: boolean;

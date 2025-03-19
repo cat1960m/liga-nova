@@ -11,6 +11,8 @@ import {
   SERVICE_ITEM,
   SERVICES,
   FILTER_GROUPS_LIST_ITEMS,
+  IMAGE_LIST,
+  ACTION_BANNER_GROUP,
 } from "@/app/lib/constants";
 import { ShowGroupColumn_Client } from "./_columnsGroup/ShowGroupColumn_Client";
 import { ShowServices_Client } from "./_service/ShowServices_Client";
@@ -20,7 +22,9 @@ import { AddTextDescriptionButton } from "./_clientComponents/AddTextDescription
 import { ShowInfoGroup_Client } from "./_info/ShowInfoGroup_Client";
 import { ShowScheduleGroup_Client } from "./_schedule/ShowScheduleGroup_Client";
 import { AdditionalPageDataGroup } from "./_additionalPageData/AdditionalPageDataGroup";
-import { FilterGroupsListItemsGroup } from "./_listItem/FilterGroupsListItemsGroup";
+import { FilterGroupsListItemsGroup } from "./_filterGroupsListItems/FilterGroupsListItemsGroup";
+import { ShowImageListGroup_Client } from "./_imageGroup/ShowImageListGroup_Client";
+import { ActionBannerGroup } from "./_actionBanner/ActionBannerGroup";
 
 export type Props = {
   groupData: FullData[];
@@ -48,6 +52,8 @@ export const ShowComplexGroup_Client = ({
     firstData.subtype === ADDITIONAL_PAGE_DATA_GROUP;
   const isFilterGroupsListItemsGroup =
     firstData?.subtype === FILTER_GROUPS_LIST_ITEMS;
+  const isImageListGroup = firstData?.subtype === IMAGE_LIST;
+  const isActionBannerGroup = firstData?.subtype === ACTION_BANNER_GROUP;
 
   return (
     <div
@@ -99,6 +105,14 @@ export const ShowComplexGroup_Client = ({
         />
       ) : null}
 
+      {isImageListGroup ? (
+        <ShowImageListGroup_Client
+          isEdit={isEdit}
+          staticTexts={staticTexts}
+          groupData={groupData}
+        />
+      ) : null}
+
       {isScheduleGroup ? (
         <ShowScheduleGroup_Client
           isEdit={isEdit}
@@ -126,6 +140,14 @@ export const ShowComplexGroup_Client = ({
         />
       ) : null}
 
+      {isActionBannerGroup ? (
+        <ActionBannerGroup
+          isEdit={isEdit}
+          staticTexts={staticTexts}
+          groupData={groupData}
+        />
+      ) : null}
+
       {isEdit ? (
         <div
           style={{
@@ -140,6 +162,7 @@ export const ShowComplexGroup_Client = ({
             <DeleteFeatureButton
               featureId={featureId}
               deleteText={staticTexts.delete ?? "N/A"}
+              featureData={groupData}
             />
 
             {isAddButtonShown ? (

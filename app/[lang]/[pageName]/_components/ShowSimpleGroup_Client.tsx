@@ -19,7 +19,8 @@ export const ShowSimpleGroup_Client = ({
   const style = {
     fontSize: isLarge ? "xx-large" : "large",
     fontWeight: isLarge ? 700 : 400,
-    padding: "20px",
+    //padding: "20px",
+    marginBottom: "10px",
     border: isEdit ? "1px dotted magenta" : undefined,
   };
 
@@ -49,6 +50,7 @@ export const ShowSimpleGroup_Client = ({
           <DeleteFeatureButton
             featureId={data.id}
             deleteText={staticTexts.delete ?? "N/A"}
+            featureData={[data]}
           />
         </div>
       ) : null}

@@ -8,9 +8,10 @@ import { CommonButton } from "./CommonButton";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import {
   addText,
+  getPageFullData,
   getTextContents,
   revalidate,
-  updatePrice,
+  updatePriceValue,
   updateText,
 } from "@/app/lib/actions_fitness";
 import { usePathname } from "next/navigation";
@@ -20,10 +21,14 @@ export const UpdateTextDescriptionDataModal_new = ({
   onClose,
   staticTexts,
   currentData,
+  useIcons,
+  isArea,
 }: {
   onClose: () => void;
   staticTexts: StaticTexts;
   currentData: FullData;
+  useIcons?: boolean;
+  isArea?: boolean;
 }) => {
   const [textContents, setTextContents] = useState<TextContent[] | null>(null);
   const [textContentsTooltips, setTextContentsTooltips] = useState<
@@ -39,6 +44,10 @@ export const UpdateTextDescriptionDataModal_new = ({
   const isTooltipUsed = currentData.subtype === SERVICES;
 
   const [priceValue, setPriceValue] = useState<number>(currentPrice ?? 0);
+  const [icons, setIcons] = useState<FullData[]>([]);
+  const [selectedIcon, setSelectedIcon] = useState<string | undefined>(
+    currentData.value
+  );
 
   useEffect(() => {
     const getData = async () => {
@@ -94,7 +103,20 @@ export const UpdateTextDescriptionDataModal_new = ({
       ]);
     };
 
+    const getIcons = async () => {
+      const pageFullData: FullData[] | null = await getPageFullData({
+        lang: "en",
+        pageName: "icon",
+      });
+
+      setIcons(pageFullData ?? []);
+    };
+
     getData();
+
+    if (useIcons) {
+      getIcons();
+    }
   }, []);
 
   const parent = document.getElementById("parentModal");
@@ -195,8 +217,15 @@ export const UpdateTextDescriptionDataModal_new = ({
       });
     }
 
-    if (price) {
-      promises.push(updatePrice({ price, textDescriptionId, pathName }));
+    if (price || useIcons) {
+      promises.push(
+        updatePriceValue({
+          price,
+          textDescriptionId,
+          pathName,
+          value: selectedIcon,
+        })
+      );
     }
 
     await Promise.all(promises);
@@ -205,6 +234,8 @@ export const UpdateTextDescriptionDataModal_new = ({
 
     onClose();
   };
+
+  const scrollPositionY = window.scrollY;
 
   return (
     <div>
@@ -217,9 +248,6 @@ export const UpdateTextDescriptionDataModal_new = ({
             right: 0,
             bottom: 0,
             backgroundColor: "rgba(255, 180, 200, 0.5)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
           }}
         >
           <div
@@ -228,80 +256,123 @@ export const UpdateTextDescriptionDataModal_new = ({
               border: "2px solid darkmagenta",
               borderRadius: "5px",
               width: "80%",
+              position: "absolute",
+              top: `${scrollPositionY + 20}px`,
+              left: "10%",
             }}
           >
-            <div
-              style={{
-                height: "40px",
-                width: "100%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontWeight: 600,
-                fontSize: "x-large",
-              }}
-            >
-              {staticTexts["updateTranslate"]}
-            </div>
+            <>
+              <div
+                style={{
+                  height: "40px",
+                  width: "100%",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontWeight: 600,
+                  fontSize: "x-large",
+                }}
+              >
+                {staticTexts["updateTranslate"]}
+              </div>
 
-            <TranslationTabs_new
-              staticTexts={staticTexts}
-              onChange={() => setIsSaveDisabled(false)}
-              tabs={tabs}
-              setTabs={setTabs}
-              title="Text"
-            />
-
-            {isTooltipUsed ? (
               <TranslationTabs_new
                 staticTexts={staticTexts}
                 onChange={() => setIsSaveDisabled(false)}
-                tabs={tabsTooltip}
-                setTabs={setTabsTooltip}
-                title="Tooltip"
+                tabs={tabs}
+                setTabs={setTabs}
+                title="Text"
+                isArea={isArea}
               />
-            ) : null}
 
-            {isPriceShown ? (
+              {isTooltipUsed ? (
+                <TranslationTabs_new
+                  staticTexts={staticTexts}
+                  onChange={() => setIsSaveDisabled(false)}
+                  tabs={tabsTooltip}
+                  setTabs={setTabsTooltip}
+                  title="Tooltip"
+                />
+              ) : null}
+
+              {isPriceShown ? (
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginTop: "20px",
+                    gap: "10px",
+                  }}
+                >
+                  Price:{" "}
+                  <input
+                    type="number"
+                    value={priceValue}
+                    onChange={handlePriceChange}
+                  ></input>
+                  грн
+                </div>
+              ) : null}
+
+              {useIcons ? (
+                <div
+                  style={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    gap: "20px",
+                    padding: "20px",
+                  }}
+                >
+                  {icons.map((icon) => {
+                    return (
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: "5px",
+                          alignItems: "center",
+                        }}
+                        key={icon.text_description_id}
+                      >
+                        <img src={icon.value ?? ""} alt="icon" width="44px" />
+                        <input
+                          type="checkbox"
+                          checked={icon.value === selectedIcon}
+                          onChange={(e) => {
+                            setSelectedIcon(
+                              e.target.checked ? icon.value : undefined
+                            );
+                            setIsSaveDisabled(false);
+                          }}
+                        />
+                      </div>
+                    );
+                  })}
+                </div>
+              ) : null}
+
               <div
                 style={{
+                  width: "100%",
                   display: "flex",
-                  justifyContent: "center",
+                  justifyContent: "flex-end",
                   alignItems: "center",
-                  marginTop: "20px",
-                  gap: "10px",
+                  padding: "30px",
+                  gap: "20px",
                 }}
               >
-                Price:{" "}
-                <input
-                  type="number"
-                  value={priceValue}
-                  onChange={handlePriceChange}
-                ></input>
-                грн
+                <CommonButton
+                  onClick={() => onClose()}
+                  text={staticTexts.cancel ?? "N/A"}
+                />
+                <CommonButton
+                  onClick={handleSave}
+                  isDisabled={isSaveDisabled}
+                  text={staticTexts.save ?? "N/A"}
+                />
               </div>
-            ) : null}
-
-            <div
-              style={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "flex-end",
-                alignItems: "center",
-                padding: "30px",
-                gap: "20px",
-              }}
-            >
-              <CommonButton
-                onClick={() => onClose()}
-                text={staticTexts.cancel ?? "N/A"}
-              />
-              <CommonButton
-                onClick={handleSave}
-                isDisabled={isSaveDisabled}
-                text={staticTexts.save ?? "N/A"}
-              />
-            </div>
+            </>
           </div>
         </div>,
         parent

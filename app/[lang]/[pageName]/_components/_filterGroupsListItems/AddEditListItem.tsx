@@ -2,6 +2,7 @@ import { StaticTexts } from "@/app/dictionaries/definitions";
 import { FullData } from "@/app/lib/definitions";
 import { AddEditTrainerItem } from "./_trainers/AddEditTrainerItem";
 import { AddEditSubscriptionItem } from "./_tickets/AddEditSubscriptionItem";
+import { TICKETS, TRAINERS } from "@/app/lib/constants";
 
 export type Props = {
   commonWidth: string;
@@ -22,7 +23,7 @@ export const AddEditListItem = ({
 }: Props) => {
   return (
     <>
-      {pageName === "tickets" ? (
+      {pageName === TICKETS ? (
         <AddEditSubscriptionItem
           currentData={currentData}
           subscriptionItemFeatureId={addEditItemFeatureId}
@@ -30,7 +31,7 @@ export const AddEditListItem = ({
           commonWidth={commonWidth}
         />
       ) : null}
-      {pageName === "trainers" ? (
+      {pageName === TRAINERS ? (
         <AddEditTrainerItem
           currentData={currentData}
           trainerItemFeatureId={addEditItemFeatureId}

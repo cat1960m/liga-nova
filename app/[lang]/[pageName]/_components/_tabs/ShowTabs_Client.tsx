@@ -111,6 +111,7 @@ export const ShowTabs_Client = ({
               <DeleteFeatureButton
                 featureId={tabsData.id}
                 deleteText={staticTexts.deleteTabs ?? "N/A"}
+                featureData={[tabsData]}
               />
               <AddChildFeatureButton
                 parentFeatureId={tabsData.id}

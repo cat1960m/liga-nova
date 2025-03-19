@@ -35,6 +35,11 @@ import {
   ADDITIONAL_PAGE_DATA_GROUP,
   FILTER_GROUPS_LIST_ITEMS,
   PAGE_NAMES_TO_LIST_ITEMS_DATA,
+  IMAGE,
+  IMAGE_LIST,
+  ACTION_BANNER_GROUP,
+  ACTION_BANNER_IMAGE,
+  ACTION_BANNER_TITLE,
 } from "@/app/lib/constants";
 import { MainParams } from "@/app/lib/definitions";
 import { usePathname } from "next/navigation";
@@ -87,7 +92,34 @@ export const AddChildFeatureToContainer = ({
         type: GROUP,
         subtype: newValue,
         name: params.pageName,
-        text_types: [INFO_TITLE, INFO_TELEPHONE, INFO_ADDRESS, INFO_BODY],
+        text_types: [
+          INFO_TITLE,
+          INFO_TELEPHONE,
+          INFO_ADDRESS,
+          INFO_BODY,
+          IMAGE,
+        ],
+        pathName,
+      });
+    }
+    if (newValue === IMAGE_LIST) {
+      await addChildFeature({
+        parentId: parentFeatureId,
+        type: GROUP,
+        subtype: newValue,
+        name: params.pageName,
+        text_types: [],
+        pathName,
+      });
+    }
+
+    if (newValue === ACTION_BANNER_GROUP) {
+      await addChildFeature({
+        parentId: parentFeatureId,
+        type: GROUP,
+        subtype: newValue,
+        name: params.pageName,
+        text_types: [ACTION_BANNER_TITLE, ACTION_BANNER_IMAGE],
         pathName,
       });
     }

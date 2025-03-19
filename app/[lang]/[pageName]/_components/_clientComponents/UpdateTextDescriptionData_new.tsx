@@ -9,9 +9,13 @@ import { StaticTexts } from "@/app/dictionaries/definitions";
 export const UpdateTextDescriptionData_new = ({
   staticTexts,
   currentData,
+  useIcons,
+  isArea,
 }: {
   staticTexts: StaticTexts;
   currentData: FullData;
+  useIcons?: boolean;
+  isArea?: boolean;
 }) => {
   const [isEditModalShown, setIsEditModalShown] = useState(false);
 
@@ -28,6 +32,8 @@ export const UpdateTextDescriptionData_new = ({
           onClose={() => setIsEditModalShown(false)}
           staticTexts={staticTexts}
           currentData={currentData}
+          useIcons={useIcons}
+          isArea={isArea}
         />
       ) : null}
     </>

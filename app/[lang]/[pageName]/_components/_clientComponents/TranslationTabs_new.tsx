@@ -13,12 +13,14 @@ export const TranslationTabs_new = ({
   tabs,
   setTabs,
   title,
+  isArea,
 }: {
   tabs: TabType[];
   setTabs: (tabs: TabType[]) => void;
   staticTexts: StaticTexts;
   onChange: () => void;
   title: string;
+  isArea?: boolean;
 }) => {
   const params = useParams<{ lang: string; pageName: string }>();
   const { lang } = params;
@@ -45,6 +47,21 @@ export const TranslationTabs_new = ({
   };
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+    setInputValue(event.target.value);
+
+    const index = tabs.findIndex((tab) => tab.langUpperCase === selectedTab);
+    if (index >= 0) {
+      const newTabs = [...tabs];
+      newTabs[index].value = event.target.value;
+      setTabs(newTabs);
+
+      onChange();
+
+      setIsTranslateDisabled(!event.target.value);
+    }
+  };
+
+  const handleAreaChange: ChangeEventHandler<HTMLTextAreaElement> = (event) => {
     setInputValue(event.target.value);
 
     const index = tabs.findIndex((tab) => tab.langUpperCase === selectedTab);
@@ -132,11 +149,19 @@ export const TranslationTabs_new = ({
           padding: "30px 50px 10px 50px",
         }}
       >
-        <input
-          value={inputValue}
-          onChange={handleChange}
-          style={{ width: "80%" }}
-        />
+        {isArea ? (
+          <textarea
+            value={inputValue}
+            onChange={handleAreaChange}
+            style={{ width: "80%" }}
+          />
+        ) : (
+          <input
+            value={inputValue}
+            onChange={handleChange}
+            style={{ width: "80%" }}
+          />
+        )}
       </div>
       <div
         style={{

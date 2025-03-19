@@ -16,7 +16,7 @@ import {
 } from "@/app/lib/constants";
 import { usePathname } from "next/navigation";
 import { WrappingListItems } from "./WrappingListItems";
-import { FilterGroups } from "../FilterGroups";
+import { FilterGroups } from "./FilterGroups";
 
 export type Props = {
   groupData: FullData[];

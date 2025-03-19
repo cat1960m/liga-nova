@@ -29,4 +29,5 @@ export type StaticTexts = {
   photo?: string;
   uploadFile?: string;
   updateFile?: string;
+  register?: string;
 };

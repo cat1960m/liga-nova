@@ -10,10 +10,9 @@ export function UploadComponent({
 }: {
   onUploaded?: (value: string) => void;
   s3Key?: string;
-  staticTexts: StaticTexts;
+  staticTexts?: StaticTexts;
 }) {
   const [file, setFile] = useState<File | null>(null);
-  const [uploadUrl, setUploadUrl] = useState("");
   const [uploadState, setUploadState] = useState("");
 
   const handleFileChange = (event: any) => {
@@ -43,12 +42,12 @@ export function UploadComponent({
 
     const path = signedUrl.split("?")[0];
 
-    setUploadUrl(path); // Remove the query string to get the public URL
     setUploadState("Uploaded");
     onUploaded?.(path);
+    setFile(null);
   };
 
-  const buttonText = s3Key ? staticTexts.updateFile : staticTexts.uploadFile;
+  const buttonText = s3Key ? staticTexts?.updateFile : staticTexts?.uploadFile;
 
   return (
     <>
@@ -67,7 +66,11 @@ export function UploadComponent({
         />
         <div>{uploadState}</div>
       </div>
-      <CommonButton onClick={handleUpload} text={buttonText ?? "N/A"} />
+      <CommonButton
+        onClick={handleUpload}
+        text={buttonText ?? "Load file"}
+        isDisabled={!file}
+      />
     </>
   );
 }

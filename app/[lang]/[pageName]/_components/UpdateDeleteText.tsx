@@ -5,9 +5,16 @@ import { StaticTexts } from "@/app/dictionaries/definitions";
 export type Props = {
   currentData?: FullData;
   staticTexts: StaticTexts;
+  useIcons?: boolean;
+  isArea?: boolean;
 };
 
-export const UpdateDeleteText = ({ currentData, staticTexts }: Props) => {
+export const UpdateDeleteText = ({
+  currentData,
+  staticTexts,
+  useIcons,
+  isArea,
+}: Props) => {
   if (!currentData) {
     return null;
   }
@@ -24,6 +31,8 @@ export const UpdateDeleteText = ({ currentData, staticTexts }: Props) => {
       <UpdateTextDescriptionData_new
         currentData={currentData}
         staticTexts={staticTexts}
+        useIcons={useIcons}
+        isArea={isArea}
       />
 
       {canDelete ? (

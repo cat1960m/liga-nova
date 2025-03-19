@@ -35,7 +35,12 @@ export const TextItemField = ({
       >
         {title ? <div style={{ fontWeight: 700 }}>{title}: </div> : null}
 
-        <div style={isImportant ? { fontWeight: 700 } : undefined}>
+        <div
+          style={{
+            fontWeight: isImportant ? 700 : undefined,
+            whiteSpace: "pre-line",
+          }}
+        >
           {fieldData.text_content ?? "N/A"}
         </div>
       </div>

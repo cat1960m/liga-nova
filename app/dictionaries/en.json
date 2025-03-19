@@ -25,9 +25,10 @@
     "share": "Share",
     "oldPrice": "Old price",
     "descriptions": "Descriptions",
-    "isPremium": "iPremium trainer",
+    "isPremium": "Premium trainer",
     "photo": "Photo",
     "uploadFile": "Upload file",
-    "updateFile": "Upload file content"
+    "updateFile": "Upload file content",
+    "register": "REGISTER"
   }
 }

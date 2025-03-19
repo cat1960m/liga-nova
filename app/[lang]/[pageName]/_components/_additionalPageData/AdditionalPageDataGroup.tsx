@@ -22,8 +22,6 @@ export const AdditionalPageDataGroup = ({
   const pageData = pageFullDataList.find((data) => data.id === pageId);
   const additionalPageName = pageData?.additional_page_name ?? "";
 
-  console.log("------additionalPageName", additionalPageName);
-
   return (
     <>
       {isEdit ? (
@@ -38,6 +36,7 @@ export const AdditionalPageDataGroup = ({
           currentData={currentData}
           pageFullDataList={pageFullDataList}
           pageName={additionalPageName}
+          staticTexts={staticTexts}
         />
       )}
     </>

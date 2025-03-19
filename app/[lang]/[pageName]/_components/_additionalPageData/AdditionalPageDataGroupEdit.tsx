@@ -4,7 +4,7 @@ import { StaticTexts } from "@/app/dictionaries/definitions";
 import { GROUP, FILTER_GROUP } from "@/app/lib/constants";
 import { FullData } from "@/app/lib/definitions";
 import { useMemo, useState } from "react";
-import { FilterGroup } from "../FilterGroup";
+import { FilterGroup } from "../_filterGroupsListItems/FilterGroup";
 import { getContainerData, getFilterIds } from "@/app/lib/utils";
 import { CommonButton } from "../_clientComponents/CommonButton";
 import { updateFeatureSubtypeFilterIds } from "@/app/lib/actions_fitness";

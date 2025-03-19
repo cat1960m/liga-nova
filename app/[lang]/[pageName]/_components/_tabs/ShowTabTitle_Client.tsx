@@ -62,6 +62,7 @@ export const ShowTabTitle_Client = ({
               featureId={tabTitle.id}
               deleteText={staticTexts.deleteTab ?? "N/A"}
               key={2}
+              featureData={[tabTitle]}
             />
           ) : null}
         </div>

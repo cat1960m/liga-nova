@@ -5,7 +5,8 @@ import { LangSelector } from "./_components/LangSelector";
 import { LinkBody } from "./_components/LInkBody";
 import { ArrowRightIcon, PowerIcon } from "@heroicons/react/24/outline";
 import { auth, signOut } from "@/app/auth";
-import { IsEditRegime } from "./[pageName]/_components/_clientComponents/IsEditRegime";
+import { EditRegime } from "./[pageName]/_components/_clientComponents/EditRegime";
+import { ManageIconsModal } from "./[pageName]/_components/_clientComponents/ManageIconsModal";
 
 export const experimental_ppr = true;
 
@@ -117,7 +118,19 @@ export default async function Layout({
         })}
       </div>
 
-      {isAuthenticated ? <IsEditRegime /> : null}
+      <div
+        style={{
+          display: "flex",
+          gap: "20px",
+          justifyContent: "flex-end",
+          alignItems: "center",
+          width: "100%",
+        }}
+      >
+        {isAuthenticated ? <ManageIconsModal params={paramsData} /> : null}
+
+        {isAuthenticated ? <EditRegime /> : null}
+      </div>
 
       <div
         id="parentModal"

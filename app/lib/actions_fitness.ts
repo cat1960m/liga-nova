@@ -9,7 +9,7 @@ import {
   FullData,
 } from "./definitions";
 import { revalidatePath } from "next/cache";
-import { CAN_NOT_DELETE, SERVICE_ITEM, TAB_TITLE } from "./constants";
+import { CAN_NOT_DELETE, ICON, SERVICE_ITEM, TAB_TITLE } from "./constants";
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: "require" });
 
@@ -90,21 +90,23 @@ export const updateFeatureSubtypeFilterIds = async ({
   }
 };
 
-export const updatePrice = async ({
-  price,
+export const updatePriceValue = async ({
+  price = null,
   textDescriptionId,
   pathName,
+  value = null,
 }: {
   textDescriptionId: number;
-  price: number;
+  price?: number | null;
+  value?: string | null;
   pathName: string;
 }) => {
   try {
     await sql`Update  text_descriptions
-               SET  price = ${price}
+               SET  price = ${price}, value=${value}
                WHERE id = ${textDescriptionId}`;
 
-    // revalidatePath(pathName);
+    revalidatePath(pathName);
     return;
   } catch (error) {
     // If a database error occurs, return a more specific error.
@@ -280,19 +282,21 @@ export const addTextDescription = async ({
   pathName,
   canDelete,
   price,
+  value = null,
 }: {
   featureId: number;
   textType: string;
   pathName: string;
   canDelete: boolean;
   price: number | null;
+  value?: string | null;
 }) => {
   const date = new Date();
   const time = date.getTime();
 
   const result =
-    await sql`INSERT INTO text_descriptions (feature_id, text_type, can_delete, price, text_description_order)
-          VALUES (${featureId}, ${textType}, ${canDelete}, ${price}, ${time})
+    await sql`INSERT INTO text_descriptions (feature_id, text_type, can_delete, price, text_description_order, value)
+          VALUES (${featureId}, ${textType}, ${canDelete}, ${price}, ${time}, ${value})
           RETURNING id;`;
   revalidatePath(pathName);
 };
@@ -483,4 +487,41 @@ export const UpdateTextDescriptionsOrder = async ({
 
 export const revalidate = async (path: string) => {
   await revalidatePath(path);
+};
+
+export const addIcon = async ({
+  value,
+  pathName,
+}: {
+  value: string;
+  pathName: string;
+}): Promise<number | null> => {
+  const date = new Date();
+  let time = date.getTime();
+  const name = ICON;
+
+  try {
+    const newFeatures = await sql`
+          INSERT INTO features ( name, feature_order)
+          VALUES ( ${name}, ${time})
+          RETURNING id;
+        `;
+
+    const newFeatureId: number = newFeatures[0]?.id;
+
+    if (newFeatureId) {
+      await sql`
+          INSERT INTO text_descriptions (feature_id, value, text_type, text_description_order)
+          VALUES (${newFeatureId}, ${value}, ${name}, ${time})
+          RETURNING id;`;
+
+      revalidatePath(pathName);
+
+      return newFeatureId;
+    }
+  } catch (error) {
+    // If a database error occurs, return a more specific error.
+    return null;
+  }
+  return null;
 };

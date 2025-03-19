@@ -2,6 +2,7 @@ import { FullData, MainParams } from "@/app/lib/definitions";
 import { DrawChildFeature_Client } from "./DrawChildFeatures_Client";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { AddChildFeatureToContainer } from "./_clientComponents/AddChildFeatureToContainer";
+import { MAX_PAGE_WIDTH } from "@/app/lib/constants";
 
 export type Props = {
   featureId: number;
@@ -38,7 +39,7 @@ export const DrawFeatureContainer_Client = ({
           gap: isEdit ? "20px" : 0,
           width: "100%",
           minHeight: "40px",
-          maxWidth: "1075px",
+          maxWidth: `${MAX_PAGE_WIDTH}px`,
         }}
       >
         {keys.map((id) => {

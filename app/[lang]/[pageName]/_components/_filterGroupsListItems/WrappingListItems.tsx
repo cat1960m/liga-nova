@@ -77,6 +77,8 @@ export const WrappingListItems = ({
         }}
       >
         {itemIds.map((itemId) => {
+          const currentData = data[itemId];
+          const id = currentData[0]?.id ?? null;
           return (
             <div
               key={itemId}
@@ -92,7 +94,12 @@ export const WrappingListItems = ({
                 padding: "10px",
               }}
             >
-              <ListItem currentData={data[itemId]} pageName={params.pageName} />
+              <ListItem
+                currentData={currentData}
+                pageName={params.pageName}
+                pageFullDataList={pageFullDataList}
+                staticTexts={staticTexts}
+              />
 
               {isEdit ? (
                 <div
@@ -106,14 +113,13 @@ export const WrappingListItems = ({
                 >
                   <CommonButton
                     text={editTextButton}
-                    onClick={() =>
-                      setEditingItemFeatureId(data[itemId][0]?.id ?? null)
-                    }
+                    onClick={() => setEditingItemFeatureId(id)}
                   />
 
                   <DeleteFeatureButton
-                    featureId={data[itemId][0]?.id}
+                    featureId={id}
                     deleteText={staticTexts.delete ?? "N/A"}
+                    featureData={currentData}
                   />
                 </div>
               ) : null}

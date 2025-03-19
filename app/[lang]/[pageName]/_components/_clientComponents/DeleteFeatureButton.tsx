@@ -3,15 +3,20 @@
 import { RemoveFeature } from "@/app/lib/actions_fitness";
 import { usePathname } from "next/navigation";
 import { CommonButton } from "./CommonButton";
+import axios from "axios";
+import { FullData } from "@/app/lib/definitions";
+import { S3_TYPES } from "@/app/lib/constants";
 
 export const DeleteFeatureButton = ({
   featureId,
   deleteText,
-  onDeleteFInished,
+  onDeleteFinished,
+  featureData,
 }: {
   featureId?: number;
   deleteText: string;
-  onDeleteFInished?: () => void;
+  onDeleteFinished?: () => void;
+  featureData: FullData[];
 }) => {
   const pathName = usePathname();
 
@@ -21,7 +26,26 @@ export const DeleteFeatureButton = ({
 
   const handleDelete = async () => {
     await RemoveFeature({ id: featureId, pathName: pathName });
-    onDeleteFInished?.();
+
+    const imageData = featureData.filter(
+      (data) => S3_TYPES.includes(data.text_type) && !!data.value
+    );
+
+    const promises: Promise<any>[] = [];
+
+    if (imageData.length) {
+      imageData.forEach((data) => {
+        promises.push(
+          axios.post("/api/removeFile", {
+            s3Key: data.value,
+          })
+        );
+      });
+
+      await Promise.all(promises);
+    }
+
+    onDeleteFinished?.();
   };
 
   return <CommonButton text={deleteText} onClick={handleDelete} />;

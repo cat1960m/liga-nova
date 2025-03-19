@@ -1,19 +1,23 @@
-import { LIST_ITEM } from "@/app/lib/constants";
+import { LIST_ITEM, TRAINERS } from "@/app/lib/constants";
 import { FullData } from "@/app/lib/definitions";
 import { getContainerData, getFilterIds } from "@/app/lib/utils";
 import { useMemo } from "react";
-import { ListItem } from "../_listItem/ListItem";
+import { ListItem } from "../_filterGroupsListItems/ListItem";
+import { StaticTexts } from "@/app/dictionaries/definitions";
+import { ScrollContainer } from "../_clientComponents/ScrollContainer/ScrollContainer";
 
 export type Props = {
   currentData: FullData;
   pageFullDataList: FullData[];
   pageName: string;
+  staticTexts: StaticTexts;
 };
 
 export const AdditionalPageDataGroupShow = ({
   currentData,
   pageFullDataList,
   pageName,
+  staticTexts,
 }: Props) => {
   const pageFeatureId = currentData.id;
   const filterTextDescriptionIds = getFilterIds(currentData.filter_ids);
@@ -38,6 +42,28 @@ export const AdditionalPageDataGroupShow = ({
   }
 
   const [data, itemIds] = containerFullData;
+
+  if (pageName === TRAINERS) {
+    const getItem = (id: string) => {
+      return (
+        <div
+          style={{
+            padding: "0 10px",
+            width: "100%",
+          }}
+        >
+          <ListItem
+            currentData={data[id]}
+            pageName={pageName}
+            pageFullDataList={pageFullDataList}
+            staticTexts={staticTexts}
+          />
+        </div>
+      );
+    };
+
+    return <ScrollContainer ids={containerFullData[1]} getItem={getItem} />;
+  }
 
   return (
     <div
@@ -66,7 +92,12 @@ export const AdditionalPageDataGroupShow = ({
               maxWidth: "50%",
             }}
           >
-            <ListItem currentData={data[itemId]} pageName={pageName} />
+            <ListItem
+              currentData={data[itemId]}
+              pageName={pageName}
+              pageFullDataList={pageFullDataList}
+              staticTexts={staticTexts}
+            />
           </div>
         );
       })}

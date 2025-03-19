@@ -8,7 +8,7 @@ import { LIST_ITEM } from "@/app/lib/constants";
 import { usePathname } from "next/navigation";
 import { updateFeatureSubtypeFilterIds } from "@/app/lib/actions_fitness";
 import { getFilterIds } from "@/app/lib/utils/getFilterIds";
-import { FilterGroups } from "../FilterGroups";
+import { FilterGroups } from "./FilterGroups";
 import { ListItem } from "./ListItem";
 import { AddEditListItem } from "./AddEditListItem";
 
@@ -129,6 +129,8 @@ export const AddEditListItemFilter = ({
           <ListItem
             currentData={addEditItemFeatureIdData}
             pageName={params.pageName}
+            pageFullDataList={pageFullDataList}
+            staticTexts={staticTexts}
           />
         </div>
 

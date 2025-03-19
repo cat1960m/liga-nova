@@ -2,11 +2,11 @@
 
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { FullData } from "@/app/lib/definitions";
-import { UpdateDeleteText } from "./UpdateDeleteText";
-import { AddTextDescriptionButton } from "./_clientComponents/AddTextDescriptionButton";
+import { UpdateDeleteText } from "../UpdateDeleteText";
+import { AddTextDescriptionButton } from "../_clientComponents/AddTextDescriptionButton";
 import { ChevronUpIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
-import { DeleteFeatureButton } from "./_clientComponents/DeleteFeatureButton";
+import { DeleteFeatureButton } from "../_clientComponents/DeleteFeatureButton";
 import { FILTER, FILTER_GROUP_TITLE } from "@/app/lib/constants";
 
 export type Props = {
@@ -120,11 +120,15 @@ export const FilterGroup = ({
                   <div style={{ fontSize: 14 }}>
                     {filter.text_content ?? "N/A"}
                   </div>
+                  {isEdit && filter.value ? (
+                    <img src={filter.value} alt="icon" />
+                  ) : null}
                 </div>
                 {isEdit ? (
                   <UpdateDeleteText
                     staticTexts={staticTexts}
                     currentData={filter}
+                    useIcons
                   />
                 ) : null}
               </div>
@@ -151,6 +155,7 @@ export const FilterGroup = ({
           <DeleteFeatureButton
             featureId={featureId}
             deleteText={staticTexts.delete ?? "N/A"}
+            featureData={groupData}
           />
         </div>
       ) : null}
