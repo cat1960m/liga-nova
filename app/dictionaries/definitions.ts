@@ -15,6 +15,7 @@ export type StaticTexts = {
 
   addItemToPage?: string;
   addItemToTab?: string;
+  addItems?: string;
   addTab?: string;
   addDescription?: string;
   addImportantDescription?: string;
@@ -25,9 +26,12 @@ export type StaticTexts = {
   share?: string;
   oldPrice?: string;
   descriptions?: string;
-  isPremium?: boolean;
+  isPremium?: string;
   photo?: string;
   uploadFile?: string;
   updateFile?: string;
   register?: string;
+  linkTo?: string;
+  apply?: string;
+  filters?: string;
 };

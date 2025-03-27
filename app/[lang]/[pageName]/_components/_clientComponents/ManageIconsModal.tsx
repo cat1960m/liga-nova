@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { CommonButton } from "./CommonButton";
+import { CommonButton } from "../_buttons/CommonButton";
 import { createPortal } from "react-dom";
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { addIcon, getPageFullData } from "@/app/lib/actions_fitness";

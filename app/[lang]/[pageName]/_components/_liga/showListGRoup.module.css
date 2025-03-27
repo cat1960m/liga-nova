@@ -1,0 +1,33 @@
+.list {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-items: space-between;
+}
+
+.item {
+    min-width: 180px;
+    max-width: 180px;
+    margin-bottom: 20px;
+}
+
+/* @media(max-width: 1024px) {
+    .item {
+        min-width: 33%;
+        max-width: 33%;
+    }
+}
+
+@media(max-width: 800px) {
+    .item {
+        min-width: 50%;
+        max-width: 50%;
+    }
+}
+
+@media(max-width: 500px) {
+    .item {
+        min-width: 100%;
+        max-width: 100%;
+    }
+} */

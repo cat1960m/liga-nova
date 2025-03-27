@@ -6,8 +6,8 @@ import { ShowTabTitle_Client } from "./ShowTabTitle_Client";
 import { DrawFeatureContainer_Client } from "../DrawFeatureContainer_Client";
 import { getContainerData } from "@/app/lib/utils";
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import { AddChildFeatureButton } from "../_clientComponents/AddChildFeatureButton";
-import { DeleteFeatureButton } from "../_clientComponents/DeleteFeatureButton";
+import { AddChildFeatureButton } from "../_buttons/AddChildFeatureButton";
+import { DeleteFeatureButton } from "../_buttons/DeleteFeatureButton";
 import { TAB, TAB_TITLE } from "@/app/lib/constants";
 
 export type Props = {
@@ -62,19 +62,25 @@ export const ShowTabs_Client = ({
   }, [pageFullDataList]);
 
   return (
-    <div style={isEdit ? { border: "4px dashed magenta" } : undefined}>
+    <div
+      style={
+        isEdit ? { border: "4px dashed magenta", padding: "5px" } : undefined
+      }
+    >
       <div
         style={{
           width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          gap: "20px",
         }}
       >
         <div
           style={{
             display: "flex",
             flexWrap: "wrap",
-            gap: "10px",
+            gap: "20px",
             width: "100%",
-            padding: "20px",
             alignItems: "center",
           }}
         >
@@ -129,7 +135,7 @@ export const ShowTabs_Client = ({
           <div
             style={{
               border: isEdit ? "1px dashed magenta" : undefined,
-              margin: "10px",
+              padding: isEdit ? "5px" : undefined,
             }}
           >
             <DrawFeatureContainer_Client
@@ -139,6 +145,7 @@ export const ShowTabs_Client = ({
               containerFullData={selectedTabData}
               isEdit={isEdit}
               staticTexts={staticTexts}
+              buttonText={staticTexts.addItemToTab ?? "N/A"}
             />
           </div>
         ) : null}

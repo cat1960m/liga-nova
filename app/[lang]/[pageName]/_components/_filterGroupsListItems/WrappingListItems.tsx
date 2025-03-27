@@ -1,13 +1,15 @@
 "use client";
 
 import { FullData, MainParams } from "@/app/lib/definitions";
-import { CommonButton } from "../_clientComponents/CommonButton";
+import { CommonButton } from "../_buttons/CommonButton";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { getContainerData } from "@/app/lib/utils";
 import { useMemo } from "react";
-import { DeleteFeatureButton } from "../_clientComponents/DeleteFeatureButton";
+import { DeleteFeatureButton } from "../_buttons/DeleteFeatureButton";
 import { ListItem } from "./ListItem";
 import { LIST_ITEM } from "@/app/lib/constants";
+
+import styles from "./wrappingListItems.module.css";
 
 export type Props = {
   isEdit: boolean;
@@ -73,7 +75,6 @@ export const WrappingListItems = ({
           justifyContent: "center",
           justifyItems: "center",
           alignContent: "center",
-          //  gap: "20px",
         }}
       >
         {itemIds.map((itemId) => {
@@ -83,16 +84,9 @@ export const WrappingListItems = ({
             <div
               key={itemId}
               style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "10px",
-                width: "33.3%",
-                minWidth: "190px",
-                flexGrow: 2,
-                maxWidth: "33.3%", //"50%",
                 border: isEdit ? "1px dotted magenta" : undefined,
-                padding: "10px",
               }}
+              className={styles.listItem}
             >
               <ListItem
                 currentData={currentData}

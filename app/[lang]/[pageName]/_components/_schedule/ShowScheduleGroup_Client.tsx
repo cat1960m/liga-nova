@@ -1,5 +1,6 @@
 import { FullData, MainParams } from "@/app/lib/definitions";
 import {
+  GRAY_BACKGROUND_COLOR,
   SCHEDULE_ITEM1,
   SCHEDULE_ITEM2,
   SCHEDULE_ITEM3,
@@ -38,14 +39,14 @@ export const ShowScheduleGroup_Client = ({
   };
 
   const style2 = {
-    backgroundColor: "#f8f8f8",
+    backgroundColor: GRAY_BACKGROUND_COLOR,
     borderTop: "1px solid blue",
     borderBottom: "1px solid blue",
     borderRight: "1px solid #D3D3D3",
   };
 
   const style3 = {
-    backgroundColor: "#f8f8f8",
+    backgroundColor: GRAY_BACKGROUND_COLOR,
     borderRadius: "0 10px 10px 0",
     border: "1px solid blue",
     borderLeft: "none",

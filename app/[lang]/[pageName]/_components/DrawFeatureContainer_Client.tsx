@@ -10,7 +10,7 @@ export type Props = {
   containerFullData: [Record<string, FullData[]>, string[]];
   isEdit: boolean;
   staticTexts: StaticTexts;
-  isPageContainer?: boolean;
+  buttonText: string;
   params: MainParams;
 };
 
@@ -20,23 +20,18 @@ export const DrawFeatureContainer_Client = ({
   containerFullData,
   isEdit,
   staticTexts,
-  isPageContainer,
+  buttonText,
   params,
 }: Props) => {
   const [data, keys] = containerFullData;
-
-  const buttonText = !isPageContainer
-    ? staticTexts.addItemToTab
-    : staticTexts.addItemToPage;
 
   return (
     <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
       <div
         style={{
-          padding: "10px",
           display: "flex",
           flexDirection: "column",
-          gap: isEdit ? "20px" : 0,
+          gap: "20px",
           width: "100%",
           minHeight: "40px",
           maxWidth: `${MAX_PAGE_WIDTH}px`,
@@ -58,7 +53,7 @@ export const DrawFeatureContainer_Client = ({
         {isEdit ? (
           <AddChildFeatureToContainer
             parentFeatureId={featureId}
-            text={buttonText ?? "N/A"}
+            text={buttonText}
             params={params}
           />
         ) : null}

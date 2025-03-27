@@ -1,7 +1,7 @@
 "use client";
 
 import { RemoveFeature } from "@/app/lib/actions_fitness";
-import { CommonButton } from "./CommonButton";
+import { CommonButton } from "../_buttons/CommonButton";
 import { usePathname } from "next/navigation";
 
 export const DeleteTabsButton = ({

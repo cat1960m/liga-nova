@@ -1,10 +1,10 @@
 "use client";
 
 import { FullData } from "@/app/lib/definitions";
-import { CommonButton } from "../_clientComponents/CommonButton";
+import { CommonButton } from "../_buttons/CommonButton";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { UpdateTextDescriptionData_new } from "../_clientComponents/UpdateTextDescriptionData_new";
-import { DeleteFeatureButton } from "../_clientComponents/DeleteFeatureButton";
+import { DeleteFeatureButton } from "../_buttons/DeleteFeatureButton";
 
 export type Props = {
   tabTitle: FullData;
@@ -40,8 +40,8 @@ export const ShowTabTitle_Client = ({
         flexDirection: "column",
         alignItems: "stretch",
         border: isEdit ? "1px dotted magenta" : undefined,
+        padding: isEdit ? "5px" : undefined,
         gap: "10px",
-        padding: "10px",
       }}
     >
       <CommonButton

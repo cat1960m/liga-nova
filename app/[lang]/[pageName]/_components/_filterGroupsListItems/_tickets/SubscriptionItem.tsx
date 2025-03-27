@@ -1,5 +1,7 @@
 import { FullData } from "@/app/lib/definitions";
 import {
+  ACTION_BUTTON_BACKGROUND,
+  GRAY_BACKGROUND_COLOR,
   SUBSCRIPTION_ITEM_DESCRIPTION,
   SUBSCRIPTION_ITEM_IMPORTANT_DESCRIPTION,
   SUBSCRIPTION_ITEM_NAME,
@@ -52,8 +54,8 @@ export const SubscriptionItem = ({ currentData }: Props) => {
       style={{
         width: "100%",
         height: "100%",
-        backgroundColor: "#f8f8f8",
-        border: "1px solid #2575fc",
+        backgroundColor: GRAY_BACKGROUND_COLOR,
+        border: `1px solid ${ACTION_BUTTON_BACKGROUND}`,
         borderRadius: "10px",
         overflow: "hidden",
         display: "flex",
@@ -64,7 +66,7 @@ export const SubscriptionItem = ({ currentData }: Props) => {
       {share?.text_content ? (
         <div
           style={{
-            backgroundColor: "#2575fc",
+            backgroundColor: ACTION_BUTTON_BACKGROUND,
             display: "flex",
             justifyContent: "center",
             flexWrap: "wrap",

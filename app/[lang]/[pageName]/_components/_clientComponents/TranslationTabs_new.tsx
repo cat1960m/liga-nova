@@ -4,7 +4,7 @@ import { TabType, TextContent } from "@/app/lib/definitions";
 import { useParams } from "next/navigation";
 import { ChangeEventHandler, useState } from "react";
 import axios from "axios";
-import { CommonButton } from "./CommonButton";
+import { CommonButton } from "../_buttons/CommonButton";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 
 export const TranslationTabs_new = ({

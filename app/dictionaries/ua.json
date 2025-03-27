@@ -15,6 +15,7 @@
     "editTrainer": "Редагувати тренера",
     "addItemToPage": "додати елемент на сторінку",
     "addItemToTab": "додати елемент в TAB",
+    "addItems": "додати елемент",
     "addTab": "додати TAB",
     "addImportantDescription": "додати важливий опис",
     "addDescription": "додати опис",
@@ -29,6 +30,9 @@
     "photo": "Фото",
     "uploadFile": "Завантажити файл",
     "updateFile": "Змінити файл",
-    "register": "ЗАПИСАТИСЯ"
+    "register": "ЗАПИСАТИСЯ",
+    "linkTo": "Посилання на:",
+    "apply": "ЗАСТОСУВАТИ",
+    "filters": "ФІЛЬТРИ"
   }
 }

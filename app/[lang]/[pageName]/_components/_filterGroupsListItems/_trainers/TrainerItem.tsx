@@ -2,6 +2,7 @@
 
 import { FullData } from "@/app/lib/definitions";
 import {
+  ACTION_BUTTON_BACKGROUND,
   TRAINER_ITEM_DESCRIPTION,
   TRAINER_ITEM_IMAGE,
   TRAINER_ITEM_IS_PREMIUM,
@@ -88,7 +89,7 @@ export const TrainerItem = ({
         <div
           style={{
             width: "100%",
-            border: "1px solid #2575fc",
+            border: `1px solid ${ACTION_BUTTON_BACKGROUND}`,
             borderRadius: "10px",
             overflow: "hidden",
             position: "relative",

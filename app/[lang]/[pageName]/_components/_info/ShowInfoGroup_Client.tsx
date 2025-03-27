@@ -10,7 +10,7 @@ import {
 } from "@/app/lib/constants";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { ShowInfoGroupItem_Client } from "./ShowInfoGroupItem_Client";
-import { AddTextDescriptionButton } from "../_clientComponents/AddTextDescriptionButton";
+import { AddTextDescriptionButton } from "../_buttons/AddTextDescriptionButton";
 import { UploadComponent } from "../_clientComponents/UploadComponent";
 import { updatePriceValue } from "@/app/lib/actions_fitness";
 import { usePathname } from "next/navigation";
@@ -68,7 +68,7 @@ export const ShowInfoGroup_Client = ({
             gap: "20px",
             width: "50%",
             borderRadius: "10px",
-            backgroundColor: "rgb(230, 230, 230)",
+            backgroundColor: "#f2f2f2",
             border: isEdit ? "1px dotted magenta" : undefined,
             padding: "20px",
           }}
@@ -119,8 +119,10 @@ export const ShowInfoGroup_Client = ({
           <div
             style={{
               display: "flex",
+              gap: "10px",
               width: "50%",
-              border: "1px solid lightgray",
+              border: "1px dotted magenta",
+              padding: "5px",
               flexDirection: "column",
               alignItems: isEdit ? "flex-start" : "stretch",
               backgroundImage: imageData?.value,

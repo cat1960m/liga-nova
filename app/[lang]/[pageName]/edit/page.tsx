@@ -41,7 +41,7 @@ export default async function Page({
   }
 
   return (
-    <>
+    <div style={{ width: "100%", padding: "30px" }}>
       {!isAuthenticated ? (
         <DrawFeatureContainer_Client
           params={pars}
@@ -50,7 +50,7 @@ export default async function Page({
           containerFullData={containerFullData}
           isEdit={false}
           staticTexts={dict.common}
-          isPageContainer
+          buttonText={dict.common.addItemToPage ?? "N/A"}
         />
       ) : (
         <DrawFeatureContainer_Client
@@ -60,9 +60,9 @@ export default async function Page({
           containerFullData={containerFullData}
           isEdit={true}
           staticTexts={dict.common}
-          isPageContainer
+          buttonText={dict.common.addItemToPage ?? "N/A"}
         />
       )}
-    </>
+    </div>
   );
 }

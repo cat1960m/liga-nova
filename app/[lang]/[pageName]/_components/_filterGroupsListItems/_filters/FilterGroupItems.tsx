@@ -11,7 +11,7 @@ import {
   GROUP,
 } from "@/app/lib/constants";
 import { useMemo } from "react";
-import { AddChildFeatureButton } from "../_clientComponents/AddChildFeatureButton";
+import { AddChildFeatureButton } from "../../_buttons/AddChildFeatureButton";
 
 export type Props = {
   isEdit: boolean;
@@ -24,10 +24,9 @@ export type Props = {
   }) => void;
   selectedFilterTextDescriptionIds: number[];
   parentFeatureId: number;
-  width?: string;
 };
 
-export const FilterGroups = ({
+export const FilterGroupsItems = ({
   pageFullDataList,
   isEdit,
   staticTexts,
@@ -35,7 +34,6 @@ export const FilterGroups = ({
   onFilterSelectionChanged,
   selectedFilterTextDescriptionIds,
   parentFeatureId,
-  width,
 }: Props) => {
   const containerFullData = useMemo(
     () =>
@@ -57,20 +55,8 @@ export const FilterGroups = ({
 
   const [data, filterGroupIds] = containerFullData;
 
-  const currentWidth = width ?? "238px";
-
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        backgroundColor: "#f8f8f8",
-        border: "1px solid lightgray",
-        borderRadius: "10px",
-        width: isEdit ? undefined : currentWidth,
-        minWidth: currentWidth,
-      }}
-    >
+    <>
       {filterGroupIds.map((filterGroupId, index) => {
         const filterGroupData = data[filterGroupId];
         return (
@@ -92,29 +78,6 @@ export const FilterGroups = ({
           </div>
         );
       })}
-
-      {isEdit ? (
-        <div
-          style={{
-            margin: "10px",
-            display: "flex",
-            width: "100%",
-            justifyContent: "center",
-            gap: "5px",
-            flexWrap: "wrap",
-            alignItems: "center",
-          }}
-        >
-          <AddChildFeatureButton
-            parentFeatureId={parentFeatureId}
-            text={staticTexts.addGroup ?? "N/A"}
-            params={params}
-            textTypes={[FILTER_GROUP_TITLE, FILTER]}
-            type={GROUP}
-            subtype={FILTER_GROUP}
-          />
-        </div>
-      ) : null}
-    </div>
+    </>
   );
 };

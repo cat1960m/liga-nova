@@ -1,0 +1,24 @@
+.listItem {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex-grow: 2;
+    width: 33.3%;
+    min-width: 190px;
+    max-width: 33.3%;
+    padding: 10px;
+}
+
+@media(max-width: 890px) {
+    .listItem {
+        width: 50%;
+        max-width: 50%;
+    }
+}
+
+@media(max-width: 768px) {
+    .listItem {
+        width: 100%;
+        max-width: 100%;
+    }
+}

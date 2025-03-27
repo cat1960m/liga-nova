@@ -2,7 +2,7 @@ import { StaticTexts } from "@/app/dictionaries/definitions";
 import { FullData } from "@/app/lib/definitions";
 import { AddEditTrainerItem } from "./_trainers/AddEditTrainerItem";
 import { AddEditSubscriptionItem } from "./_tickets/AddEditSubscriptionItem";
-import { TICKETS, TRAINERS } from "@/app/lib/constants";
+import { TICKETS_PAGE_NAME, TRAINERS_PAGE_NAME } from "@/app/lib/constants";
 
 export type Props = {
   commonWidth: string;
@@ -22,8 +22,8 @@ export const AddEditListItem = ({
   setIsSaveDisabled,
 }: Props) => {
   return (
-    <>
-      {pageName === TICKETS ? (
+    <div style={{ width: "100%" }}>
+      {pageName === TICKETS_PAGE_NAME ? (
         <AddEditSubscriptionItem
           currentData={currentData}
           subscriptionItemFeatureId={addEditItemFeatureId}
@@ -31,7 +31,7 @@ export const AddEditListItem = ({
           commonWidth={commonWidth}
         />
       ) : null}
-      {pageName === TRAINERS ? (
+      {pageName === TRAINERS_PAGE_NAME ? (
         <AddEditTrainerItem
           currentData={currentData}
           trainerItemFeatureId={addEditItemFeatureId}
@@ -40,6 +40,6 @@ export const AddEditListItem = ({
           setIsSaveDisabled={setIsSaveDisabled}
         />
       ) : null}
-    </>
+    </div>
   );
 };

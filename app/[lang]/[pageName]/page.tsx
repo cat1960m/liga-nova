@@ -37,14 +37,16 @@ export default async function Page({
   }
 
   return (
-    <DrawFeatureContainer_Client
-      params={pars}
-      featureId={currentPageData?.id}
-      pageFullDataList={pageFullData}
-      containerFullData={containerFullData}
-      isEdit={false}
-      staticTexts={dict.common}
-      isPageContainer
-    />
+    <div style={{ width: "100%", padding: "30px" }}>
+      <DrawFeatureContainer_Client
+        params={pars}
+        featureId={currentPageData?.id}
+        pageFullDataList={pageFullData}
+        containerFullData={containerFullData}
+        isEdit={false}
+        staticTexts={dict.common}
+        buttonText={dict.common.addItemToPage ?? "N/A"}
+      />
+    </div>
   );
 }

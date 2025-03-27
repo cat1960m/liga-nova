@@ -12,14 +12,14 @@ import {
   GROUP_2COLUMNS_2HEADERS,
   HEADER1,
   HEADER2,
-  INFO,
+  INFO_GROUP,
   INFO_ADDRESS,
   INFO_BODY,
   INFO_TELEPHONE,
   INFO_TITLE,
   ITEM_COLUMN1,
   ITEM_COLUMN2,
-  SCHEDULE,
+  SCHEDULE_GROUP,
   SCHEDULE_ITEM1,
   SCHEDULE_ITEM2,
   SCHEDULE_ITEM3,
@@ -27,7 +27,7 @@ import {
   SCHEDULE_ITEM5,
   SCHEDULE_ITEM6,
   SERVICE_ITEM,
-  SERVICES,
+  SERVICES_GROUP,
   SIMPLE_GROUP_ITEM,
   TAB,
   TAB_TITLE,
@@ -36,10 +36,19 @@ import {
   FILTER_GROUPS_LIST_ITEMS,
   PAGE_NAMES_TO_LIST_ITEMS_DATA,
   IMAGE,
-  IMAGE_LIST,
+  IMAGE_LIST_GROUP,
   ACTION_BANNER_GROUP,
   ACTION_BANNER_IMAGE,
   ACTION_BANNER_TITLE,
+  LIGA_GROUP,
+  LIGA_TITLE,
+  LIGA_TELEPHONE,
+  LIGA_ADDRESS,
+  PHOTO_GALLERY_GROUP,
+  LAYOUT_PARENT,
+  LAYOUT_ITEM_LEFT,
+  LAYOUT_ITEM,
+  LAYOUT_ITEM_RIGHT,
 } from "@/app/lib/constants";
 import { MainParams } from "@/app/lib/definitions";
 import { usePathname } from "next/navigation";
@@ -58,7 +67,7 @@ export const AddChildFeatureToContainer = ({
   const [selectedValue, setSelectedValue] = useState<string>("");
 
   const options = useMemo(() => {
-    const data = [...FeatureTypes.GROUP, TABS];
+    const data = [...FeatureTypes.GROUP, TABS, LAYOUT_PARENT];
 
     if (!!PAGE_NAMES_TO_LIST_ITEMS_DATA[params.pageName]) {
       data.push(FILTER_GROUPS_LIST_ITEMS);
@@ -86,7 +95,7 @@ export const AddChildFeatureToContainer = ({
       });
     }
 
-    if (newValue === INFO) {
+    if (newValue === INFO_GROUP) {
       await addChildFeature({
         parentId: parentFeatureId,
         type: GROUP,
@@ -102,7 +111,30 @@ export const AddChildFeatureToContainer = ({
         pathName,
       });
     }
-    if (newValue === IMAGE_LIST) {
+
+    if (newValue === LIGA_GROUP) {
+      await addChildFeature({
+        parentId: parentFeatureId,
+        type: GROUP,
+        subtype: newValue,
+        name: params.pageName,
+        text_types: [LIGA_TITLE, LIGA_TELEPHONE, LIGA_ADDRESS],
+        pathName,
+      });
+    }
+
+    if (newValue === IMAGE_LIST_GROUP) {
+      await addChildFeature({
+        parentId: parentFeatureId,
+        type: GROUP,
+        subtype: newValue,
+        name: params.pageName,
+        text_types: [],
+        pathName,
+      });
+    }
+
+    if (newValue === PHOTO_GALLERY_GROUP) {
       await addChildFeature({
         parentId: parentFeatureId,
         type: GROUP,
@@ -135,7 +167,7 @@ export const AddChildFeatureToContainer = ({
       });
     }
 
-    if (newValue === SERVICES) {
+    if (newValue === SERVICES_GROUP) {
       await addChildFeature({
         parentId: parentFeatureId,
         type: GROUP,
@@ -146,7 +178,7 @@ export const AddChildFeatureToContainer = ({
       });
     }
 
-    if (newValue === SCHEDULE) {
+    if (newValue === SCHEDULE_GROUP) {
       await addChildFeature({
         parentId: parentFeatureId,
         type: GROUP,
@@ -218,6 +250,38 @@ export const AddChildFeatureToContainer = ({
         });
       }
     }
+
+    if (newValue === LAYOUT_PARENT) {
+      const layoutFeatureId = await addChildFeature({
+        parentId: parentFeatureId,
+        type: LAYOUT_PARENT,
+        subtype: LAYOUT_PARENT,
+        name: params.pageName,
+        text_types: [],
+        pathName,
+      });
+
+      if (layoutFeatureId) {
+        await addChildFeature({
+          parentId: layoutFeatureId,
+          type: LAYOUT_ITEM,
+          subtype: LAYOUT_ITEM_LEFT,
+          name: params.pageName,
+          text_types: [],
+          pathName,
+        });
+
+        await addChildFeature({
+          parentId: layoutFeatureId,
+          type: LAYOUT_ITEM,
+          subtype: LAYOUT_ITEM_RIGHT,
+          name: params.pageName,
+          text_types: [],
+          pathName,
+        });
+      }
+    }
+
     setSelectedValue("");
   };
 

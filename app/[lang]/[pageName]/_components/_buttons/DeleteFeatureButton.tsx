@@ -2,7 +2,7 @@
 
 import { RemoveFeature } from "@/app/lib/actions_fitness";
 import { usePathname } from "next/navigation";
-import { CommonButton } from "./CommonButton";
+import { CommonButton } from "../_buttons/CommonButton";
 import axios from "axios";
 import { FullData } from "@/app/lib/definitions";
 import { S3_TYPES } from "@/app/lib/constants";

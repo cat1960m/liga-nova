@@ -4,7 +4,6 @@ import { FullData } from "@/app/lib/definitions";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { MAX_PAGE_WIDTH } from "@/app/lib/constants";
 import { useEffect, useState } from "react";
-import { ListItem } from "../../_filterGroupsListItems/ListItem";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 import styles from "./scrollContainer.module.css";
 import cl from "clsx";

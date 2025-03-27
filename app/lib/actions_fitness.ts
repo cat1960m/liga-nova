@@ -136,7 +136,29 @@ export const updateTextDescriptionValue = async ({
   }
 };
 
-export const RemoveFeature = async ({
+export const updateTextDescriptionLink = async ({
+  link,
+  textDescriptionId,
+  pathName,
+}: {
+  textDescriptionId: number;
+  link: string;
+  pathName: string;
+}) => {
+  try {
+    await sql`Update  text_descriptions
+               SET  link = ${link}
+               WHERE id = ${textDescriptionId}`;
+
+    revalidatePath(pathName);
+    return;
+  } catch (error) {
+    // If a database error occurs, return a more specific error.
+    return null;
+  }
+};
+
+/* export const RemoveFeature = async ({
   id,
   pathName,
 }: {
@@ -149,6 +171,52 @@ export const RemoveFeature = async ({
     if (pathName) {
       revalidatePath(pathName);
     }
+    return true;
+  } catch (error) {
+    // If a database error occurs, return a more specific error.
+    return null;
+  }
+}; */
+
+export const RemoveFeature = async ({
+  id,
+  pathName,
+}: {
+  id: number;
+  pathName?: string;
+}) => {
+  let ids: number[] = [id];
+
+  try {
+    await sql`DELETE  FROM features WHERE features.id = ${id} `;
+
+    while (true) {
+      if (!ids.length) {
+        break;
+      }
+
+      const children: FullData[] = await sql<FullData[]>`SELECT *
+        FROM features
+        WHERE parent_feature_id = ANY (${sql.array(ids)}::integer[]);`;
+
+      if (children.length) {
+        ids = children.map((child) => child.id);
+
+        await sql`
+            DELETE FROM features
+            WHERE id = ANY (${sql.array(ids)}::integer[]);
+          `;
+
+        console.log("deleted", ids);
+      } else {
+        ids = [];
+      }
+    }
+
+    if (pathName) {
+      revalidatePath(pathName);
+    }
+
     return true;
   } catch (error) {
     // If a database error occurs, return a more specific error.
@@ -388,7 +456,7 @@ export const getPageFullData = async ({
   try {
     return await sql<FullData[]>`SELECT features.id, 
         parent_feature_id, type, subtype, name, feature_order, filter_ids, additional_page_name,
-        text_descriptions.id as text_description_id, text_type, price, can_delete, value,
+        text_descriptions.id as text_description_id, text_type, price, can_delete, value, link,
         language, text_content, content_type
         FROM features 
         LEFT JOIN text_descriptions 

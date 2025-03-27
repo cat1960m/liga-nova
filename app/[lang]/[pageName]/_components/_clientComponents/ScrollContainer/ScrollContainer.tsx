@@ -8,10 +8,11 @@ import cl from "clsx";
 
 export type Props = {
   ids: string[];
-  getItem: (id: string) => React.ReactElement;
+  getItem: (value: { id: string; widthItem?: number }) => React.ReactElement;
+  countVisibleItems?: number;
 };
 
-export const ScrollContainer = ({ ids, getItem }: Props) => {
+export const ScrollContainer = ({ ids, getItem, countVisibleItems }: Props) => {
   const [scrollPosition, setScrollPosition] = useState<number>(0);
   const [count, setCount] = useState(0);
   const [widthItem, setWidthItem] = useState(0);
@@ -19,13 +20,18 @@ export const ScrollContainer = ({ ids, getItem }: Props) => {
   const start = useRef<number | null>(null);
 
   const getData = () => {
-    let countVisible = 1;
     const w =
       //document.documentElement.clientWidth;
       window.innerWidth;
 
-    if (ids.length > 1 && w > 500) {
-      countVisible = w >= MAX_PAGE_WIDTH && ids.length > 2 ? 3 : 2;
+    let countVisible = countVisibleItems;
+
+    if (!countVisible) {
+      countVisible = 1;
+
+      if (ids.length > 1 && w > 500) {
+        countVisible = w >= MAX_PAGE_WIDTH && ids.length > 2 ? 3 : 2;
+      }
     }
 
     let widthItem = w - 60 - 15;
@@ -114,7 +120,9 @@ export const ScrollContainer = ({ ids, getItem }: Props) => {
       {isIconsVisible ? (
         <div
           onClick={onLeftClick}
-          className={cl(styles.icon, styles.left)}
+          className={cl(styles.icon, styles.left, {
+            [styles.oneItemLeft]: !!countVisibleItems,
+          })}
           style={{ width: "48px", marginTop: widthItem / 2 }}
         >
           <ChevronLeftIcon style={{ width: "32px" }} />
@@ -152,7 +160,7 @@ export const ScrollContainer = ({ ids, getItem }: Props) => {
                 }}
                 key={id + "_" + index}
               >
-                {getItem(id)}
+                {getItem({ id, widthItem })}
               </div>
             ))}
           </div>
@@ -161,7 +169,9 @@ export const ScrollContainer = ({ ids, getItem }: Props) => {
       {isIconsVisible ? (
         <div
           onClick={onRightClick}
-          className={cl(styles.icon, styles.right)}
+          className={cl(styles.icon, styles.right, {
+            [styles.oneItemRight]: !!countVisibleItems,
+          })}
           style={{ width: "48px", marginTop: widthItem / 2 }}
         >
           <ChevronRightIcon style={{ width: "32px" }} />

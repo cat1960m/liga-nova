@@ -1,16 +1,18 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import { CommonButton } from "./CommonButton";
+import { CommonButton } from "../_buttons/CommonButton";
 
 export function UploadComponent({
   onUploaded,
   s3Key,
   staticTexts,
+  maxWidth,
 }: {
   onUploaded?: (value: string) => void;
   s3Key?: string;
   staticTexts?: StaticTexts;
+  maxWidth?: string;
 }) {
   const [file, setFile] = useState<File | null>(null);
   const [uploadState, setUploadState] = useState("");
@@ -57,13 +59,17 @@ export function UploadComponent({
           flexDirection: "column",
           gap: "10px",
           width: "100%",
+          overflow: "auto",
         }}
       >
         <input
           type="file"
           onChange={handleFileChange}
-          style={{ wordWrap: "break-word", overflow: "hidden" }}
+          style={{
+            maxWidth,
+          }}
         />
+
         <div>{uploadState}</div>
       </div>
       <CommonButton

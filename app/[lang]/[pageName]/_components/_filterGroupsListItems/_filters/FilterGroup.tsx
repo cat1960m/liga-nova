@@ -2,11 +2,11 @@
 
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { FullData } from "@/app/lib/definitions";
-import { UpdateDeleteText } from "../UpdateDeleteText";
-import { AddTextDescriptionButton } from "../_clientComponents/AddTextDescriptionButton";
+import { UpdateDeleteText } from "../../UpdateDeleteText";
+import { AddTextDescriptionButton } from "../../_buttons/AddTextDescriptionButton";
 import { ChevronUpIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
-import { DeleteFeatureButton } from "../_clientComponents/DeleteFeatureButton";
+import { DeleteFeatureButton } from "../../_buttons/DeleteFeatureButton";
 import { FILTER, FILTER_GROUP_TITLE } from "@/app/lib/constants";
 
 export type Props = {

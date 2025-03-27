@@ -1,4 +1,4 @@
-import { LIST_ITEM, TRAINERS } from "@/app/lib/constants";
+import { LIST_ITEM, TRAINERS_PAGE_NAME } from "@/app/lib/constants";
 import { FullData } from "@/app/lib/definitions";
 import { getContainerData, getFilterIds } from "@/app/lib/utils";
 import { useMemo } from "react";
@@ -43,8 +43,8 @@ export const AdditionalPageDataGroupShow = ({
 
   const [data, itemIds] = containerFullData;
 
-  if (pageName === TRAINERS) {
-    const getItem = (id: string) => {
+  if (pageName === TRAINERS_PAGE_NAME) {
+    const getItem = ({ id }: { id: string }) => {
       return (
         <div
           style={{

@@ -2,7 +2,7 @@ import { FullData } from "@/app/lib/definitions";
 import { SubscriptionItem } from "./_tickets/SubscriptionItem";
 import { TrainerItem } from "./_trainers/TrainerItem";
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import { TICKETS, TRAINERS } from "@/app/lib/constants";
+import { TICKETS_PAGE_NAME, TRAINERS_PAGE_NAME } from "@/app/lib/constants";
 
 export type Props = {
   currentData: FullData[];
@@ -19,10 +19,10 @@ export const ListItem = ({
 }: Props) => {
   return (
     <>
-      {pageName === TICKETS ? (
+      {pageName === TICKETS_PAGE_NAME ? (
         <SubscriptionItem currentData={currentData} />
       ) : null}
-      {pageName === TRAINERS ? (
+      {pageName === TRAINERS_PAGE_NAME ? (
         <TrainerItem
           currentData={currentData}
           pageFullDataList={pageFullDataList}

@@ -1,0 +1,45 @@
+.container {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+
+.title {
+    display: flex;
+    justify-content: center;
+    font-size: 24;
+    font-weight: 700;
+}
+
+.main {
+    display: flex;
+    flex-grow: 2;
+}
+
+.addEdit {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.filterGroups {
+    display: block;
+}
+
+.filterGroupsMobile {
+    display: none;
+}
+
+@media(max-width: 768px) {
+    .container {
+        flex-direction: column;
+    } 
+
+    .filterGroups {
+        display: none;
+    }
+    
+    .filterGroupsMobile {
+        display: block;
+    }
+}

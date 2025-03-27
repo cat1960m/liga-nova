@@ -4,6 +4,7 @@ import { StaticTexts } from "@/app/dictionaries/definitions";
 import {
   ACTION_BANNER_IMAGE,
   ACTION_BANNER_TITLE,
+  ACTION_BUTTON_BACKGROUND,
   IMAGE,
 } from "@/app/lib/constants";
 import { FullData, MainParams } from "@/app/lib/definitions";
@@ -13,13 +14,12 @@ import {
   addTextDescription,
   updateTextDescriptionValue,
 } from "@/app/lib/actions_fitness";
-import { ScrollContainer } from "../_clientComponents/ScrollContainer/ScrollContainer";
 import Image from "next/image";
 import { UploadComponent } from "../_clientComponents/UploadComponent";
 import { isNull } from "node:util";
 import { TextItemField } from "../TextItemField";
 import styles from "./actionBanner.module.css";
-import { CommonButton } from "../_clientComponents/CommonButton";
+import { CommonButton } from "../_buttons/CommonButton";
 
 export type Props = {
   isEdit: boolean;
@@ -86,14 +86,14 @@ export const ActionBannerGroup = ({
           {title?.text_content ?? "N/A"}
           <CommonButton
             text={staticTexts.register ?? "N/A"}
-            backgroundColor="#2575fc"
+            backgroundColor={ACTION_BUTTON_BACKGROUND}
           />
         </div>
         <div className={styles.info_small}>
           {title?.text_content ?? "N/A"}
           <CommonButton
             text={staticTexts.register ?? "N/A"}
-            backgroundColor="#2575fc"
+            backgroundColor={ACTION_BUTTON_BACKGROUND}
           />
         </div>
       </div>

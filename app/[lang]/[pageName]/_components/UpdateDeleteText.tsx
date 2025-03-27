@@ -1,5 +1,5 @@
 import { FullData } from "@/app/lib/definitions";
-import { DeleteTextDescriptionButton } from "./_clientComponents/DeleteTextDescriptionButton";
+import { DeleteTextDescriptionButton } from "./_buttons/DeleteTextDescriptionButton";
 import { UpdateTextDescriptionData_new } from "./_clientComponents/UpdateTextDescriptionData_new";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 export type Props = {

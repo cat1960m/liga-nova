@@ -3,14 +3,16 @@
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { useEffect, useState } from "react";
-import { CommonButton } from "../_clientComponents/CommonButton";
+import { CommonButton } from "../_buttons/CommonButton";
 import { LIST_ITEM } from "@/app/lib/constants";
 import { usePathname } from "next/navigation";
 import { updateFeatureSubtypeFilterIds } from "@/app/lib/actions_fitness";
 import { getFilterIds } from "@/app/lib/utils/getFilterIds";
-import { FilterGroups } from "./FilterGroups";
+import { FilterGroups } from "./_filters/FilterGroups";
 import { ListItem } from "./ListItem";
 import { AddEditListItem } from "./AddEditListItem";
+
+import styles from "./addEditKistItemFilter.module.css";
 
 export type Props = {
   staticTexts: StaticTexts;
@@ -104,6 +106,8 @@ export const AddEditListItemFilter = ({
         width: "100%",
         border: "1px dotted magenta",
         padding: "10px",
+        display: "flex",
+        flexDirection: "column",
       }}
     >
       <div
@@ -113,19 +117,26 @@ export const AddEditListItemFilter = ({
           width: "100%",
           alignItems: "flex-start",
           flexWrap: "wrap",
-          justifyContent: "space-between",
         }}
       >
-        <AddEditListItem
-          currentData={addEditItemFeatureIdData}
-          addEditItemFeatureId={addEditItemFeatureId}
-          staticTexts={staticTexts}
-          commonWidth={commonWidth}
-          setIsSaveDisabled={setIsSaveDisabled}
-          pageName={params.pageName}
-        />
+        <div
+          style={{
+            width: commonWidth,
+            flexGrow: 2,
+            minWidth: "190px",
+          }}
+        >
+          <AddEditListItem
+            currentData={addEditItemFeatureIdData}
+            addEditItemFeatureId={addEditItemFeatureId}
+            staticTexts={staticTexts}
+            commonWidth={commonWidth}
+            setIsSaveDisabled={setIsSaveDisabled}
+            pageName={params.pageName}
+          />
+        </div>
 
-        <div style={{ width: commonWidth, minWidth: "190px" }}>
+        <div style={{ width: "190px", minWidth: "190px" }}>
           <ListItem
             currentData={addEditItemFeatureIdData}
             pageName={params.pageName}

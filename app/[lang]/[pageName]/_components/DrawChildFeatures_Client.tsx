@@ -1,9 +1,16 @@
-import { GROUP, GROUP1, GROUP2, TABS } from "@/app/lib/constants";
+import {
+  GROUP,
+  GROUP1,
+  GROUP2,
+  LAYOUT_PARENT,
+  TABS,
+} from "@/app/lib/constants";
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { ShowComplexGroup_Client } from "./ShowComplexGroup_Client";
 import { ShowTabs_Client } from "./_tabs/ShowTabs_Client";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { ShowSimpleGroup_Client } from "./ShowSimpleGroup_Client";
+import { LayoutParent } from "./_layout_parent/LayoutParent";
 
 export type Props = {
   childFeatureDataList: FullData[];
@@ -63,5 +70,18 @@ export const DrawChildFeature_Client = ({
       />
     );
   }
+
+  if (childFeatureFirstItem.type === LAYOUT_PARENT) {
+    return (
+      <LayoutParent
+        tabsData={childFeatureFirstItem}
+        pageFullDataList={pageFullDataList}
+        params={params}
+        isEdit={isEdit}
+        staticTexts={staticTexts}
+      />
+    );
+  }
+
   return <></>;
 };

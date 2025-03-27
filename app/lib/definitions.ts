@@ -194,6 +194,7 @@ export type FullData = {
   can_delete?: boolean;
   price?: number;
   value?: string;
+  link?: string;
   text_content?: string;
   content_type?: string;
   language?: string;

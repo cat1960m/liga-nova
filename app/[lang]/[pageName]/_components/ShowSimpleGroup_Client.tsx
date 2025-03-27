@@ -1,7 +1,7 @@
 import { FullData } from "@/app/lib/definitions";
 import { DEFAULT_TEXT, GROUP1 } from "@/app/lib/constants";
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import { DeleteFeatureButton } from "./_clientComponents/DeleteFeatureButton";
+import { DeleteFeatureButton } from "./_buttons/DeleteFeatureButton";
 import { UpdateTextDescriptionData_new } from "./_clientComponents/UpdateTextDescriptionData_new";
 
 export type Props = {
@@ -19,9 +19,9 @@ export const ShowSimpleGroup_Client = ({
   const style = {
     fontSize: isLarge ? "xx-large" : "large",
     fontWeight: isLarge ? 700 : 400,
-    //padding: "20px",
     marginBottom: "10px",
     border: isEdit ? "1px dotted magenta" : undefined,
+    padding: isEdit ? "5px" : undefined,
   };
 
   const text = data.text_content ?? DEFAULT_TEXT + "!!";

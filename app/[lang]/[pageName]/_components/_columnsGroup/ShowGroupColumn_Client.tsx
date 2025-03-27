@@ -1,7 +1,7 @@
 import { FullData } from "@/app/lib/definitions";
 import { ShowGroupColumnText_Client } from "./ShowGroupColumnText_Client";
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import { AddTextDescriptionButton } from "../_clientComponents/AddTextDescriptionButton";
+import { AddTextDescriptionButton } from "../_buttons/AddTextDescriptionButton";
 
 export type Props = {
   headerType: string;
@@ -11,7 +11,7 @@ export type Props = {
   staticTexts: StaticTexts;
 };
 
-export const ShowGroupColumn_Client = ({
+export const ShowGroupColumn = ({
   headerType,
   columnItemType,
   groupData,

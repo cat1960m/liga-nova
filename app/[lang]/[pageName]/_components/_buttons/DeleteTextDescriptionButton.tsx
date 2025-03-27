@@ -2,7 +2,7 @@
 
 import { RemoveTextDescription } from "@/app/lib/actions_fitness";
 import { usePathname } from "next/navigation";
-import { CommonButton } from "./CommonButton";
+import { CommonButton } from "../_buttons/CommonButton";
 import axios from "axios";
 
 export const DeleteTextDescriptionButton = ({

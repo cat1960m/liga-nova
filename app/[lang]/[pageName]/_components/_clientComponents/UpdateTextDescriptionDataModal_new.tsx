@@ -4,7 +4,7 @@ import { createPortal } from "react-dom";
 import { useState, ChangeEventHandler, useEffect } from "react";
 import { FullData, TabType, TextContent } from "@/app/lib/definitions";
 import { TranslationTabs_new } from "./TranslationTabs_new";
-import { CommonButton } from "./CommonButton";
+import { CommonButton } from "../_buttons/CommonButton";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import {
   addText,
@@ -15,7 +15,7 @@ import {
   updateText,
 } from "@/app/lib/actions_fitness";
 import { usePathname } from "next/navigation";
-import { SERVICES, TOOLTIP } from "@/app/lib/constants";
+import { SERVICES_GROUP, TOOLTIP } from "@/app/lib/constants";
 
 export const UpdateTextDescriptionDataModal_new = ({
   onClose,
@@ -41,7 +41,7 @@ export const UpdateTextDescriptionDataModal_new = ({
 
   const textDescriptionId = currentData.text_description_id;
   const currentPrice = currentData.price;
-  const isTooltipUsed = currentData.subtype === SERVICES;
+  const isTooltipUsed = currentData.subtype === SERVICES_GROUP;
 
   const [priceValue, setPriceValue] = useState<number>(currentPrice ?? 0);
   const [icons, setIcons] = useState<FullData[]>([]);

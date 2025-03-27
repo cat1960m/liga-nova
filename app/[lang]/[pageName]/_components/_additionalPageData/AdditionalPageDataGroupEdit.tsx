@@ -1,12 +1,17 @@
 "use client";
 
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import { GROUP, FILTER_GROUP } from "@/app/lib/constants";
+import {
+  GROUP,
+  FILTER_GROUP,
+  FILTER_GROUP_DEFAULT_WIDTH,
+  GRAY_BACKGROUND_COLOR,
+} from "@/app/lib/constants";
 import { FullData } from "@/app/lib/definitions";
 import { useMemo, useState } from "react";
-import { FilterGroup } from "../_filterGroupsListItems/FilterGroup";
+import { FilterGroup } from "../_filterGroupsListItems/_filters/FilterGroup";
 import { getContainerData, getFilterIds } from "@/app/lib/utils";
-import { CommonButton } from "../_clientComponents/CommonButton";
+import { CommonButton } from "../_buttons/CommonButton";
 import { updateFeatureSubtypeFilterIds } from "@/app/lib/actions_fitness";
 import { usePathname } from "next/navigation";
 
@@ -91,10 +96,10 @@ export const AdditionalPageDataGroupEdit = ({
         style={{
           display: "flex",
           flexWrap: "wrap",
-          backgroundColor: "#f8f8f8",
+          backgroundColor: GRAY_BACKGROUND_COLOR,
           border: "1px solid lightgray",
           borderRadius: "10px",
-          minWidth: "238px",
+          minWidth: FILTER_GROUP_DEFAULT_WIDTH,
           alignItems: "flex-start",
           gap: "20px",
         }}

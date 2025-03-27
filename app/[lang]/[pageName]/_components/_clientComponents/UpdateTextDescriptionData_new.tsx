@@ -3,7 +3,7 @@
 import { FullData, TabType, TextContent } from "@/app/lib/definitions";
 import { useState } from "react";
 import { UpdateTextDescriptionDataModal_new } from "./UpdateTextDescriptionDataModal_new";
-import { CommonButton } from "./CommonButton";
+import { CommonButton } from "../_buttons/CommonButton";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 
 export const UpdateTextDescriptionData_new = ({

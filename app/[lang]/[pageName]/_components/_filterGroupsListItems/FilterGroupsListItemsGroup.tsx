@@ -16,7 +16,9 @@ import {
 } from "@/app/lib/constants";
 import { usePathname } from "next/navigation";
 import { WrappingListItems } from "./WrappingListItems";
-import { FilterGroups } from "./FilterGroups";
+import { FilterGroups } from "./_filters/FilterGroups";
+import styles from "./filterGroupsListItemGroup.module.css";
+import { FilterGroupsMobile } from "./_filters/FilterGroupsMobile";
 
 export type Props = {
   groupData: FullData[];
@@ -126,46 +128,44 @@ export const FilterGroupsListItemsGroup = ({
     : editListItemText;
 
   return (
-    <div style={{ display: "flex", gap: "10px" }}>
+    <div className={styles.container}>
       {parentFeatureId ? (
-        <FilterGroups
-          isEdit={isEdit}
-          staticTexts={staticTexts}
-          parentFeatureId={parentFeatureId}
-          pageFullDataList={pageFullDataList}
-          params={params}
-          onFilterSelectionChanged={handleFilterSelectionChanged}
-          selectedFilterTextDescriptionIds={selectedFilterTextDescriptionIds}
-        />
+        <>
+          <div className={isEdit ? undefined : styles.filterGroups}>
+            <FilterGroups
+              isEdit={isEdit}
+              staticTexts={staticTexts}
+              parentFeatureId={parentFeatureId}
+              pageFullDataList={pageFullDataList}
+              params={params}
+              onFilterSelectionChanged={handleFilterSelectionChanged}
+              selectedFilterTextDescriptionIds={
+                selectedFilterTextDescriptionIds
+              }
+            />
+          </div>
+
+          {!isEdit ? (
+            <div className={styles.filterGroupsMobile}>
+              <FilterGroupsMobile
+                staticTexts={staticTexts}
+                parentFeatureId={parentFeatureId}
+                pageFullDataList={pageFullDataList}
+                params={params}
+                onFilterSelectionChanged={handleFilterSelectionChanged}
+                selectedFilterTextDescriptionIds={
+                  selectedFilterTextDescriptionIds
+                }
+              />
+            </div>
+          ) : null}
+        </>
       ) : null}
 
-      <div
-        style={{
-          display: "flex",
-          flexGrow: 2,
-        }}
-      >
+      <div className={styles.main}>
         {addEditItemFeatureId ? (
-          <div
-            style={{
-              width: "100%",
-              display: "flex",
-              flexDirection: "column",
-              gap: "10px",
-            }}
-          >
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                width: "100%",
-                fontSize: 24,
-                fontWeight: 700,
-              }}
-            >
-              {addEditTitle ?? "N/A"}
-            </div>
-
+          <div className={styles.addEdit}>
+            <div className={styles.title}>{addEditTitle ?? "N/A"}</div>
             <AddEditListItemFilter
               staticTexts={staticTexts}
               pageFullDataList={pageFullDataList}

@@ -1,8 +1,8 @@
 import { FullData } from "@/app/lib/definitions";
-import { CommonButton } from "./CommonButton";
-import { DeleteFeatureButton } from "./DeleteFeatureButton";
+import { CommonButton } from "../_buttons/CommonButton";
+import { DeleteFeatureButton } from "../_buttons/DeleteFeatureButton";
 import { UploadComponent } from "./UploadComponent";
-import { DeleteTextDescriptionButton } from "./DeleteTextDescriptionButton";
+import { DeleteTextDescriptionButton } from "../_buttons/DeleteTextDescriptionButton";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 
 export type Props = {

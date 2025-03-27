@@ -7,17 +7,21 @@ import { usePathname } from "next/navigation";
 import { ManageImages } from "../_clientComponents/ManageImages";
 import { addTextDescription } from "@/app/lib/actions_fitness";
 import { ScrollContainer } from "../_clientComponents/ScrollContainer/ScrollContainer";
+import Image from "next/image";
+import { DragEventHandler } from "react";
 
 export type Props = {
   isEdit: boolean;
   staticTexts: StaticTexts;
   groupData: FullData[];
+  countVisibleItems?: number;
 };
 
-export const ShowImageListGroup_Client = ({
+export const ShowImageListGroup = ({
   isEdit,
   staticTexts,
   groupData,
+  countVisibleItems,
 }: Props) => {
   const featureId = groupData[0]?.id;
   const pathName = usePathname();
@@ -45,11 +49,47 @@ export const ShowImageListGroup_Client = ({
 
   const ids = imagesData.map((item) => item.text_description_id.toString());
 
-  const getItem = (id: string) => {
+  const getItem = ({ id, widthItem }: { id: string; widthItem?: number }) => {
     const value = imagesData.find(
       (item) => item.text_description_id.toString() === id
     )?.value;
-    return <>{value ? <img src={value} /> : null}</>;
+
+    const preventDragHandler: DragEventHandler = (event) => {
+      event.preventDefault();
+    };
+    return (
+      <>
+        {value ? (
+          <div
+            style={{
+              padding: "10px",
+              width: "100%",
+              height: widthItem ? `${widthItem}px` : widthItem,
+            }}
+          >
+            <div
+              style={{
+                borderRadius: "10px",
+                overflow: "hidden",
+                width: "100%",
+                height: "100%",
+                position: "relative",
+              }}
+            >
+              <Image
+                src={value}
+                layout="fill" // Fill the container
+                objectFit="cover" // Make sure it covers the entire container
+                quality={100} // Optional, for higher quality
+                alt="image"
+                draggable="false" // This directly disables drag-and-drop
+                onDragStart={preventDragHandler} // Ensures additional prevention
+              />
+            </div>
+          </div>
+        ) : null}
+      </>
+    );
   };
 
   return (
@@ -62,7 +102,11 @@ export const ShowImageListGroup_Client = ({
           isImageGroup
         />
       ) : (
-        <ScrollContainer ids={ids} getItem={getItem} />
+        <ScrollContainer
+          ids={ids}
+          getItem={getItem}
+          countVisibleItems={countVisibleItems}
+        />
       )}
     </>
   );

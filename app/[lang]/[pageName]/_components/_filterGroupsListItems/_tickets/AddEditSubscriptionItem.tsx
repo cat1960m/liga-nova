@@ -1,5 +1,5 @@
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import { AddTextDescriptionButton } from "../../_clientComponents/AddTextDescriptionButton";
+import { AddTextDescriptionButton } from "../../_buttons/AddTextDescriptionButton";
 import { TextItemField } from "../../TextItemField";
 import {
   SUBSCRIPTION_ITEM_DESCRIPTION,
@@ -52,14 +52,12 @@ export const AddEditSubscriptionItem = ({
   return (
     <div
       style={{
-        flexGrow: 2,
+        width: "100%",
         border: "1px dotted magenta",
         display: "flex",
         flexDirection: "column",
         gap: "10px",
         padding: "5px",
-        maxWidth: commonWidth,
-        minWidth: "170px",
       }}
     >
       <TextItemField
