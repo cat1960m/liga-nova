@@ -3,7 +3,7 @@
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import {
   GROUP,
-  FILTER_GROUP,
+  FILTER_GROUP_SUBTYPE,
   FILTER_GROUP_DEFAULT_WIDTH,
   GRAY_BACKGROUND_COLOR,
 } from "@/app/lib/constants";
@@ -47,7 +47,7 @@ export const AdditionalPageDataGroupEdit = ({
             pageFullData: pageFullDataList,
             parentFeatureId: null,
             type: GROUP,
-            subtype: FILTER_GROUP,
+            subtype: FILTER_GROUP_SUBTYPE,
           })
         : null,
     [pageFullDataList, pageFeatureId]

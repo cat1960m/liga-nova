@@ -1,5 +1,5 @@
 import { FullData } from "@/app/lib/definitions";
-import { DEFAULT_TEXT, GROUP1 } from "@/app/lib/constants";
+import { DEFAULT_TEXT, GROUP1_SUBTYPE } from "@/app/lib/constants";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { DeleteFeatureButton } from "./_buttons/DeleteFeatureButton";
 import { UpdateTextDescriptionData_new } from "./_clientComponents/UpdateTextDescriptionData_new";
@@ -15,7 +15,7 @@ export const ShowSimpleGroup_Client = ({
   isEdit,
   staticTexts,
 }: Props) => {
-  const isLarge = data.subtype === GROUP1;
+  const isLarge = data.subtype === GROUP1_SUBTYPE;
   const style = {
     fontSize: isLarge ? "xx-large" : "large",
     fontWeight: isLarge ? 700 : 400,

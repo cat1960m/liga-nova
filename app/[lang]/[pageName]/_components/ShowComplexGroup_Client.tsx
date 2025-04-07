@@ -1,26 +1,25 @@
 import { FullData, MainParams } from "@/app/lib/definitions";
 import {
-  GROUP_2COLUMNS_2HEADERS,
+  GROUP_2COLUMNS_2HEADERS_SUBTYPE,
   HEADER1,
   HEADER2,
-  INFO_GROUP,
+  INFO_GROUP_SUBTYPE,
   ITEM_COLUMN1,
   ITEM_COLUMN2,
-  ADDITIONAL_PAGE_DATA_GROUP,
-  SCHEDULE_GROUP,
-  SERVICE_ITEM,
-  SERVICES_GROUP,
-  FILTER_GROUPS_LIST_ITEMS,
-  IMAGE_LIST_GROUP,
-  PHOTO_GALLERY_GROUP,
-  ACTION_BANNER_GROUP,
-  LIGA_GROUP,
+  ADDITIONAL_PAGE_DATA_GROUP_SUBTYPE,
+  SCHEDULE_GROUP_SUBTYPE,
+  SERVICES_GROUP_SUBTYPE,
+  FILTER_GROUPS_LIST_ITEMS_SUBTYPE,
+  IMAGE_LIST_GROUP_SUBTYPE,
+  PHOTO_GALLERY_GROUP_SUBTYPE,
+  ACTION_BANNER_GROUP_SUBTYPE,
+  LIGA_GROUP_SUBTYPE,
+  CALENDAR_EVENTS_GROUP_SUBTYPE,
 } from "@/app/lib/constants";
 import { ShowGroupColumn } from "./_columnsGroup/ShowGroupColumn_Client";
 import { ShowServices_Client } from "./_service/ShowServices_Client";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { DeleteFeatureButton } from "./_buttons/DeleteFeatureButton";
-import { AddTextDescriptionButton } from "./_buttons/AddTextDescriptionButton";
 import { ShowInfoGroup_Client } from "./_info/ShowInfoGroup_Client";
 import { ShowScheduleGroup_Client } from "./_schedule/ShowScheduleGroup_Client";
 import { AdditionalPageDataGroup } from "./_additionalPageData/AdditionalPageDataGroup";
@@ -28,6 +27,7 @@ import { FilterGroupsListItemsGroup } from "./_filterGroupsListItems/FilterGroup
 import { ShowImageListGroup } from "./_imageGroup/ShowImageListGroup";
 import { ActionBannerGroup } from "./_actionBanner/ActionBannerGroup";
 import { ShowLigaGroup } from "./_liga/ShowLigaGroup";
+import { CalendarEventsGroup } from "./_calendarEvents/CalendarEventsGroup";
 
 export type Props = {
   groupData: FullData[];
@@ -46,20 +46,26 @@ export const ShowComplexGroup_Client = ({
 }: Props) => {
   const firstData = groupData[0];
   const featureId = firstData.id;
-  const is2headers2columns = firstData?.subtype === GROUP_2COLUMNS_2HEADERS;
-  const isServices = firstData?.subtype === SERVICES_GROUP;
-  const isAddButtonShown = isServices;
-  const isInfoGroup = firstData?.subtype === INFO_GROUP;
-  const isLigaGroup = firstData?.subtype === LIGA_GROUP;
+  const is2headers2columns =
+    firstData?.subtype === GROUP_2COLUMNS_2HEADERS_SUBTYPE;
+  const isServices = firstData?.subtype === SERVICES_GROUP_SUBTYPE;
+  const isInfoGroup = firstData?.subtype === INFO_GROUP_SUBTYPE;
+  const isLigaGroup = firstData?.subtype === LIGA_GROUP_SUBTYPE;
 
-  const isScheduleGroup = firstData?.subtype === SCHEDULE_GROUP;
+  const isScheduleGroup = firstData?.subtype === SCHEDULE_GROUP_SUBTYPE;
   const isAdditionalPageDataGroup =
-    firstData.subtype === ADDITIONAL_PAGE_DATA_GROUP;
+    firstData.subtype === ADDITIONAL_PAGE_DATA_GROUP_SUBTYPE;
   const isFilterGroupsListItemsGroup =
-    firstData?.subtype === FILTER_GROUPS_LIST_ITEMS;
-  const isImageListGroup = firstData?.subtype === IMAGE_LIST_GROUP;
-  const isActionBannerGroup = firstData?.subtype === ACTION_BANNER_GROUP;
-  const isPhotoGalleryGroup = firstData?.subtype === PHOTO_GALLERY_GROUP;
+    firstData?.subtype === FILTER_GROUPS_LIST_ITEMS_SUBTYPE;
+  const isImageListGroup = firstData?.subtype === IMAGE_LIST_GROUP_SUBTYPE;
+  const isActionBannerGroup =
+    firstData?.subtype === ACTION_BANNER_GROUP_SUBTYPE;
+  const isPhotoGalleryGroup =
+    firstData?.subtype === PHOTO_GALLERY_GROUP_SUBTYPE;
+  const isCalendarEventsGroup =
+    firstData?.subtype === CALENDAR_EVENTS_GROUP_SUBTYPE;
+
+  const isAddButtonShown = isServices || isCalendarEventsGroup;
 
   return (
     <div
@@ -172,7 +178,17 @@ export const ShowComplexGroup_Client = ({
         />
       ) : null}
 
-      {isEdit ? (
+      {isCalendarEventsGroup ? (
+        <CalendarEventsGroup
+          isEdit={isEdit}
+          staticTexts={staticTexts}
+          groupData={groupData}
+          params={params}
+          pageFullData={pageFullDataList}
+        />
+      ) : null}
+
+      {isEdit && !isAddButtonShown ? (
         <div
           style={{
             width: "100%",
@@ -182,22 +198,11 @@ export const ShowComplexGroup_Client = ({
             marginTop: "20px",
           }}
         >
-          <div style={{ display: "flex", gap: "20px" }}>
-            <DeleteFeatureButton
-              featureId={featureId}
-              deleteText={staticTexts.delete ?? "N/A"}
-              featureData={groupData}
-            />
-
-            {isAddButtonShown ? (
-              <AddTextDescriptionButton
-                featureId={featureId}
-                textType={SERVICE_ITEM}
-                buttonText={staticTexts.addGroupItem ?? "N/A"}
-                price={0}
-              />
-            ) : null}
-          </div>
+          <DeleteFeatureButton
+            featureId={featureId}
+            deleteText={staticTexts.delete ?? "N/A"}
+            featureData={groupData}
+          />
         </div>
       ) : null}
     </div>

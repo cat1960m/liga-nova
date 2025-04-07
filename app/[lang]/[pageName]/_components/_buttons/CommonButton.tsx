@@ -31,6 +31,7 @@ export const CommonButton = ({
         display: "flex",
         justifyContent: "center",
         width,
+        opacity: isDisabled ? 0.5 : 1,
       }}
       className="flex h-10 items-center rounded-lg bg-blue-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
     >

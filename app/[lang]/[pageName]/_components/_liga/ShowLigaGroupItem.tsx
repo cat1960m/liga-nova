@@ -1,7 +1,5 @@
 import { FullData } from "@/app/lib/definitions";
 import {
-  INFO_TELEPHONE,
-  INFO_TITLE,
   LIGA_ADDRESS,
   LIGA_SERVICE,
   LIGA_TELEPHONE,

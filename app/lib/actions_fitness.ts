@@ -44,29 +44,6 @@ export const getFeatureChildren = async ({
   }
 };
 
-export const updateText = async ({
-  id,
-  text,
-  pathName,
-  contentType,
-}: {
-  id: number;
-  text: string | null;
-  pathName: string;
-  contentType: string;
-}) => {
-  try {
-    await sql`Update  text_contents
-               SET  text_content = ${text}
-               WHERE id = ${id}`;
-    revalidatePath(pathName);
-    return;
-  } catch (error) {
-    // If a database error occurs, return a more specific error.
-    return null;
-  }
-};
-
 export const updateFeatureSubtypeFilterIds = async ({
   id,
   subtype,
@@ -157,26 +134,6 @@ export const updateTextDescriptionLink = async ({
     return null;
   }
 };
-
-/* export const RemoveFeature = async ({
-  id,
-  pathName,
-}: {
-  id: number;
-  pathName?: string;
-}) => {
-  try {
-    await sql`DELETE  FROM features
-               WHERE features.id = ${id} OR features.parent_feature_id =${id}`;
-    if (pathName) {
-      revalidatePath(pathName);
-    }
-    return true;
-  } catch (error) {
-    // If a database error occurs, return a more specific error.
-    return null;
-  }
-}; */
 
 export const RemoveFeature = async ({
   id,
@@ -283,8 +240,31 @@ export const addText = async ({
           VALUES (${textDescriptionId}, ${lang}, ${text}, ${contentType})
           RETURNING id;`;
 
-    // revalidatePath(pathName);
+    revalidatePath(pathName);
     return newTextContent;
+  } catch (error) {
+    // If a database error occurs, return a more specific error.
+    return null;
+  }
+};
+
+export const updateText = async ({
+  id,
+  text,
+  pathName,
+  contentType,
+}: {
+  id: number;
+  text: string | null;
+  pathName: string;
+  contentType?: string;
+}) => {
+  try {
+    await sql`Update  text_contents
+               SET  text_content = ${text}
+               WHERE id = ${id}`;
+    revalidatePath(pathName);
+    return;
   } catch (error) {
     // If a database error occurs, return a more specific error.
     return null;
@@ -298,6 +278,7 @@ export const addChildFeature = async ({
   name,
   text_types,
   pathName,
+  filter_ids = null,
 }: {
   type: string;
   parentId: number;
@@ -305,13 +286,14 @@ export const addChildFeature = async ({
   name: string;
   text_types: string[];
   pathName: string;
+  filter_ids?: string | null;
 }): Promise<number | null> => {
   const date = new Date();
   let time = date.getTime();
   try {
     const newFeatures = await sql`
-          INSERT INTO features (parent_feature_id, type, subtype, name, feature_order)
-          VALUES (${parentId}, ${type}, ${subtype}, ${name}, ${time})
+          INSERT INTO features (parent_feature_id, type, subtype, name, feature_order, filter_ids)
+          VALUES (${parentId}, ${type}, ${subtype}, ${name}, ${time}, ${filter_ids})
           RETURNING id;
         `;
 
@@ -359,14 +341,22 @@ export const addTextDescription = async ({
   price: number | null;
   value?: string | null;
 }) => {
-  const date = new Date();
-  const time = date.getTime();
-
-  const result =
-    await sql`INSERT INTO text_descriptions (feature_id, text_type, can_delete, price, text_description_order, value)
+  try {
+    const date = new Date();
+    const time = date.getTime();
+    const result =
+      await sql`INSERT INTO text_descriptions (feature_id, text_type, can_delete, price, text_description_order, value)
           VALUES (${featureId}, ${textType}, ${canDelete}, ${price}, ${time}, ${value})
           RETURNING id;`;
-  revalidatePath(pathName);
+
+    const newTextDEscriptionId: number = result[0]?.id;
+    revalidatePath(pathName);
+
+    return newTextDEscriptionId;
+  } catch (error) {
+    return null;
+  }
+  return null;
 };
 
 export const getTextContents = async ({
@@ -419,32 +409,6 @@ export const getTabsTitles = async ({
     return null;
   }
 };
-
-/* export const getFullData = async ({
-  lang,
-  parentId,
-}: {
-  lang: string;
-  parentId: number;
-}) => {
-  try {
-    return await sql<FullData[]>`SELECT features.id, 
-        parent_feature_id, text_descriptions.id as text_description_id, text_contents.id  as text_content_id
-        type, subtype, name, 
-        text_type, price,  text_content , content_type, language 
-        FROM features 
-        LEFT JOIN text_descriptions 
-        ON features.id = text_descriptions.feature_id 
-        LEFT JOIN text_contents 
-        ON text_descriptions.id = text_contents.text_description_id 
-        WHERE  (parent_feature_id=${parentId} OR parent_feature_id in 
-        (select id from features where features.parent_feature_id = ${parentId} and features.type='tabs'))
-        AND (language = ${lang} or language is null)`;
-  } catch (error) {
-    // If a database error occurs, return a more specific error.
-    return null;
-  }
-}; */
 
 export const getPageFullData = async ({
   lang,

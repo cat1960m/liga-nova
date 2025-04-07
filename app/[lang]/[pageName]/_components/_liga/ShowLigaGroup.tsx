@@ -3,11 +3,6 @@
 import { FullData, MainParams, PageData } from "@/app/lib/definitions";
 import {
   GRAY_BACKGROUND_COLOR,
-  IMAGE,
-  INFO_ADDRESS,
-  INFO_BODY,
-  INFO_TELEPHONE,
-  INFO_TITLE,
   LIGA_ADDRESS,
   LIGA_SERVICE,
   LIGA_TELEPHONE,

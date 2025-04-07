@@ -18,7 +18,7 @@ export const TranslationTabs_new = ({
   tabs: TabType[];
   setTabs: (tabs: TabType[]) => void;
   staticTexts: StaticTexts;
-  onChange: () => void;
+  onChange?: () => void;
   title: string;
   isArea?: boolean;
 }) => {
@@ -55,7 +55,7 @@ export const TranslationTabs_new = ({
       newTabs[index].value = event.target.value;
       setTabs(newTabs);
 
-      onChange();
+      onChange?.();
 
       setIsTranslateDisabled(!event.target.value);
     }
@@ -70,7 +70,7 @@ export const TranslationTabs_new = ({
       newTabs[index].value = event.target.value;
       setTabs(newTabs);
 
-      onChange();
+      onChange?.();
 
       setIsTranslateDisabled(!event.target.value);
     }
@@ -110,7 +110,7 @@ export const TranslationTabs_new = ({
       });
 
       setTabs(tabsNew);
-      onChange();
+      onChange?.();
     } catch (error) {
       console.error("Translation error:", error);
     }
@@ -121,7 +121,7 @@ export const TranslationTabs_new = ({
       style={{
         border: "1px dotted lightgray",
         padding: "20px",
-        margin: "20px",
+        margin: "5px",
       }}
     >
       <div style={{ fontWeight: 700 }}>{title}</div>
@@ -153,13 +153,13 @@ export const TranslationTabs_new = ({
           <textarea
             value={inputValue}
             onChange={handleAreaChange}
-            style={{ width: "80%" }}
+            style={{ width: "100%" }}
           />
         ) : (
           <input
             value={inputValue}
             onChange={handleChange}
-            style={{ width: "80%" }}
+            style={{ width: "100%" }}
           />
         )}
       </div>

@@ -1,6 +1,5 @@
 import { FullData } from "@/app/lib/definitions";
 import {
-  INFO_TITLE,
   SCHEDULE_ITEM1,
   SCHEDULE_ITEM2,
   SCHEDULE_ITEM3,

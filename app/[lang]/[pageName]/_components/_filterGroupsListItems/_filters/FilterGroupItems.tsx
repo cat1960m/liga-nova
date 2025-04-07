@@ -4,12 +4,7 @@ import { StaticTexts } from "@/app/dictionaries/definitions";
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { getContainerData } from "@/app/lib/utils";
 import { FilterGroup } from "./FilterGroup";
-import {
-  FILTER,
-  FILTER_GROUP,
-  FILTER_GROUP_TITLE,
-  GROUP,
-} from "@/app/lib/constants";
+import { FILTER_GROUP_SUBTYPE, GROUP } from "@/app/lib/constants";
 import { useMemo } from "react";
 import { AddChildFeatureButton } from "../../_buttons/AddChildFeatureButton";
 
@@ -43,7 +38,7 @@ export const FilterGroupsItems = ({
             pageFullData: pageFullDataList,
             parentFeatureId: parentFeatureId,
             type: GROUP,
-            subtype: FILTER_GROUP,
+            subtype: FILTER_GROUP_SUBTYPE,
           })
         : null,
     [pageFullDataList, parentFeatureId]

@@ -6,7 +6,7 @@ import { getContainerData } from "@/app/lib/utils";
 import { FilterGroup } from "./FilterGroup";
 import {
   FILTER,
-  FILTER_GROUP,
+  FILTER_GROUP_SUBTYPE,
   FILTER_GROUP_DEFAULT_WIDTH,
   FILTER_GROUP_TITLE,
   GRAY_BACKGROUND_COLOR,
@@ -82,7 +82,7 @@ export const FilterGroups = ({
             params={params}
             textTypes={[FILTER_GROUP_TITLE, FILTER]}
             type={GROUP}
-            subtype={FILTER_GROUP}
+            subtype={FILTER_GROUP_SUBTYPE}
           />
         </div>
       ) : null}

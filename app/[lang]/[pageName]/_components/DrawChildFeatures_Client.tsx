@@ -1,7 +1,7 @@
 import {
   GROUP,
-  GROUP1,
-  GROUP2,
+  GROUP1_SUBTYPE,
+  GROUP2_SUBTYPE,
   LAYOUT_PARENT,
   TABS,
 } from "@/app/lib/constants";
@@ -35,7 +35,7 @@ export const DrawChildFeature_Client = ({
 
   const isSimpleGroup =
     childFeatureFirstItem.type === GROUP &&
-    [GROUP1, GROUP2].includes(childFeatureFirstItem.subtype);
+    [GROUP1_SUBTYPE, GROUP2_SUBTYPE].includes(childFeatureFirstItem.subtype);
 
   if (isSimpleGroup) {
     return (

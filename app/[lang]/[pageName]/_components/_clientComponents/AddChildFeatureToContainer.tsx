@@ -2,24 +2,23 @@
 
 import { addChildFeature } from "@/app/lib/actions_fitness";
 import {
-  FeatureTypes,
   FILTER,
-  FILTER_GROUP,
+  FILTER_GROUP_SUBTYPE,
   FILTER_GROUP_TITLE,
   GROUP,
-  GROUP1,
-  GROUP2,
-  GROUP_2COLUMNS_2HEADERS,
+  GROUP1_SUBTYPE,
+  GROUP2_SUBTYPE,
+  GROUP_2COLUMNS_2HEADERS_SUBTYPE,
   HEADER1,
   HEADER2,
-  INFO_GROUP,
+  INFO_GROUP_SUBTYPE,
   INFO_ADDRESS,
   INFO_BODY,
   INFO_TELEPHONE,
   INFO_TITLE,
   ITEM_COLUMN1,
   ITEM_COLUMN2,
-  SCHEDULE_GROUP,
+  SCHEDULE_GROUP_SUBTYPE,
   SCHEDULE_ITEM1,
   SCHEDULE_ITEM2,
   SCHEDULE_ITEM3,
@@ -27,28 +26,30 @@ import {
   SCHEDULE_ITEM5,
   SCHEDULE_ITEM6,
   SERVICE_ITEM,
-  SERVICES_GROUP,
+  SERVICES_GROUP_SUBTYPE,
   SIMPLE_GROUP_ITEM,
   TAB,
   TAB_TITLE,
   TABS,
-  ADDITIONAL_PAGE_DATA_GROUP,
-  FILTER_GROUPS_LIST_ITEMS,
+  ADDITIONAL_PAGE_DATA_GROUP_SUBTYPE,
+  FILTER_GROUPS_LIST_ITEMS_SUBTYPE,
   PAGE_NAMES_TO_LIST_ITEMS_DATA,
   IMAGE,
-  IMAGE_LIST_GROUP,
-  ACTION_BANNER_GROUP,
+  IMAGE_LIST_GROUP_SUBTYPE,
+  ACTION_BANNER_GROUP_SUBTYPE,
   ACTION_BANNER_IMAGE,
   ACTION_BANNER_TITLE,
-  LIGA_GROUP,
+  LIGA_GROUP_SUBTYPE,
   LIGA_TITLE,
   LIGA_TELEPHONE,
   LIGA_ADDRESS,
-  PHOTO_GALLERY_GROUP,
+  PHOTO_GALLERY_GROUP_SUBTYPE,
   LAYOUT_PARENT,
   LAYOUT_ITEM_LEFT,
   LAYOUT_ITEM,
   LAYOUT_ITEM_RIGHT,
+  CALENDAR_EVENTS_GROUP_SUBTYPE,
+  GroupFeatureSubtypes,
 } from "@/app/lib/constants";
 import { MainParams } from "@/app/lib/definitions";
 import { usePathname } from "next/navigation";
@@ -67,10 +68,10 @@ export const AddChildFeatureToContainer = ({
   const [selectedValue, setSelectedValue] = useState<string>("");
 
   const options = useMemo(() => {
-    const data = [...FeatureTypes.GROUP, TABS, LAYOUT_PARENT];
+    const data = [...GroupFeatureSubtypes, TABS, LAYOUT_PARENT];
 
     if (!!PAGE_NAMES_TO_LIST_ITEMS_DATA[params.pageName]) {
-      data.push(FILTER_GROUPS_LIST_ITEMS);
+      data.push(FILTER_GROUPS_LIST_ITEMS_SUBTYPE);
     }
 
     return data;
@@ -84,7 +85,7 @@ export const AddChildFeatureToContainer = ({
       return;
     }
 
-    if (newValue === GROUP1 || newValue === GROUP2) {
+    if (newValue === GROUP1_SUBTYPE || newValue === GROUP2_SUBTYPE) {
       await addChildFeature({
         parentId: parentFeatureId,
         type: GROUP,
@@ -95,7 +96,7 @@ export const AddChildFeatureToContainer = ({
       });
     }
 
-    if (newValue === INFO_GROUP) {
+    if (newValue === INFO_GROUP_SUBTYPE) {
       await addChildFeature({
         parentId: parentFeatureId,
         type: GROUP,
@@ -112,7 +113,7 @@ export const AddChildFeatureToContainer = ({
       });
     }
 
-    if (newValue === LIGA_GROUP) {
+    if (newValue === LIGA_GROUP_SUBTYPE) {
       await addChildFeature({
         parentId: parentFeatureId,
         type: GROUP,
@@ -123,7 +124,7 @@ export const AddChildFeatureToContainer = ({
       });
     }
 
-    if (newValue === IMAGE_LIST_GROUP) {
+    if (newValue === IMAGE_LIST_GROUP_SUBTYPE) {
       await addChildFeature({
         parentId: parentFeatureId,
         type: GROUP,
@@ -134,7 +135,7 @@ export const AddChildFeatureToContainer = ({
       });
     }
 
-    if (newValue === PHOTO_GALLERY_GROUP) {
+    if (newValue === PHOTO_GALLERY_GROUP_SUBTYPE) {
       await addChildFeature({
         parentId: parentFeatureId,
         type: GROUP,
@@ -145,7 +146,7 @@ export const AddChildFeatureToContainer = ({
       });
     }
 
-    if (newValue === ACTION_BANNER_GROUP) {
+    if (newValue === ACTION_BANNER_GROUP_SUBTYPE) {
       await addChildFeature({
         parentId: parentFeatureId,
         type: GROUP,
@@ -156,7 +157,7 @@ export const AddChildFeatureToContainer = ({
       });
     }
 
-    if (newValue === GROUP_2COLUMNS_2HEADERS) {
+    if (newValue === GROUP_2COLUMNS_2HEADERS_SUBTYPE) {
       await addChildFeature({
         parentId: parentFeatureId,
         type: GROUP,
@@ -167,7 +168,7 @@ export const AddChildFeatureToContainer = ({
       });
     }
 
-    if (newValue === SERVICES_GROUP) {
+    if (newValue === SERVICES_GROUP_SUBTYPE) {
       await addChildFeature({
         parentId: parentFeatureId,
         type: GROUP,
@@ -178,7 +179,7 @@ export const AddChildFeatureToContainer = ({
       });
     }
 
-    if (newValue === SCHEDULE_GROUP) {
+    if (newValue === SCHEDULE_GROUP_SUBTYPE) {
       await addChildFeature({
         parentId: parentFeatureId,
         type: GROUP,
@@ -196,7 +197,7 @@ export const AddChildFeatureToContainer = ({
       });
     }
 
-    if (newValue === ADDITIONAL_PAGE_DATA_GROUP) {
+    if (newValue === ADDITIONAL_PAGE_DATA_GROUP_SUBTYPE) {
       await addChildFeature({
         parentId: parentFeatureId,
         type: GROUP,
@@ -207,7 +208,7 @@ export const AddChildFeatureToContainer = ({
       });
     }
 
-    if (newValue === FILTER_GROUPS_LIST_ITEMS) {
+    if (newValue === FILTER_GROUPS_LIST_ITEMS_SUBTYPE) {
       const filterGroupsListItemsId = await addChildFeature({
         parentId: parentFeatureId,
         type: GROUP,
@@ -221,12 +222,23 @@ export const AddChildFeatureToContainer = ({
         await addChildFeature({
           parentId: filterGroupsListItemsId,
           type: GROUP,
-          subtype: FILTER_GROUP,
+          subtype: FILTER_GROUP_SUBTYPE,
           name: params.pageName,
           text_types: [FILTER_GROUP_TITLE, FILTER],
           pathName,
         });
       }
+    }
+
+    if (newValue === CALENDAR_EVENTS_GROUP_SUBTYPE) {
+      await addChildFeature({
+        parentId: parentFeatureId,
+        type: GROUP,
+        subtype: CALENDAR_EVENTS_GROUP_SUBTYPE,
+        name: params.pageName,
+        text_types: [],
+        pathName,
+      });
     }
 
     if (newValue === TABS) {

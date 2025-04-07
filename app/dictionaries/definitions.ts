@@ -34,4 +34,64 @@ export type StaticTexts = {
   linkTo?: string;
   apply?: string;
   filters?: string;
+  addEvent?: string;
+  updateEvent?: string;
+  deleteCalendar?: string;
+  trainer?: string;
+  count?: string;
+  year?: string;
+  month?: string;
+  weekDay?: string;
+  day?: string;
+  sunday?: string;
+  sunday0?: string;
+
+  monday?: string;
+  monday0?: string;
+
+  tuesday?: string;
+  tuesday0?: string;
+
+  wednesday?: string;
+  wednesday0?: string;
+
+  thursday?: string;
+  thursday0?: string;
+
+  friday?: string;
+  friday0?: string;
+
+  saturday?: string;
+  saturday0?: string;
+
+  hours?: string;
+  minutes?: string;
+  type?: string;
+  addWeekDay?: string;
+  today?: string;
+  week?: string;
+  january?: string;
+  february?: string;
+  march?: string;
+  april?: string;
+  may?: string;
+  june?: string;
+  july?: string;
+  august?: string;
+  september?: string;
+  october?: string;
+  november?: string;
+  december?: string;
+  january0?: string;
+  february0?: string;
+  march0?: string;
+  april0?: string;
+  may0?: string;
+  june0?: string;
+  july0?: string;
+  august0?: string;
+  september0?: string;
+  october0?: string;
+  november0?: string;
+  december0?: string;
 };

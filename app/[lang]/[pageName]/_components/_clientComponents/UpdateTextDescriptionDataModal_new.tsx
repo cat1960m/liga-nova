@@ -15,7 +15,11 @@ import {
   updateText,
 } from "@/app/lib/actions_fitness";
 import { usePathname } from "next/navigation";
-import { SERVICES_GROUP, TOOLTIP } from "@/app/lib/constants";
+import {
+  SERVICES_GROUP_SUBTYPE,
+  TOOLTIP,
+  TRANSLATE_LANGUAGES,
+} from "@/app/lib/constants";
 
 export const UpdateTextDescriptionDataModal_new = ({
   onClose,
@@ -41,7 +45,7 @@ export const UpdateTextDescriptionDataModal_new = ({
 
   const textDescriptionId = currentData.text_description_id;
   const currentPrice = currentData.price;
-  const isTooltipUsed = currentData.subtype === SERVICES_GROUP;
+  const isTooltipUsed = currentData.subtype === SERVICES_GROUP_SUBTYPE;
 
   const [priceValue, setPriceValue] = useState<number>(currentPrice ?? 0);
   const [icons, setIcons] = useState<FullData[]>([]);
@@ -78,29 +82,15 @@ export const UpdateTextDescriptionDataModal_new = ({
         allContents?.filter((content) => content.content_type === TOOLTIP) ??
         [];
       setTextContentsTooltips(contentsTooltips);
-      setTabsTooltip([
-        {
-          langUpperCase: "EN",
+      setTabsTooltip(
+        TRANSLATE_LANGUAGES.map((language) => ({
+          langUpperCase: language,
           value: getLanguageValue({
-            lang: "en",
+            lang: language.toLocaleLowerCase(),
             textContents: contentsTooltips,
           }),
-        },
-        {
-          langUpperCase: "UA",
-          value: getLanguageValue({
-            lang: "ua",
-            textContents: contentsTooltips,
-          }),
-        },
-        {
-          langUpperCase: "DE",
-          value: getLanguageValue({
-            lang: "de",
-            textContents: contentsTooltips,
-          }),
-        },
-      ]);
+        }))
+      );
     };
 
     const getIcons = async () => {
@@ -147,7 +137,7 @@ export const UpdateTextDescriptionDataModal_new = ({
     setIsSaveDisabled(false);
   };
 
-  const saveTab = async ({
+  const saveTab = ({
     text,
     id,
     tabLang,
