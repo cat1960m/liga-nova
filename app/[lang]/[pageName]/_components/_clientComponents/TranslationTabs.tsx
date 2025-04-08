@@ -6,14 +6,18 @@ import { ChangeEventHandler, useState } from "react";
 import axios from "axios";
 import { CommonButton } from "../_buttons/CommonButton";
 import { StaticTexts } from "@/app/dictionaries/definitions";
+import dynamic from "next/dynamic";
 
-export const TranslationTabs_new = ({
+const QuillEditor = dynamic(() => import("./QuillEditor"), { ssr: false });
+
+export const TranslationTabs = ({
   staticTexts,
   onChange,
   tabs,
   setTabs,
   title,
   isArea,
+  isQuill,
 }: {
   tabs: TabType[];
   setTabs: (tabs: TabType[]) => void;
@@ -21,6 +25,7 @@ export const TranslationTabs_new = ({
   onChange?: () => void;
   title: string;
   isArea?: boolean;
+  isQuill?: boolean;
 }) => {
   const params = useParams<{ lang: string; pageName: string }>();
   const { lang } = params;
@@ -35,6 +40,9 @@ export const TranslationTabs_new = ({
 
   const [inputValue, setInputValue] = useState(startText);
 
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [error, setError] = useState("");
+
   const getTabStyle = (tab: string) => {
     return tab === selectedTab
       ? {
@@ -47,17 +55,23 @@ export const TranslationTabs_new = ({
   };
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-    setInputValue(event.target.value);
+    handleTextChange(event.target.value);
+  };
+
+  const handleTextChange = (value: string) => {
+    console.log("handleTextChange", value, selectedTab);
+
+    setInputValue(value);
 
     const index = tabs.findIndex((tab) => tab.langUpperCase === selectedTab);
     if (index >= 0) {
       const newTabs = [...tabs];
-      newTabs[index].value = event.target.value;
+      newTabs[index].value = value;
       setTabs(newTabs);
 
       onChange?.();
 
-      setIsTranslateDisabled(!event.target.value);
+      setIsTranslateDisabled(!value);
     }
   };
 
@@ -77,6 +91,7 @@ export const TranslationTabs_new = ({
   };
 
   const handleTranslate = async () => {
+    setIsButtonDisabled(true);
     const promises: Promise<any>[] = [];
     const originText = tabs.find(
       (tab) => tab.langUpperCase === selectedTab
@@ -111,10 +126,16 @@ export const TranslationTabs_new = ({
 
       setTabs(tabsNew);
       onChange?.();
-    } catch (error) {
+      setError("");
+    } catch (error: any) {
       console.error("Translation error:", error);
+      setError(error.toString());
     }
+    setIsButtonDisabled(false);
   };
+
+  const isPlain = !isArea && !isQuill;
+  const isDisabled = isButtonDisabled || isTranslateDisabled;
 
   return (
     <div
@@ -131,9 +152,27 @@ export const TranslationTabs_new = ({
             key={tab.langUpperCase}
             style={getTabStyle(tab.langUpperCase)}
             onClick={() => {
+              console.log(
+                "-------tab click",
+                tab.value,
+                tab.langUpperCase,
+                selectedTab,
+                {
+                  ...tabs,
+                }
+              );
               setSelectedTab(tab.langUpperCase);
               setIsTranslateDisabled(!tab.value);
               setInputValue(tab.value);
+              console.log(
+                "tab click",
+                tab.value,
+                tab.langUpperCase,
+                selectedTab,
+                {
+                  ...tabs,
+                }
+              );
             }}
           >
             {tab.langUpperCase}
@@ -155,13 +194,27 @@ export const TranslationTabs_new = ({
             onChange={handleAreaChange}
             style={{ width: "100%" }}
           />
-        ) : (
+        ) : null}
+
+        {isPlain ? (
           <input
             value={inputValue}
             onChange={handleChange}
             style={{ width: "100%" }}
           />
-        )}
+        ) : null}
+
+        {isQuill ? (
+          <div
+            style={{
+              width: "100%",
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <QuillEditor text={inputValue ?? ""} onChange={handleTextChange} />
+          </div>
+        ) : null}
       </div>
       <div
         style={{
@@ -173,10 +226,11 @@ export const TranslationTabs_new = ({
       >
         <CommonButton
           onClick={handleTranslate}
-          isDisabled={isTranslateDisabled}
+          isDisabled={isDisabled}
           text={staticTexts.translate ?? "N/A"}
         />
       </div>
+      {error ? <div style={{ color: "red" }}>{error} </div> : null}
     </div>
   );
 };

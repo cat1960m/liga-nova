@@ -1,9 +1,8 @@
 "use client";
 
-import { createPortal } from "react-dom";
 import { useState, ChangeEventHandler, useEffect } from "react";
 import { FullData, TabType, TextContent } from "@/app/lib/definitions";
-import { TranslationTabs_new } from "./TranslationTabs_new";
+import { TranslationTabs } from "./TranslationTabs";
 import { CommonButton } from "../_buttons/CommonButton";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import {
@@ -21,19 +20,23 @@ import {
   TRANSLATE_LANGUAGES,
 } from "@/app/lib/constants";
 
-export const UpdateTextDescriptionDataModal_new = ({
-  onClose,
-  staticTexts,
-  currentData,
-  useIcons,
-  isArea,
-}: {
+export type Props = {
   onClose: () => void;
   staticTexts: StaticTexts;
   currentData: FullData;
   useIcons?: boolean;
   isArea?: boolean;
-}) => {
+  isQuill?: boolean;
+};
+
+export const UpdateTextDescriptionDataModalContent = ({
+  onClose,
+  staticTexts,
+  currentData,
+  useIcons,
+  isArea,
+  isQuill,
+}: Props) => {
   const [textContents, setTextContents] = useState<TextContent[] | null>(null);
   const [textContentsTooltips, setTextContentsTooltips] = useState<
     TextContent[] | null
@@ -108,12 +111,6 @@ export const UpdateTextDescriptionDataModal_new = ({
       getIcons();
     }
   }, []);
-
-  const parent = document.getElementById("parentModal");
-  if (!parent) {
-    onClose();
-    return null;
-  }
 
   const getLanguageValue = ({
     lang,
@@ -228,145 +225,116 @@ export const UpdateTextDescriptionDataModal_new = ({
   const scrollPositionY = window.scrollY;
 
   return (
-    <div>
-      {createPortal(
+    <>
+      <div
+        style={{
+          height: "40px",
+          width: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          fontWeight: 600,
+          fontSize: "x-large",
+        }}
+      >
+        {staticTexts["updateTranslate"]}
+      </div>
+
+      <TranslationTabs
+        staticTexts={staticTexts}
+        onChange={() => setIsSaveDisabled(false)}
+        tabs={tabs}
+        setTabs={setTabs}
+        title="Text"
+        isArea={isArea}
+        isQuill={isQuill}
+      />
+
+      {isTooltipUsed ? (
+        <TranslationTabs
+          staticTexts={staticTexts}
+          onChange={() => setIsSaveDisabled(false)}
+          tabs={tabsTooltip}
+          setTabs={setTabsTooltip}
+          title="Tooltip"
+        />
+      ) : null}
+
+      {isPriceShown ? (
         <div
           style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundColor: "rgba(255, 180, 200, 0.5)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop: "20px",
+            gap: "10px",
           }}
         >
-          <div
-            style={{
-              backgroundColor: "white",
-              border: "2px solid darkmagenta",
-              borderRadius: "5px",
-              width: "80%",
-              position: "absolute",
-              top: `${scrollPositionY + 20}px`,
-              left: "10%",
-            }}
-          >
-            <>
+          Price:{" "}
+          <input
+            type="number"
+            value={priceValue}
+            onChange={handlePriceChange}
+          ></input>
+          грн
+        </div>
+      ) : null}
+
+      {useIcons ? (
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "20px",
+            padding: "20px",
+          }}
+        >
+          {icons.map((icon) => {
+            return (
               <div
                 style={{
-                  height: "40px",
-                  width: "100%",
                   display: "flex",
+                  flexDirection: "column",
+                  gap: "5px",
                   alignItems: "center",
-                  justifyContent: "center",
-                  fontWeight: 600,
-                  fontSize: "x-large",
                 }}
+                key={icon.text_description_id}
               >
-                {staticTexts["updateTranslate"]}
-              </div>
-
-              <TranslationTabs_new
-                staticTexts={staticTexts}
-                onChange={() => setIsSaveDisabled(false)}
-                tabs={tabs}
-                setTabs={setTabs}
-                title="Text"
-                isArea={isArea}
-              />
-
-              {isTooltipUsed ? (
-                <TranslationTabs_new
-                  staticTexts={staticTexts}
-                  onChange={() => setIsSaveDisabled(false)}
-                  tabs={tabsTooltip}
-                  setTabs={setTabsTooltip}
-                  title="Tooltip"
-                />
-              ) : null}
-
-              {isPriceShown ? (
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    marginTop: "20px",
-                    gap: "10px",
+                <img src={icon.value ?? ""} alt="icon" width="44px" />
+                <input
+                  type="checkbox"
+                  checked={icon.value === selectedIcon}
+                  onChange={(e) => {
+                    setSelectedIcon(e.target.checked ? icon.value : undefined);
+                    setIsSaveDisabled(false);
                   }}
-                >
-                  Price:{" "}
-                  <input
-                    type="number"
-                    value={priceValue}
-                    onChange={handlePriceChange}
-                  ></input>
-                  грн
-                </div>
-              ) : null}
-
-              {useIcons ? (
-                <div
-                  style={{
-                    display: "flex",
-                    flexWrap: "wrap",
-                    gap: "20px",
-                    padding: "20px",
-                  }}
-                >
-                  {icons.map((icon) => {
-                    return (
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "column",
-                          gap: "5px",
-                          alignItems: "center",
-                        }}
-                        key={icon.text_description_id}
-                      >
-                        <img src={icon.value ?? ""} alt="icon" width="44px" />
-                        <input
-                          type="checkbox"
-                          checked={icon.value === selectedIcon}
-                          onChange={(e) => {
-                            setSelectedIcon(
-                              e.target.checked ? icon.value : undefined
-                            );
-                            setIsSaveDisabled(false);
-                          }}
-                        />
-                      </div>
-                    );
-                  })}
-                </div>
-              ) : null}
-
-              <div
-                style={{
-                  width: "100%",
-                  display: "flex",
-                  justifyContent: "flex-end",
-                  alignItems: "center",
-                  padding: "30px",
-                  gap: "20px",
-                }}
-              >
-                <CommonButton
-                  onClick={() => onClose()}
-                  text={staticTexts.cancel ?? "N/A"}
-                />
-                <CommonButton
-                  onClick={handleSave}
-                  isDisabled={isSaveDisabled}
-                  text={staticTexts.save ?? "N/A"}
                 />
               </div>
-            </>
-          </div>
-        </div>,
-        parent
-      )}
-    </div>
+            );
+          })}
+        </div>
+      ) : null}
+
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "flex-end",
+          alignItems: "center",
+          padding: "30px",
+          gap: "20px",
+        }}
+      >
+        <CommonButton
+          onClick={() => onClose()}
+          text={staticTexts.cancel ?? "N/A"}
+        />
+        <CommonButton
+          onClick={handleSave}
+          isDisabled={isSaveDisabled}
+          text={staticTexts.save ?? "N/A"}
+        />
+      </div>
+    </>
   );
 };

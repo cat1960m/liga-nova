@@ -10,7 +10,7 @@ import {
 } from "@/app/lib/constants";
 import { NumberValue } from "./NumberValue";
 import { EventDates } from "./EventDates";
-import { TranslationTabs_new } from "../_clientComponents/TranslationTabs_new";
+import { TranslationTabs } from "../_clientComponents/TranslationTabs";
 import { getTextContents } from "@/app/lib/actions_fitness";
 import {
   CALENDAR_EVENTS_TITLE,
@@ -253,21 +253,21 @@ export const AddEditCalendarEvents = ({
         />
       </div>
 
-      <TranslationTabs_new
+      <TranslationTabs
         staticTexts={staticTexts}
         tabs={title}
         setTabs={handleChangeTitle}
         title={staticTexts.name ?? "N/A"}
       />
 
-      <TranslationTabs_new
+      <TranslationTabs
         staticTexts={staticTexts}
         tabs={trainer}
         setTabs={handleChangeTrainer}
         title={staticTexts.trainer ?? "N/A"}
       />
 
-      <TranslationTabs_new
+      <TranslationTabs
         staticTexts={staticTexts}
         tabs={description}
         setTabs={handleChangeDescription}

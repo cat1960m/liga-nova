@@ -134,7 +134,10 @@ export default async function Layout({
 
       <div
         id="parentModal"
-        style={{ position: "relative", minHeight: "300px" }}
+        style={{
+          position: "relative",
+          minHeight: "300px",
+        }}
       >
         {children}
       </div>

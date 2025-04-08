@@ -3,7 +3,7 @@
 import { FullData } from "@/app/lib/definitions";
 import { CommonButton } from "../_buttons/CommonButton";
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import { UpdateTextDescriptionData_new } from "../_clientComponents/UpdateTextDescriptionData_new";
+import { UpdateTextDescriptionData } from "../_clientComponents/UpdateTextDescriptionData";
 import { DeleteFeatureButton } from "../_buttons/DeleteFeatureButton";
 
 export type Props = {
@@ -52,7 +52,7 @@ export const ShowTabTitle_Client = ({
 
       {isEdit ? (
         <div style={{ display: "flex", gap: "20px" }}>
-          <UpdateTextDescriptionData_new
+          <UpdateTextDescriptionData
             currentData={tabTitle}
             staticTexts={staticTexts}
           />

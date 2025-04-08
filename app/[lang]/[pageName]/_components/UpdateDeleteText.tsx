@@ -1,6 +1,6 @@
 import { FullData } from "@/app/lib/definitions";
 import { DeleteTextDescriptionButton } from "./_buttons/DeleteTextDescriptionButton";
-import { UpdateTextDescriptionData_new } from "./_clientComponents/UpdateTextDescriptionData_new";
+import { UpdateTextDescriptionData } from "./_clientComponents/UpdateTextDescriptionData";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 export type Props = {
   currentData?: FullData;
@@ -28,7 +28,7 @@ export const UpdateDeleteText = ({
         flexWrap: "wrap",
       }}
     >
-      <UpdateTextDescriptionData_new
+      <UpdateTextDescriptionData
         currentData={currentData}
         staticTexts={staticTexts}
         useIcons={useIcons}

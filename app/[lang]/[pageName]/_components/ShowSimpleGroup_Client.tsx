@@ -2,7 +2,7 @@ import { FullData } from "@/app/lib/definitions";
 import { DEFAULT_TEXT, GROUP1_SUBTYPE } from "@/app/lib/constants";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { DeleteFeatureButton } from "./_buttons/DeleteFeatureButton";
-import { UpdateTextDescriptionData_new } from "./_clientComponents/UpdateTextDescriptionData_new";
+import { UpdateTextDescriptionData } from "./_clientComponents/UpdateTextDescriptionData";
 
 export type Props = {
   data: FullData;
@@ -17,14 +17,16 @@ export const ShowSimpleGroup_Client = ({
 }: Props) => {
   const isLarge = data.subtype === GROUP1_SUBTYPE;
   const style = {
-    fontSize: isLarge ? "xx-large" : "large",
-    fontWeight: isLarge ? 700 : 400,
+    fontSize: isLarge ? "xx-large" : undefined,
+    fontWeight: isLarge ? 700 : undefined,
     marginBottom: "10px",
     border: isEdit ? "1px dotted magenta" : undefined,
     padding: isEdit ? "5px" : undefined,
   };
 
   const text = data.text_content ?? DEFAULT_TEXT + "!!";
+
+  const sanitizedContent = text; //DOMPurify.sanitize(text);
 
   return (
     <div style={style}>
@@ -38,13 +40,17 @@ export const ShowSimpleGroup_Client = ({
           }}
         />
       ) : null}
-      {text}
+      {isLarge ? text : null}
+      {!isLarge ? (
+        <div dangerouslySetInnerHTML={{ __html: sanitizedContent }} />
+      ) : null}
 
       {isEdit ? (
         <div style={{ display: "flex", gap: "20px", marginTop: "20px" }}>
-          <UpdateTextDescriptionData_new
+          <UpdateTextDescriptionData
             currentData={data}
             staticTexts={staticTexts}
+            isQuill={!isLarge}
           />
 
           <DeleteFeatureButton
