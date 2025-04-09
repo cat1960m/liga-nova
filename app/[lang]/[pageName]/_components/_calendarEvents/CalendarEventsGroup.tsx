@@ -156,11 +156,7 @@ export const CalendarEventsGroup = ({
                 alignItems: "center",
               }}
             >
-              <CommonButton
-                text={"<"}
-                onClick={handleLeftClick}
-                backgroundColor={ACTION_BUTTON_BACKGROUND}
-              />
+              <CommonButton text={"<"} onClick={handleLeftClick} isAction />
               <ShowDatesInterval
                 staticTexts={staticTexts}
                 startOfWeek={startOfWeek}
@@ -168,11 +164,7 @@ export const CalendarEventsGroup = ({
                 currentDate={currentDate}
                 isWeek={isWeek}
               />
-              <CommonButton
-                text={">"}
-                onClick={handleRightClick}
-                backgroundColor={ACTION_BUTTON_BACKGROUND}
-              />
+              <CommonButton text={">"} onClick={handleRightClick} isAction />
             </div>
             <div
               style={{
@@ -186,7 +178,7 @@ export const CalendarEventsGroup = ({
               <CommonButton
                 text={staticTexts.today}
                 onClick={handleTodayClick}
-                backgroundColor={ACTION_BUTTON_BACKGROUND}
+                isAction
                 isDisabled={
                   isWeek
                     ? dateToString(startOfWeek) ===

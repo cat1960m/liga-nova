@@ -7,7 +7,6 @@ import { CommonButton } from "../../_buttons/CommonButton";
 import { AdjustmentsHorizontalIcon } from "@heroicons/react/24/solid";
 import { FilterGroupsItems } from "./FilterGroupItems";
 import {
-  ACTION_BUTTON_BACKGROUND,
   FILTER_GROUP_DEFAULT_WIDTH,
   GRAY_BACKGROUND_COLOR,
 } from "@/app/lib/constants";
@@ -106,7 +105,7 @@ export const FilterGroupsMobile = ({
             <CommonButton
               text={staticTexts.apply}
               onClick={handleFiltersHideClick}
-              backgroundColor={ACTION_BUTTON_BACKGROUND}
+              isAction
             />
           </div>
         </div>

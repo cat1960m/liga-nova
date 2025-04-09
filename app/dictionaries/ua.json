@@ -87,6 +87,9 @@
     "september0": "вересня",
     "october0": "жовтня",
     "november0": "листопада",
-    "december0": "грудня"
+    "december0": "грудня",
+    "expand": "Дізнатись більше",
+    "wrap": "Згорнути",
+    "signUpForTraining": "ЗАПИСАТИСЯ НА ТРЕНУВАННЯ"
   }
 }

@@ -50,6 +50,8 @@ import {
   LAYOUT_ITEM_RIGHT,
   CALENDAR_EVENTS_GROUP_SUBTYPE,
   GroupFeatureSubtypes,
+  GROUP_EXPANDED_SUBTYPE,
+  SIMPLE_GROUP_SUBTYPES,
 } from "@/app/lib/constants";
 import { MainParams } from "@/app/lib/definitions";
 import { usePathname } from "next/navigation";
@@ -85,7 +87,7 @@ export const AddChildFeatureToContainer = ({
       return;
     }
 
-    if (newValue === GROUP1_SUBTYPE || newValue === GROUP2_SUBTYPE) {
+    if (SIMPLE_GROUP_SUBTYPES.includes(newValue)) {
       await addChildFeature({
         parentId: parentFeatureId,
         type: GROUP,

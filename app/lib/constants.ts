@@ -5,6 +5,8 @@ export const PAGE = "page";
 
 export const GROUP1_SUBTYPE = "group1";
 export const GROUP2_SUBTYPE = "group2";
+export const GROUP_EXPANDED_SUBTYPE = "group_expanded";
+
 export const SIMPLE_GROUP_ITEM = "simple_group_item";
 
 export const GROUP = "group";
@@ -135,6 +137,7 @@ export const GROUP_TYPES_WITH_TOOLTIP = [SERVICES_GROUP_SUBTYPE];
 export const GroupFeatureSubtypes = [
   GROUP1_SUBTYPE,
   GROUP2_SUBTYPE,
+  GROUP_EXPANDED_SUBTYPE,
   GROUP_2COLUMNS_2HEADERS_SUBTYPE,
   SERVICES_GROUP_SUBTYPE,
   INFO_GROUP_SUBTYPE,
@@ -145,6 +148,12 @@ export const GroupFeatureSubtypes = [
   ACTION_BANNER_GROUP_SUBTYPE,
   PHOTO_GALLERY_GROUP_SUBTYPE,
   CALENDAR_EVENTS_GROUP_SUBTYPE,
+];
+
+export const SIMPLE_GROUP_SUBTYPES = [
+  GROUP1_SUBTYPE,
+  GROUP2_SUBTYPE,
+  GROUP_EXPANDED_SUBTYPE,
 ];
 
 export const DEFAULT_TEXT = "Please enter text";

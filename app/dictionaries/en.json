@@ -87,6 +87,9 @@
     "september0": "sep",
     "october0": "oct",
     "november0": "nov",
-    "december0": "dec"
+    "december0": "dec",
+    "wrap": "Wrap",
+    "expand": "Expand",
+    "signUpForTraining": "SIGN UP FOR TRAINING"
   }
 }

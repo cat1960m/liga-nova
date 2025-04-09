@@ -7,6 +7,7 @@ export type Props = {
   staticTexts: StaticTexts;
   useIcons?: boolean;
   isArea?: boolean;
+  isQuill?: boolean;
 };
 
 export const UpdateDeleteText = ({
@@ -14,6 +15,7 @@ export const UpdateDeleteText = ({
   staticTexts,
   useIcons,
   isArea,
+  isQuill,
 }: Props) => {
   if (!currentData) {
     return null;
@@ -33,6 +35,7 @@ export const UpdateDeleteText = ({
         staticTexts={staticTexts}
         useIcons={useIcons}
         isArea={isArea}
+        isQuill={isQuill}
       />
 
       {canDelete ? (

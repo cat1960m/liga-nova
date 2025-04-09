@@ -94,4 +94,7 @@ export type StaticTexts = {
   october0?: string;
   november0?: string;
   december0?: string;
+  wrap?: string;
+  expand?: string;
+  signUpForTraining?: string;
 };

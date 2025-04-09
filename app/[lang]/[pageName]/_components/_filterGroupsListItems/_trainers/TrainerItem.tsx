@@ -12,6 +12,8 @@ import { useEffect, useMemo, useState } from "react";
 import { getPageFullData } from "@/app/lib/actions_fitness";
 import { getFilterIds } from "@/app/lib/utils";
 import { StaticTexts } from "@/app/dictionaries/definitions";
+import { ExpandedText } from "../../_clientComponents/ExpandedText";
+import { CommonButton } from "../../_buttons/CommonButton";
 
 const PREMIUM = "premium%28--0%29";
 
@@ -26,7 +28,6 @@ export const TrainerItem = ({
   pageFullDataList,
   staticTexts,
 }: Props) => {
-  const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const [icons, setIcons] = useState<FullData[]>([]);
   const [isMouseIn, setIsMouseIn] = useState(false);
 
@@ -66,12 +67,6 @@ export const TrainerItem = ({
   }
 
   const isPremiumValue = isPremium.value;
-
-  const handleExpand = () => {
-    setIsExpanded(!isExpanded);
-  };
-
-  const buttonText = isExpanded ? "Wrap" : "Expand";
 
   const premiumIcon = icons.find((icon) => icon.value?.includes(PREMIUM));
 
@@ -171,43 +166,12 @@ export const TrainerItem = ({
         {name.text_content ?? "N/A"}
       </div>
 
-      <div
-        style={{
-          flexGrow: 2,
-          display: "flex",
-          flexDirection: "column",
-          minHeight: "100px",
-          fontSize: 14,
-          padding: "10px 0",
-        }}
-      >
-        <div
-          style={{
-            width: "100%",
-            height: "100%",
-            maxHeight: isExpanded ? undefined : "60px",
-            overflow: isExpanded ? undefined : "hidden",
-            display: "flex",
-            flexDirection: "column",
-            gap: "10px",
-          }}
-        >
-          {descriptions.map((item) => {
-            return (
-              <p key={item.text_description_id}>
-                {item.text_content ?? "N/A"}{" "}
-              </p>
-            );
-          })}
-        </div>
+      <ExpandedText
+        staticTexts={staticTexts}
+        descriptions={descriptions.map((item) => item.text_content ?? "N/A")}
+      />
 
-        <button
-          onClick={handleExpand}
-          style={{ color: "darkblue", fontWeight: 700, marginTop: "10px" }}
-        >
-          {buttonText}
-        </button>
-      </div>
+      <CommonButton isAction text={staticTexts.signUpForTraining} />
     </div>
   );
 };

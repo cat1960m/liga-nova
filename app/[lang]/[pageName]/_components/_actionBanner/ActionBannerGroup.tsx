@@ -1,22 +1,12 @@
 "use client";
 
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import {
-  ACTION_BANNER_IMAGE,
-  ACTION_BANNER_TITLE,
-  ACTION_BUTTON_BACKGROUND,
-  IMAGE,
-} from "@/app/lib/constants";
-import { FullData, MainParams } from "@/app/lib/definitions";
+import { ACTION_BANNER_IMAGE, ACTION_BANNER_TITLE } from "@/app/lib/constants";
+import { FullData } from "@/app/lib/definitions";
 import { usePathname } from "next/navigation";
-import { ManageImages } from "../_clientComponents/ManageImages";
-import {
-  addTextDescription,
-  updateTextDescriptionValue,
-} from "@/app/lib/actions_fitness";
+import { updateTextDescriptionValue } from "@/app/lib/actions_fitness";
 import Image from "next/image";
 import { UploadComponent } from "../_clientComponents/UploadComponent";
-import { isNull } from "node:util";
 import { TextItemField } from "../TextItemField";
 import styles from "./actionBanner.module.css";
 import { CommonButton } from "../_buttons/CommonButton";
@@ -84,17 +74,11 @@ export const ActionBannerGroup = ({
         {/* changes for mobile needed */}
         <div className={styles.info_big}>
           {title?.text_content ?? "N/A"}
-          <CommonButton
-            text={staticTexts.register ?? "N/A"}
-            backgroundColor={ACTION_BUTTON_BACKGROUND}
-          />
+          <CommonButton text={staticTexts.register ?? "N/A"} isAction />
         </div>
         <div className={styles.info_small}>
           {title?.text_content ?? "N/A"}
-          <CommonButton
-            text={staticTexts.register ?? "N/A"}
-            backgroundColor={ACTION_BUTTON_BACKGROUND}
-          />
+          <CommonButton text={staticTexts.register ?? "N/A"} isAction />
         </div>
       </div>
       {isEdit ? (

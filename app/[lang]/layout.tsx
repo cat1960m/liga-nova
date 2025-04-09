@@ -1,4 +1,3 @@
-import { getDictionary } from "./dictionaries";
 import { getPageTitles } from "../lib/actions_fitness";
 import Link from "next/link";
 import { LangSelector } from "./_components/LangSelector";
