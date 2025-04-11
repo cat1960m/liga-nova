@@ -7,22 +7,22 @@ import {
   SIMPLE_GROUP_ITEM,
 } from "@/app/lib/constants";
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import { DeleteFeatureButton } from "./_buttons/DeleteFeatureButton";
 import { ExpandedText } from "./_clientComponents/ExpandedText";
-import DOMPurify from "dompurify";
-import { AddTextDescriptionButton } from "./_buttons/AddTextDescriptionButton";
-import { UpdateDeleteText } from "./UpdateDeleteText";
+import { UpdateDeleteTextButtons } from "./_buttons/UpdateDeleteTextButtons";
+import { AddTextDescriptionDeleteFeatureButtons } from "./_buttons/AddTextDescriptionDeleteFeatureButtons";
 
 export type Props = {
   data: FullData[];
   isEdit: boolean;
   staticTexts: StaticTexts;
+  parentFeatureId: number;
 };
 
 export const ShowSimpleGroup_Client = ({
   data,
   isEdit,
   staticTexts,
+  parentFeatureId,
 }: Props) => {
   const firstItem = data[0];
   const isHeader = firstItem.subtype === GROUP1_SUBTYPE;
@@ -91,7 +91,7 @@ export const ShowSimpleGroup_Client = ({
                   />
                 )}
                 {isEdit ? (
-                  <UpdateDeleteText
+                  <UpdateDeleteTextButtons
                     currentData={item}
                     staticTexts={staticTexts}
                     isQuill={!isHeader}
@@ -102,29 +102,15 @@ export const ShowSimpleGroup_Client = ({
           })
         : null}
       {isEdit ? (
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "5px",
-            flexWrap: "wrap",
-          }}
-        >
-          {!isHeader ? (
-            <AddTextDescriptionButton
-              featureId={featureId}
-              textType={SIMPLE_GROUP_ITEM}
-              buttonText={staticTexts.addGroupItem ?? "N/A"}
-              price={null}
-            />
-          ) : null}
-          <DeleteFeatureButton
-            featureId={featureId}
-            deleteText={staticTexts.delete ?? "N/A"}
-            featureData={data}
-          />
-        </div>
+        <AddTextDescriptionDeleteFeatureButtons
+          featureId={featureId}
+          deleteButtonText={staticTexts.delete ?? "N/A"}
+          featureData={data}
+          parentFeatureId={parentFeatureId}
+          addButtonText={staticTexts.addGroupItem ?? "N/A"}
+          textDescriptionType={SIMPLE_GROUP_ITEM}
+          isNoAddButton={isHeader}
+        />
       ) : null}
     </div>
   );

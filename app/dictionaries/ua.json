@@ -90,6 +90,9 @@
     "december0": "грудня",
     "expand": "Дізнатись більше",
     "wrap": "Згорнути",
-    "signUpForTraining": "ЗАПИСАТИСЯ НА ТРЕНУВАННЯ"
+    "signUpForTraining": "ЗАПИСАТИСЯ НА ТРЕНУВАННЯ",
+    "showTAB": "показати ТАВ",
+    "hideTAB": "сховати ТАВ",
+    "saveFilters": "Зберегти фільтри"
   }
 }

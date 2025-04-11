@@ -90,6 +90,9 @@
     "december0": "dec",
     "wrap": "Wrap",
     "expand": "Expand",
-    "signUpForTraining": "SIGN UP FOR TRAINING"
+    "signUpForTraining": "SIGN UP FOR TRAINING",
+    "showTAB": "show TAB",
+    "hideTAB": "hide TAB",
+    "saveFilters": "save filters"
   }
 }

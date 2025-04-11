@@ -1,4 +1,4 @@
-import { FullData } from "@/app/lib/definitions";
+import { FullData, MainParams, PageData } from "@/app/lib/definitions";
 import {
   LIGA_ADDRESS,
   LIGA_SERVICE,
@@ -6,16 +6,25 @@ import {
   LIGA_TITLE,
 } from "@/app/lib/constants";
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import { UpdateDeleteText } from "../UpdateDeleteText";
+import { UpdateDeleteTextButtons } from "../_buttons/UpdateDeleteTextButtons";
 import { PhoneIcon, MapPinIcon } from "@heroicons/react/24/solid";
+import { PagesSelect } from "./PagesSelect";
 
 export type Props = {
   data?: FullData;
   isEdit: boolean;
   staticTexts: StaticTexts;
+  pages?: PageData[] | null;
+  onLinkUpdated: () => void;
 };
 
-export const ShowLigaGroupItem = ({ data, isEdit, staticTexts }: Props) => {
+export const ShowLigaGroupItem = ({
+  data,
+  isEdit,
+  staticTexts,
+  pages,
+  onLinkUpdated,
+}: Props) => {
   if (!data) {
     return null;
   }
@@ -52,6 +61,8 @@ export const ShowLigaGroupItem = ({ data, isEdit, staticTexts }: Props) => {
           flexDirection: "column",
           gap: "10px",
           alignItems: "stretch",
+          border: isEdit ? "1px dotted magenta" : undefined,
+          padding: isEdit ? "10px" : undefined,
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
@@ -63,22 +74,61 @@ export const ShowLigaGroupItem = ({ data, isEdit, staticTexts }: Props) => {
             <PhoneIcon style={{ color: "blue", width: "24px" }} />
           ) : null}
 
-          {isService ? (
-            <div style={{ display: "flex", gap: "5px", alignItems: "center" }}>
-              <img src={data.value} alt="icon" />
-              <div style={textStyle}> {data?.text_content ?? "N/A"}</div>
-            </div>
-          ) : null}
-
           {!isService ? (
             <p style={textStyle}> {data?.text_content ?? "N/A"}</p>
           ) : null}
+
+          {isService ? (
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                flexWrap: "wrap",
+                gap: "10px",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  gap: "5px",
+                  alignItems: "center",
+                }}
+              >
+                <img src={data.value} alt="icon" />
+                <div style={textStyle}> {data?.text_content ?? "N/A"}</div>
+              </div>
+
+              {isEdit && pages ? (
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "10px",
+                    flexWrap: "wrap",
+                    alignItems: "center",
+                  }}
+                >
+                  <div>{staticTexts.linkTo} </div>
+
+                  <PagesSelect
+                    textDescriptionId={data.text_description_id}
+                    link={data.link ?? ""}
+                    pages={pages}
+                    onLinkUpdated={onLinkUpdated}
+                  />
+                </div>
+              ) : null}
+            </div>
+          ) : null}
         </div>
+
         {isEdit ? (
-          <UpdateDeleteText
+          <UpdateDeleteTextButtons
             staticTexts={staticTexts}
             currentData={data}
             useIcons={isService}
+            changeOrderTextType={isService ? LIGA_SERVICE : undefined}
           />
         ) : null}
       </div>

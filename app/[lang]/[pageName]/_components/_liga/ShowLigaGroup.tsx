@@ -13,15 +13,18 @@ import { ShowLigaGroupItem } from "./ShowLigaGroupItem";
 import { AddTextDescriptionButton } from "../_buttons/AddTextDescriptionButton";
 import { getPageTitles } from "@/app/lib/actions_fitness";
 import Link from "next/link";
-import { Pages } from "./Pages";
+import { PagesSelect } from "./PagesSelect";
 import { useEffect, useState } from "react";
 import styles from "./showListGRoup.module.css";
+import { DeleteFeatureButton } from "../_buttons/DeleteFeatureButton";
+import { AddTextDescriptionDeleteFeatureButtons } from "../_buttons/AddTextDescriptionDeleteFeatureButtons";
 
 export type Props = {
   isEdit: boolean;
   staticTexts: StaticTexts;
   groupData: FullData[];
   params: MainParams;
+  parentFeatureId: number;
 };
 
 export const ShowLigaGroup = ({
@@ -29,16 +32,17 @@ export const ShowLigaGroup = ({
   staticTexts,
   groupData,
   params,
+  parentFeatureId,
 }: Props) => {
   const [pages, setPages] = useState<PageData[] | null>(null);
 
+  const getPages = async () => {
+    const pages1 = await getPageTitles(params.lang);
+
+    setPages(pages1?.map((page) => page) ?? []);
+  };
+
   useEffect(() => {
-    const getPages = async () => {
-      const pages1 = await getPageTitles(params.lang);
-
-      setPages(pages1?.map((page) => page) ?? []);
-    };
-
     getPages();
   }, []);
 
@@ -60,107 +64,81 @@ export const ShowLigaGroup = ({
     return null;
   }
 
+  const onLinkUpdated = () => {
+    getPages();
+  };
+
+  const commonProps = {
+    isEdit,
+    staticTexts,
+    onLinkUpdated,
+  };
+
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        gap: "20px",
-        width: "100%",
-        borderRadius: "10px",
-        backgroundColor: GRAY_BACKGROUND_COLOR,
-        border: isEdit ? "1px dotted magenta" : undefined,
-        padding: "20px",
-      }}
-    >
-      <ShowLigaGroupItem
-        isEdit={isEdit}
-        staticTexts={staticTexts}
-        data={dataTitle}
-      />
-      <div style={{ display: "flex", gap: "30px", flexWrap: "wrap" }}>
-        <ShowLigaGroupItem
-          isEdit={isEdit}
-          staticTexts={staticTexts}
-          data={dataAddress}
-        />
+    <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "20px",
+          width: "100%",
+          borderRadius: "10px",
+          backgroundColor: GRAY_BACKGROUND_COLOR,
+          border: isEdit ? "1px dotted magenta" : undefined,
+          padding: "10px",
+        }}
+      >
+        <ShowLigaGroupItem {...commonProps} data={dataTitle} />
+        <div style={{ display: "flex", gap: "30px", flexWrap: "wrap" }}>
+          <ShowLigaGroupItem {...commonProps} data={dataAddress} />
 
-        <ShowLigaGroupItem
-          isEdit={isEdit}
-          staticTexts={staticTexts}
-          data={dataTelephone}
-        />
-      </div>
+          <ShowLigaGroupItem {...commonProps} data={dataTelephone} />
+        </div>
 
-      {isEdit
-        ? dataServiceList.map((item, index) => {
-            return (
-              <div
-                style={{
-                  display: "flex",
-                  gap: "20px",
-                  flexWrap: "wrap",
-                  alignItems: "center",
-                }}
-                key={item.text_content_id ?? "" + "_" + index}
-              >
-                <ShowLigaGroupItem
-                  isEdit={isEdit}
-                  staticTexts={staticTexts}
-                  data={item}
-                />
-
-                <div>{staticTexts.linkTo} </div>
-
-                <Pages
-                  params={params}
-                  textDescriptionId={item.text_description_id}
-                  link={item.link ?? ""}
-                  pages={pages}
-                />
-              </div>
-            );
-          })
-        : null}
-
-      {!isEdit ? (
-        <div className={styles.list}>
-          {dataServiceList.map((item, index) => {
-            return (
-              <div
-                key={item.text_content_id ?? "" + "_" + index}
-                className={styles.item}
-              >
-                {item.link ? (
-                  <Link href={`/${params.lang}/${item.link}`}>
-                    <ShowLigaGroupItem
-                      isEdit={isEdit}
-                      staticTexts={staticTexts}
-                      data={item}
-                    />
-                  </Link>
-                ) : (
+        {isEdit
+          ? dataServiceList.map((item, index) => {
+              return (
+                <div key={item.text_content_id ?? "" + "_" + index}>
                   <ShowLigaGroupItem
-                    isEdit={isEdit}
-                    staticTexts={staticTexts}
+                    {...commonProps}
                     data={item}
+                    pages={pages}
                   />
-                )}
-              </div>
-            );
-          })}
-        </div>
-      ) : null}
+                </div>
+              );
+            })
+          : null}
 
+        {!isEdit ? (
+          <div className={styles.list}>
+            {dataServiceList.map((item, index) => {
+              return (
+                <div
+                  key={item.text_content_id ?? "" + "_" + index}
+                  className={styles.item}
+                >
+                  {item.link ? (
+                    <Link href={`/${params.lang}/${item.link}`}>
+                      <ShowLigaGroupItem {...commonProps} data={item} />
+                    </Link>
+                  ) : (
+                    <ShowLigaGroupItem {...commonProps} data={item} />
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        ) : null}
+      </div>
       {isEdit ? (
-        <div style={{ display: "flex", gap: "20px", marginTop: "20px" }}>
-          <AddTextDescriptionButton
-            featureId={featureId}
-            buttonText={staticTexts.addGroupItem ?? "N/A"}
-            textType={LIGA_SERVICE}
-            price={null}
-          />
-        </div>
+        <AddTextDescriptionDeleteFeatureButtons
+          featureId={featureId}
+          deleteButtonText={staticTexts.delete ?? "N/A"}
+          featureData={groupData}
+          parentFeatureId={parentFeatureId}
+          addButtonText={staticTexts.addGroupItem ?? "N/A"}
+          textDescriptionType={LIGA_SERVICE}
+        />
       ) : null}
     </div>
   );

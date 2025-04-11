@@ -20,6 +20,7 @@ export type Props = {
   groupData: FullData[];
   params: MainParams;
   pageFullData: FullData[];
+  parentFeatureId: number;
 };
 
 export const CalendarEventsGroup = ({
@@ -28,6 +29,7 @@ export const CalendarEventsGroup = ({
   staticTexts,
   params,
   pageFullData,
+  parentFeatureId,
 }: Props) => {
   const getDateToday = () => {
     const today = new Date();
@@ -215,6 +217,7 @@ export const CalendarEventsGroup = ({
             setEditEventId={setEditEventId}
             startDate={isWeek ? startOfWeek : currentDate}
             countDates={isWeek ? 7 : 1}
+            parentFeatureId={calendarFeatureId}
           />
         </div>
       ) : null}
@@ -251,6 +254,7 @@ export const CalendarEventsGroup = ({
               featureId={calendarFeatureId}
               deleteText={staticTexts.deleteCalendar ?? "N/A"}
               featureData={groupData}
+              parentFeatureId={parentFeatureId}
             />
           </div>
         </div>

@@ -1,7 +1,7 @@
 import { FullData } from "@/app/lib/definitions";
-import { INFO_TELEPHONE, INFO_TITLE } from "@/app/lib/constants";
+import { INFO_BODY, INFO_TELEPHONE, INFO_TITLE } from "@/app/lib/constants";
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import { UpdateDeleteText } from "../UpdateDeleteText";
+import { UpdateDeleteTextButtons } from "../_buttons/UpdateDeleteTextButtons";
 import { PhoneIcon } from "@heroicons/react/24/solid";
 
 export type Props = {
@@ -11,7 +11,7 @@ export type Props = {
   isArea?: boolean;
 };
 
-export const ShowInfoGroupItem_Client = ({
+export const ShowInfoGroupItem = ({
   data,
   isEdit,
   staticTexts,
@@ -27,6 +27,7 @@ export const ShowInfoGroupItem_Client = ({
   };
 
   const isPhone = data.text_type === INFO_TELEPHONE;
+  const isBody = data.text_type === INFO_BODY;
 
   return (
     <div
@@ -44,10 +45,11 @@ export const ShowInfoGroupItem_Client = ({
         <p style={textStyle}> {data?.text_content ?? "N/A"}</p>
       </div>
       {isEdit ? (
-        <UpdateDeleteText
+        <UpdateDeleteTextButtons
           staticTexts={staticTexts}
           currentData={data}
           isArea={isArea}
+          changeOrderTextType={isBody ? INFO_BODY : undefined}
         />
       ) : null}
     </div>

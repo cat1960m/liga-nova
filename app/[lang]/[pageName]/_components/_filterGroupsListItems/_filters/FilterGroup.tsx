@@ -2,12 +2,11 @@
 
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { FullData } from "@/app/lib/definitions";
-import { UpdateDeleteText } from "../../UpdateDeleteText";
-import { AddTextDescriptionButton } from "../../_buttons/AddTextDescriptionButton";
+import { UpdateDeleteTextButtons } from "../../_buttons/UpdateDeleteTextButtons";
 import { ChevronUpIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
-import { DeleteFeatureButton } from "../../_buttons/DeleteFeatureButton";
 import { FILTER, FILTER_GROUP_TITLE } from "@/app/lib/constants";
+import { AddTextDescriptionDeleteFeatureButtons } from "../../_buttons/AddTextDescriptionDeleteFeatureButtons";
 
 export type Props = {
   groupData: FullData[];
@@ -18,6 +17,7 @@ export type Props = {
     value: boolean;
   }) => void;
   selectedFilterTextDescriptionIds: number[];
+  parentFeatureId: number | null;
 };
 
 export const FilterGroup = ({
@@ -26,6 +26,7 @@ export const FilterGroup = ({
   staticTexts,
   onFilterSelectionChanged,
   selectedFilterTextDescriptionIds,
+  parentFeatureId,
 }: Props) => {
   const featureId = groupData[0]?.id;
   const [isExpanded, setIsExpanded] = useState<boolean>(true);
@@ -83,7 +84,10 @@ export const FilterGroup = ({
           )}
         </div>
         {isEdit ? (
-          <UpdateDeleteText staticTexts={staticTexts} currentData={titleData} />
+          <UpdateDeleteTextButtons
+            staticTexts={staticTexts}
+            currentData={titleData}
+          />
         ) : null}
       </div>
 
@@ -125,7 +129,7 @@ export const FilterGroup = ({
                   ) : null}
                 </div>
                 {isEdit ? (
-                  <UpdateDeleteText
+                  <UpdateDeleteTextButtons
                     staticTexts={staticTexts}
                     currentData={filter}
                     useIcons
@@ -137,27 +141,14 @@ export const FilterGroup = ({
         : null}
 
       {isEdit ? (
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "5px",
-            flexWrap: "wrap",
-          }}
-        >
-          <AddTextDescriptionButton
-            featureId={featureId}
-            textType={FILTER}
-            buttonText={staticTexts.addGroupItem ?? "N/A"}
-            price={null}
-          />
-          <DeleteFeatureButton
-            featureId={featureId}
-            deleteText={staticTexts.delete ?? "N/A"}
-            featureData={groupData}
-          />
-        </div>
+        <AddTextDescriptionDeleteFeatureButtons
+          featureId={featureId}
+          deleteButtonText={staticTexts.delete ?? "N/A"}
+          featureData={groupData}
+          parentFeatureId={parentFeatureId}
+          addButtonText={staticTexts.addGroupItem ?? "N/A"}
+          textDescriptionType={FILTER}
+        />
       ) : null}
     </div>
   );

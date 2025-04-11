@@ -11,9 +11,7 @@ import { FullData } from "@/app/lib/definitions";
 import { useMemo, useState } from "react";
 import { FilterGroup } from "../_filterGroupsListItems/_filters/FilterGroup";
 import { getContainerData, getFilterIds } from "@/app/lib/utils";
-import { CommonButton } from "../_buttons/CommonButton";
-import { updateFeatureSubtypeFilterIds } from "@/app/lib/actions_fitness";
-import { usePathname } from "next/navigation";
+import { UpdateFeatureFilterIdsButton } from "../_buttons/UpdateFeatureFilterIdsButton";
 
 export type Props = {
   currentData: FullData;
@@ -21,7 +19,7 @@ export type Props = {
   pageFullDataList: FullData[];
   additionalPageName: string;
 };
-
+//Персональні тренування ,Групові студії, Кріосауна, Солярій
 export const AdditionalPageDataGroupEdit = ({
   currentData,
   staticTexts,
@@ -34,8 +32,6 @@ export const AdditionalPageDataGroupEdit = ({
     selectedFilterTextDescriptionIds,
     setSelectedFilterTextDescriptionIds,
   ] = useState<number[]>(filterTextDescriptionIds);
-
-  const pathName = usePathname();
 
   const pageFeatureId = currentData.id;
 
@@ -81,15 +77,6 @@ export const AdditionalPageDataGroupEdit = ({
     }
   };
 
-  const handleSave = async () => {
-    await updateFeatureSubtypeFilterIds({
-      id: pageFeatureId,
-      pathName,
-      subtype: currentData.subtype,
-      filterIds: selectedFilterTextDescriptionIds.join(","),
-    });
-  };
-
   return (
     <>
       <div
@@ -116,6 +103,7 @@ export const AdditionalPageDataGroupEdit = ({
                 selectedFilterTextDescriptionIds={
                   selectedFilterTextDescriptionIds
                 }
+                parentFeatureId={null}
               />
             </div>
           );
@@ -130,7 +118,12 @@ export const AdditionalPageDataGroupEdit = ({
           gap: "10px",
         }}
       >
-        <CommonButton text="Save filters" onClick={handleSave} />
+        <UpdateFeatureFilterIdsButton
+          featureId={pageFeatureId}
+          subtype={currentData.subtype}
+          filterIds={selectedFilterTextDescriptionIds.join(",")}
+          buttonText={staticTexts.saveFilters ?? "N/A"}
+        />
       </div>
     </>
   );

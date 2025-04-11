@@ -8,7 +8,7 @@ import {
   SCHEDULE_ITEM6,
 } from "@/app/lib/constants";
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import { UpdateDeleteText } from "../UpdateDeleteText";
+import { UpdateDeleteTextButtons } from "../_buttons/UpdateDeleteTextButtons";
 
 export type Props = {
   data?: FullData;
@@ -16,11 +16,7 @@ export type Props = {
   staticTexts: StaticTexts;
 };
 
-export const ShowSCheduleGroupItem_Client = ({
-  data,
-  isEdit,
-  staticTexts,
-}: Props) => {
+export const ShowSCheduleGroupItem = ({ data, isEdit, staticTexts }: Props) => {
   if (!data) {
     return null;
   }
@@ -56,7 +52,7 @@ export const ShowSCheduleGroupItem_Client = ({
         {data?.text_content ?? "N/A"}
       </div>
       {isEdit ? (
-        <UpdateDeleteText staticTexts={staticTexts} currentData={data} />
+        <UpdateDeleteTextButtons staticTexts={staticTexts} currentData={data} />
       ) : null}
     </div>
   );

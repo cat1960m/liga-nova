@@ -5,14 +5,12 @@ import { FullData, MainParams } from "@/app/lib/definitions";
 import { useEffect, useState } from "react";
 import { CommonButton } from "../_buttons/CommonButton";
 import { LIST_ITEM } from "@/app/lib/constants";
-import { usePathname } from "next/navigation";
-import { updateFeatureSubtypeFilterIds } from "@/app/lib/actions_fitness";
 import { getFilterIds } from "@/app/lib/utils/getFilterIds";
 import { FilterGroups } from "./_filters/FilterGroups";
 import { ListItem } from "./ListItem";
 import { AddEditListItem } from "./AddEditListItem";
 
-import styles from "./addEditKistItemFilter.module.css";
+import { UpdateFeatureFilterIdsButton } from "../_buttons/UpdateFeatureFilterIdsButton";
 
 export type Props = {
   staticTexts: StaticTexts;
@@ -33,7 +31,6 @@ export const AddEditListItemFilter = ({
   onSave,
   addEditItemFeatureId,
 }: Props) => {
-  const pathName = usePathname();
   const [isSaveDisabled, setIsSaveDisabled] = useState<boolean>(false);
 
   const addEditItemFeatureIdData = pageFullDataList.filter(
@@ -84,17 +81,6 @@ export const AddEditListItemFilter = ({
 
       setSelectedFilterTextDescriptionIds(newSelectedFilterTextDescriptionIds);
     }
-  };
-
-  const handleSave = async () => {
-    await updateFeatureSubtypeFilterIds({
-      id: addEditItemFeatureId,
-      pathName,
-      subtype: LIST_ITEM,
-      filterIds: selectedFilterTextDescriptionIds.join(","),
-    });
-
-    onSave();
   };
 
   const parentFeatureId = groupData[0]?.id;
@@ -168,10 +154,13 @@ export const AddEditListItemFilter = ({
         }}
       >
         <CommonButton text="Cancel" onClick={onCancel} />
-        <CommonButton
-          text="Save"
-          onClick={handleSave}
-          isDisabled={isSaveDisabled}
+        <UpdateFeatureFilterIdsButton
+          featureId={addEditItemFeatureId}
+          subtype={LIST_ITEM}
+          filterIds={selectedFilterTextDescriptionIds.join(",")}
+          buttonText={staticTexts.save ?? "N/A"}
+          isDisabled={!!isSaveDisabled}
+          onSaved={onSave}
         />
       </div>
     </div>

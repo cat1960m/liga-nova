@@ -16,6 +16,7 @@ export type Props = {
   params: MainParams;
   isEdit: boolean;
   staticTexts: StaticTexts;
+  parentFeatureId: number;
 };
 
 export const ShowTabs_Client = ({
@@ -24,6 +25,7 @@ export const ShowTabs_Client = ({
   params,
   isEdit,
   staticTexts,
+  parentFeatureId,
 }: Props) => {
   const tabTitles = pageFullDataList.filter(
     (item) => item.parent_feature_id === tabsData.id
@@ -40,6 +42,8 @@ export const ShowTabs_Client = ({
   const [selectedTabData, setSelectedTabData] = useState<
     [Record<string, FullData[]>, string[]] | null
   >(null);
+
+  const [isEditTabShown, setIsEditTabShown] = useState(false);
 
   const handleSelectedTabFeatureIdChanged = (featureId: number) => {
     setSelectedTabFeatureId(featureId);
@@ -60,6 +64,8 @@ export const ShowTabs_Client = ({
 
     setSelectedTabData(tabContainerData);
   }, [pageFullDataList]);
+
+  const isTabShown = !isEdit || isEditTabShown;
 
   return (
     <div
@@ -95,8 +101,9 @@ export const ShowTabs_Client = ({
                   }
                   isEdit={isEdit}
                   staticTexts={staticTexts}
-                  tabIndex={index}
-                  pageFullDataList={pageFullDataList}
+                  parentFeatureId={tabsData.id}
+                  isEditTabShown={isEditTabShown}
+                  onShowTabClick={() => setIsEditTabShown(!isEditTabShown)}
                 />
               </div>
             );
@@ -114,11 +121,6 @@ export const ShowTabs_Client = ({
             }}
           >
             <div style={{ display: "flex", gap: "20px" }}>
-              <DeleteFeatureButton
-                featureId={tabsData.id}
-                deleteText={staticTexts.deleteTabs ?? "N/A"}
-                featureData={[tabsData]}
-              />
               <AddChildFeatureButton
                 parentFeatureId={tabsData.id}
                 text={staticTexts.addTab ?? "N/A"}
@@ -127,11 +129,17 @@ export const ShowTabs_Client = ({
                 type={TAB}
                 subtype="1"
               />
+              <DeleteFeatureButton
+                featureId={tabsData.id}
+                deleteText={staticTexts.deleteTabs ?? "N/A"}
+                featureData={[tabsData]}
+                parentFeatureId={parentFeatureId}
+              />
             </div>
           </div>
         ) : null}
 
-        {selectedTabData && selectedTabFeatureId ? (
+        {selectedTabData && selectedTabFeatureId && isTabShown ? (
           <div
             style={{
               border: isEdit ? "1px dashed magenta" : undefined,

@@ -6,18 +6,13 @@ import {
   FILTER_GROUP_SUBTYPE,
   FILTER_GROUP_TITLE,
   GROUP,
-  GROUP1_SUBTYPE,
-  GROUP2_SUBTYPE,
-  GROUP_2COLUMNS_2HEADERS_SUBTYPE,
-  HEADER1,
-  HEADER2,
+  INFO_CHECK_GROUP_SUBTYPE,
   INFO_GROUP_SUBTYPE,
+  IMAGE_GROUP_SUBTYPE,
   INFO_ADDRESS,
   INFO_BODY,
   INFO_TELEPHONE,
   INFO_TITLE,
-  ITEM_COLUMN1,
-  ITEM_COLUMN2,
   SCHEDULE_GROUP_SUBTYPE,
   SCHEDULE_ITEM1,
   SCHEDULE_ITEM2,
@@ -52,6 +47,8 @@ import {
   GroupFeatureSubtypes,
   GROUP_EXPANDED_SUBTYPE,
   SIMPLE_GROUP_SUBTYPES,
+  INFO_CHECK_HEADER,
+  INFO_CHECK_ITEM,
 } from "@/app/lib/constants";
 import { MainParams } from "@/app/lib/definitions";
 import { usePathname } from "next/navigation";
@@ -104,13 +101,17 @@ export const AddChildFeatureToContainer = ({
         type: GROUP,
         subtype: newValue,
         name: params.pageName,
-        text_types: [
-          INFO_TITLE,
-          INFO_TELEPHONE,
-          INFO_ADDRESS,
-          INFO_BODY,
-          IMAGE,
-        ],
+        text_types: [INFO_TITLE, INFO_TELEPHONE, INFO_ADDRESS, INFO_BODY],
+        pathName,
+      });
+    }
+    if (newValue === IMAGE_GROUP_SUBTYPE) {
+      await addChildFeature({
+        parentId: parentFeatureId,
+        type: GROUP,
+        subtype: newValue,
+        name: params.pageName,
+        text_types: [IMAGE],
         pathName,
       });
     }
@@ -159,13 +160,13 @@ export const AddChildFeatureToContainer = ({
       });
     }
 
-    if (newValue === GROUP_2COLUMNS_2HEADERS_SUBTYPE) {
+    if (newValue === INFO_CHECK_GROUP_SUBTYPE) {
       await addChildFeature({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: newValue,
         name: params.pageName,
-        text_types: [HEADER1, HEADER2, ITEM_COLUMN1, ITEM_COLUMN2],
+        text_types: [INFO_CHECK_HEADER, INFO_CHECK_ITEM],
         pathName,
       });
     }

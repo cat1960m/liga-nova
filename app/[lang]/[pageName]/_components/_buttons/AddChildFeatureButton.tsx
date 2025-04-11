@@ -2,8 +2,8 @@
 
 import { addChildFeature } from "@/app/lib/actions_fitness";
 import { CommonButton } from "./CommonButton";
-import { TAB } from "@/app/lib/constants";
 import { MainParams } from "@/app/lib/definitions";
+import { useEditContext } from "../../edit/_components/EditContextProvider";
 
 export type Props = {
   parentFeatureId: number;
@@ -22,7 +22,11 @@ export const AddChildFeatureButton = ({
   type,
   subtype,
 }: Props) => {
+  const { isEditButtonsDisabled, changeIsEditButtonDisabled } =
+    useEditContext();
+
   const handleAddTab = async (pathName: string) => {
+    changeIsEditButtonDisabled(true);
     await addChildFeature({
       parentId: parentFeatureId,
       type,
@@ -31,7 +35,14 @@ export const AddChildFeatureButton = ({
       text_types: textTypes,
       pathName,
     });
+    changeIsEditButtonDisabled(false);
   };
 
-  return <CommonButton text={text} onClick={handleAddTab} />;
+  return (
+    <CommonButton
+      text={text}
+      onClick={handleAddTab}
+      isDisabled={isEditButtonsDisabled}
+    />
+  );
 };

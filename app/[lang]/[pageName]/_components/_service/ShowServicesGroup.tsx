@@ -1,21 +1,22 @@
 import { SERVICE_ITEM, TOOLTIP } from "@/app/lib/constants";
 import { FullData } from "@/app/lib/definitions";
-import { ShowGroupServicesText_Client } from "./ShowGroupServicesText_Client";
+import { ShowGroupServicesText } from "./ShowGroupServicesText";
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import { UpdateDeleteText } from "../UpdateDeleteText";
-import { DeleteFeatureButton } from "../_buttons/DeleteFeatureButton";
-import { AddTextDescriptionButton } from "../_buttons/AddTextDescriptionButton";
+import { UpdateDeleteTextButtons } from "../_buttons/UpdateDeleteTextButtons";
+import { AddTextDescriptionDeleteFeatureButtons } from "../_buttons/AddTextDescriptionDeleteFeatureButtons";
 
 export type Props = {
   groupData: FullData[];
   isEdit: boolean;
   staticTexts: StaticTexts;
+  parentFeatureId: number;
 };
 
-export const ShowServices_Client = ({
+export const ShowServicesGroup = ({
   groupData,
   isEdit,
   staticTexts,
+  parentFeatureId,
 }: Props) => {
   const firstData = groupData[0];
   const featureId = firstData.id;
@@ -23,7 +24,7 @@ export const ShowServices_Client = ({
   const texts = groupData.filter((data) => data.content_type !== TOOLTIP);
 
   return (
-    <div>
+    <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
       <div
         style={{
           width: "100%",
@@ -57,16 +58,17 @@ export const ShowServices_Client = ({
                 }}
                 key={data.id + "_" + index}
               >
-                <ShowGroupServicesText_Client
+                <ShowGroupServicesText
                   text={data.text_content ?? "N/A"}
                   title={title?.text_content ?? ""}
                   price={data.price ?? 0}
                 />
 
                 {isEdit ? (
-                  <UpdateDeleteText
+                  <UpdateDeleteTextButtons
                     currentData={data}
                     staticTexts={staticTexts}
+                    changeOrderTextType={SERVICE_ITEM}
                   />
                 ) : null}
               </div>
@@ -76,30 +78,15 @@ export const ShowServices_Client = ({
       </div>
 
       {isEdit ? (
-        <div
-          style={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            marginTop: "20px",
-          }}
-        >
-          <div style={{ display: "flex", gap: "20px" }}>
-            <AddTextDescriptionButton
-              featureId={featureId}
-              textType={SERVICE_ITEM}
-              buttonText={staticTexts.addGroupItem ?? "N/A"}
-              price={0}
-            />
-
-            <DeleteFeatureButton
-              featureId={featureId}
-              deleteText={staticTexts.delete ?? "N/A"}
-              featureData={groupData}
-            />
-          </div>
-        </div>
+        <AddTextDescriptionDeleteFeatureButtons
+          featureId={featureId}
+          deleteButtonText={staticTexts.delete ?? "N/A"}
+          featureData={groupData}
+          parentFeatureId={parentFeatureId}
+          textDescriptionType={SERVICE_ITEM}
+          addButtonText={staticTexts.addGroupItem ?? "N/A"}
+          price={0}
+        />
       ) : null}
     </div>
   );

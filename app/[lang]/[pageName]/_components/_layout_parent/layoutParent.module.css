@@ -32,10 +32,11 @@
     }
 
     .left {
-        padding-right: none;
+        padding-right: 0;
     }
     
     .right {
-        padding-left: none;
+        padding-top: 20px;
+        padding-left: 0;
     }
 }

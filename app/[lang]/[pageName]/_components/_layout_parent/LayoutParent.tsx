@@ -13,6 +13,7 @@ export type Props = {
   params: MainParams;
   isEdit: boolean;
   staticTexts: StaticTexts;
+  parentFeatureId: number;
 };
 
 export const LayoutParent = ({
@@ -21,6 +22,7 @@ export const LayoutParent = ({
   params,
   isEdit,
   staticTexts,
+  parentFeatureId,
 }: Props) => {
   const layoutItems = pageFullDataList.filter(
     (item) => item.parent_feature_id === tabsData.id
@@ -54,11 +56,15 @@ export const LayoutParent = ({
   });
 
   return (
-    <div style={isEdit ? { border: "4px dashed magenta" } : undefined}>
+    <div
+      style={
+        isEdit ? { border: "4px dashed magenta", padding: "10px" } : undefined
+      }
+    >
       <div className={styles.container}>
         <div
           style={{
-            padding: isEdit ? "5px" : undefined,
+            padding: isEdit ? "10px" : undefined,
             border: isEdit ? "1px dotted magenta" : undefined,
           }}
           className={cn(styles.item, styles.left)}
@@ -75,7 +81,7 @@ export const LayoutParent = ({
         </div>
         <div
           style={{
-            padding: isEdit ? "5px" : undefined,
+            padding: isEdit ? "10px" : undefined,
             border: isEdit ? "1px dotted magenta" : undefined,
           }}
           className={cn(styles.item, styles.right)}
@@ -106,6 +112,7 @@ export const LayoutParent = ({
               featureId={tabsData.id}
               deleteText={staticTexts.delete ?? "N/A"}
               featureData={[tabsData]}
+              parentFeatureId={parentFeatureId}
             />
           </div>
         </div>

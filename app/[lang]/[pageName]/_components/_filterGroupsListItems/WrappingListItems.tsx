@@ -114,6 +114,8 @@ export const WrappingListItems = ({
                     featureId={id}
                     deleteText={staticTexts.delete ?? "N/A"}
                     featureData={currentData}
+                    parentFeatureId={parentFeatureId}
+                    isHorizontal
                   />
                 </div>
               ) : null}

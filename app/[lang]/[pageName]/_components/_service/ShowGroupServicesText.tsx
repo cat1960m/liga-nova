@@ -4,7 +4,7 @@ export type Props = {
   price: number;
 };
 
-export const ShowGroupServicesText_Client = ({ text, title, price }: Props) => {
+export const ShowGroupServicesText = ({ text, title, price }: Props) => {
   return (
     <div
       style={{

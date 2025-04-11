@@ -69,6 +69,7 @@ export const FilterGroupsItems = ({
               selectedFilterTextDescriptionIds={
                 selectedFilterTextDescriptionIds
               }
+              parentFeatureId={parentFeatureId}
             />
           </div>
         );

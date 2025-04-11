@@ -1,5 +1,5 @@
 import { FullData } from "@/app/lib/definitions";
-import { UpdateDeleteText } from "./UpdateDeleteText";
+import { UpdateDeleteTextButtons } from "./_buttons/UpdateDeleteTextButtons";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 
 export type Props = {
@@ -44,7 +44,10 @@ export const TextItemField = ({
           {fieldData.text_content ?? "N/A"}
         </div>
       </div>
-      <UpdateDeleteText staticTexts={staticTexts} currentData={fieldData} />
+      <UpdateDeleteTextButtons
+        staticTexts={staticTexts}
+        currentData={fieldData}
+      />
     </div>
   );
 };

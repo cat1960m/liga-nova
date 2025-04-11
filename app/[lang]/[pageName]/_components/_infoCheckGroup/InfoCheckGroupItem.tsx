@@ -1,7 +1,7 @@
-import { HEADER1, HEADER2 } from "@/app/lib/constants";
+import { INFO_CHECK_HEADER } from "@/app/lib/constants";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { FullData } from "@/app/lib/definitions";
-import { UpdateDeleteText } from "../UpdateDeleteText";
+import { UpdateDeleteTextButtons } from "../_buttons/UpdateDeleteTextButtons";
 
 export type Props = {
   isEdit: boolean;
@@ -9,34 +9,35 @@ export type Props = {
   currentData: FullData;
 };
 
-export const ShowGroupColumnText_Client = ({
+export const InfoCheckGroupItem = ({
   isEdit,
   staticTexts,
   currentData,
 }: Props) => {
-  const isHeader = [HEADER1, HEADER2].includes(currentData.text_type);
-  const canDelete = !!currentData.can_delete;
-
+  const isHeader = [INFO_CHECK_HEADER].includes(currentData.text_type);
   const text = currentData.text_content ?? "N/A";
-  const textDescriptionId = currentData.text_description_id;
+  const changeOrderTextType = [INFO_CHECK_HEADER].includes(
+    currentData.text_type
+  )
+    ? undefined
+    : currentData.text_type;
 
   return (
     <div
       style={{
         flexGrow: 2,
         display: "flex",
-        flexWrap: "wrap",
+        flexDirection: "column",
         fontWeight: isHeader ? 700 : 400,
         gap: "10px",
-        alignItems: "center",
-        justifyContent: "space-between",
       }}
     >
-      <div style={{ display: "flex", gap: "5px", alignItems: "center" }}>
+      <div style={{ display: "flex", gap: "5px", alignItems: "flex-start" }}>
         {!isHeader ? (
           <div
             style={{
               width: "16px",
+              minWidth: "16px",
               height: "16px",
               borderRadius: "8px",
               border: "2px solid blue",
@@ -45,6 +46,7 @@ export const ShowGroupColumnText_Client = ({
               alignItems: "center",
               justifyContent: "center",
               fontSize: "small",
+              marginTop: "5px",
             }}
           >
             v
@@ -53,7 +55,11 @@ export const ShowGroupColumnText_Client = ({
         <div>{text}</div>
       </div>
       {isEdit ? (
-        <UpdateDeleteText currentData={currentData} staticTexts={staticTexts} />
+        <UpdateDeleteTextButtons
+          currentData={currentData}
+          staticTexts={staticTexts}
+          changeOrderTextType={changeOrderTextType}
+        />
       ) : null}
     </div>
   );

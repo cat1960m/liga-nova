@@ -97,4 +97,7 @@ export type StaticTexts = {
   wrap?: string;
   expand?: string;
   signUpForTraining?: string;
+  showTAB?: string;
+  hideTAB?: string;
+  saveFilters?: string;
 };

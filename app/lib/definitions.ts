@@ -97,6 +97,7 @@ export type Feature = {
   updated_by: number;
   last_edit: Date;
   additional_page_name?: string;
+  feature_order: number;
 };
 
 //table in db text_descriptions
@@ -106,6 +107,7 @@ export type TextDescription = {
   text_type: string;
   price?: number;
   can_delete?: boolean;
+  text_description_order: number;
 };
 
 //table in db text_contents

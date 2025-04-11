@@ -3,6 +3,7 @@
 import { RemoveFeature } from "@/app/lib/actions_fitness";
 import { CommonButton } from "../_buttons/CommonButton";
 import { usePathname } from "next/navigation";
+import { useEditContext } from "../../edit/_components/EditContextProvider";
 
 export const DeleteTabsButton = ({
   tabsFeatureId,
@@ -12,10 +13,20 @@ export const DeleteTabsButton = ({
   text: string;
 }) => {
   const pathName = usePathname();
+  const { isEditButtonsDisabled, changeIsEditButtonDisabled } =
+    useEditContext();
 
-  const onRemoveTabs = () => {
-    RemoveFeature({ id: tabsFeatureId, pathName });
+  const onRemoveTabs = async () => {
+    changeIsEditButtonDisabled(true);
+    await RemoveFeature({ id: tabsFeatureId, pathName });
+    changeIsEditButtonDisabled(false);
   };
 
-  return <CommonButton text={text} onClick={onRemoveTabs} />;
+  return (
+    <CommonButton
+      text={text}
+      onClick={onRemoveTabs}
+      isDisabled={isEditButtonsDisabled}
+    />
+  );
 };

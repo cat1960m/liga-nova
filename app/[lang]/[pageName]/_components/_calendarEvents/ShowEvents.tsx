@@ -14,6 +14,7 @@ export type Props = {
   setEditEventId: (id: number) => void;
   startDate: Date;
   countDates: number;
+  parentFeatureId: number;
 };
 
 export const ShowEvents = ({
@@ -24,6 +25,7 @@ export const ShowEvents = ({
   setEditEventId,
   startDate,
   countDates,
+  parentFeatureId,
 }: Props) => {
   const headerItems: {
     name: string;
@@ -109,6 +111,7 @@ export const ShowEvents = ({
                   eventData={eventFeatureData}
                   setEditEventId={setEditEventId}
                   key={index}
+                  parentFeatureId={parentFeatureId}
                 />
               );
             })}

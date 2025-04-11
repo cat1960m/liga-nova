@@ -1,9 +1,11 @@
 import { FullData } from "@/app/lib/definitions";
-import { CommonButton } from "../_buttons/CommonButton";
 import { DeleteFeatureButton } from "../_buttons/DeleteFeatureButton";
 import { UploadComponent } from "./UploadComponent";
 import { DeleteTextDescriptionButton } from "../_buttons/DeleteTextDescriptionButton";
 import { StaticTexts } from "@/app/dictionaries/definitions";
+import { ChangeOrderButtons } from "../_buttons/ChangeOrderButtons";
+import { UpdateDeleteTextButtons } from "../_buttons/UpdateDeleteTextButtons";
+import { IMAGE } from "@/app/lib/constants";
 
 export type Props = {
   imagesData: FullData[];
@@ -30,6 +32,7 @@ export const ManageImages = ({
               style={{
                 display: "flex",
                 flexDirection: "column",
+                alignItems: "center",
                 gap: "5px",
               }}
             >
@@ -38,11 +41,15 @@ export const ManageImages = ({
                 alt="image"
                 style={{ maxWidth: "100px" }}
               />
-              {isImageGroup ? (
-                <DeleteTextDescriptionButton
-                  deleteText={staticTexts?.delete ?? "N/A"}
-                  textDescriptionId={imageItem.text_description_id}
+              {isImageGroup && staticTexts ? (
+                <UpdateDeleteTextButtons
+                  staticTexts={staticTexts}
+                  currentData={imageItem}
                   s3Key={imageItem.value}
+                  isNoUpdate
+                  flexDirection="column"
+                  changeOrderTextType={IMAGE}
+                  isHorizontal
                 />
               ) : (
                 <DeleteFeatureButton
@@ -50,6 +57,7 @@ export const ManageImages = ({
                   deleteText="Delete"
                   onDeleteFinished={onDeleteFinished}
                   featureData={[imageItem]}
+                  parentFeatureId={null}
                 />
               )}
             </div>

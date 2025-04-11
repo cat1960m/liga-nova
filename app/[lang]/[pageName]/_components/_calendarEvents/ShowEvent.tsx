@@ -21,6 +21,7 @@ export type Props = {
   isEdit: boolean;
   eventData: FullData[];
   setEditEventId: (id: number) => void;
+  parentFeatureId: number;
 };
 
 export const ShowEvent = ({
@@ -28,6 +29,7 @@ export const ShowEvent = ({
   isEdit,
   eventData,
   setEditEventId,
+  parentFeatureId,
 }: Props) => {
   const [position, setPosition] = useState<number[] | null>(null);
   const subtype = eventData[0]?.subtype;
@@ -131,6 +133,7 @@ export const ShowEvent = ({
                 featureId={eventData[0].id}
                 deleteText={staticTexts.delete ?? "N/A"}
                 featureData={eventData}
+                parentFeatureId={null}
               />
             </div>
           ) : null}

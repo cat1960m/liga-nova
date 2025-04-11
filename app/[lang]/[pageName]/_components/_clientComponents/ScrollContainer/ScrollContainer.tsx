@@ -107,6 +107,8 @@ export const ScrollContainer = ({ ids, getItem, countVisibleItems }: Props) => {
     setScrollPosition(checkPosition(newScrollPosition));
   };
 
+  console.log("isIconsVisible", isIconsVisible, ids.length, count);
+
   return (
     <div
       style={{
@@ -115,6 +117,7 @@ export const ScrollContainer = ({ ids, getItem, countVisibleItems }: Props) => {
         display: "flex",
         alignItems: "flex-start",
         justifyContent: "space-between",
+        position: "relative",
       }}
     >
       {isIconsVisible ? (

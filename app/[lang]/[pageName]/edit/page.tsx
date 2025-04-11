@@ -5,6 +5,7 @@ import { getContainerData } from "@/app/lib/utils";
 import { PAGE, TITLE } from "@/app/lib/constants";
 import { getDictionary } from "../../dictionaries";
 import { DrawFeatureContainer_Client } from "../_components/DrawFeatureContainer_Client";
+import { DrawFeatureContainerEdit } from "./_components/DrawFeatureContainerEdit";
 
 export default async function Page({
   params,
@@ -53,7 +54,7 @@ export default async function Page({
           buttonText={dict.common.addItemToPage ?? "N/A"}
         />
       ) : (
-        <DrawFeatureContainer_Client
+        <DrawFeatureContainerEdit
           params={pars}
           featureId={currentPageData?.id}
           pageFullDataList={pageFullData}

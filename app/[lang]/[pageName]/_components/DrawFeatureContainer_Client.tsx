@@ -46,6 +46,7 @@ export const DrawFeatureContainer_Client = ({
               key={id}
               isEdit={isEdit}
               staticTexts={staticTexts}
+              parentFeatureId={featureId}
             />
           );
         })}

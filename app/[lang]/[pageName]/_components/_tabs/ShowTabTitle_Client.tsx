@@ -12,8 +12,9 @@ export type Props = {
   onSelectedTabFeatureIdChanged: (num: number) => void;
   isEdit: boolean;
   staticTexts: StaticTexts;
-  tabIndex: number;
-  pageFullDataList: FullData[];
+  parentFeatureId: number;
+  isEditTabShown: boolean;
+  onShowTabClick: () => void;
 };
 
 export const ShowTabTitle_Client = ({
@@ -22,8 +23,9 @@ export const ShowTabTitle_Client = ({
   onSelectedTabFeatureIdChanged,
   isEdit,
   staticTexts,
-  tabIndex,
-  pageFullDataList,
+  parentFeatureId,
+  isEditTabShown,
+  onShowTabClick,
 }: Props) => {
   const isTabSelected = selectedTabFeatureId === tabTitle.id;
 
@@ -32,6 +34,7 @@ export const ShowTabTitle_Client = ({
   };
 
   const backgroundColor = isTabSelected ? "lightblue" : "lightgray";
+  const buttonText = isEditTabShown ? staticTexts.hideTAB : staticTexts.showTAB;
 
   return (
     <div
@@ -57,14 +60,18 @@ export const ShowTabTitle_Client = ({
             staticTexts={staticTexts}
           />
 
-          {tabIndex > 0 ? (
+          {!isTabSelected ? (
             <DeleteFeatureButton
               featureId={tabTitle.id}
               deleteText={staticTexts.deleteTab ?? "N/A"}
               key={2}
               featureData={[tabTitle]}
+              parentFeatureId={parentFeatureId}
+              isHorizontal
             />
-          ) : null}
+          ) : (
+            <CommonButton text={buttonText} onClick={onShowTabClick} />
+          )}
         </div>
       ) : null}
     </div>

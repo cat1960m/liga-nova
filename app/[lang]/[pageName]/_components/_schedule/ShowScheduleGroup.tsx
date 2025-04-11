@@ -9,7 +9,7 @@ import {
   SCHEDULE_ITEM6,
 } from "@/app/lib/constants";
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import { ShowSCheduleGroupItem_Client } from "./ShowScheduleGroupItem_Client";
+import { ShowSCheduleGroupItem } from "./ShowScheduleGroupItem";
 
 export type Props = {
   isEdit: boolean;
@@ -17,7 +17,7 @@ export type Props = {
   groupData: FullData[];
 };
 
-export const ShowScheduleGroup_Client = ({
+export const ShowScheduleGroup = ({
   isEdit,
   staticTexts,
   groupData,
@@ -63,32 +63,44 @@ export const ShowScheduleGroup_Client = ({
         display: "flex",
       }}
     >
-      <div style={{ display: "flex", flexDirection: "column", gap: "30px" }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "30px",
+        }}
+      >
         <div style={style1}>
-          <ShowSCheduleGroupItem_Client
+          <ShowSCheduleGroupItem
             isEdit={isEdit}
             staticTexts={staticTexts}
             data={item1}
           />
         </div>
         <div style={style1}>
-          <ShowSCheduleGroupItem_Client
+          <ShowSCheduleGroupItem
             isEdit={isEdit}
             staticTexts={staticTexts}
             data={item4}
           />
         </div>
       </div>
-      <div style={{ display: "flex", flexDirection: "column", gap: "30px" }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "30px",
+        }}
+      >
         <div style={style2}>
-          <ShowSCheduleGroupItem_Client
+          <ShowSCheduleGroupItem
             isEdit={isEdit}
             staticTexts={staticTexts}
             data={item2}
           />
         </div>
         <div style={style2}>
-          <ShowSCheduleGroupItem_Client
+          <ShowSCheduleGroupItem
             isEdit={isEdit}
             staticTexts={staticTexts}
             data={item5}
@@ -104,14 +116,14 @@ export const ShowScheduleGroup_Client = ({
         }}
       >
         <div style={style3}>
-          <ShowSCheduleGroupItem_Client
+          <ShowSCheduleGroupItem
             isEdit={isEdit}
             staticTexts={staticTexts}
             data={item3}
           />
         </div>
         <div style={style3}>
-          <ShowSCheduleGroupItem_Client
+          <ShowSCheduleGroupItem
             isEdit={isEdit}
             staticTexts={staticTexts}
             data={item6}

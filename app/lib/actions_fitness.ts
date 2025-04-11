@@ -37,7 +37,8 @@ export const getFeatureChildren = async ({
     return await sql<Feature[]>`SELECT
                *
                FROM features
-               WHERE features.parent_feature_id=${parentFeatureId}`;
+               WHERE features.parent_feature_id=${parentFeatureId}
+               ORDER BY feature_order`;
   } catch (error) {
     // If a database error occurs, return a more specific error.
     return null;
@@ -377,14 +378,17 @@ export const getTextContents = async ({
 
 export const getTextDescriptions = async ({
   featureId,
+  textType,
 }: {
   featureId: number;
+  textType: string;
 }) => {
   try {
     return await sql<TextDescription[]>`SELECT
                *
                FROM text_descriptions b
-               WHERE b.feature_id = ${featureId}`;
+               WHERE b.feature_id = ${featureId} AND b.text_type =${textType}
+               ORDER BY b.text_description_order`;
   } catch (error) {
     // If a database error occurs, return a more specific error.
     return null;

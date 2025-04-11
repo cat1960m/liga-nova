@@ -11,11 +11,9 @@ export const SIMPLE_GROUP_ITEM = "simple_group_item";
 
 export const GROUP = "group";
 
-export const GROUP_2COLUMNS_2HEADERS_SUBTYPE = "group2columns2headers";
-export const HEADER1 = "header1";
-export const HEADER2 = "header2";
-export const ITEM_COLUMN1 = "item_column1";
-export const ITEM_COLUMN2 = "item_column2";
+export const INFO_CHECK_GROUP_SUBTYPE = "info_check_group_subtitle";
+export const INFO_CHECK_HEADER = "info_check_header";
+export const INFO_CHECK_ITEM = "info_check_item";
 
 export const SERVICES_GROUP_SUBTYPE = "services";
 export const SERVICE_ITEM = "service_item";
@@ -26,6 +24,8 @@ export const INFO_TITLE = "infoTitle";
 export const INFO_TELEPHONE = "infoTelephone";
 export const INFO_ADDRESS = "infoAddress";
 export const INFO_BODY = "infoBody";
+
+export const IMAGE_GROUP_SUBTYPE = "image_group_subtitle";
 
 export const LIGA_GROUP_SUBTYPE = "liga_group";
 export const LIGA_TITLE = "liga_itle";
@@ -102,12 +102,10 @@ export const CALENDAR_EVENTS_AUTHOR_SUBTYPE = "author";
 export const CALENDAR_EVENTS_SPECIAL_SUBTYPE = "special";
 
 export const CAN_NOT_DELETE = [
-  HEADER1,
-  HEADER2,
+  INFO_CHECK_HEADER,
   INFO_TITLE,
   INFO_TELEPHONE,
   INFO_ADDRESS,
-  INFO_BODY,
   SCHEDULE_ITEM1,
   SCHEDULE_ITEM2,
   SCHEDULE_ITEM3,
@@ -138,9 +136,10 @@ export const GroupFeatureSubtypes = [
   GROUP1_SUBTYPE,
   GROUP2_SUBTYPE,
   GROUP_EXPANDED_SUBTYPE,
-  GROUP_2COLUMNS_2HEADERS_SUBTYPE,
+  INFO_CHECK_GROUP_SUBTYPE,
   SERVICES_GROUP_SUBTYPE,
   INFO_GROUP_SUBTYPE,
+  IMAGE_GROUP_SUBTYPE,
   LIGA_GROUP_SUBTYPE,
   SCHEDULE_GROUP_SUBTYPE,
   ADDITIONAL_PAGE_DATA_GROUP_SUBTYPE,
