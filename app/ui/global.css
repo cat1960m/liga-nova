@@ -32,3 +32,36 @@ p {
 a {
   color: blue;
 }
+
+
+
+.ql-weight .ql-picker-item[data-value="normal"]::before {
+  content: "Normal";
+}
+
+.ql-weight .ql-picker-item[data-value="bolder"]::before {
+  content: "Bolder";
+}
+
+.ql-weight .ql-picker-item[data-value="lighter"]::before {
+  content: "lighter";
+}
+
+.ql-weight .ql-picker-item[data-value="bold"]::before {
+  content: "Bold";
+}
+.ql-weight .ql-picker-item[data-value="100"]::before {
+  content: "Weight 100";
+}
+
+.ql-weight .ql-picker-item[data-value="300"]::before {
+  content: "Weight 300";
+}
+.ql-weight .ql-picker-item[data-value="400"]::before {
+  content: "Weight 400";
+}
+.ql-weight .ql-picker-item[data-value="700"]::before {
+  content: "Weight 700";
+}
+
+

@@ -36,7 +36,6 @@ export const UpdateFeatureFilterIdsButton = ({
     });
     changeIsEditButtonDisabled(false);
     onSaved?.();
-    alert("save");
   };
 
   return (

@@ -1,14 +1,9 @@
 import { FullData } from "@/app/lib/definitions";
-import {
-  SCHEDULE_ITEM1,
-  SCHEDULE_ITEM2,
-  SCHEDULE_ITEM3,
-  SCHEDULE_ITEM4,
-  SCHEDULE_ITEM5,
-  SCHEDULE_ITEM6,
-} from "@/app/lib/constants";
+import { SCHEDULE_ITEM, SCHEDULE_NAME } from "@/app/lib/constants";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { UpdateDeleteTextButtons } from "../_buttons/UpdateDeleteTextButtons";
+
+import styles from "./showScheduleGroup.module.css";
 
 export type Props = {
   data?: FullData;
@@ -21,38 +16,29 @@ export const ShowSCheduleGroupItem = ({ data, isEdit, staticTexts }: Props) => {
     return null;
   }
 
-  const isColumn1 = [SCHEDULE_ITEM1, SCHEDULE_ITEM4].includes(data.text_type);
-  const isColumn3 = [SCHEDULE_ITEM3, SCHEDULE_ITEM6].includes(data.text_type);
-
-  const fontWeight = isColumn3 ? 400 : 700;
-  const color = isColumn1 ? "blue" : "black";
-  const fontSize = isColumn1 ? 18 : 16;
+  const isName = data.text_type === SCHEDULE_NAME;
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        gap: "10px",
-        alignItems: "stretch",
-        padding: "17px 30px",
-      }}
-    >
-      <div
-        style={{
-          fontWeight,
-          color,
-          fontSize,
-          display: "flex",
-          justifyContent: isColumn3 ? "flex-start" : "center",
-          height: "20px",
-          alignItems: "center",
-        }}
-      >
-        {data?.text_content ?? "N/A"}
-      </div>
+    <div className={styles.groupItem}>
+      {isName ? (
+        <div className={styles.name}>{data?.text_content ?? "N/A"}</div>
+      ) : (
+        <div className={styles.item}>
+          <div className={styles.days}>{data?.text_content ?? "N/A"}</div>
+          <div className={styles.time}>{data?.value ?? "N/A"}</div>
+        </div>
+      )}
       {isEdit ? (
-        <UpdateDeleteTextButtons staticTexts={staticTexts} currentData={data} />
+        <div className={styles.itemEdit}>
+          <UpdateDeleteTextButtons
+            staticTexts={staticTexts}
+            currentData={data}
+            valueTitle={!isName ? staticTexts.time : undefined}
+            useValue={!isName}
+            changeOrderTextType={SCHEDULE_ITEM}
+            flexDirection={isName ? "column" : "row"}
+          />
+        </div>
       ) : null}
     </div>
   );

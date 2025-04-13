@@ -1,13 +1,20 @@
 "use client";
 
 import { useState, ChangeEventHandler, useEffect } from "react";
-import { FullData, TabType, TextContent } from "@/app/lib/definitions";
+import {
+  FullData,
+  MainParams,
+  PageData,
+  TabType,
+  TextContent,
+} from "@/app/lib/definitions";
 import { TranslationTabs } from "./TranslationTabs";
 import { CommonButton } from "../_buttons/CommonButton";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import {
   addText,
   getPageFullData,
+  getPageTitles,
   getTextContents,
   revalidate,
   updatePriceValue,
@@ -27,6 +34,10 @@ export type Props = {
   useIcons?: boolean;
   isArea?: boolean;
   isQuill?: boolean;
+  useValue?: boolean;
+  valueTitle?: string;
+  usePageLinkSelect?: boolean;
+  params?: MainParams;
 };
 
 export const UpdateTextDescriptionDataModalContent = ({
@@ -36,6 +47,10 @@ export const UpdateTextDescriptionDataModalContent = ({
   useIcons,
   isArea,
   isQuill,
+  valueTitle,
+  usePageLinkSelect,
+  useValue,
+  params,
 }: Props) => {
   const [textContents, setTextContents] = useState<TextContent[] | null>(null);
   const [textContentsTooltips, setTextContentsTooltips] = useState<
@@ -55,6 +70,10 @@ export const UpdateTextDescriptionDataModalContent = ({
   const [selectedIcon, setSelectedIcon] = useState<string | undefined>(
     currentData.value
   );
+  const [valueValue, setValueValue] = useState<string>(
+    useValue ? currentData.value ?? "" : ""
+  );
+  const [pages, setPages] = useState<PageData[] | null>(null);
 
   useEffect(() => {
     const getData = async () => {
@@ -104,6 +123,13 @@ export const UpdateTextDescriptionDataModalContent = ({
 
       setIcons(pageFullData ?? []);
     };
+    const getPages = async () => {
+      if (params) {
+        const pages1 = await getPageTitles(params.lang);
+
+        setPages(pages1?.map((page) => page) ?? []);
+      }
+    };
 
     getData();
 
@@ -131,6 +157,11 @@ export const UpdateTextDescriptionDataModalContent = ({
 
   const handlePriceChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     setPriceValue(parseInt(event.target.value));
+    setIsSaveDisabled(false);
+  };
+
+  const handleValueChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+    setValueValue(event.target.value);
     setIsSaveDisabled(false);
   };
 
@@ -204,13 +235,15 @@ export const UpdateTextDescriptionDataModalContent = ({
       });
     }
 
-    if (price || useIcons) {
+    if (price || useIcons || useValue) {
+      const newValueValue = useValue ? valueValue : null;
+      const newValue = useIcons ? selectedIcon : newValueValue;
       promises.push(
         updatePriceValue({
           price,
           textDescriptionId,
           pathName,
-          value: selectedIcon,
+          value: newValue,
         })
       );
     }
@@ -277,6 +310,25 @@ export const UpdateTextDescriptionDataModalContent = ({
             onChange={handlePriceChange}
           ></input>
           грн
+        </div>
+      ) : null}
+
+      {useValue && !useIcons ? (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop: "20px",
+            gap: "10px",
+          }}
+        >
+          {`${valueTitle}:`}
+          <input
+            type="text"
+            value={valueValue ?? ""}
+            onChange={handleValueChange}
+          ></input>
         </div>
       ) : null}
 

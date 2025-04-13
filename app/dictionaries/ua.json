@@ -93,6 +93,10 @@
     "signUpForTraining": "ЗАПИСАТИСЯ НА ТРЕНУВАННЯ",
     "showTAB": "показати ТАВ",
     "hideTAB": "сховати ТАВ",
-    "saveFilters": "Зберегти фільтри"
+    "saveFilters": "Зберегти фільтри",
+    "time": "Час",
+    "moreTrainers": "Більше тренерів >",
+    "moreSubscriptions": "Більше абонементів >",
+    "selectPageName": "Виберіть назву сторінки"
   }
 }

@@ -16,6 +16,7 @@ export type Props = {
   currentData?: FullData;
   staticTexts: StaticTexts;
   useIcons?: boolean;
+  useValue?: boolean;
   isArea?: boolean;
   isQuill?: boolean;
   changeOrderTextType?: string;
@@ -23,12 +24,15 @@ export type Props = {
   isNoUpdate?: boolean;
   s3Key?: string;
   flexDirection?: CSSProperties["flexDirection"];
+  valueTitle?: string;
+  usePageLinkSelect?: boolean;
 };
 
 export const UpdateDeleteTextButtons = ({
   currentData,
   staticTexts,
   useIcons,
+  useValue,
   isArea,
   isQuill,
   changeOrderTextType,
@@ -36,6 +40,8 @@ export const UpdateDeleteTextButtons = ({
   isNoUpdate = false,
   s3Key,
   flexDirection = "row",
+  valueTitle,
+  usePageLinkSelect,
 }: Props) => {
   const { changeIsEditButtonDisabled } = useEditContext();
   const pathName = usePathname();
@@ -57,14 +63,6 @@ export const UpdateDeleteTextButtons = ({
         featureId: currentData.id,
         textType: changeOrderTextType,
       });
-
-    console.log(
-      "textDescriptions",
-      textDescriptions,
-      changeOrderTextType,
-      currentData.id
-    );
-    console.log("currentData", currentData);
 
     if (textDescriptions && textDescriptions.length > 1) {
       const index = textDescriptions.findIndex(
@@ -115,6 +113,9 @@ export const UpdateDeleteTextButtons = ({
           useIcons={useIcons}
           isArea={isArea}
           isQuill={isQuill}
+          valueTitle={valueTitle}
+          useValue={useValue}
+          usePageLinkSelect={usePageLinkSelect}
         />
       ) : null}
       <div

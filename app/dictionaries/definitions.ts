@@ -100,4 +100,8 @@ export type StaticTexts = {
   showTAB?: string;
   hideTAB?: string;
   saveFilters?: string;
+  time?: string;
+  moreTrainers?: string;
+  moreSubscriptions?: string;
+  selectPageName?: string;
 };

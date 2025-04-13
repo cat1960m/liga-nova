@@ -14,6 +14,7 @@ export type Props = {
   isEdit: boolean;
   staticTexts: StaticTexts;
   parentFeatureId: number;
+  pageId: number;
 };
 
 export const LayoutParent = ({
@@ -23,6 +24,7 @@ export const LayoutParent = ({
   isEdit,
   staticTexts,
   parentFeatureId,
+  pageId,
 }: Props) => {
   const layoutItems = pageFullDataList.filter(
     (item) => item.parent_feature_id === tabsData.id
@@ -77,6 +79,7 @@ export const LayoutParent = ({
             isEdit={isEdit}
             staticTexts={staticTexts}
             buttonText={staticTexts.addItems ?? "N/A"}
+            pageId={pageId}
           />
         </div>
         <div
@@ -94,6 +97,7 @@ export const LayoutParent = ({
             isEdit={isEdit}
             staticTexts={staticTexts}
             buttonText={staticTexts.addItems ?? "N/A"}
+            pageId={pageId}
           />
         </div>
       </div>

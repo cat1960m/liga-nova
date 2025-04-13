@@ -8,7 +8,9 @@ import { CommonButton } from "../_buttons/CommonButton";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import dynamic from "next/dynamic";
 
-const QuillEditor = dynamic(() => import("./QuillEditor"), { ssr: false });
+const QuillEditor = dynamic(() => import("../_quill/QuillEditor"), {
+  ssr: false,
+});
 
 export const TranslationTabs = ({
   staticTexts,

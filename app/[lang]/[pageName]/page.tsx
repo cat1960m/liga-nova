@@ -32,7 +32,11 @@ export default async function Page({
       })
     : null;
 
-  if (!containerFullData || !pageFullData || !currentPageData) {
+  const pageId = pageFullData?.find(
+    (item) => item.type === PAGE && item.name === pageName
+  )?.id;
+
+  if (!containerFullData || !pageFullData || !currentPageData || !pageId) {
     return null;
   }
 
@@ -46,6 +50,7 @@ export default async function Page({
         isEdit={false}
         staticTexts={dict.common}
         buttonText={dict.common.addItemToPage ?? "N/A"}
+        pageId={pageId}
       />
     </div>
   );

@@ -13,12 +13,18 @@ export const UpdateTextDescriptionData = ({
   useIcons,
   isArea,
   isQuill,
+  valueTitle,
+  useValue,
+  usePageLinkSelect,
 }: {
   staticTexts: StaticTexts;
   currentData: FullData;
   useIcons?: boolean;
   isArea?: boolean;
   isQuill?: boolean;
+  valueTitle?: string;
+  useValue?: boolean;
+  usePageLinkSelect?: boolean;
 }) => {
   const [isEditModalShown, setIsEditModalShown] = useState(false);
 
@@ -43,6 +49,9 @@ export const UpdateTextDescriptionData = ({
             useIcons={useIcons}
             isArea={isArea}
             isQuill={isQuill}
+            valueTitle={valueTitle}
+            useValue={useValue}
+            usePageLinkSelect={usePageLinkSelect}
           />
         </CreateModal>
       ) : null}

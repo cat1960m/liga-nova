@@ -1,15 +1,19 @@
 "use client";
 
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import { FullData } from "@/app/lib/definitions";
+import { FullData, MainParams } from "@/app/lib/definitions";
 import { AdditionalPageDataGroupEdit } from "./AdditionalPageDataGroupEdit";
 import { AdditionalPageDataGroupShow } from "./AdditionalPageDataGroupShow";
+import { PAGE_NAMES_TO_LIST_ITEMS_DATA } from "@/app/lib/constants";
+import Link from "next/link";
 
 export type Props = {
   currentData: FullData;
   isEdit: boolean;
   staticTexts: StaticTexts;
   pageFullDataList: FullData[];
+  pageId: number;
+  params: MainParams;
 };
 
 export const AdditionalPageDataGroup = ({
@@ -17,10 +21,21 @@ export const AdditionalPageDataGroup = ({
   isEdit,
   staticTexts,
   pageFullDataList,
+  pageId,
+  params,
 }: Props) => {
-  const pageId = currentData.parent_feature_id;
   const pageData = pageFullDataList.find((data) => data.id === pageId);
-  const additionalPageName = pageData?.additional_page_name ?? "";
+  const additionalPageNames = (pageData?.additional_page_name ?? "").split(",");
+  const additionalPageName =
+    additionalPageNames.length === 1
+      ? additionalPageNames[0]
+      : currentData.additional_page_name;
+
+  if (!additionalPageName) {
+    return;
+  }
+
+  const linkText = PAGE_NAMES_TO_LIST_ITEMS_DATA[additionalPageName]?.linkText;
 
   return (
     <>
@@ -39,6 +54,19 @@ export const AdditionalPageDataGroup = ({
           staticTexts={staticTexts}
         />
       )}
+
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+          padding: "10px",
+        }}
+      >
+        <Link href={`/${params.lang}/${additionalPageName}`}>
+          {staticTexts[linkText]}
+        </Link>
+      </div>
     </>
   );
 };

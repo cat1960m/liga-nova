@@ -17,6 +17,7 @@ export type Props = {
   isEdit: boolean;
   staticTexts: StaticTexts;
   parentFeatureId: number;
+  pageId: number;
 };
 
 export const ShowTabs_Client = ({
@@ -26,6 +27,7 @@ export const ShowTabs_Client = ({
   isEdit,
   staticTexts,
   parentFeatureId,
+  pageId,
 }: Props) => {
   const tabTitles = pageFullDataList.filter(
     (item) => item.parent_feature_id === tabsData.id
@@ -154,6 +156,7 @@ export const ShowTabs_Client = ({
               isEdit={isEdit}
               staticTexts={staticTexts}
               buttonText={staticTexts.addItemToTab ?? "N/A"}
+              pageId={pageId}
             />
           </div>
         ) : null}

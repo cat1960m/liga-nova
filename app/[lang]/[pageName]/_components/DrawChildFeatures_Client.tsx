@@ -21,6 +21,7 @@ export type Props = {
   isEdit: boolean;
   staticTexts: StaticTexts;
   parentFeatureId: number;
+  pageId: number;
 };
 
 export const DrawChildFeature_Client = ({
@@ -30,6 +31,7 @@ export const DrawChildFeature_Client = ({
   isEdit,
   staticTexts,
   parentFeatureId,
+  pageId,
 }: Props) => {
   const childFeatureFirstItem = childFeatureDataList[0];
 
@@ -61,6 +63,7 @@ export const DrawChildFeature_Client = ({
         pageFullDataList={pageFullDataList}
         params={params}
         parentFeatureId={parentFeatureId}
+        pageId={pageId}
       />
     );
   }
@@ -74,6 +77,7 @@ export const DrawChildFeature_Client = ({
         isEdit={isEdit}
         staticTexts={staticTexts}
         parentFeatureId={parentFeatureId}
+        pageId={pageId}
       />
     );
   }
@@ -87,6 +91,7 @@ export const DrawChildFeature_Client = ({
         isEdit={isEdit}
         staticTexts={staticTexts}
         parentFeatureId={parentFeatureId}
+        pageId={pageId}
       />
     );
   }

@@ -1,7 +1,7 @@
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { DrawChildFeature_Client } from "./DrawChildFeatures_Client";
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import { AddChildFeatureToContainer } from "./_clientComponents/AddChildFeatureToContainer";
+import { AddChildFeatureToContainer } from "./_buttons/AddChildFeatureToContainer";
 import { MAX_PAGE_WIDTH } from "@/app/lib/constants";
 
 export type Props = {
@@ -12,6 +12,7 @@ export type Props = {
   staticTexts: StaticTexts;
   buttonText: string;
   params: MainParams;
+  pageId: number;
 };
 
 export const DrawFeatureContainer_Client = ({
@@ -22,6 +23,7 @@ export const DrawFeatureContainer_Client = ({
   staticTexts,
   buttonText,
   params,
+  pageId,
 }: Props) => {
   const [data, keys] = containerFullData;
 
@@ -31,7 +33,7 @@ export const DrawFeatureContainer_Client = ({
         style={{
           display: "flex",
           flexDirection: "column",
-          gap: "20px",
+          // gap: "20px",
           width: "100%",
           minHeight: "40px",
           maxWidth: `${MAX_PAGE_WIDTH}px`,
@@ -47,6 +49,7 @@ export const DrawFeatureContainer_Client = ({
               isEdit={isEdit}
               staticTexts={staticTexts}
               parentFeatureId={featureId}
+              pageId={pageId}
             />
           );
         })}
@@ -56,6 +59,9 @@ export const DrawFeatureContainer_Client = ({
             parentFeatureId={featureId}
             text={buttonText}
             params={params}
+            pageFullDataList={pageFullDataList}
+            pageId={pageId}
+            staticTexts={staticTexts}
           />
         ) : null}
       </div>

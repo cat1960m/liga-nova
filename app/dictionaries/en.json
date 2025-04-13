@@ -93,6 +93,10 @@
     "signUpForTraining": "SIGN UP FOR TRAINING",
     "showTAB": "show TAB",
     "hideTAB": "hide TAB",
-    "saveFilters": "save filters"
+    "saveFilters": "save filters",
+    "time": "Time",
+    "moreTrainers": "More trainers >",
+    "moreSubscriptions": "More subscriptions >",
+    "selectPageName": "Select page name"
   }
 }

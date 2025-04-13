@@ -280,6 +280,7 @@ export const addChildFeature = async ({
   text_types,
   pathName,
   filter_ids = null,
+  additionalPageName = null,
 }: {
   type: string;
   parentId: number;
@@ -288,13 +289,14 @@ export const addChildFeature = async ({
   text_types: string[];
   pathName: string;
   filter_ids?: string | null;
+  additionalPageName?: string | null;
 }): Promise<number | null> => {
   const date = new Date();
   let time = date.getTime();
   try {
     const newFeatures = await sql`
-          INSERT INTO features (parent_feature_id, type, subtype, name, feature_order, filter_ids)
-          VALUES (${parentId}, ${type}, ${subtype}, ${name}, ${time}, ${filter_ids})
+          INSERT INTO features (parent_feature_id, type, subtype, name, feature_order, filter_ids, additional_page_name)
+          VALUES (${parentId}, ${type}, ${subtype}, ${name}, ${time}, ${filter_ids}, ${additionalPageName})
           RETURNING id;
         `;
 
@@ -414,13 +416,14 @@ export const getTabsTitles = async ({
   }
 };
 
-export const getPageFullData = async ({
+export const getPageFullDataOld = async ({
   lang,
   pageName,
 }: {
   lang: string;
   pageName: string;
 }) => {
+  //ANY (${sql.array(ids)}::integer[])
   try {
     return await sql<FullData[]>`SELECT features.id, 
         parent_feature_id, type, subtype, name, feature_order, filter_ids, additional_page_name,
@@ -433,6 +436,41 @@ export const getPageFullData = async ({
         ON text_descriptions.id = text_contents.text_description_id 
         WHERE  (name = ${pageName} OR 
         name = (SELECT additional_page_name FROM features WHERE name=${pageName} AND type='page')) 
+        AND (language = ${lang} or language is null)
+        ORDER BY feature_order, text_description_order`;
+  } catch (error) {
+    // If a database error occurs, return a more specific error.
+    return null;
+  }
+};
+
+export const getPageFullData = async ({
+  lang,
+  pageName,
+}: {
+  lang: string;
+  pageName: string;
+}) => {
+  type StrAdd = {
+    additional_page_name: string | null;
+  };
+  try {
+    const additionalPageNames = await sql<
+      StrAdd[]
+    >`SELECT additional_page_name FROM features WHERE name=${pageName} AND type='page'`;
+    const names: string[] =
+      additionalPageNames[0]?.additional_page_name?.split(",") ?? [];
+
+    return await sql<FullData[]>`SELECT features.id, 
+        parent_feature_id, type, subtype, name, feature_order, filter_ids, additional_page_name,
+        text_descriptions.id as text_description_id, text_type, price, can_delete, value, link,
+        language, text_content, content_type
+        FROM features 
+        LEFT JOIN text_descriptions 
+        ON features.id = text_descriptions.feature_id 
+        LEFT JOIN text_contents 
+        ON text_descriptions.id = text_contents.text_description_id 
+        WHERE  (name = ${pageName} OR name = ANY (${sql.array(names)})) 
         AND (language = ${lang} or language is null)
         ORDER BY feature_order, text_description_order`;
   } catch (error) {

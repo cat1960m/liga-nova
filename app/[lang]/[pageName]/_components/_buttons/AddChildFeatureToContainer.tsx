@@ -1,5 +1,6 @@
 "use client";
 
+import { StaticTexts } from "@/app/dictionaries/definitions";
 import { addChildFeature } from "@/app/lib/actions_fitness";
 import {
   FILTER,
@@ -14,12 +15,8 @@ import {
   INFO_TELEPHONE,
   INFO_TITLE,
   SCHEDULE_GROUP_SUBTYPE,
-  SCHEDULE_ITEM1,
-  SCHEDULE_ITEM2,
-  SCHEDULE_ITEM3,
-  SCHEDULE_ITEM4,
-  SCHEDULE_ITEM5,
-  SCHEDULE_ITEM6,
+  SCHEDULE_NAME,
+  SCHEDULE_ITEM,
   SERVICE_ITEM,
   SERVICES_GROUP_SUBTYPE,
   SIMPLE_GROUP_ITEM,
@@ -31,6 +28,7 @@ import {
   PAGE_NAMES_TO_LIST_ITEMS_DATA,
   IMAGE,
   IMAGE_LIST_GROUP_SUBTYPE,
+  IMAGE_LINKS_GROUP_SUBTYPE,
   ACTION_BANNER_GROUP_SUBTYPE,
   ACTION_BANNER_IMAGE,
   ACTION_BANNER_TITLE,
@@ -49,8 +47,9 @@ import {
   SIMPLE_GROUP_SUBTYPES,
   INFO_CHECK_HEADER,
   INFO_CHECK_ITEM,
+  IMAGE_LINKS_ITEM,
 } from "@/app/lib/constants";
-import { MainParams } from "@/app/lib/definitions";
+import { FullData, MainParams } from "@/app/lib/definitions";
 import { usePathname } from "next/navigation";
 import { ChangeEventHandler, useMemo, useState } from "react";
 
@@ -58,13 +57,23 @@ export const AddChildFeatureToContainer = ({
   parentFeatureId,
   text,
   params,
+  pageFullDataList,
+  pageId,
+  staticTexts,
 }: {
   parentFeatureId: number | undefined;
   text: string;
   params: MainParams;
+  pageFullDataList: FullData[];
+  pageId: number;
+  staticTexts: StaticTexts;
 }) => {
   const pathName = usePathname();
   const [selectedValue, setSelectedValue] = useState<string>("");
+
+  const [optionsAdditionalPagename, setOptionsAdditionalPagename] = useState<
+    string[]
+  >([]);
 
   const options = useMemo(() => {
     const data = [...GroupFeatureSubtypes, TABS, LAYOUT_PARENT];
@@ -76,12 +85,72 @@ export const AddChildFeatureToContainer = ({
     return data;
   }, []);
 
+  const handleChangeAdditionalPagename: ChangeEventHandler<
+    HTMLSelectElement
+  > = async (event) => {
+    const newValue = event.target.value;
+
+    if (!parentFeatureId) {
+      return;
+    }
+
+    await addChildFeature({
+      parentId: parentFeatureId,
+      type: GROUP,
+      subtype: ADDITIONAL_PAGE_DATA_GROUP_SUBTYPE,
+      name: params.pageName,
+      text_types: [],
+      pathName,
+      additionalPageName: newValue,
+    });
+
+    setOptionsAdditionalPagename([]);
+  };
+
   const handleChange: ChangeEventHandler<HTMLSelectElement> = async (event) => {
     const newValue = event.target.value;
     setSelectedValue(newValue);
 
     if (!parentFeatureId) {
       return;
+    }
+
+    if (newValue === ADDITIONAL_PAGE_DATA_GROUP_SUBTYPE) {
+      const pageData = pageFullDataList.find((data) => data.id === pageId);
+      const additionalPageNames = (pageData?.additional_page_name ?? "").split(
+        ","
+      );
+
+      if (!additionalPageNames.length) {
+        return;
+      }
+
+      if (additionalPageNames.length > 1) {
+        setOptionsAdditionalPagename(additionalPageNames);
+      }
+
+      if (additionalPageNames.length === 1) {
+        await addChildFeature({
+          parentId: parentFeatureId,
+          type: GROUP,
+          subtype: newValue,
+          name: params.pageName,
+          text_types: [],
+          pathName,
+          additionalPageName: additionalPageNames[0],
+        });
+      }
+    }
+
+    if (newValue === ACTION_BANNER_GROUP_SUBTYPE) {
+      await addChildFeature({
+        parentId: parentFeatureId,
+        type: GROUP,
+        subtype: newValue,
+        name: params.pageName,
+        text_types: [ACTION_BANNER_TITLE, ACTION_BANNER_IMAGE],
+        pathName,
+      });
     }
 
     if (SIMPLE_GROUP_SUBTYPES.includes(newValue)) {
@@ -138,6 +207,17 @@ export const AddChildFeatureToContainer = ({
       });
     }
 
+    if (newValue === IMAGE_LINKS_GROUP_SUBTYPE) {
+      await addChildFeature({
+        parentId: parentFeatureId,
+        type: GROUP,
+        subtype: newValue,
+        name: params.pageName,
+        text_types: [IMAGE_LINKS_ITEM],
+        pathName,
+      });
+    }
+
     if (newValue === PHOTO_GALLERY_GROUP_SUBTYPE) {
       await addChildFeature({
         parentId: parentFeatureId,
@@ -145,17 +225,6 @@ export const AddChildFeatureToContainer = ({
         subtype: newValue,
         name: params.pageName,
         text_types: [],
-        pathName,
-      });
-    }
-
-    if (newValue === ACTION_BANNER_GROUP_SUBTYPE) {
-      await addChildFeature({
-        parentId: parentFeatureId,
-        type: GROUP,
-        subtype: newValue,
-        name: params.pageName,
-        text_types: [ACTION_BANNER_TITLE, ACTION_BANNER_IMAGE],
         pathName,
       });
     }
@@ -188,25 +257,7 @@ export const AddChildFeatureToContainer = ({
         type: GROUP,
         subtype: newValue,
         name: params.pageName,
-        text_types: [
-          SCHEDULE_ITEM1,
-          SCHEDULE_ITEM2,
-          SCHEDULE_ITEM3,
-          SCHEDULE_ITEM4,
-          SCHEDULE_ITEM5,
-          SCHEDULE_ITEM6,
-        ],
-        pathName,
-      });
-    }
-
-    if (newValue === ADDITIONAL_PAGE_DATA_GROUP_SUBTYPE) {
-      await addChildFeature({
-        parentId: parentFeatureId,
-        type: GROUP,
-        subtype: newValue,
-        name: params.pageName,
-        text_types: [],
+        text_types: [SCHEDULE_NAME, SCHEDULE_ITEM],
         pathName,
       });
     }
@@ -305,10 +356,11 @@ export const AddChildFeatureToContainer = ({
       style={{
         width: "100%",
         display: "flex",
+        flexWrap: "wrap",
         justifyContent: "center",
         alignItems: "center",
         padding: "20px",
-        // border: "1px solid lightgray",
+        gap: "20px",
       }}
     >
       <select value={selectedValue} onChange={handleChange}>
@@ -321,6 +373,19 @@ export const AddChildFeatureToContainer = ({
           </option>
         ))}
       </select>
+
+      {optionsAdditionalPagename.length ? (
+        <select value={selectedValue} onChange={handleChangeAdditionalPagename}>
+          <option value="" disabled>
+            {staticTexts.selectPageName}
+          </option>
+          {optionsAdditionalPagename.map((option, index) => (
+            <option value={option} key={option}>
+              {option}
+            </option>
+          ))}
+        </select>
+      ) : null}
     </div>
   );
 };

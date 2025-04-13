@@ -13,6 +13,7 @@ export type Props = {
   staticTexts: StaticTexts;
   buttonText: string;
   params: MainParams;
+  pageId: number;
 };
 export const DrawFeatureContainerEdit = (props: Props) => {
   return (

@@ -6,6 +6,7 @@ import {
   SERVICES_GROUP_SUBTYPE,
   FILTER_GROUPS_LIST_ITEMS_SUBTYPE,
   IMAGE_LIST_GROUP_SUBTYPE,
+  IMAGE_LINKS_GROUP_SUBTYPE,
   PHOTO_GALLERY_GROUP_SUBTYPE,
   ACTION_BANNER_GROUP_SUBTYPE,
   LIGA_GROUP_SUBTYPE,
@@ -28,6 +29,8 @@ import { ActionBannerGroup } from "./_actionBanner/ActionBannerGroup";
 import { ShowLigaGroup } from "./_liga/ShowLigaGroup";
 import { CalendarEventsGroup } from "./_calendarEvents/CalendarEventsGroup";
 import { ShowImageGroup } from "./_imageGroup/ShowImageGroup";
+import { isUndefined } from "node:util";
+import { ImageLinksGroup } from "./_imageLinksGroup/Image:LinksGroup";
 
 export type Props = {
   groupData: FullData[];
@@ -36,6 +39,7 @@ export type Props = {
   pageFullDataList: FullData[];
   params: MainParams;
   parentFeatureId: number;
+  pageId: number;
 };
 
 export const ShowComplexGroup_Client = ({
@@ -45,6 +49,7 @@ export const ShowComplexGroup_Client = ({
   pageFullDataList,
   params,
   parentFeatureId,
+  pageId,
 }: Props) => {
   const firstData = groupData[0];
   const featureId = firstData.id;
@@ -61,7 +66,10 @@ export const ShowComplexGroup_Client = ({
     firstData.subtype === ADDITIONAL_PAGE_DATA_GROUP_SUBTYPE;
   const isFilterGroupsListItemsGroup =
     firstData?.subtype === FILTER_GROUPS_LIST_ITEMS_SUBTYPE;
+
   const isImageListGroup = firstData?.subtype === IMAGE_LIST_GROUP_SUBTYPE;
+  const isImageLinksGroup = firstData?.subtype === IMAGE_LINKS_GROUP_SUBTYPE;
+
   const isActionBannerGroup =
     firstData?.subtype === ACTION_BANNER_GROUP_SUBTYPE;
   const isPhotoGalleryGroup =
@@ -74,7 +82,6 @@ export const ShowComplexGroup_Client = ({
     isImageListGroup ||
     isPhotoGalleryGroup ||
     isActionBannerGroup ||
-    isScheduleGroup ||
     isAdditionalPageDataGroup ||
     isFilterGroupsListItemsGroup ||
     isCalendarEventsGroup;
@@ -85,6 +92,7 @@ export const ShowComplexGroup_Client = ({
         width: "100%",
         border: isEdit ? "1px dotted magenta" : undefined,
         padding: isEdit ? "10px" : undefined,
+        margin: "30px 0 30px 0",
       }}
     >
       {isInfoCheckGroup ? (
@@ -142,6 +150,15 @@ export const ShowComplexGroup_Client = ({
         />
       ) : null}
 
+      {isImageLinksGroup ? (
+        <ImageLinksGroup
+          isEdit={isEdit}
+          staticTexts={staticTexts}
+          groupData={groupData}
+          parentFeatureId={parentFeatureId}
+        />
+      ) : null}
+
       {isPhotoGalleryGroup ? (
         <ShowImageListGroup
           isEdit={isEdit}
@@ -164,6 +181,7 @@ export const ShowComplexGroup_Client = ({
           isEdit={isEdit}
           staticTexts={staticTexts}
           groupData={groupData}
+          parentFeatureId={parentFeatureId}
         />
       ) : null}
 
@@ -173,6 +191,8 @@ export const ShowComplexGroup_Client = ({
           isEdit={isEdit}
           staticTexts={staticTexts}
           pageFullDataList={pageFullDataList}
+          pageId={pageId}
+          params={params}
         />
       ) : null}
 

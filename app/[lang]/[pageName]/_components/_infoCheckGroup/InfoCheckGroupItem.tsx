@@ -41,7 +41,7 @@ export const InfoCheckGroupItem = ({
               height: "16px",
               borderRadius: "8px",
               border: "2px solid blue",
-              color: "blue",
+              color: "#2575fc",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",

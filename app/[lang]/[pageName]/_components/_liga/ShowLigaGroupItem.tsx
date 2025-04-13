@@ -128,6 +128,7 @@ export const ShowLigaGroupItem = ({
             staticTexts={staticTexts}
             currentData={data}
             useIcons={isService}
+            usePageLinkSelect
             changeOrderTextType={isService ? LIGA_SERVICE : undefined}
           />
         ) : null}

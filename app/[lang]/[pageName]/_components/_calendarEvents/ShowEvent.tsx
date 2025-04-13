@@ -60,7 +60,6 @@ export const ShowEvent = ({
     (description?.text_content ?? "");
 
   const handleMouseMove: MouseEventHandler<HTMLDivElement> = (event) => {
-    console.log("_____", event.screenX, event.screenY);
     setPosition([event.clientX, event.clientY]);
   };
 

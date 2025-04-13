@@ -34,17 +34,16 @@ export const LIGA_ADDRESS = "liga_address";
 export const LIGA_SERVICE = "liga_service";
 
 export const SCHEDULE_GROUP_SUBTYPE = "schedule";
-export const SCHEDULE_ITEM1 = "scheduleItem1";
-export const SCHEDULE_ITEM2 = "scheduleItem2";
-export const SCHEDULE_ITEM3 = "scheduleItem3";
-export const SCHEDULE_ITEM4 = "scheduleItem4";
-export const SCHEDULE_ITEM5 = "scheduleItem5";
-export const SCHEDULE_ITEM6 = "scheduleItem6";
+export const SCHEDULE_NAME = "schedule_name";
+export const SCHEDULE_ITEM = "schedule_item";
 
 export const IMAGE = "image";
 export const ICON = "icon";
 export const IMAGE_LIST_GROUP_SUBTYPE = "image_list";
 export const PHOTO_GALLERY_GROUP_SUBTYPE = "photo_gallery";
+
+export const IMAGE_LINKS_GROUP_SUBTYPE = "image_links_group_subtype";
+export const IMAGE_LINKS_ITEM = "image_links_item";
 
 export const TICKETS_PAGE_NAME = "tickets";
 
@@ -106,12 +105,7 @@ export const CAN_NOT_DELETE = [
   INFO_TITLE,
   INFO_TELEPHONE,
   INFO_ADDRESS,
-  SCHEDULE_ITEM1,
-  SCHEDULE_ITEM2,
-  SCHEDULE_ITEM3,
-  SCHEDULE_ITEM4,
-  SCHEDULE_ITEM5,
-  SCHEDULE_ITEM6,
+  SCHEDULE_NAME,
   FILTER_GROUP_TITLE,
   SUBSCRIPTION_ITEM_NAME,
   SUBSCRIPTION_ITEM_PRICE,
@@ -144,6 +138,7 @@ export const GroupFeatureSubtypes = [
   SCHEDULE_GROUP_SUBTYPE,
   ADDITIONAL_PAGE_DATA_GROUP_SUBTYPE,
   IMAGE_LIST_GROUP_SUBTYPE,
+  IMAGE_LINKS_GROUP_SUBTYPE,
   ACTION_BANNER_GROUP_SUBTYPE,
   PHOTO_GALLERY_GROUP_SUBTYPE,
   CALENDAR_EVENTS_GROUP_SUBTYPE,
@@ -163,11 +158,13 @@ export const PAGE_NAMES_TO_LIST_ITEMS_DATA: Record<
     addText: keyof StaticTexts;
     editText: keyof StaticTexts;
     textTypes: string[];
+    linkText: keyof StaticTexts;
   }
 > = {
   tickets: {
     addText: "addSubscription",
     editText: "editSubscription",
+    linkText: "moreSubscriptions",
     textTypes: [
       SUBSCRIPTION_ITEM_NAME,
       SUBSCRIPTION_ITEM_PRICE,
@@ -179,6 +176,7 @@ export const PAGE_NAMES_TO_LIST_ITEMS_DATA: Record<
   trainers: {
     addText: "addTrainer",
     editText: "editTrainer",
+    linkText: "moreTrainers",
     textTypes: [
       TRAINER_ITEM_NAME,
       TRAINER_ITEM_IS_PREMIUM,

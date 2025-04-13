@@ -1,0 +1,38 @@
+.container {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.itemContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.item {
+    border: 1px solid gray;
+    border-radius: 10px;
+    min-width: 30%;
+    max-width: 32%;
+    flex-grow: 2;
+    height: 220px;
+}
+
+@media(max-width: 980px) {
+    .item {
+        min-width: 45%;
+        max-width: 49%
+    }
+}
+
+@media(max-width: 668px) {
+    .item {
+        min-width: 96%;
+        max-width: 98%;
+        height: 80px;
+    }
+}
