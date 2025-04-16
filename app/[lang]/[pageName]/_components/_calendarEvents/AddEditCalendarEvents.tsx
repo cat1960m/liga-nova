@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { CommonButton } from "../_buttons/CommonButton";
+import { CommonButton } from "../__commonComponents/_buttons/CommonButton";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { FullData, MainParams, TabType } from "@/app/lib/definitions";
 import {
@@ -10,7 +10,7 @@ import {
 } from "@/app/lib/constants";
 import { NumberValue } from "./NumberValue";
 import { EventDates } from "./EventDates";
-import { TranslationTabs } from "../_clientComponents/TranslationTabs";
+import { TranslationTabs } from "../__commonComponents/TranslationTabs";
 import { getTextContents } from "@/app/lib/actions_fitness";
 import {
   CALENDAR_EVENTS_TITLE,

@@ -1,24 +1,26 @@
 "use client";
 
-import { FullData } from "@/app/lib/definitions";
+import { FullData, MainParams } from "@/app/lib/definitions";
 import {
-  IMAGE,
-  INFO_ADDRESS,
+  INFO_ACTION_CHILD_SUBTYPE,
+  INFO_ACTION_COMMON_SUBTYPE,
+  INFO_ACTION_FREE_SUBTYPE,
   INFO_BODY,
-  INFO_TELEPHONE,
+  INFO_SUBTYPE,
   INFO_TITLE,
 } from "@/app/lib/constants";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { ShowInfoGroupItem } from "./ShowInfoGroupItem";
-import { AddTextDescriptionButton } from "../_buttons/AddTextDescriptionButton";
-import { usePathname } from "next/navigation";
-import { AddTextDescriptionDeleteFeatureButtons } from "../_buttons/AddTextDescriptionDeleteFeatureButtons";
+import { AddTextDescriptionDeleteFeatureButtons } from "../__commonComponents/_buttons/AddTextDescriptionDeleteFeatureButtons";
+import { PhoneAddress } from "./PhoneAddress";
+import { CommonButton } from "../__commonComponents/_buttons/CommonButton";
 
 export type Props = {
   isEdit: boolean;
   staticTexts: StaticTexts;
   groupData: FullData[];
   parentFeatureId: number;
+  params: MainParams;
 };
 
 export const ShowInfoGroup = ({
@@ -26,24 +28,25 @@ export const ShowInfoGroup = ({
   staticTexts,
   groupData,
   parentFeatureId,
+  params,
 }: Props) => {
   const featureId = groupData[0]?.id;
-
-  const dataTitle = groupData.find((item) => item.text_type === INFO_TITLE);
-
-  const dataTelephone = groupData.find(
-    (item) => item.text_type === INFO_TELEPHONE
-  );
-
-  const dataAddress = groupData.find((item) => item.text_type === INFO_ADDRESS);
-
-  const dataBodyList = groupData.filter((item) => item.text_type === INFO_BODY);
-
-  const imageData = groupData.find((item) => item.text_type === IMAGE);
 
   if (!featureId) {
     return null;
   }
+
+  const subtype = groupData[0]?.subtype;
+
+  const dataTitle = groupData.find((item) => item.text_type === INFO_TITLE);
+
+  const isInfoGroup = subtype === INFO_SUBTYPE;
+
+  const dataBodyList = groupData.filter((item) => item.text_type === INFO_BODY);
+  const map: Record<string, string> = {};
+  map[INFO_ACTION_COMMON_SUBTYPE] = staticTexts.register ?? "N/A";
+  map[INFO_ACTION_CHILD_SUBTYPE] = staticTexts.registerChild ?? "N/A";
+  map[INFO_ACTION_FREE_SUBTYPE] = staticTexts.tryFree ?? "N/A";
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
@@ -63,32 +66,42 @@ export const ShowInfoGroup = ({
           isEdit={isEdit}
           staticTexts={staticTexts}
           data={dataTitle}
+          params={params}
         />
-        <div style={{ display: "flex", gap: "30px", flexWrap: "wrap" }}>
-          <ShowInfoGroupItem
+        {isInfoGroup ? (
+          <PhoneAddress
             isEdit={isEdit}
             staticTexts={staticTexts}
-            data={dataTelephone}
+            groupData={groupData}
+            params={params}
           />
-
-          <ShowInfoGroupItem
-            isEdit={isEdit}
-            staticTexts={staticTexts}
-            data={dataAddress}
-          />
+        ) : null}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            width: "100%",
+          }}
+        >
+          {dataBodyList.map((item, index) => {
+            return (
+              <div key={item.text_content_id ?? "" + "_" + index}>
+                <ShowInfoGroupItem
+                  isEdit={isEdit}
+                  staticTexts={staticTexts}
+                  data={item}
+                  isQuill
+                  params={params}
+                />
+              </div>
+            );
+          })}
         </div>
-        {dataBodyList.map((item, index) => {
-          return (
-            <div key={item.text_content_id ?? "" + "_" + index}>
-              <ShowInfoGroupItem
-                isEdit={isEdit}
-                staticTexts={staticTexts}
-                data={item}
-                isArea
-              />
-            </div>
-          );
-        })}
+        {!isInfoGroup ? (
+          <div style={{ marginTop: "20px" }}>
+            <CommonButton isAction text={map[subtype] ?? ""} />
+          </div>
+        ) : null}
       </div>
       {isEdit ? (
         <AddTextDescriptionDeleteFeatureButtons

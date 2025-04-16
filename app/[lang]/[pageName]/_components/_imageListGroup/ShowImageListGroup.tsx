@@ -2,11 +2,11 @@
 
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { IMAGE } from "@/app/lib/constants";
-import { FullData } from "@/app/lib/definitions";
+import { FullData, MainParams } from "@/app/lib/definitions";
 import { usePathname } from "next/navigation";
-import { ManageImages } from "../_clientComponents/ManageImages";
+import { ManageImages } from "../__commonComponents/ManageImages";
 import { addTextDescription } from "@/app/lib/actions_fitness";
-import { ScrollContainer } from "../_clientComponents/ScrollContainer/ScrollContainer";
+import { ScrollContainer } from "../__commonComponents/_scrollContainer/ScrollContainer";
 import Image from "next/image";
 import { DragEventHandler } from "react";
 
@@ -15,6 +15,7 @@ export type Props = {
   staticTexts: StaticTexts;
   groupData: FullData[];
   countVisibleItems?: number;
+  params: MainParams;
 };
 
 export const ShowImageListGroup = ({
@@ -22,6 +23,7 @@ export const ShowImageListGroup = ({
   staticTexts,
   groupData,
   countVisibleItems,
+  params,
 }: Props) => {
   const featureId = groupData[0]?.id;
   const pathName = usePathname();
@@ -100,6 +102,7 @@ export const ShowImageListGroup = ({
           onImageUpload={handleImageUploaded}
           staticTexts={staticTexts}
           isImageGroup
+          params={params}
         />
       ) : (
         <ScrollContainer

@@ -1,4 +1,4 @@
-import { FullData } from "@/app/lib/definitions";
+import { FullData, MainParams } from "@/app/lib/definitions";
 import {
   DEFAULT_TEXT,
   GROUP1_SUBTYPE,
@@ -7,15 +7,16 @@ import {
   SIMPLE_GROUP_ITEM,
 } from "@/app/lib/constants";
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import { ExpandedText } from "./_clientComponents/ExpandedText";
-import { UpdateDeleteTextButtons } from "./_buttons/UpdateDeleteTextButtons";
-import { AddTextDescriptionDeleteFeatureButtons } from "./_buttons/AddTextDescriptionDeleteFeatureButtons";
+import { ExpandedText } from "./__commonComponents/_expandedText/ExpandedText";
+import { UpdateDeleteTextButtons } from "./__commonComponents/_buttons/UpdateDeleteTextButtons";
+import { AddTextDescriptionDeleteFeatureButtons } from "./__commonComponents/_buttons/AddTextDescriptionDeleteFeatureButtons";
 
 export type Props = {
   data: FullData[];
   isEdit: boolean;
   staticTexts: StaticTexts;
   parentFeatureId: number;
+  params: MainParams;
 };
 
 export const ShowSimpleGroup_Client = ({
@@ -23,6 +24,7 @@ export const ShowSimpleGroup_Client = ({
   isEdit,
   staticTexts,
   parentFeatureId,
+  params,
 }: Props) => {
   const firstItem = data[0];
   const isHeader = firstItem.subtype === GROUP1_SUBTYPE;
@@ -45,6 +47,7 @@ export const ShowSimpleGroup_Client = ({
         marginBottom: "10px",
         border: isEdit ? "1px dotted magenta" : undefined,
         padding: isEdit ? "10px" : undefined,
+        marginTop: isEdit ? "10px" : undefined,
         gap: isEdit ? "10px" : undefined,
         display: "flex",
         flexDirection: "column",
@@ -94,7 +97,9 @@ export const ShowSimpleGroup_Client = ({
                   <UpdateDeleteTextButtons
                     currentData={item}
                     staticTexts={staticTexts}
-                    isQuill={!isHeader}
+                    useItems={{ text: isHeader ? "simple" : "quill" }}
+                    isChangeOrder
+                    params={params}
                   />
                 ) : null}
               </div>

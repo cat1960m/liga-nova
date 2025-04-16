@@ -1,11 +1,11 @@
 "use client";
 
 import { FullData, MainParams } from "@/app/lib/definitions";
-import { CommonButton } from "../_buttons/CommonButton";
+import { CommonButton } from "../__commonComponents/_buttons/CommonButton";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { getContainerData } from "@/app/lib/utils";
 import { useMemo } from "react";
-import { DeleteFeatureButton } from "../_buttons/DeleteFeatureButton";
+import { DeleteFeatureButton } from "../__commonComponents/_buttons/DeleteFeatureButton";
 import { ListItem } from "./ListItem";
 import { LIST_ITEM } from "@/app/lib/constants";
 

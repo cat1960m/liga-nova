@@ -1,21 +1,23 @@
-import { FullData } from "@/app/lib/definitions";
+import { FullData, MainParams } from "@/app/lib/definitions";
 import { INFO_BODY, INFO_TELEPHONE, INFO_TITLE } from "@/app/lib/constants";
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import { UpdateDeleteTextButtons } from "../_buttons/UpdateDeleteTextButtons";
 import { PhoneIcon } from "@heroicons/react/24/solid";
+import { UpdateDeleteTextButtons } from "../__commonComponents/_buttons/UpdateDeleteTextButtons";
 
 export type Props = {
   data?: FullData;
   isEdit: boolean;
   staticTexts: StaticTexts;
-  isArea?: boolean;
+  isQuill?: boolean;
+  params: MainParams;
 };
 
 export const ShowInfoGroupItem = ({
   data,
   isEdit,
   staticTexts,
-  isArea,
+  isQuill,
+  params,
 }: Props) => {
   if (!data) {
     return null;
@@ -42,14 +44,23 @@ export const ShowInfoGroupItem = ({
         {isPhone ? (
           <PhoneIcon style={{ color: "blue", width: "24px" }} />
         ) : null}
-        <p style={textStyle}> {data?.text_content ?? "N/A"}</p>
+        {!isQuill ? (
+          <p style={textStyle}> {data?.text_content ?? "N/A"}</p>
+        ) : (
+          <div
+            dangerouslySetInnerHTML={{
+              __html: data.text_content ?? "N/A",
+            }}
+          />
+        )}
       </div>
       {isEdit ? (
         <UpdateDeleteTextButtons
           staticTexts={staticTexts}
           currentData={data}
-          isArea={isArea}
-          changeOrderTextType={isBody ? INFO_BODY : undefined}
+          isChangeOrder={isBody}
+          useItems={{ text: isQuill ? "quill" : "simple" }}
+          params={params}
         />
       ) : null}
     </div>

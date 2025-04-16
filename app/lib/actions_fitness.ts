@@ -68,20 +68,22 @@ export const updateFeatureSubtypeFilterIds = async ({
   }
 };
 
-export const updatePriceValue = async ({
-  price = null,
+export const updatePriceValueLink = async ({
   textDescriptionId,
   pathName,
+  price = null,
   value = null,
+  link = null,
 }: {
   textDescriptionId: number;
   price?: number | null;
   value?: string | null;
+  link?: string | null;
   pathName: string;
 }) => {
   try {
     await sql`Update  text_descriptions
-               SET  price = ${price}, value=${value}
+               SET  price = ${price}, value=${value}, link=${link}
                WHERE id = ${textDescriptionId}`;
 
     revalidatePath(pathName);
@@ -104,28 +106,6 @@ export const updateTextDescriptionValue = async ({
   try {
     await sql`Update  text_descriptions
                SET  value = ${value}
-               WHERE id = ${textDescriptionId}`;
-
-    revalidatePath(pathName);
-    return;
-  } catch (error) {
-    // If a database error occurs, return a more specific error.
-    return null;
-  }
-};
-
-export const updateTextDescriptionLink = async ({
-  link,
-  textDescriptionId,
-  pathName,
-}: {
-  textDescriptionId: number;
-  link: string;
-  pathName: string;
-}) => {
-  try {
-    await sql`Update  text_descriptions
-               SET  link = ${link}
                WHERE id = ${textDescriptionId}`;
 
     revalidatePath(pathName);

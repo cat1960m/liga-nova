@@ -2,7 +2,7 @@ import { FullData, MainParams } from "@/app/lib/definitions";
 import { DrawFeatureContainer_Client } from "../DrawFeatureContainer_Client";
 import { getContainerData } from "@/app/lib/utils";
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import { DeleteFeatureButton } from "../_buttons/DeleteFeatureButton";
+import { DeleteFeatureButton } from "../__commonComponents/_buttons/DeleteFeatureButton";
 import { LAYOUT_ITEM_LEFT, LAYOUT_ITEM_RIGHT } from "@/app/lib/constants";
 import styles from "./layoutParent.module.css";
 import cn from "clsx";

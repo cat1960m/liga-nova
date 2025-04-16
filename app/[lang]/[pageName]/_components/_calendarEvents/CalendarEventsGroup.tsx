@@ -4,9 +4,9 @@ import { StaticTexts } from "@/app/dictionaries/definitions";
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { AddEditCalendarEvents } from "./AddEditCalendarEvents";
 import { dateToString, getContainerData } from "@/app/lib/utils";
-import { DeleteFeatureButton } from "../_buttons/DeleteFeatureButton";
+import { DeleteFeatureButton } from "../__commonComponents/_buttons/DeleteFeatureButton";
 import { useState } from "react";
-import { CommonButton } from "../_buttons/CommonButton";
+import { CommonButton } from "../__commonComponents/_buttons/CommonButton";
 import { ShowEvents } from "./ShowEvents";
 import {
   ACTION_BUTTON_BACKGROUND,

@@ -31,6 +31,8 @@ export type StaticTexts = {
   uploadFile?: string;
   updateFile?: string;
   register?: string;
+  registerChild?: string;
+
   linkTo?: string;
   apply?: string;
   filters?: string;
@@ -104,4 +106,6 @@ export type StaticTexts = {
   moreTrainers?: string;
   moreSubscriptions?: string;
   selectPageName?: string;
+  tryFree?: string;
+  details?: string;
 };

@@ -15,15 +15,24 @@ export const INFO_CHECK_GROUP_SUBTYPE = "info_check_group_subtitle";
 export const INFO_CHECK_HEADER = "info_check_header";
 export const INFO_CHECK_ITEM = "info_check_item";
 
+export const INFO_SUBTYPE = "info";
+export const INFO_ACTION_COMMON_SUBTYPE = "info_action_common";
+export const INFO_ACTION_CHILD_SUBTYPE = "info_action_child";
+export const INFO_ACTION_FREE_SUBTYPE = "info_action_free";
+export const INFO_ACTION_SUBTYPES = [
+  INFO_ACTION_COMMON_SUBTYPE,
+  INFO_ACTION_CHILD_SUBTYPE,
+  INFO_ACTION_FREE_SUBTYPE,
+];
+
+export const INFO_ADDRESS = "info_address";
+export const INFO_TELEPHONE = "info_telephone";
+export const INFO_TITLE = "info_title";
+export const INFO_BODY = "info_body";
+
 export const SERVICES_GROUP_SUBTYPE = "services";
 export const SERVICE_ITEM = "service_item";
 export const TOOLTIP = "tooltip";
-
-export const INFO_GROUP_SUBTYPE = "info";
-export const INFO_TITLE = "infoTitle";
-export const INFO_TELEPHONE = "infoTelephone";
-export const INFO_ADDRESS = "infoAddress";
-export const INFO_BODY = "infoBody";
 
 export const IMAGE_GROUP_SUBTYPE = "image_group_subtitle";
 
@@ -44,6 +53,9 @@ export const PHOTO_GALLERY_GROUP_SUBTYPE = "photo_gallery";
 
 export const IMAGE_LINKS_GROUP_SUBTYPE = "image_links_group_subtype";
 export const IMAGE_LINKS_ITEM = "image_links_item";
+
+export const IMAGE_ACTIONS_GROUP_SUBTYPE = "image_actions_group_subtype";
+export const IMAGE_ACTIONS_ITEM = "image_actions_item";
 
 export const TICKETS_PAGE_NAME = "tickets";
 
@@ -102,9 +114,6 @@ export const CALENDAR_EVENTS_SPECIAL_SUBTYPE = "special";
 
 export const CAN_NOT_DELETE = [
   INFO_CHECK_HEADER,
-  INFO_TITLE,
-  INFO_TELEPHONE,
-  INFO_ADDRESS,
   SCHEDULE_NAME,
   FILTER_GROUP_TITLE,
   SUBSCRIPTION_ITEM_NAME,
@@ -131,14 +140,18 @@ export const GroupFeatureSubtypes = [
   GROUP2_SUBTYPE,
   GROUP_EXPANDED_SUBTYPE,
   INFO_CHECK_GROUP_SUBTYPE,
+  INFO_SUBTYPE,
+  INFO_ACTION_COMMON_SUBTYPE,
+  INFO_ACTION_CHILD_SUBTYPE,
+  INFO_ACTION_FREE_SUBTYPE,
   SERVICES_GROUP_SUBTYPE,
-  INFO_GROUP_SUBTYPE,
   IMAGE_GROUP_SUBTYPE,
   LIGA_GROUP_SUBTYPE,
   SCHEDULE_GROUP_SUBTYPE,
   ADDITIONAL_PAGE_DATA_GROUP_SUBTYPE,
   IMAGE_LIST_GROUP_SUBTYPE,
   IMAGE_LINKS_GROUP_SUBTYPE,
+  IMAGE_ACTIONS_GROUP_SUBTYPE,
   ACTION_BANNER_GROUP_SUBTYPE,
   PHOTO_GALLERY_GROUP_SUBTYPE,
   CALENDAR_EVENTS_GROUP_SUBTYPE,

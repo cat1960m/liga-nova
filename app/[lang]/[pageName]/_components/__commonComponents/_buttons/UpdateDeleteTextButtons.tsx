@@ -1,10 +1,10 @@
 "use client";
-import { FullData, TextDescription } from "@/app/lib/definitions";
+import { FullData, MainParams, TextDescription } from "@/app/lib/definitions";
 import { DeleteTextDescriptionButton } from "./DeleteTextDescriptionButton";
-import { UpdateTextDescriptionData } from "../_clientComponents/UpdateTextDescriptionData";
+import { UpdateTextDescriptionData } from "../_upadeModal/UpdateTextDescriptionData";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { ChangeOrderButtons } from "./ChangeOrderButtons";
-import { useEditContext } from "../../edit/_components/EditContextProvider";
+import { useEditContext } from "../../../edit/_components/EditContextProvider";
 import {
   getTextDescriptions,
   revalidate,
@@ -12,36 +12,29 @@ import {
 } from "@/app/lib/actions_fitness";
 import { usePathname } from "next/navigation";
 import { CSSProperties } from "react";
+import { UseItems } from "../_upadeModal/UpdateTextDescriptionDataModalContent";
 export type Props = {
   currentData?: FullData;
   staticTexts: StaticTexts;
-  useIcons?: boolean;
-  useValue?: boolean;
-  isArea?: boolean;
-  isQuill?: boolean;
-  changeOrderTextType?: string;
+  isChangeOrder?: boolean;
   isHorizontal?: boolean;
-  isNoUpdate?: boolean;
   s3Key?: string;
   flexDirection?: CSSProperties["flexDirection"];
-  valueTitle?: string;
-  usePageLinkSelect?: boolean;
+  useItems: UseItems;
+  params: MainParams;
+  changeModalState?: (state: boolean) => void;
 };
 
 export const UpdateDeleteTextButtons = ({
   currentData,
   staticTexts,
-  useIcons,
-  useValue,
-  isArea,
-  isQuill,
-  changeOrderTextType,
+  isChangeOrder,
   isHorizontal,
-  isNoUpdate = false,
   s3Key,
   flexDirection = "row",
-  valueTitle,
-  usePageLinkSelect,
+  useItems,
+  params,
+  changeModalState,
 }: Props) => {
   const { changeIsEditButtonDisabled } = useEditContext();
   const pathName = usePathname();
@@ -52,7 +45,7 @@ export const UpdateDeleteTextButtons = ({
   const canDelete = !!currentData.can_delete;
 
   const changeOrder = async (isToStart: boolean) => {
-    if (!changeOrderTextType) {
+    if (!isChangeOrder) {
       return;
     }
 
@@ -61,7 +54,7 @@ export const UpdateDeleteTextButtons = ({
     const textDescriptions: TextDescription[] | null =
       await getTextDescriptions({
         featureId: currentData.id,
-        textType: changeOrderTextType,
+        textType: currentData.text_type,
       });
 
     if (textDescriptions && textDescriptions.length > 1) {
@@ -106,18 +99,13 @@ export const UpdateDeleteTextButtons = ({
         flexWrap: "wrap",
       }}
     >
-      {!isNoUpdate ? (
-        <UpdateTextDescriptionData
-          currentData={currentData}
-          staticTexts={staticTexts}
-          useIcons={useIcons}
-          isArea={isArea}
-          isQuill={isQuill}
-          valueTitle={valueTitle}
-          useValue={useValue}
-          usePageLinkSelect={usePageLinkSelect}
-        />
-      ) : null}
+      <UpdateTextDescriptionData
+        currentData={currentData}
+        staticTexts={staticTexts}
+        useItems={useItems}
+        params={params}
+        changeModalState={changeModalState}
+      />
       <div
         style={{
           display: "flex",
@@ -135,7 +123,7 @@ export const UpdateDeleteTextButtons = ({
           />
         ) : null}
 
-        {changeOrderTextType ? (
+        {isChangeOrder ? (
           <ChangeOrderButtons
             isHorizontal={isHorizontal}
             changeOrder={changeOrder}

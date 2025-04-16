@@ -7,17 +7,11 @@ import {
   UpdateFeatureOrder,
 } from "@/app/lib/actions_fitness";
 import { usePathname } from "next/navigation";
-import { CommonButton } from "../_buttons/CommonButton";
+import { CommonButton } from "./CommonButton";
 import axios from "axios";
 import { Feature, FullData } from "@/app/lib/definitions";
 import { S3_TYPES } from "@/app/lib/constants";
-import {
-  ChevronUpIcon,
-  ChevronDownIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-} from "@heroicons/react/24/outline";
-import { useEditContext } from "../../edit/_components/EditContextProvider";
+import { useEditContext } from "../../../edit/_components/EditContextProvider";
 import { ChangeOrderButtons } from "./ChangeOrderButtons";
 
 export const DeleteFeatureButton = ({

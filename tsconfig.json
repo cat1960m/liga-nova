@@ -31,7 +31,7 @@
     "app/lib/placeholder-data.ts",
     "scripts/seed.js",
     "app/dashboard/error.tsx",
-    "app/[lang]/[pageName]/_components/_buttons/AddChildFeatureToContainer.tsx",
+    "app/[lang]/[pageName]/_components/__commonComponents/_buttons/AddChildFeatureToContainer.tsx",
     "app/[lang]/[pageName]/_components/_calendarEvents/AddCalendarEventItemtsx"
   ],
   "exclude": ["node_modules"]

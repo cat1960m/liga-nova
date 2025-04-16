@@ -1,7 +1,7 @@
-import { FullData } from "@/app/lib/definitions";
+import { FullData, MainParams } from "@/app/lib/definitions";
 import { InfoCheckGroupItem } from "./InfoCheckGroupItem";
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import { AddTextDescriptionDeleteFeatureButtons } from "../_buttons/AddTextDescriptionDeleteFeatureButtons";
+import { AddTextDescriptionDeleteFeatureButtons } from "../__commonComponents/_buttons/AddTextDescriptionDeleteFeatureButtons";
 
 export type Props = {
   headerType: string;
@@ -10,6 +10,7 @@ export type Props = {
   isEdit: boolean;
   staticTexts: StaticTexts;
   parentFeatureId: number;
+  params: MainParams;
 };
 
 export const InfoCheckGroup = ({
@@ -19,6 +20,7 @@ export const InfoCheckGroup = ({
   isEdit,
   staticTexts,
   parentFeatureId,
+  params,
 }: Props) => {
   const featureId = groupData[0]?.id;
   const headerData = groupData.find((data) => data.text_type === headerType);
@@ -52,6 +54,7 @@ export const InfoCheckGroup = ({
             isEdit={isEdit}
             currentData={headerData}
             staticTexts={staticTexts}
+            params={params}
           />
         ) : null}
 
@@ -63,6 +66,7 @@ export const InfoCheckGroup = ({
                   isEdit={isEdit}
                   currentData={data}
                   staticTexts={staticTexts}
+                  params={params}
                 />
               );
             })

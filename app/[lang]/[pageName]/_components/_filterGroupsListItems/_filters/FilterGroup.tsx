@@ -1,12 +1,12 @@
 "use client";
 
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import { FullData } from "@/app/lib/definitions";
-import { UpdateDeleteTextButtons } from "../../_buttons/UpdateDeleteTextButtons";
+import { FullData, MainParams } from "@/app/lib/definitions";
+import { UpdateDeleteTextButtons } from "../../__commonComponents/_buttons/UpdateDeleteTextButtons";
 import { ChevronUpIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { FILTER, FILTER_GROUP_TITLE } from "@/app/lib/constants";
-import { AddTextDescriptionDeleteFeatureButtons } from "../../_buttons/AddTextDescriptionDeleteFeatureButtons";
+import { AddTextDescriptionDeleteFeatureButtons } from "../../__commonComponents/_buttons/AddTextDescriptionDeleteFeatureButtons";
 
 export type Props = {
   groupData: FullData[];
@@ -18,6 +18,7 @@ export type Props = {
   }) => void;
   selectedFilterTextDescriptionIds: number[];
   parentFeatureId: number | null;
+  params: MainParams;
 };
 
 export const FilterGroup = ({
@@ -27,6 +28,7 @@ export const FilterGroup = ({
   onFilterSelectionChanged,
   selectedFilterTextDescriptionIds,
   parentFeatureId,
+  params,
 }: Props) => {
   const featureId = groupData[0]?.id;
   const [isExpanded, setIsExpanded] = useState<boolean>(true);
@@ -87,6 +89,9 @@ export const FilterGroup = ({
           <UpdateDeleteTextButtons
             staticTexts={staticTexts}
             currentData={titleData}
+            useItems={{ text: "simple" }}
+            isChangeOrder
+            params={params}
           />
         ) : null}
       </div>
@@ -132,7 +137,8 @@ export const FilterGroup = ({
                   <UpdateDeleteTextButtons
                     staticTexts={staticTexts}
                     currentData={filter}
-                    useIcons
+                    useItems={{ text: "simple", value: "icons" }}
+                    params={params}
                   />
                 ) : null}
               </div>

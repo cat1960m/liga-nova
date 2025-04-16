@@ -3,7 +3,7 @@
     "save": "зберегти",
     "edit": "редагувати",
     "cancel": "відміна",
-    "updateTranslate": "Редагувати та перекласти ",
+    "updateTranslate": "Редагувати / перекласти ",
     "translate": "перекласти",
     "delete": "видалити",
     "addColumnItem": "додати елемент в колонку",
@@ -97,6 +97,9 @@
     "time": "Час",
     "moreTrainers": "Більше тренерів >",
     "moreSubscriptions": "Більше абонементів >",
-    "selectPageName": "Виберіть назву сторінки"
+    "selectPageName": "Виберіть назву сторінки",
+    "registerChild": "Записати дитину",
+    "tryFree": "Спробувати безкоштовно",
+    "details": "Детальніше"
   }
 }

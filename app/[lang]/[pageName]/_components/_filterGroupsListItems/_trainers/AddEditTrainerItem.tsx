@@ -1,16 +1,16 @@
 "use client";
 
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import { AddTextDescriptionButton } from "../../_buttons/AddTextDescriptionButton";
+import { AddTextDescriptionButton } from "../../__commonComponents/_buttons/AddTextDescriptionButton";
 import { TextItemField } from "../../TextItemField";
-import { FullData } from "@/app/lib/definitions";
+import { FullData, MainParams } from "@/app/lib/definitions";
 import {
   TRAINER_ITEM_DESCRIPTION,
   TRAINER_ITEM_IMAGE,
   TRAINER_ITEM_IS_PREMIUM,
   TRAINER_ITEM_NAME,
 } from "@/app/lib/constants";
-import { UploadComponent } from "../../_clientComponents/UploadComponent";
+import { UploadComponent } from "../../__commonComponents/UploadComponent";
 import { updateTextDescriptionValue } from "@/app/lib/actions_fitness";
 import { ChangeEventHandler } from "react";
 import { usePathname } from "next/navigation";
@@ -21,6 +21,7 @@ export type Props = {
   trainerItemFeatureId: number;
   currentData: FullData[];
   setIsSaveDisabled?: (value: boolean) => void;
+  params: MainParams;
 };
 
 export const AddEditTrainerItem = ({
@@ -29,6 +30,7 @@ export const AddEditTrainerItem = ({
   trainerItemFeatureId,
   currentData,
   setIsSaveDisabled,
+  params,
 }: Props) => {
   const pathName = usePathname();
 
@@ -86,6 +88,7 @@ export const AddEditTrainerItem = ({
         staticTexts={staticTexts}
         title={staticTexts.name}
         importantDescriptionType=""
+        params={params}
       />
 
       <div
@@ -132,6 +135,7 @@ export const AddEditTrainerItem = ({
             staticTexts={staticTexts}
             key={description.text_description_id}
             importantDescriptionType=""
+            params={params}
           />
         );
       })}

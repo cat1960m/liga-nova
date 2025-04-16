@@ -5,14 +5,14 @@ import { FullData, MainParams } from "@/app/lib/definitions";
 import { AddTextDescriptionDeleteFeatureButtons } from "../__commonComponents/_buttons/AddTextDescriptionDeleteFeatureButtons";
 import {
   IMAGE_ACTIONS_GROUP_SUBTYPE,
-  IMAGE_LINKS_ITEM,
+  IMAGE_ACTIONS_ITEM,
   TOOLTIP,
 } from "@/app/lib/constants";
-import { ImageLink } from "./ImageLink";
+import { ImageAction } from "./ImageAction";
 import cn from "clsx";
 import { UpdateDeleteTextButtons } from "../__commonComponents/_buttons/UpdateDeleteTextButtons";
 
-import styles from "./imageLinks.module.css";
+import styles from "./imageActions.module.css";
 import { useState } from "react";
 import { ActionButton } from "../__commonComponents/_buttons/_actionButon/ActionButton";
 
@@ -24,7 +24,7 @@ export type Props = {
   params: MainParams;
 };
 
-export const ImageLinksGroup = ({
+export const ImageActionsGroup = ({
   groupData,
   isEdit,
   staticTexts,
@@ -33,11 +33,11 @@ export const ImageLinksGroup = ({
 }: Props) => {
   const [isModalShown, setIsModalShown] = useState<boolean>(false);
   const featureId = groupData[0]?.id;
-  const subtype = groupData[0]?.subtype;
   console.log("groupData", groupData);
   const groupDataMain = groupData.filter(
     (item) => item.content_type !== TOOLTIP
   );
+
   const changeModalState = (state: boolean) => setIsModalShown(state);
 
   return (
@@ -55,11 +55,14 @@ export const ImageLinksGroup = ({
             className={cn(styles.itemContainer, { [styles.edit]: isEdit })}
             key={item.text_description_id}
           >
-            <ImageLink
+            <ImageAction
               data={item}
               groupData={groupData}
               isModalShown={isModalShown}
             />
+
+            <ActionButton text={staticTexts.details} onClick={() => {}} />
+
             {isEdit ? (
               <UpdateDeleteTextButtons
                 currentData={item}
@@ -68,10 +71,8 @@ export const ImageLinksGroup = ({
                 isHorizontal
                 s3Key={item.value}
                 useItems={{
-                  text: "simple",
                   tooltip: "quill",
                   value: "image",
-                  link: true,
                 }}
                 params={params}
                 changeModalState={changeModalState}
@@ -80,6 +81,7 @@ export const ImageLinksGroup = ({
           </div>
         ))}
       </div>
+
       {isEdit ? (
         <AddTextDescriptionDeleteFeatureButtons
           featureId={featureId}
@@ -87,7 +89,7 @@ export const ImageLinksGroup = ({
           parentFeatureId={parentFeatureId}
           deleteButtonText={staticTexts.delete ?? "N/A"}
           addButtonText={staticTexts.addGroupItem ?? "N/A"}
-          textDescriptionType={IMAGE_LINKS_ITEM}
+          textDescriptionType={IMAGE_ACTIONS_ITEM}
         />
       ) : null}
     </div>

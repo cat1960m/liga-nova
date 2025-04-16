@@ -6,7 +6,7 @@ import { getContainerData } from "@/app/lib/utils";
 import { FilterGroup } from "./FilterGroup";
 import { FILTER_GROUP_SUBTYPE, GROUP } from "@/app/lib/constants";
 import { useMemo } from "react";
-import { AddChildFeatureButton } from "../../_buttons/AddChildFeatureButton";
+import { AddChildFeatureButton } from "../../__commonComponents/_buttons/AddChildFeatureButton";
 
 export type Props = {
   isEdit: boolean;

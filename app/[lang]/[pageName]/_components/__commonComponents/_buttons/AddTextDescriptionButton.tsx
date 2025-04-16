@@ -3,7 +3,7 @@
 import { addTextDescription } from "@/app/lib/actions_fitness";
 import { usePathname } from "next/navigation";
 import { CommonButton } from "./CommonButton";
-import { useEditContext } from "../../edit/_components/EditContextProvider";
+import { useEditContext } from "../../../edit/_components/EditContextProvider";
 
 export type Props = {
   featureId: number;

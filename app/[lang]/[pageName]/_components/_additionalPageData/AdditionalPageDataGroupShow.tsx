@@ -4,7 +4,7 @@ import { getContainerData, getFilterIds } from "@/app/lib/utils";
 import { useMemo } from "react";
 import { ListItem } from "../_filterGroupsListItems/ListItem";
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import { ScrollContainer } from "../_clientComponents/ScrollContainer/ScrollContainer";
+import { ScrollContainer } from "../__commonComponents/_scrollContainer/ScrollContainer";
 
 export type Props = {
   currentData: FullData;

@@ -22,13 +22,6 @@ const QuillEditor = ({ text, onChange }: Props) => {
     if (!quillInstanceRef.current) {
       const Parchment = Quill.import("parchment"); // Access Parchment directly
 
-      /*  const FontWeightStyle = new Parchment.Attributor.Style('fontWeight', 'font-weight', {
-        scope: Parchment.Scope.INLINE,
-        whitelist: ['normal', 'bold', 'lighter', '100', '200', '300', '400', '500', '600', '700', '800', '900'],
-      });
-      
-      Quill.register(FontWeightStyle, true); */
-
       const FontWeightAttributor = new Parchment.StyleAttributor(
         "weight", // Format name for Quill
         "font-weight", // CSS property
@@ -53,18 +46,12 @@ const QuillEditor = ({ text, onChange }: Props) => {
       // Register the font-weight format
       Quill.register(FontWeightAttributor, true);
 
-      /*   const FontWeight = new StyleAttributor('fontWeight', 'font-weight', {
-        scope: Scope.INLINE,
-        whitelist: ['normal', 'bold', 'lighter', '100', '200', '300', '400', '500', '600', '700', '800', '900'],
-      });
-      
-      Quill.register(FontWeight, true); */
 
       const quill = new Quill(editorRef.current, {
         theme: "snow",
         modules: {
           toolbar: [
-            [{ header: [1, 2, 3, false] }],
+            [{ header: [1, 2, 3, 4, false] }],
             [{ font: [] }], // Font selection
             [
               {
@@ -82,6 +69,7 @@ const QuillEditor = ({ text, onChange }: Props) => {
             ], // Custom font-weight dropdown
             ["bold", "italic", "underline", "strike"],
             [{ color: [] }], // Add color selection
+            [{ align: [] }], // Add alignment options
             [{ list: "ordered" }, { list: "bullet" }],
             ["link", "image"],
           ],
@@ -109,6 +97,16 @@ const QuillEditor = ({ text, onChange }: Props) => {
 
     const quill = quillInstanceRef.current;
     quill.on("text-change", () => {
+      const editor = document.querySelector(".ql-editor");
+      editor?.querySelectorAll("h4").forEach((h4) => {
+        h4.style.padding = "5px";
+        h4.style.marginBottom = "15px";
+        h4.style.marginBottom = "15px";
+        h4.style.marginTop = "5px";
+        h4.style.backgroundColor = "#e0e0e0";
+        h4.style.display = "inline-block";
+        h4.style.borderRadius = "5px";
+      });
       setData(quill.root.innerHTML);
     });
     quill.clipboard.dangerouslyPasteHTML(text);

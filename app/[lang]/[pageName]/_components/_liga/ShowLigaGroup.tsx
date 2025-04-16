@@ -10,14 +10,11 @@ import {
 } from "@/app/lib/constants";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { ShowLigaGroupItem } from "./ShowLigaGroupItem";
-import { AddTextDescriptionButton } from "../_buttons/AddTextDescriptionButton";
 import { getPageTitles } from "@/app/lib/actions_fitness";
 import Link from "next/link";
-import { PagesSelect } from "./PagesSelect";
 import { useEffect, useState } from "react";
 import styles from "./showListGRoup.module.css";
-import { DeleteFeatureButton } from "../_buttons/DeleteFeatureButton";
-import { AddTextDescriptionDeleteFeatureButtons } from "../_buttons/AddTextDescriptionDeleteFeatureButtons";
+import { AddTextDescriptionDeleteFeatureButtons } from "../__commonComponents/_buttons/AddTextDescriptionDeleteFeatureButtons";
 
 export type Props = {
   isEdit: boolean;
@@ -64,14 +61,10 @@ export const ShowLigaGroup = ({
     return null;
   }
 
-  const onLinkUpdated = () => {
-    getPages();
-  };
-
   const commonProps = {
     isEdit,
     staticTexts,
-    onLinkUpdated,
+    params,
   };
 
   return (
@@ -99,11 +92,7 @@ export const ShowLigaGroup = ({
           ? dataServiceList.map((item, index) => {
               return (
                 <div key={item.text_content_id ?? "" + "_" + index}>
-                  <ShowLigaGroupItem
-                    {...commonProps}
-                    data={item}
-                    pages={pages}
-                  />
+                  <ShowLigaGroupItem {...commonProps} data={item} />
                 </div>
               );
             })

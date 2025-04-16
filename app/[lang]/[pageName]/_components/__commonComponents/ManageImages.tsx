@@ -1,10 +1,8 @@
-import { FullData } from "@/app/lib/definitions";
-import { DeleteFeatureButton } from "../_buttons/DeleteFeatureButton";
+import { FullData, MainParams } from "@/app/lib/definitions";
+import { DeleteFeatureButton } from "./_buttons/DeleteFeatureButton";
 import { UploadComponent } from "./UploadComponent";
-import { DeleteTextDescriptionButton } from "../_buttons/DeleteTextDescriptionButton";
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import { ChangeOrderButtons } from "../_buttons/ChangeOrderButtons";
-import { UpdateDeleteTextButtons } from "../_buttons/UpdateDeleteTextButtons";
+import { UpdateDeleteTextButtons } from "./_buttons/UpdateDeleteTextButtons";
 import { IMAGE } from "@/app/lib/constants";
 
 export type Props = {
@@ -13,6 +11,7 @@ export type Props = {
   onDeleteFinished?: () => void;
   isImageGroup?: boolean;
   staticTexts?: StaticTexts;
+  params: MainParams;
 };
 
 export const ManageImages = ({
@@ -21,6 +20,7 @@ export const ManageImages = ({
   onDeleteFinished,
   isImageGroup,
   staticTexts,
+  params,
 }: Props) => {
   return (
     <div style={{ width: "100%" }}>
@@ -46,10 +46,11 @@ export const ManageImages = ({
                   staticTexts={staticTexts}
                   currentData={imageItem}
                   s3Key={imageItem.value}
-                  isNoUpdate
                   flexDirection="column"
-                  changeOrderTextType={IMAGE}
+                  isChangeOrder
                   isHorizontal
+                  params={params}
+                  useItems={{ value: "image" }}
                 />
               ) : (
                 <DeleteFeatureButton

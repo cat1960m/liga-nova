@@ -1,15 +1,16 @@
 import { SERVICE_ITEM, TOOLTIP } from "@/app/lib/constants";
-import { FullData } from "@/app/lib/definitions";
+import { FullData, MainParams } from "@/app/lib/definitions";
 import { ShowGroupServicesText } from "./ShowGroupServicesText";
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import { UpdateDeleteTextButtons } from "../_buttons/UpdateDeleteTextButtons";
-import { AddTextDescriptionDeleteFeatureButtons } from "../_buttons/AddTextDescriptionDeleteFeatureButtons";
+import { UpdateDeleteTextButtons } from "../__commonComponents/_buttons/UpdateDeleteTextButtons";
+import { AddTextDescriptionDeleteFeatureButtons } from "../__commonComponents/_buttons/AddTextDescriptionDeleteFeatureButtons";
 
 export type Props = {
   groupData: FullData[];
   isEdit: boolean;
   staticTexts: StaticTexts;
   parentFeatureId: number;
+  params: MainParams;
 };
 
 export const ShowServicesGroup = ({
@@ -17,6 +18,7 @@ export const ShowServicesGroup = ({
   isEdit,
   staticTexts,
   parentFeatureId,
+  params,
 }: Props) => {
   const firstData = groupData[0];
   const featureId = firstData.id;
@@ -68,7 +70,13 @@ export const ShowServicesGroup = ({
                   <UpdateDeleteTextButtons
                     currentData={data}
                     staticTexts={staticTexts}
-                    changeOrderTextType={SERVICE_ITEM}
+                    isChangeOrder={data.text_type === SERVICE_ITEM}
+                    useItems={{
+                      text: "simple",
+                      tooltip: "simple",
+                      price: true,
+                    }}
+                    params={params}
                   />
                 ) : null}
               </div>

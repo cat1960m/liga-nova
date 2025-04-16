@@ -4,8 +4,8 @@ import { LangSelector } from "./_components/LangSelector";
 import { LinkBody } from "./_components/LInkBody";
 import { ArrowRightIcon, PowerIcon } from "@heroicons/react/24/outline";
 import { auth, signOut } from "@/app/auth";
-import { EditRegime } from "./[pageName]/_components/_clientComponents/EditRegime";
-import { ManageIconsModal } from "./[pageName]/_components/_clientComponents/ManageIconsModal";
+import { EditRegime } from "./[pageName]/_components/__commonComponents/EditRegime";
+import { ManageIconsModal } from "./[pageName]/_components/__commonComponents/_upadeModal/ManageIconsModal";
 
 export const experimental_ppr = true;
 

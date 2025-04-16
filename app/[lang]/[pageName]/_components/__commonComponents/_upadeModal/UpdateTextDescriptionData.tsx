@@ -1,39 +1,38 @@
 "use client";
 
-import { FullData, TabType, TextContent } from "@/app/lib/definitions";
+import { FullData, MainParams } from "@/app/lib/definitions";
 import { useState } from "react";
 import { CreateModal } from "./CreateModal";
 import { CommonButton } from "../_buttons/CommonButton";
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import { UpdateTextDescriptionDataModalContent } from "./UpdateTextDescriptionDataModalContent";
+import {
+  UpdateTextDescriptionDataModalContent,
+  UseItems,
+} from "./UpdateTextDescriptionDataModalContent";
 
 export const UpdateTextDescriptionData = ({
   staticTexts,
   currentData,
-  useIcons,
-  isArea,
-  isQuill,
-  valueTitle,
-  useValue,
-  usePageLinkSelect,
+  useItems,
+  params,
+  changeModalState,
 }: {
   staticTexts: StaticTexts;
   currentData: FullData;
-  useIcons?: boolean;
-  isArea?: boolean;
-  isQuill?: boolean;
-  valueTitle?: string;
-  useValue?: boolean;
-  usePageLinkSelect?: boolean;
+  useItems: UseItems;
+  params: MainParams;
+  changeModalState?: (state: boolean) => void;
 }) => {
   const [isEditModalShown, setIsEditModalShown] = useState(false);
 
   const handleEdit = () => {
     setIsEditModalShown(true);
+    changeModalState?.(true);
   };
 
   const handleClose = () => {
     setIsEditModalShown(false);
+    changeModalState?.(false);
   };
 
   return (
@@ -46,12 +45,8 @@ export const UpdateTextDescriptionData = ({
             onClose={handleClose}
             staticTexts={staticTexts}
             currentData={currentData}
-            useIcons={useIcons}
-            isArea={isArea}
-            isQuill={isQuill}
-            valueTitle={valueTitle}
-            useValue={useValue}
-            usePageLinkSelect={usePageLinkSelect}
+            useItems={useItems}
+            params={params}
           />
         </CreateModal>
       ) : null}

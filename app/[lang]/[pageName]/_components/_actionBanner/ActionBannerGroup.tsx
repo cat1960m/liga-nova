@@ -2,25 +2,27 @@
 
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { ACTION_BANNER_IMAGE, ACTION_BANNER_TITLE } from "@/app/lib/constants";
-import { FullData } from "@/app/lib/definitions";
+import { FullData, MainParams } from "@/app/lib/definitions";
 import { usePathname } from "next/navigation";
 import { updateTextDescriptionValue } from "@/app/lib/actions_fitness";
 import Image from "next/image";
-import { UploadComponent } from "../_clientComponents/UploadComponent";
+import { UploadComponent } from "../__commonComponents/UploadComponent";
 import { TextItemField } from "../TextItemField";
 import styles from "./actionBanner.module.css";
-import { CommonButton } from "../_buttons/CommonButton";
+import { CommonButton } from "../__commonComponents/_buttons/CommonButton";
 
 export type Props = {
   isEdit: boolean;
   staticTexts: StaticTexts;
   groupData: FullData[];
+  params: MainParams;
 };
 
 export const ActionBannerGroup = ({
   isEdit,
   staticTexts,
   groupData,
+  params,
 }: Props) => {
   const featureId = groupData[0]?.id;
   const pathName = usePathname();
@@ -96,6 +98,7 @@ export const ActionBannerGroup = ({
               fieldData={title}
               staticTexts={staticTexts}
               importantDescriptionType=""
+              params={params}
             />
           ) : null}
 

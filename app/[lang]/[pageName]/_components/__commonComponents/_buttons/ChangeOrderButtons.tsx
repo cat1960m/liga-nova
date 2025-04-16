@@ -5,7 +5,7 @@ import {
   ChevronUpIcon,
 } from "@heroicons/react/24/outline";
 import { CommonButton } from "./CommonButton";
-import { useEditContext } from "../../edit/_components/EditContextProvider";
+import { useEditContext } from "../../../edit/_components/EditContextProvider";
 
 export type Props = {
   isHorizontal?: boolean;

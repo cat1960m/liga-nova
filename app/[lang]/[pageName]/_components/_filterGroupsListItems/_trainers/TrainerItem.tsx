@@ -12,8 +12,8 @@ import { useEffect, useMemo, useState } from "react";
 import { getPageFullData } from "@/app/lib/actions_fitness";
 import { getFilterIds } from "@/app/lib/utils";
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import { ExpandedText } from "../../_clientComponents/ExpandedText";
-import { CommonButton } from "../../_buttons/CommonButton";
+import { ExpandedText } from "../../__commonComponents/_expandedText/ExpandedText";
+import { CommonButton } from "../../__commonComponents/_buttons/CommonButton";
 
 const PREMIUM = "premium%28--0%29";
 

@@ -1,26 +1,23 @@
 import { INFO_CHECK_HEADER } from "@/app/lib/constants";
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import { FullData } from "@/app/lib/definitions";
-import { UpdateDeleteTextButtons } from "../_buttons/UpdateDeleteTextButtons";
+import { FullData, MainParams } from "@/app/lib/definitions";
+import { UpdateDeleteTextButtons } from "../__commonComponents/_buttons/UpdateDeleteTextButtons";
 
 export type Props = {
   isEdit: boolean;
   staticTexts: StaticTexts;
   currentData: FullData;
+  params: MainParams;
 };
 
 export const InfoCheckGroupItem = ({
   isEdit,
   staticTexts,
   currentData,
+  params,
 }: Props) => {
-  const isHeader = [INFO_CHECK_HEADER].includes(currentData.text_type);
+  const isHeader = currentData.text_type === INFO_CHECK_HEADER;
   const text = currentData.text_content ?? "N/A";
-  const changeOrderTextType = [INFO_CHECK_HEADER].includes(
-    currentData.text_type
-  )
-    ? undefined
-    : currentData.text_type;
 
   return (
     <div
@@ -58,7 +55,9 @@ export const InfoCheckGroupItem = ({
         <UpdateDeleteTextButtons
           currentData={currentData}
           staticTexts={staticTexts}
-          changeOrderTextType={changeOrderTextType}
+          isChangeOrder={!isHeader}
+          useItems={{ text: "simple" }}
+          params={params}
         />
       ) : null}
     </div>

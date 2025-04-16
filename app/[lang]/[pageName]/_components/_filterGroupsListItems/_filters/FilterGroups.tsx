@@ -13,7 +13,7 @@ import {
   GROUP,
 } from "@/app/lib/constants";
 import { useMemo } from "react";
-import { AddChildFeatureButton } from "../../_buttons/AddChildFeatureButton";
+import { AddChildFeatureButton } from "../../__commonComponents/_buttons/AddChildFeatureButton";
 import { FilterGroupsItems } from "./FilterGroupItems";
 
 export type Props = {

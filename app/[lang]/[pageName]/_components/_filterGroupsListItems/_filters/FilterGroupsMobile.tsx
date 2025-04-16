@@ -3,7 +3,7 @@
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { useState } from "react";
-import { CommonButton } from "../../_buttons/CommonButton";
+import { CommonButton } from "../../__commonComponents/_buttons/CommonButton";
 import { AdjustmentsHorizontalIcon } from "@heroicons/react/24/solid";
 import { FilterGroupsItems } from "./FilterGroupItems";
 import {

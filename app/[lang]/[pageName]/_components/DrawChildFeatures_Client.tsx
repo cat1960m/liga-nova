@@ -50,6 +50,7 @@ export const DrawChildFeature_Client = ({
         isEdit={isEdit}
         staticTexts={staticTexts}
         parentFeatureId={parentFeatureId}
+        params={params}
       />
     );
   }

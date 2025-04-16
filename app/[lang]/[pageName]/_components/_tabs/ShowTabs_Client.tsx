@@ -6,8 +6,8 @@ import { ShowTabTitle_Client } from "./ShowTabTitle_Client";
 import { DrawFeatureContainer_Client } from "../DrawFeatureContainer_Client";
 import { getContainerData } from "@/app/lib/utils";
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import { AddChildFeatureButton } from "../_buttons/AddChildFeatureButton";
-import { DeleteFeatureButton } from "../_buttons/DeleteFeatureButton";
+import { AddChildFeatureButton } from "../__commonComponents/_buttons/AddChildFeatureButton";
+import { DeleteFeatureButton } from "../__commonComponents/_buttons/DeleteFeatureButton";
 import { TAB, TAB_TITLE } from "@/app/lib/constants";
 
 export type Props = {
@@ -72,7 +72,13 @@ export const ShowTabs_Client = ({
   return (
     <div
       style={
-        isEdit ? { border: "4px dashed magenta", padding: "5px" } : undefined
+        isEdit
+          ? {
+              border: "4px dashed magenta",
+              padding: "5px",
+              margin: "20px 0 20px 0",
+            }
+          : undefined
       }
     >
       <div
@@ -106,6 +112,7 @@ export const ShowTabs_Client = ({
                   parentFeatureId={tabsData.id}
                   isEditTabShown={isEditTabShown}
                   onShowTabClick={() => setIsEditTabShown(!isEditTabShown)}
+                  params={params}
                 />
               </div>
             );

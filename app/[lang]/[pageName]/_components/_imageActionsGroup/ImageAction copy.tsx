@@ -10,7 +10,7 @@ export type Props = {
   isModalShown: boolean;
 };
 
-export const ImageLink = ({ data, groupData, isModalShown }: Props) => {
+export const ImageAction = ({ data, groupData, isModalShown }: Props) => {
   const tooltip = groupData.find(
     (item) =>
       item.text_description_id === data.text_description_id &&

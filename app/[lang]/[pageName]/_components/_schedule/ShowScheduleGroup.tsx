@@ -12,7 +12,7 @@ import {
 } from "@/app/lib/constants";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { ShowSCheduleGroupItem } from "./ShowScheduleGroupItem";
-import { AddTextDescriptionDeleteFeatureButtons } from "../_buttons/AddTextDescriptionDeleteFeatureButtons";
+import { AddTextDescriptionDeleteFeatureButtons } from "../__commonComponents/_buttons/AddTextDescriptionDeleteFeatureButtons";
 
 import styles from "./showScheduleGroup.module.css";
 

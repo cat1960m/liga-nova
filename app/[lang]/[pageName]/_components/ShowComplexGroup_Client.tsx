@@ -1,6 +1,5 @@
 import { FullData, MainParams } from "@/app/lib/definitions";
 import {
-  INFO_GROUP_SUBTYPE,
   ADDITIONAL_PAGE_DATA_GROUP_SUBTYPE,
   SCHEDULE_GROUP_SUBTYPE,
   SERVICES_GROUP_SUBTYPE,
@@ -15,12 +14,14 @@ import {
   INFO_CHECK_HEADER,
   INFO_CHECK_ITEM,
   IMAGE_GROUP_SUBTYPE,
+  INFO_SUBTYPE,
+  INFO_ACTION_SUBTYPES,
+  IMAGE_ACTIONS_GROUP_SUBTYPE,
 } from "@/app/lib/constants";
 import { InfoCheckGroup } from "./_infoCheckGroup/InfoCheckGroup";
 import { ShowServicesGroup } from "./_service/ShowServicesGroup";
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import { DeleteFeatureButton } from "./_buttons/DeleteFeatureButton";
-import { ShowInfoGroup } from "./_info/ShowInfoGroup";
+import { DeleteFeatureButton } from "./__commonComponents/_buttons/DeleteFeatureButton";
 import { ShowScheduleGroup } from "./_schedule/ShowScheduleGroup";
 import { AdditionalPageDataGroup } from "./_additionalPageData/AdditionalPageDataGroup";
 import { FilterGroupsListItemsGroup } from "./_filterGroupsListItems/FilterGroupsListItemsGroup";
@@ -29,8 +30,9 @@ import { ActionBannerGroup } from "./_actionBanner/ActionBannerGroup";
 import { ShowLigaGroup } from "./_liga/ShowLigaGroup";
 import { CalendarEventsGroup } from "./_calendarEvents/CalendarEventsGroup";
 import { ShowImageGroup } from "./_imageGroup/ShowImageGroup";
-import { isUndefined } from "node:util";
 import { ImageLinksGroup } from "./_imageLinksGroup/Image:LinksGroup";
+import { ShowInfoGroup } from "./_info/ShowInfoGroup";
+import { ImageActionsGroup } from "./_imageActionsGroup/ImageActionsGroup";
 
 export type Props = {
   groupData: FullData[];
@@ -54,9 +56,11 @@ export const ShowComplexGroup_Client = ({
   const firstData = groupData[0];
   const featureId = firstData.id;
   const isInfoCheckGroup = firstData?.subtype === INFO_CHECK_GROUP_SUBTYPE;
+  const isInfoGroup =
+    firstData?.subtype === INFO_SUBTYPE ||
+    INFO_ACTION_SUBTYPES.includes(firstData?.subtype);
 
   const isServices = firstData?.subtype === SERVICES_GROUP_SUBTYPE;
-  const isInfoGroup = firstData?.subtype === INFO_GROUP_SUBTYPE;
   const isImageGroup = firstData?.subtype === IMAGE_GROUP_SUBTYPE;
 
   const isLigaGroup = firstData?.subtype === LIGA_GROUP_SUBTYPE;
@@ -68,7 +72,9 @@ export const ShowComplexGroup_Client = ({
     firstData?.subtype === FILTER_GROUPS_LIST_ITEMS_SUBTYPE;
 
   const isImageListGroup = firstData?.subtype === IMAGE_LIST_GROUP_SUBTYPE;
-  const isImageLinksGroup = firstData?.subtype === IMAGE_LINKS_GROUP_SUBTYPE;
+  const isImageLinksGroup = IMAGE_LINKS_GROUP_SUBTYPE === firstData?.subtype;
+  const isImageActionsGroup =
+    IMAGE_ACTIONS_GROUP_SUBTYPE === firstData?.subtype;
 
   const isActionBannerGroup =
     firstData?.subtype === ACTION_BANNER_GROUP_SUBTYPE;
@@ -92,7 +98,7 @@ export const ShowComplexGroup_Client = ({
         width: "100%",
         border: isEdit ? "1px dotted magenta" : undefined,
         padding: isEdit ? "10px" : undefined,
-        margin: "30px 0 30px 0",
+        margin: "20px 0 20px 0",
       }}
     >
       {isInfoCheckGroup ? (
@@ -103,6 +109,17 @@ export const ShowComplexGroup_Client = ({
           isEdit={isEdit}
           staticTexts={staticTexts}
           parentFeatureId={parentFeatureId}
+          params={params}
+        />
+      ) : null}
+
+      {isInfoGroup ? (
+        <ShowInfoGroup
+          groupData={groupData}
+          isEdit={isEdit}
+          staticTexts={staticTexts}
+          parentFeatureId={parentFeatureId}
+          params={params}
         />
       ) : null}
 
@@ -112,15 +129,7 @@ export const ShowComplexGroup_Client = ({
           isEdit={isEdit}
           staticTexts={staticTexts}
           parentFeatureId={parentFeatureId}
-        />
-      ) : null}
-
-      {isInfoGroup ? (
-        <ShowInfoGroup
-          isEdit={isEdit}
-          staticTexts={staticTexts}
-          groupData={groupData}
-          parentFeatureId={parentFeatureId}
+          params={params}
         />
       ) : null}
 
@@ -147,6 +156,7 @@ export const ShowComplexGroup_Client = ({
           isEdit={isEdit}
           staticTexts={staticTexts}
           groupData={groupData}
+          params={params}
         />
       ) : null}
 
@@ -156,6 +166,17 @@ export const ShowComplexGroup_Client = ({
           staticTexts={staticTexts}
           groupData={groupData}
           parentFeatureId={parentFeatureId}
+          params={params}
+        />
+      ) : null}
+
+      {isImageActionsGroup ? (
+        <ImageActionsGroup
+          isEdit={isEdit}
+          staticTexts={staticTexts}
+          groupData={groupData}
+          parentFeatureId={parentFeatureId}
+          params={params}
         />
       ) : null}
 
@@ -165,6 +186,7 @@ export const ShowComplexGroup_Client = ({
           staticTexts={staticTexts}
           groupData={groupData}
           countVisibleItems={1}
+          params={params}
         />
       ) : null}
 
@@ -173,6 +195,7 @@ export const ShowComplexGroup_Client = ({
           isEdit={isEdit}
           staticTexts={staticTexts}
           groupData={groupData}
+          params={params}
         />
       ) : null}
 

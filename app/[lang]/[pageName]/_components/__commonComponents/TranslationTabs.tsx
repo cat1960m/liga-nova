@@ -4,11 +4,11 @@ import { TabType, TextContent } from "@/app/lib/definitions";
 import { useParams } from "next/navigation";
 import { ChangeEventHandler, useState } from "react";
 import axios from "axios";
-import { CommonButton } from "../_buttons/CommonButton";
+import { CommonButton } from "./_buttons/CommonButton";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import dynamic from "next/dynamic";
 
-const QuillEditor = dynamic(() => import("../_quill/QuillEditor"), {
+const QuillEditor = dynamic(() => import("./_quill/QuillEditor"), {
   ssr: false,
 });
 
@@ -143,38 +143,25 @@ export const TranslationTabs = ({
     <div
       style={{
         border: "1px dotted lightgray",
-        padding: "20px",
-        margin: "5px",
+        padding: "10px",
       }}
     >
-      <div style={{ fontWeight: 700 }}>{title}</div>
-      <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+      <div style={{ fontWeight: 600 }}>{title}:</div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-evenly",
+          padding: "0px 30px 0px 30px",
+        }}
+      >
         {tabs.map((tab) => (
           <div
             key={tab.langUpperCase}
             style={getTabStyle(tab.langUpperCase)}
             onClick={() => {
-              console.log(
-                "-------tab click",
-                tab.value,
-                tab.langUpperCase,
-                selectedTab,
-                {
-                  ...tabs,
-                }
-              );
               setSelectedTab(tab.langUpperCase);
               setIsTranslateDisabled(!tab.value);
               setInputValue(tab.value);
-              console.log(
-                "tab click",
-                tab.value,
-                tab.langUpperCase,
-                selectedTab,
-                {
-                  ...tabs,
-                }
-              );
             }}
           >
             {tab.langUpperCase}
@@ -187,7 +174,7 @@ export const TranslationTabs = ({
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          padding: "30px 50px 10px 50px",
+          padding: "10px 50px 10px 50px",
         }}
       >
         {isArea ? (
@@ -223,7 +210,7 @@ export const TranslationTabs = ({
           width: "100%",
           display: "flex",
           justifyContent: "flex-end",
-          padding: "0 30px",
+          padding: 0,
         }}
       >
         <CommonButton

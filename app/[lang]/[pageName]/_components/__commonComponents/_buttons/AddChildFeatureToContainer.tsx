@@ -8,12 +8,7 @@ import {
   FILTER_GROUP_TITLE,
   GROUP,
   INFO_CHECK_GROUP_SUBTYPE,
-  INFO_GROUP_SUBTYPE,
   IMAGE_GROUP_SUBTYPE,
-  INFO_ADDRESS,
-  INFO_BODY,
-  INFO_TELEPHONE,
-  INFO_TITLE,
   SCHEDULE_GROUP_SUBTYPE,
   SCHEDULE_NAME,
   SCHEDULE_ITEM,
@@ -48,6 +43,14 @@ import {
   INFO_CHECK_HEADER,
   INFO_CHECK_ITEM,
   IMAGE_LINKS_ITEM,
+  INFO_SUBTYPE,
+  INFO_BODY,
+  INFO_TITLE,
+  INFO_TELEPHONE,
+  INFO_ADDRESS,
+  INFO_ACTION_SUBTYPES,
+  IMAGE_ACTIONS_GROUP_SUBTYPE,
+  IMAGE_ACTIONS_ITEM,
 } from "@/app/lib/constants";
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { usePathname } from "next/navigation";
@@ -164,16 +167,6 @@ export const AddChildFeatureToContainer = ({
       });
     }
 
-    if (newValue === INFO_GROUP_SUBTYPE) {
-      await addChildFeature({
-        parentId: parentFeatureId,
-        type: GROUP,
-        subtype: newValue,
-        name: params.pageName,
-        text_types: [INFO_TITLE, INFO_TELEPHONE, INFO_ADDRESS, INFO_BODY],
-        pathName,
-      });
-    }
     if (newValue === IMAGE_GROUP_SUBTYPE) {
       await addChildFeature({
         parentId: parentFeatureId,
@@ -207,7 +200,7 @@ export const AddChildFeatureToContainer = ({
       });
     }
 
-    if (newValue === IMAGE_LINKS_GROUP_SUBTYPE) {
+    if (IMAGE_LINKS_GROUP_SUBTYPE === newValue) {
       await addChildFeature({
         parentId: parentFeatureId,
         type: GROUP,
@@ -217,6 +210,18 @@ export const AddChildFeatureToContainer = ({
         pathName,
       });
     }
+
+    if (IMAGE_ACTIONS_GROUP_SUBTYPE === newValue){
+      await addChildFeature({
+        parentId: parentFeatureId,
+        type: GROUP,
+        subtype: newValue,
+        name: params.pageName,
+        text_types: [IMAGE_ACTIONS_ITEM],
+        pathName,
+      });
+    }
+
 
     if (newValue === PHOTO_GALLERY_GROUP_SUBTYPE) {
       await addChildFeature({
@@ -236,6 +241,26 @@ export const AddChildFeatureToContainer = ({
         subtype: newValue,
         name: params.pageName,
         text_types: [INFO_CHECK_HEADER, INFO_CHECK_ITEM],
+        pathName,
+      });
+    }
+    if (newValue === INFO_SUBTYPE) {
+      await addChildFeature({
+        parentId: parentFeatureId,
+        type: GROUP,
+        subtype: newValue,
+        name: params.pageName,
+        text_types: [INFO_TITLE, INFO_BODY, INFO_TELEPHONE, INFO_ADDRESS],
+        pathName,
+      });
+    }
+    if (INFO_ACTION_SUBTYPES.includes(newValue)) {
+      await addChildFeature({
+        parentId: parentFeatureId,
+        type: GROUP,
+        subtype: newValue,
+        name: params.pageName,
+        text_types: [INFO_TITLE, INFO_BODY],
         pathName,
       });
     }

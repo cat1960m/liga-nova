@@ -3,7 +3,7 @@
 import { addChildFeature } from "@/app/lib/actions_fitness";
 import { CommonButton } from "./CommonButton";
 import { MainParams } from "@/app/lib/definitions";
-import { useEditContext } from "../../edit/_components/EditContextProvider";
+import { useEditContext } from "../../../edit/_components/EditContextProvider";
 
 export type Props = {
   parentFeatureId: number;

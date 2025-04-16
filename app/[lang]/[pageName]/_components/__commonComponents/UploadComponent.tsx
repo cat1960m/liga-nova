@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import { CommonButton } from "../_buttons/CommonButton";
+import { CommonButton } from "./_buttons/CommonButton";
 
 export function UploadComponent({
   onUploaded,

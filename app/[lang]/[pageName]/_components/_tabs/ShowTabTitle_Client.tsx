@@ -1,10 +1,10 @@
 "use client";
 
-import { FullData } from "@/app/lib/definitions";
-import { CommonButton } from "../_buttons/CommonButton";
+import { FullData, MainParams } from "@/app/lib/definitions";
+import { CommonButton } from "../__commonComponents/_buttons/CommonButton";
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import { UpdateTextDescriptionData } from "../_clientComponents/UpdateTextDescriptionData";
-import { DeleteFeatureButton } from "../_buttons/DeleteFeatureButton";
+import { UpdateTextDescriptionData } from "../__commonComponents/_upadeModal/UpdateTextDescriptionData";
+import { DeleteFeatureButton } from "../__commonComponents/_buttons/DeleteFeatureButton";
 
 export type Props = {
   tabTitle: FullData;
@@ -15,6 +15,7 @@ export type Props = {
   parentFeatureId: number;
   isEditTabShown: boolean;
   onShowTabClick: () => void;
+  params: MainParams;
 };
 
 export const ShowTabTitle_Client = ({
@@ -26,6 +27,7 @@ export const ShowTabTitle_Client = ({
   parentFeatureId,
   isEditTabShown,
   onShowTabClick,
+  params,
 }: Props) => {
   const isTabSelected = selectedTabFeatureId === tabTitle.id;
 
@@ -58,6 +60,10 @@ export const ShowTabTitle_Client = ({
           <UpdateTextDescriptionData
             currentData={tabTitle}
             staticTexts={staticTexts}
+            useItems={{
+              text: "simple",
+            }}
+            params={params}
           />
 
           {!isTabSelected ? (

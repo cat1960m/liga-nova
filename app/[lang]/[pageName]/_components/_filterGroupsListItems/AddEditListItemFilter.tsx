@@ -3,14 +3,14 @@
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { useEffect, useState } from "react";
-import { CommonButton } from "../_buttons/CommonButton";
+import { CommonButton } from "../__commonComponents/_buttons/CommonButton";
 import { LIST_ITEM } from "@/app/lib/constants";
 import { getFilterIds } from "@/app/lib/utils/getFilterIds";
 import { FilterGroups } from "./_filters/FilterGroups";
 import { ListItem } from "./ListItem";
 import { AddEditListItem } from "./AddEditListItem";
 
-import { UpdateFeatureFilterIdsButton } from "../_buttons/UpdateFeatureFilterIdsButton";
+import { UpdateFeatureFilterIdsButton } from "../__commonComponents/_buttons/UpdateFeatureFilterIdsButton";
 
 export type Props = {
   staticTexts: StaticTexts;
@@ -119,6 +119,7 @@ export const AddEditListItemFilter = ({
             commonWidth={commonWidth}
             setIsSaveDisabled={setIsSaveDisabled}
             pageName={params.pageName}
+            params={params}
           />
         </div>
 

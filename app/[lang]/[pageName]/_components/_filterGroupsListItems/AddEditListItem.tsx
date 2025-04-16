@@ -1,5 +1,5 @@
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import { FullData } from "@/app/lib/definitions";
+import { FullData, MainParams } from "@/app/lib/definitions";
 import { AddEditTrainerItem } from "./_trainers/AddEditTrainerItem";
 import { AddEditSubscriptionItem } from "./_tickets/AddEditSubscriptionItem";
 import { TICKETS_PAGE_NAME, TRAINERS_PAGE_NAME } from "@/app/lib/constants";
@@ -11,6 +11,7 @@ export type Props = {
   currentData: FullData[];
   pageName: string;
   setIsSaveDisabled: (value: boolean) => void;
+  params: MainParams;
 };
 
 export const AddEditListItem = ({
@@ -20,6 +21,7 @@ export const AddEditListItem = ({
   currentData,
   pageName,
   setIsSaveDisabled,
+  params,
 }: Props) => {
   return (
     <div style={{ width: "100%" }}>
@@ -38,6 +40,7 @@ export const AddEditListItem = ({
           staticTexts={staticTexts}
           commonWidth="32%"
           setIsSaveDisabled={setIsSaveDisabled}
+          params={params}
         />
       ) : null}
     </div>

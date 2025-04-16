@@ -1,12 +1,11 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { CommonButton } from "../_buttons/CommonButton";
-import { createPortal } from "react-dom";
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { addIcon, getPageFullData } from "@/app/lib/actions_fitness";
 import { usePathname } from "next/navigation";
-import { ManageImages } from "./ManageImages";
+import { ManageImages } from "../ManageImages";
 import { CreateModal } from "./CreateModal";
 
 export const ManageIconsModal = ({ params }: { params: MainParams }) => {
@@ -58,6 +57,7 @@ export const ManageIconsModal = ({ params }: { params: MainParams }) => {
               imagesData={iconsData}
               onDeleteFinished={handleDeleteFinished}
               onImageUpload={handleIconUploaded}
+              params={params}
             />
 
             <div

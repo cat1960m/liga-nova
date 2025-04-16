@@ -3,7 +3,7 @@
     "save": "save",
     "edit": "edit",
     "cancel": "cancel",
-    "updateTranslate": "Update and translate ",
+    "updateTranslate": "Update / translate ",
     "translate": "translate",
     "delete": "delete",
     "addColumnItem": "Add column item",
@@ -97,6 +97,10 @@
     "time": "Time",
     "moreTrainers": "More trainers >",
     "moreSubscriptions": "More subscriptions >",
-    "selectPageName": "Select page name"
+    "selectPageName": "Select page name",
+    "registerChild": "Register child",
+    "tryFree": "Try free",
+    "details": "Details"
+
   }
 }

@@ -1,5 +1,5 @@
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import { AddTextDescriptionButton } from "../../_buttons/AddTextDescriptionButton";
+import { AddTextDescriptionButton } from "../../__commonComponents/_buttons/AddTextDescriptionButton";
 import { TextItemField } from "../../TextItemField";
 import {
   SUBSCRIPTION_ITEM_DESCRIPTION,

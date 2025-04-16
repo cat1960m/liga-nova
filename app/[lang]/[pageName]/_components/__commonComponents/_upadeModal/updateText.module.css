@@ -1,0 +1,56 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    z-index: 10;
+}
+
+.title {
+    height: 40px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: x-large;
+}
+
+.editItem {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    border: 1px dotted lightgray;
+    padding: 10px;
+}
+
+.iconContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    border: 1px dotted lightgray;
+    padding: 10px;
+
+}
+
+.icon {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+}
+
+.buttons {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 10px;
+    gap: 20px;
+}
+
+.editTitle {
+    font-weight: 600;
+}

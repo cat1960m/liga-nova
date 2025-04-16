@@ -9,8 +9,8 @@ import {
   CALENDAR_EVENTS_TITLE,
   CALENDAR_EVENTS_TRAINER,
 } from "@/app/lib/constants";
-import { CommonButton } from "../_buttons/CommonButton";
-import { DeleteFeatureButton } from "../_buttons/DeleteFeatureButton";
+import { CommonButton } from "../__commonComponents/_buttons/CommonButton";
+import { DeleteFeatureButton } from "../__commonComponents/_buttons/DeleteFeatureButton";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { FullData } from "@/app/lib/definitions";
 import styles from "./showEvent.module.css";

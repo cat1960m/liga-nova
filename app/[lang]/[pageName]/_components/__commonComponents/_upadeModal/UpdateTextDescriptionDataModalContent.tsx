@@ -1,6 +1,12 @@
 "use client";
 
-import { useState, ChangeEventHandler, useEffect } from "react";
+import {
+  useState,
+  ChangeEventHandler,
+  useEffect,
+  useMemo,
+  CSSProperties,
+} from "react";
 import {
   FullData,
   MainParams,
@@ -8,7 +14,7 @@ import {
   TabType,
   TextContent,
 } from "@/app/lib/definitions";
-import { TranslationTabs } from "./TranslationTabs";
+import { TranslationTabs } from "../TranslationTabs";
 import { CommonButton } from "../_buttons/CommonButton";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import {
@@ -17,40 +23,38 @@ import {
   getPageTitles,
   getTextContents,
   revalidate,
-  updatePriceValue,
+  updatePriceValueLink,
   updateText,
 } from "@/app/lib/actions_fitness";
 import { usePathname } from "next/navigation";
-import {
-  SERVICES_GROUP_SUBTYPE,
-  TOOLTIP,
-  TRANSLATE_LANGUAGES,
-} from "@/app/lib/constants";
+import { TOOLTIP, TRANSLATE_LANGUAGES } from "@/app/lib/constants";
+
+import styles from "./updateText.module.css";
+import { UploadComponent } from "../UploadComponent";
+import axios from "axios";
+
+export type UseItems = {
+  text?: "simple" | "area" | "quill";
+  tooltip?: "simple" | "area" | "quill";
+  price?: boolean;
+  link?: boolean;
+  value?: "icons" | "time" | "image";
+};
 
 export type Props = {
   onClose: () => void;
   staticTexts: StaticTexts;
   currentData: FullData;
-  useIcons?: boolean;
-  isArea?: boolean;
-  isQuill?: boolean;
-  useValue?: boolean;
-  valueTitle?: string;
-  usePageLinkSelect?: boolean;
-  params?: MainParams;
+  params: MainParams;
+  useItems: UseItems;
 };
 
 export const UpdateTextDescriptionDataModalContent = ({
   onClose,
   staticTexts,
   currentData,
-  useIcons,
-  isArea,
-  isQuill,
-  valueTitle,
-  usePageLinkSelect,
-  useValue,
   params,
+  useItems,
 }: Props) => {
   const [textContents, setTextContents] = useState<TextContent[] | null>(null);
   const [textContentsTooltips, setTextContentsTooltips] = useState<
@@ -62,18 +66,17 @@ export const UpdateTextDescriptionDataModalContent = ({
   const pathName = usePathname();
 
   const textDescriptionId = currentData.text_description_id;
-  const currentPrice = currentData.price;
-  const isTooltipUsed = currentData.subtype === SERVICES_GROUP_SUBTYPE;
 
-  const [priceValue, setPriceValue] = useState<number>(currentPrice ?? 0);
+  const [priceValue, setPriceValue] = useState<number>(currentData.price ?? 0);
   const [icons, setIcons] = useState<FullData[]>([]);
-  const [selectedIcon, setSelectedIcon] = useState<string | undefined>(
+  const [currentValue, setCurrentValue] = useState<string | undefined>(
     currentData.value
   );
-  const [valueValue, setValueValue] = useState<string>(
-    useValue ? currentData.value ?? "" : ""
+  const [linkValue, setLinkValue] = useState<string>(
+    useItems.link ? currentData.link ?? "" : ""
   );
   const [pages, setPages] = useState<PageData[] | null>(null);
+  const [file, setFile] = useState<File | null>(null);
 
   useEffect(() => {
     const getData = async () => {
@@ -123,6 +126,7 @@ export const UpdateTextDescriptionDataModalContent = ({
 
       setIcons(pageFullData ?? []);
     };
+
     const getPages = async () => {
       if (params) {
         const pages1 = await getPageTitles(params.lang);
@@ -133,10 +137,29 @@ export const UpdateTextDescriptionDataModalContent = ({
 
     getData();
 
-    if (useIcons) {
+    if (useItems.value === "icons") {
       getIcons();
     }
+
+    if (useItems.link) {
+      getPages();
+    }
   }, []);
+
+  const pagesOptions = useMemo(() => {
+    const mainOptions =
+      pages?.map((page) => (
+        <option key={page.name} value={page.name}>
+          {page.text_content}
+        </option>
+      )) ?? [];
+    return [
+      <option key={0} value={""}>
+        {"no page"}
+      </option>,
+      ...mainOptions,
+    ];
+  }, [pages]);
 
   const getLanguageValue = ({
     lang,
@@ -152,18 +175,6 @@ export const UpdateTextDescriptionDataModalContent = ({
   if (!textContents || !textContentsTooltips || !tabs || !tabsTooltip) {
     return null;
   }
-
-  const isPriceShown = !!currentPrice || currentPrice === 0;
-
-  const handlePriceChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-    setPriceValue(parseInt(event.target.value));
-    setIsSaveDisabled(false);
-  };
-
-  const handleValueChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-    setValueValue(event.target.value);
-    setIsSaveDisabled(false);
-  };
 
   const saveTab = ({
     text,
@@ -197,26 +208,44 @@ export const UpdateTextDescriptionDataModalContent = ({
 
   const handleSave = async () => {
     setIsSaveDisabled(true);
-    const price = isPriceShown ? priceValue : undefined;
     const promises: Promise<any>[] = [];
 
-    tabs.forEach((tab) => {
-      const tabLang = tab.langUpperCase.toLocaleLowerCase();
-      const textContent = textContents.find(
-        ({ language }) => language === tabLang
-      );
+    const path = await UploadFile();
+
+    if (useItems.price || useItems.value || useItems.link) {
+      const newValue = path ?? (useItems.value ? currentValue : undefined);
+      const price = useItems.price ? priceValue : undefined;
+      const link = useItems.link ? linkValue : undefined;
 
       promises.push(
-        saveTab({
-          text: tab.value,
-          id: textContent?.id,
-          tabLang,
-          contentType: "main",
+        updatePriceValueLink({
+          price,
+          textDescriptionId,
+          pathName,
+          value: newValue,
+          link,
         })
       );
-    });
+    }
+    if (useItems.text || useItems.tooltip) {
+      tabs.forEach((tab) => {
+        const tabLang = tab.langUpperCase.toLocaleLowerCase();
+        const textContent = textContents.find(
+          ({ language }) => language === tabLang
+        );
 
-    if (isTooltipUsed) {
+        promises.push(
+          saveTab({
+            text: tab.value,
+            id: textContent?.id,
+            tabLang,
+            contentType: "main",
+          })
+        );
+      });
+    }
+
+    if (useItems.tooltip) {
       tabsTooltip.forEach((tab) => {
         const tabLang = tab.langUpperCase.toLocaleLowerCase();
 
@@ -235,19 +264,6 @@ export const UpdateTextDescriptionDataModalContent = ({
       });
     }
 
-    if (price || useIcons || useValue) {
-      const newValueValue = useValue ? valueValue : null;
-      const newValue = useIcons ? selectedIcon : newValueValue;
-      promises.push(
-        updatePriceValue({
-          price,
-          textDescriptionId,
-          pathName,
-          value: newValue,
-        })
-      );
-    }
-
     await Promise.all(promises);
 
     await revalidate(pathName);
@@ -255,55 +271,85 @@ export const UpdateTextDescriptionDataModalContent = ({
     onClose();
   };
 
-  const scrollPositionY = window.scrollY;
+  const handlePriceChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+    setPriceValue(parseInt(event.target.value));
+    setIsSaveDisabled(false);
+  };
+
+  const handleValueChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+    setCurrentValue(event.target.value);
+    setIsSaveDisabled(false);
+  };
+
+  const handlePageChange: ChangeEventHandler<HTMLSelectElement> = async (
+    event
+  ) => {
+    setLinkValue(event.target.value);
+    setIsSaveDisabled(false);
+  };
+
+  const handleFileChange = (event: any) => {
+    const file = event.target.files[0];
+    setFile(file);
+    setIsSaveDisabled(false);
+  };
+
+  const UploadFile = async () => {
+    if (!file) return undefined;
+
+    const response = await axios.post("/api/uploadFile", {
+      fileName: file.name,
+      fileType: file.type,
+      file,
+      s3Key: currentValue,
+    });
+
+    const signedUrl = response.data.signedUrl;
+
+    const result = await fetch(signedUrl, {
+      method: "PUT",
+      body: file,
+      headers: { "Content-Type": file.type },
+    });
+
+    const path = signedUrl.split("?")[0];
+
+    //onUploaded?.(path);
+    setFile(null);
+    return path;
+  };
 
   return (
-    <>
-      <div
-        style={{
-          height: "40px",
-          width: "100%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          fontWeight: 600,
-          fontSize: "x-large",
-        }}
-      >
-        {staticTexts["updateTranslate"]}
-      </div>
+    <div className={styles.container}>
+      <div className={styles.title}>{staticTexts["updateTranslate"]}</div>
 
-      <TranslationTabs
-        staticTexts={staticTexts}
-        onChange={() => setIsSaveDisabled(false)}
-        tabs={tabs}
-        setTabs={setTabs}
-        title="Text"
-        isArea={isArea}
-        isQuill={isQuill}
-      />
+      {!!useItems.text ? (
+        <TranslationTabs
+          staticTexts={staticTexts}
+          onChange={() => setIsSaveDisabled(false)}
+          tabs={tabs}
+          setTabs={setTabs}
+          title="Text"
+          isArea={useItems.text === "area"}
+          isQuill={useItems.text === "quill"}
+        />
+      ) : null}
 
-      {isTooltipUsed ? (
+      {!!useItems.tooltip ? (
         <TranslationTabs
           staticTexts={staticTexts}
           onChange={() => setIsSaveDisabled(false)}
           tabs={tabsTooltip}
           setTabs={setTabsTooltip}
           title="Tooltip"
+          isArea={useItems.tooltip === "area"}
+          isQuill={useItems.tooltip === "quill"}
         />
       ) : null}
 
-      {isPriceShown ? (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            marginTop: "20px",
-            gap: "10px",
-          }}
-        >
-          Price:{" "}
+      {useItems.price ? (
+        <div className={styles.editItem}>
+          <div className={styles.editTitle}>{`${staticTexts.price}:`}</div>
           <input
             type="number"
             value={priceValue}
@@ -313,51 +359,45 @@ export const UpdateTextDescriptionDataModalContent = ({
         </div>
       ) : null}
 
-      {useValue && !useIcons ? (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            marginTop: "20px",
-            gap: "10px",
-          }}
-        >
-          {`${valueTitle}:`}
-          <input
-            type="text"
-            value={valueValue ?? ""}
-            onChange={handleValueChange}
-          ></input>
+      {useItems.link && !!pages ? (
+        <div className={styles.editItem}>
+          <div className={styles.editTitle}>{`${staticTexts.linkTo}`}</div>
+
+          <select onChange={handlePageChange} value={linkValue}>
+            {[...pagesOptions]}
+          </select>
         </div>
       ) : null}
 
-      {useIcons ? (
-        <div
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            gap: "20px",
-            padding: "20px",
-          }}
-        >
+      {useItems.value === "time" ? (
+        <div className={styles.editItem}>
+          <div className={styles.editTitle}>{`${staticTexts.time}:`}</div>
+          <input
+            type="text"
+            value={currentValue ?? ""}
+            onChange={handleValueChange}
+          />
+        </div>
+      ) : null}
+
+      {useItems.value === "image" ? (
+        <div className={styles.editItem}>
+          <div className={styles.editTitle}>{`${"Image"}:`}</div>
+          <input type="file" onChange={handleFileChange} />
+        </div>
+      ) : null}
+
+      {useItems.value === "icons" ? (
+        <div className={styles.iconContainer}>
           {icons.map((icon) => {
             return (
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "5px",
-                  alignItems: "center",
-                }}
-                key={icon.text_description_id}
-              >
+              <div className={styles.icon} key={icon.text_description_id}>
                 <img src={icon.value ?? ""} alt="icon" width="44px" />
                 <input
                   type="checkbox"
-                  checked={icon.value === selectedIcon}
+                  checked={icon.value === currentValue}
                   onChange={(e) => {
-                    setSelectedIcon(e.target.checked ? icon.value : undefined);
+                    setCurrentValue(e.target.checked ? icon.value : undefined);
                     setIsSaveDisabled(false);
                   }}
                 />
@@ -367,16 +407,7 @@ export const UpdateTextDescriptionDataModalContent = ({
         </div>
       ) : null}
 
-      <div
-        style={{
-          width: "100%",
-          display: "flex",
-          justifyContent: "flex-end",
-          alignItems: "center",
-          padding: "30px",
-          gap: "20px",
-        }}
-      >
+      <div className={styles.buttons}>
         <CommonButton
           onClick={() => onClose()}
           text={staticTexts.cancel ?? "N/A"}
@@ -387,6 +418,6 @@ export const UpdateTextDescriptionDataModalContent = ({
           text={staticTexts.save ?? "N/A"}
         />
       </div>
-    </>
+    </div>
   );
 };

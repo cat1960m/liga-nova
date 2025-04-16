@@ -1,9 +1,9 @@
 "use client";
 
 import { RemoveFeature } from "@/app/lib/actions_fitness";
-import { CommonButton } from "../_buttons/CommonButton";
+import { CommonButton } from "./CommonButton";
 import { usePathname } from "next/navigation";
-import { useEditContext } from "../../edit/_components/EditContextProvider";
+import { useEditContext } from "../../../edit/_components/EditContextProvider";
 
 export const DeleteTabsButton = ({
   tabsFeatureId,

@@ -1,7 +1,7 @@
-import { FullData } from "@/app/lib/definitions";
+import { FullData, MainParams } from "@/app/lib/definitions";
 import { SCHEDULE_ITEM, SCHEDULE_NAME } from "@/app/lib/constants";
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import { UpdateDeleteTextButtons } from "../_buttons/UpdateDeleteTextButtons";
+import { UpdateDeleteTextButtons } from "../__commonComponents/_buttons/UpdateDeleteTextButtons";
 
 import styles from "./showScheduleGroup.module.css";
 
@@ -9,9 +9,15 @@ export type Props = {
   data?: FullData;
   isEdit: boolean;
   staticTexts: StaticTexts;
+  params: MainParams;
 };
 
-export const ShowSCheduleGroupItem = ({ data, isEdit, staticTexts }: Props) => {
+export const ShowSCheduleGroupItem = ({
+  data,
+  isEdit,
+  staticTexts,
+  params,
+}: Props) => {
   if (!data) {
     return null;
   }
@@ -33,10 +39,10 @@ export const ShowSCheduleGroupItem = ({ data, isEdit, staticTexts }: Props) => {
           <UpdateDeleteTextButtons
             staticTexts={staticTexts}
             currentData={data}
-            valueTitle={!isName ? staticTexts.time : undefined}
-            useValue={!isName}
-            changeOrderTextType={SCHEDULE_ITEM}
+            isChangeOrder={data.text_type === SCHEDULE_ITEM}
             flexDirection={isName ? "column" : "row"}
+            useItems={{ text: "simple", value: !isName ? "time" : undefined }}
+            params={params}
           />
         </div>
       ) : null}

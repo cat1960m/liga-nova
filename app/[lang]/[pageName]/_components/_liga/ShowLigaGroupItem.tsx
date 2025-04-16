@@ -6,24 +6,21 @@ import {
   LIGA_TITLE,
 } from "@/app/lib/constants";
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import { UpdateDeleteTextButtons } from "../_buttons/UpdateDeleteTextButtons";
+import { UpdateDeleteTextButtons } from "../__commonComponents/_buttons/UpdateDeleteTextButtons";
 import { PhoneIcon, MapPinIcon } from "@heroicons/react/24/solid";
-import { PagesSelect } from "./PagesSelect";
 
 export type Props = {
   data?: FullData;
   isEdit: boolean;
   staticTexts: StaticTexts;
-  pages?: PageData[] | null;
-  onLinkUpdated: () => void;
+  params: MainParams;
 };
 
 export const ShowLigaGroupItem = ({
   data,
   isEdit,
   staticTexts,
-  pages,
-  onLinkUpdated,
+  params,
 }: Props) => {
   if (!data) {
     return null;
@@ -100,7 +97,7 @@ export const ShowLigaGroupItem = ({
                 <div style={textStyle}> {data?.text_content ?? "N/A"}</div>
               </div>
 
-              {isEdit && pages ? (
+              {/*   {isEdit && pages ? (
                 <div
                   style={{
                     display: "flex",
@@ -115,10 +112,9 @@ export const ShowLigaGroupItem = ({
                     textDescriptionId={data.text_description_id}
                     link={data.link ?? ""}
                     pages={pages}
-                    onLinkUpdated={onLinkUpdated}
                   />
                 </div>
-              ) : null}
+              ) : null} */}
             </div>
           ) : null}
         </div>
@@ -127,9 +123,13 @@ export const ShowLigaGroupItem = ({
           <UpdateDeleteTextButtons
             staticTexts={staticTexts}
             currentData={data}
-            useIcons={isService}
-            usePageLinkSelect
-            changeOrderTextType={isService ? LIGA_SERVICE : undefined}
+            isChangeOrder={isService}
+            useItems={{
+              text: "simple",
+              value: isService ? "icons" : undefined,
+              link: isService,
+            }}
+            params={params}
           />
         ) : null}
       </div>

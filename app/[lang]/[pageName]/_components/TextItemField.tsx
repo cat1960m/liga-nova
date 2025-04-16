@@ -1,5 +1,5 @@
-import { FullData } from "@/app/lib/definitions";
-import { UpdateDeleteTextButtons } from "./_buttons/UpdateDeleteTextButtons";
+import { FullData, MainParams } from "@/app/lib/definitions";
+import { UpdateDeleteTextButtons } from "./__commonComponents/_buttons/UpdateDeleteTextButtons";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 
 export type Props = {
@@ -7,6 +7,7 @@ export type Props = {
   staticTexts: StaticTexts;
   title?: string;
   importantDescriptionType: string;
+  params: MainParams;
 };
 
 export const TextItemField = ({
@@ -14,6 +15,7 @@ export const TextItemField = ({
   staticTexts,
   title,
   importantDescriptionType,
+  params,
 }: Props) => {
   const isImportant = fieldData.text_type === importantDescriptionType;
   return (
@@ -47,6 +49,8 @@ export const TextItemField = ({
       <UpdateDeleteTextButtons
         staticTexts={staticTexts}
         currentData={fieldData}
+        useItems={{ text: "simple" }}
+        params={params}
       />
     </div>
   );

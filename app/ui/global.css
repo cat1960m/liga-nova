@@ -19,14 +19,40 @@ input[type='number']::-webkit-outer-spin-button {
 
 h1 {
   font-size: 28;
+  margin-bottom: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important; 
 }
 
 h2 {
-  font-size: 20;
+  font-size: 18;
+  margin-bottom: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important; 
+
+}
+
+h3 {
+  font-size: 16;
+  margin-bottom: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important; 
+
+}
+
+h4 {
+  font-size: 12;
+  margin-bottom: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important; 
+
 }
 
 p {
-  font-size: 18;
+  font-size: 16;
+  margin-bottom: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important; 
 }
 
 a {
@@ -34,26 +60,16 @@ a {
 }
 
 
-
+/*font-weight*/
 .ql-weight .ql-picker-item[data-value="normal"]::before {
   content: "Normal";
 }
-
-.ql-weight .ql-picker-item[data-value="bolder"]::before {
-  content: "Bolder";
-}
-
-.ql-weight .ql-picker-item[data-value="lighter"]::before {
-  content: "lighter";
-}
-
 .ql-weight .ql-picker-item[data-value="bold"]::before {
   content: "Bold";
 }
 .ql-weight .ql-picker-item[data-value="100"]::before {
   content: "Weight 100";
 }
-
 .ql-weight .ql-picker-item[data-value="300"]::before {
   content: "Weight 300";
 }
@@ -63,5 +79,95 @@ a {
 .ql-weight .ql-picker-item[data-value="700"]::before {
   content: "Weight 700";
 }
+
+.ql-weight .ql-picker-item[data-value="normal"]::before {
+  content: "Normal";
+}
+
+/*font size*/
+.ql-fontsize .ql-picker-item[data-value="12px"]::before {
+  content: "Size 12px";
+}
+.ql-fontsize .ql-picker-item[data-value="14px"]::before {
+  content: "Size 14px";
+}
+.ql-fontsize .ql-picker-item[data-value="16px"]::before {
+  content: "Size 16px";
+}
+.ql-fontsize .ql-picker-item[data-value="18px"]::before {
+  content: "Size 18px";
+}
+.ql-fontsize .ql-picker-item[data-value="20px"]::before {
+  content: "Size 20px";
+}
+
+
+.ql-padding .ql-picker-item[data-value="5px"]::before {
+  content: "padding 5px";
+}
+.ql-padding .ql-picker-item[data-value="10px"]::before {
+  content: "padding 10px";
+}
+.ql-padding .ql-picker-item[data-value="15px"]::before {
+  content: "padding 15px";
+}
+.ql-padding .ql-picker-item[data-value="20px"]::before {
+  content: "padding 20px";
+}
+
+.ql-margin .ql-picker-item[data-value="5px"]::before {
+  content: "margin top 5px";
+}
+.ql-margin .ql-picker-item[data-value="10px"]::before {
+  content: "margin top 10px";
+}
+.ql-margin .ql-picker-item[data-value="15px"]::before {
+  content: "margin too 15px";
+}
+.ql-margin .ql-picker-item[data-value="20px"]::before {
+  content: "margin top 20px";
+}
+
+.ql-backgroundColor .ql-picker-item[data-value="lightgray"]::before {
+  content: "BG color lightgray";
+}
+.ql-backgroundColor .ql-picker-item[data-value="gray"]::before {
+  content: "BG color gray";
+} 
+
+
+.custom-style-style1 {
+  font-size: 12;
+  font-weight: 600;
+  background-color: #e0e0e0;
+  padding: 10px 14px;
+  border-radius: 5px;
+  margin-right: 15px;
+}
+
+.custom-style-style2 {
+  font-size: 12;
+  font-weight: 600;
+  background-color: #f6f6f6; 
+  padding: 10px 14px;
+  border-radius: 5px;
+  margin-right: 15px;
+
+}
+
+.ql-custom-style .ql-picker-item[data-value="style1"]::before {
+  content: "customStyle 1";
+}
+.ql-custom-style .ql-picker-item[data-value="style2"]::before {
+  content: "customStyle 2";
+}
+
+
+
+.ql-align-center {
+  text-align: center;
+}
+
+
 
 

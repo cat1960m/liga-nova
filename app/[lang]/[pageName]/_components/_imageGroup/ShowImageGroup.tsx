@@ -3,8 +3,8 @@
 import { FullData } from "@/app/lib/definitions";
 import { IMAGE } from "@/app/lib/constants";
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import { UploadComponent } from "../_clientComponents/UploadComponent";
-import { updatePriceValue } from "@/app/lib/actions_fitness";
+import { UploadComponent } from "../__commonComponents/UploadComponent";
+import { updatePriceValueLink } from "@/app/lib/actions_fitness";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 
@@ -25,7 +25,7 @@ export const ShowImageGroup = ({ isEdit, staticTexts, groupData }: Props) => {
       return;
     }
 
-    updatePriceValue({
+    updatePriceValueLink({
       textDescriptionId: imageData.text_description_id,
       pathName,
       value,

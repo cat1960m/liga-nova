@@ -6,7 +6,7 @@ import {
   addTextDescription,
   getTextContents,
   updateFeatureSubtypeFilterIds,
-  updatePriceValue,
+  updatePriceValueLink,
   updateText,
 } from "@/app/lib/actions_fitness";
 import {
@@ -193,7 +193,7 @@ export const useChangeEventData = () => {
     );
 
     promises.push(
-      updatePriceValue({
+      updatePriceValueLink({
         price,
         textDescriptionId: titleInit.text_description_id,
         pathName,
@@ -201,7 +201,7 @@ export const useChangeEventData = () => {
     );
 
     promises.push(
-      updatePriceValue({
+      updatePriceValueLink({
         value: count.toString(),
         textDescriptionId: countInit.text_description_id,
         pathName,
@@ -209,7 +209,7 @@ export const useChangeEventData = () => {
     );
 
     promises.push(
-      updatePriceValue({
+      updatePriceValueLink({
         value: time,
         textDescriptionId: timeInit.text_description_id,
         pathName,

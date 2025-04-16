@@ -2,9 +2,8 @@
 
 import { MAX_PAGE_WIDTH } from "@/app/lib/constants";
 import { MouseEventHandler, useEffect, useRef, useState } from "react";
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 import styles from "./scrollContainer.module.css";
-import cl from "clsx";
+import { ScrollIcon } from "./ScrollIcon";
 
 export type Props = {
   ids: string[];
@@ -81,13 +80,9 @@ export const ScrollContainer = ({ ids, getItem, countVisibleItems }: Props) => {
     return newScrollPosition;
   };
 
-  const onLeftClick = () => {
-    let newScrollPosition = scrollPosition - widthItem;
-    setScrollPosition(checkPosition(newScrollPosition));
-  };
-
-  const onRightClick = () => {
-    let newScrollPosition = scrollPosition + widthItem;
+  const onScrollItemClick = (direction: "left" | "right") => {
+    const value = direction === "left" ? -widthItem : widthItem;
+    let newScrollPosition = scrollPosition + value;
     setScrollPosition(checkPosition(newScrollPosition));
   };
 
@@ -110,26 +105,14 @@ export const ScrollContainer = ({ ids, getItem, countVisibleItems }: Props) => {
   console.log("isIconsVisible", isIconsVisible, ids.length, count);
 
   return (
-    <div
-      style={{
-        width: "100%",
-        padding: "10px",
-        display: "flex",
-        alignItems: "flex-start",
-        justifyContent: "space-between",
-        position: "relative",
-      }}
-    >
+    <div className={styles.container}>
       {isIconsVisible ? (
-        <div
-          onClick={onLeftClick}
-          className={cl(styles.icon, styles.left, {
-            [styles.oneItemLeft]: !!countVisibleItems,
-          })}
-          style={{ width: "48px", marginTop: widthItem / 2 }}
-        >
-          <ChevronLeftIcon style={{ width: "32px" }} />
-        </div>
+        <ScrollIcon
+          direction={"left"}
+          widthItem={widthItem}
+          countVisibleItems={countVisibleItems}
+          onScrollItemClick={onScrollItemClick}
+        />
       ) : null}
 
       <div
@@ -148,10 +131,7 @@ export const ScrollContainer = ({ ids, getItem, countVisibleItems }: Props) => {
           }}
         >
           <div
-            style={{
-              width: "100%",
-              display: "flex",
-            }}
+            className={styles.items}
             onMouseDown={(e) => (start.current = e.screenX)}
             onMouseUp={handleMouseUp}
             onMouseMove={handleMouseMove}
@@ -169,16 +149,14 @@ export const ScrollContainer = ({ ids, getItem, countVisibleItems }: Props) => {
           </div>
         </div>
       </div>
+
       {isIconsVisible ? (
-        <div
-          onClick={onRightClick}
-          className={cl(styles.icon, styles.right, {
-            [styles.oneItemRight]: !!countVisibleItems,
-          })}
-          style={{ width: "48px", marginTop: widthItem / 2 }}
-        >
-          <ChevronRightIcon style={{ width: "32px" }} />
-        </div>
+        <ScrollIcon
+          direction={"right"}
+          widthItem={widthItem}
+          countVisibleItems={countVisibleItems}
+          onScrollItemClick={onScrollItemClick}
+        />
       ) : null}
     </div>
   );

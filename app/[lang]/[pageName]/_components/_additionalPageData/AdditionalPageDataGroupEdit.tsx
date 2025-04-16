@@ -11,7 +11,7 @@ import { FullData } from "@/app/lib/definitions";
 import { useMemo, useState } from "react";
 import { FilterGroup } from "../_filterGroupsListItems/_filters/FilterGroup";
 import { getContainerData, getFilterIds } from "@/app/lib/utils";
-import { UpdateFeatureFilterIdsButton } from "../_buttons/UpdateFeatureFilterIdsButton";
+import { UpdateFeatureFilterIdsButton } from "../__commonComponents/_buttons/UpdateFeatureFilterIdsButton";
 
 export type Props = {
   currentData: FullData;
