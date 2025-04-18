@@ -15,27 +15,30 @@ import { useEditContext } from "../../../edit/_components/EditContextProvider";
 import { ChangeOrderButtons } from "./ChangeOrderButtons";
 
 export const DeleteFeatureButton = ({
-  featureId,
   deleteText,
   onDeleteFinished,
   featureData,
-  parentFeatureId,
   isHorizontal,
+  noChangeOrder
 }: {
-  featureId?: number;
   deleteText: string;
   onDeleteFinished?: () => void;
   featureData: FullData[];
-  parentFeatureId: number | null;
   isHorizontal?: boolean;
+  noChangeOrder?: boolean;
 }) => {
   const pathName = usePathname();
   const { isEditButtonsDisabled, changeIsEditButtonDisabled } =
     useEditContext();
 
-  if (!featureId) {
+  const featureFirst = featureData.length ? featureData[0]: undefined;
+
+  if (!featureFirst) {
     return null;
   }
+
+  const featureId = featureFirst.id;
+  const parentFeatureId = featureFirst.parent_feature_id;
 
   const handleDelete = async () => {
     changeIsEditButtonDisabled(true);
@@ -131,7 +134,7 @@ export const DeleteFeatureButton = ({
         />
       </div>
 
-      {parentFeatureId ? (
+      {!noChangeOrder && parentFeatureId ? (
         <ChangeOrderButtons
           isHorizontal={isHorizontal}
           changeOrder={changeOrder}

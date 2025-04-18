@@ -19,7 +19,6 @@ export type Props = {
   isEdit: boolean;
   staticTexts: StaticTexts;
   groupData: FullData[];
-  parentFeatureId: number;
   params: MainParams;
 };
 
@@ -27,14 +26,8 @@ export const ShowInfoGroup = ({
   isEdit,
   staticTexts,
   groupData,
-  parentFeatureId,
   params,
 }: Props) => {
-  const featureId = groupData[0]?.id;
-
-  if (!featureId) {
-    return null;
-  }
 
   const subtype = groupData[0]?.subtype;
 
@@ -105,10 +98,8 @@ export const ShowInfoGroup = ({
       </div>
       {isEdit ? (
         <AddTextDescriptionDeleteFeatureButtons
-          featureId={featureId}
           deleteButtonText={staticTexts.delete ?? "N/A"}
           featureData={groupData}
-          parentFeatureId={parentFeatureId}
           addButtonText={staticTexts.addGroupItem ?? "N/A"}
           textDescriptionType={INFO_BODY}
         />

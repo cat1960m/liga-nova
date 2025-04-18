@@ -30,7 +30,6 @@ import { usePathname } from "next/navigation";
 import { TOOLTIP, TRANSLATE_LANGUAGES } from "@/app/lib/constants";
 
 import styles from "./updateText.module.css";
-import { UploadComponent } from "../UploadComponent";
 import axios from "axios";
 
 export type UseItems = {
@@ -296,6 +295,8 @@ export const UpdateTextDescriptionDataModalContent = ({
 
   const UploadFile = async () => {
     if (!file) return undefined;
+
+    console.log("%%%%%%%%%%--------$$$$$$ try delete image", currentValue);
 
     const response = await axios.post("/api/uploadFile", {
       fileName: file.name,

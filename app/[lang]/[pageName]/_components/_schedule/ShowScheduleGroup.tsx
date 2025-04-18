@@ -20,45 +20,18 @@ export type Props = {
   isEdit: boolean;
   staticTexts: StaticTexts;
   groupData: FullData[];
-  parentFeatureId: number;
+  params: MainParams;
 };
 
 export const ShowScheduleGroup = ({
   isEdit,
   staticTexts,
   groupData,
-  parentFeatureId,
+  params,
 }: Props) => {
-  const featureId = groupData[0]?.id;
 
   const name = groupData.find((item) => item.text_type === SCHEDULE_NAME);
   const items = groupData.filter((item) => item.text_type === SCHEDULE_ITEM);
-
-  /*  const style1 = {
-    backgroundColor: "#d3d3d3",
-    borderRadius: "10px 0 0 10px",
-    border: "1px solid blue",
-    borderRight: "none",
-  };
-
-  const style2 = {
-    backgroundColor: GRAY_BACKGROUND_COLOR,
-    borderTop: "1px solid blue",
-    borderBottom: "1px solid blue",
-    borderRight: "1px solid #D3D3D3",
-  };
-
-  const style3 = {
-    backgroundColor: GRAY_BACKGROUND_COLOR,
-    borderRadius: "0 10px 10px 0",
-    border: "1px solid blue",
-    borderLeft: "none",
-    width: "100%",
-  }; */
-
-  if (!featureId) {
-    return null;
-  }
 
   return (
     <div className={styles.main}>
@@ -68,6 +41,7 @@ export const ShowScheduleGroup = ({
             isEdit={isEdit}
             staticTexts={staticTexts}
             data={name}
+            params={params}
           />
         </div>
         <div className={styles.items}>
@@ -78,6 +52,7 @@ export const ShowScheduleGroup = ({
                 staticTexts={staticTexts}
                 data={item}
                 key={item.text_description_id}
+                params={params}
               />
             );
           })}
@@ -86,10 +61,8 @@ export const ShowScheduleGroup = ({
 
       {isEdit ? (
         <AddTextDescriptionDeleteFeatureButtons
-          featureId={featureId}
           deleteButtonText={staticTexts.delete ?? "N/A"}
           featureData={groupData}
-          parentFeatureId={parentFeatureId}
           addButtonText={staticTexts.addGroupItem ?? "N/A"}
           textDescriptionType={SCHEDULE_ITEM}
         />

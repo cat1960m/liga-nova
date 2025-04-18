@@ -84,8 +84,15 @@ export const TRAINER_ITEM_IMAGE = "trainer_item_image";
 export const TRAINER_ITEM_DESCRIPTION = "trainer_item_description";
 
 export const ACTION_BANNER_GROUP_SUBTYPE = "action_banner_group";
-export const ACTION_BANNER_TITLE = "action_banner_title";
-export const ACTION_BANNER_IMAGE = "action_banner_image";
+export const ACTION_BANNER_TITLE_IMAGE = "action_banner_title_image";
+
+export const ACTION_BANNER_LIST_GROUP_SUBTYPE = "action_banner_list_group";
+export const ACTION_BANNER_LIST_GROUP_ITEM = "action_banner_list_group_item";
+
+export const ACTION_BANNER_LIST_SHARE = "action_banner_list_share";
+export const ACTION_BANNER_LIST_TICKET = "action_banner_list_ticket";
+export const ACTION_BANNER_LIST_DESCRIPTION = "action_banner_list_description";
+export const ACTION_BANNER_LIST_IMAGE = "action_banner_list_description";
 
 export const TABS = "tabs";
 export const TAB = "tab";
@@ -120,8 +127,7 @@ export const CAN_NOT_DELETE = [
   SUBSCRIPTION_ITEM_PRICE,
   SUBSCRIPTION_ITEM_OLD_PRICE,
   SUBSCRIPTION_ITEM_SHARE,
-  ACTION_BANNER_TITLE,
-  ACTION_BANNER_IMAGE,
+  ACTION_BANNER_TITLE_IMAGE,
   LIGA_TITLE,
   LIGA_TELEPHONE,
   LIGA_ADDRESS,
@@ -132,6 +138,11 @@ export const CAN_NOT_DELETE = [
   CALENDAR_EVENTS_COUNT,
   CALENDAR_EVENTS_TIME,
   CALENDAR_EVENTS_DESCRIPTION,
+  ACTION_BANNER_LIST_SHARE,
+  ACTION_BANNER_LIST_TICKET,
+  ACTION_BANNER_LIST_DESCRIPTION,
+  ACTION_BANNER_LIST_IMAGE,
+
 ];
 export const GROUP_TYPES_WITH_TOOLTIP = [SERVICES_GROUP_SUBTYPE];
 
@@ -153,6 +164,7 @@ export const GroupFeatureSubtypes = [
   IMAGE_LINKS_GROUP_SUBTYPE,
   IMAGE_ACTIONS_GROUP_SUBTYPE,
   ACTION_BANNER_GROUP_SUBTYPE,
+  ACTION_BANNER_LIST_GROUP_SUBTYPE,
   PHOTO_GALLERY_GROUP_SUBTYPE,
   CALENDAR_EVENTS_GROUP_SUBTYPE,
 ];

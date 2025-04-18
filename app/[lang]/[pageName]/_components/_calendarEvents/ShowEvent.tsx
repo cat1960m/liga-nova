@@ -129,10 +129,9 @@ export const ShowEvent = ({
                 onClick={() => setEditEventId(eventId)}
               />
               <DeleteFeatureButton
-                featureId={eventData[0].id}
                 deleteText={staticTexts.delete ?? "N/A"}
                 featureData={eventData}
-                parentFeatureId={null}
+                noChangeOrder
               />
             </div>
           ) : null}

@@ -3,12 +3,11 @@
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { IMAGE } from "@/app/lib/constants";
 import { FullData, MainParams } from "@/app/lib/definitions";
-import { usePathname } from "next/navigation";
-import { ManageImages } from "../__commonComponents/ManageImages";
-import { addTextDescription } from "@/app/lib/actions_fitness";
 import { ScrollContainer } from "../__commonComponents/_scrollContainer/ScrollContainer";
 import Image from "next/image";
-import { DragEventHandler } from "react";
+import { DragEventHandler, useState } from "react";
+import { AddTextDescriptionDeleteFeatureButtons } from "../__commonComponents/_buttons/AddTextDescriptionDeleteFeatureButtons";
+import { UpdateDeleteTextButtons } from "../__commonComponents/_buttons/UpdateDeleteTextButtons";
 
 export type Props = {
   isEdit: boolean;
@@ -25,59 +24,42 @@ export const ShowImageListGroup = ({
   countVisibleItems,
   params,
 }: Props) => {
-  const featureId = groupData[0]?.id;
-  const pathName = usePathname();
+  const [lastAddedId, setLastAddedId] = useState<number | null>(null);
 
   const imagesData = groupData.filter((item) => item.text_type === IMAGE);
-
-  const handleImageUploaded = (value: string) => {
-    if (!pathName) {
-      return;
-    }
-
-    addTextDescription({
-      featureId,
-      textType: IMAGE,
-      canDelete: true,
-      pathName,
-      price: null,
-      value,
-    });
-  };
-
-  if (!featureId) {
-    return null;
-  }
 
   const ids = imagesData.map((item) => item.text_description_id.toString());
 
   const getItem = ({ id, widthItem }: { id: string; widthItem?: number }) => {
-    const value = imagesData.find(
+    const imageData = imagesData.find(
       (item) => item.text_description_id.toString() === id
-    )?.value;
+    );
+
+    const value = imageData?.value;
 
     const preventDragHandler: DragEventHandler = (event) => {
       event.preventDefault();
     };
     return (
-      <>
-        {value ? (
+      <div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
+        <div
+          style={{
+            padding: "10px",
+            width: "100%",
+            height: widthItem ? `${widthItem}px` : widthItem,
+          }}
+        >
           <div
             style={{
-              padding: "10px",
+              borderRadius: "10px",
+              overflow: "hidden",
               width: "100%",
-              height: widthItem ? `${widthItem}px` : widthItem,
+              height: "100%",
+              position: "relative",
+              border: value ? undefined : "1px solid lightgray",
             }}
           >
-            <div
-              style={{
-                borderRadius: "10px",
-                overflow: "hidden",
-                width: "100%",
-                height: "100%",
-                position: "relative",
-              }}
-            >
+            {value ? (
               <Image
                 src={value}
                 layout="fill" // Fill the container
@@ -87,30 +69,60 @@ export const ShowImageListGroup = ({
                 draggable="false" // This directly disables drag-and-drop
                 onDragStart={preventDragHandler} // Ensures additional prevention
               />
-            </div>
+            ) : (
+              <div
+                style={{ width: "100%", padding: "30px", textAlign: "center" }}
+              >
+                {"No Image"}
+              </div>
+            )}
           </div>
+        </div>
+
+        {imageData && isEdit ? (
+          <UpdateDeleteTextButtons
+            staticTexts={staticTexts}
+            currentData={imageData}
+            s3Key={imageData.value}
+            flexDirection="column"
+            isChangeOrder
+            isHorizontal
+            params={params}
+            useItems={{ value: "image" }}
+          />
         ) : null}
-      </>
+      </div>
     );
   };
 
+  const onTextDescriptionAdded = (newId: number) => {
+    setLastAddedId(newId);
+  };
+
+  const onDeleteFinished = () => {
+    setLastAddedId(null);
+  };
+
   return (
-    <>
+    <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+      <ScrollContainer
+        ids={ids}
+        getItem={getItem}
+        countVisibleItems={countVisibleItems}
+        isEdit={isEdit}
+        lastAddedId={lastAddedId}
+      />
+
       {isEdit ? (
-        <ManageImages
-          imagesData={imagesData}
-          onImageUpload={handleImageUploaded}
-          staticTexts={staticTexts}
-          isImageGroup
-          params={params}
+        <AddTextDescriptionDeleteFeatureButtons
+          featureData={groupData}
+          deleteButtonText={staticTexts.delete ?? "N/A"}
+          addButtonText={staticTexts.addGroupItem ?? "N/A"}
+          textDescriptionType={IMAGE}
+          onTextDescriptionAdded={onTextDescriptionAdded}
+          onDeleteFinished={onDeleteFinished}
         />
-      ) : (
-        <ScrollContainer
-          ids={ids}
-          getItem={getItem}
-          countVisibleItems={countVisibleItems}
-        />
-      )}
-    </>
+      ) : null}
+    </div>
   );
 };

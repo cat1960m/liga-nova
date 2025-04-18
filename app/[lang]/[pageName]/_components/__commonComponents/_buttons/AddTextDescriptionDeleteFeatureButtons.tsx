@@ -3,30 +3,31 @@ import { AddTextDescriptionButton } from "./AddTextDescriptionButton";
 import { DeleteFeatureButton } from "./DeleteFeatureButton";
 
 export type Props = {
-  featureId?: number;
   onDeleteFinished?: () => void;
   featureData: FullData[];
-  parentFeatureId: number | null;
   isHorizontal?: boolean;
   deleteButtonText: string;
   addButtonText: string;
   textDescriptionType: string;
   isNoAddButton?: boolean;
   price?: number;
+  onTextDescriptionAdded?: (newId: number) => void;
+
 };
 
 export const AddTextDescriptionDeleteFeatureButtons = ({
-  featureId,
   onDeleteFinished,
   featureData,
-  parentFeatureId,
   isHorizontal,
   deleteButtonText,
   addButtonText,
   textDescriptionType,
   isNoAddButton,
   price,
+  onTextDescriptionAdded
 }: Props) => {
+  const featureFirst = featureData.length ? featureData[0]: undefined;
+  const featureId = featureFirst?.id;
   const isAddShown = !!featureId && !isNoAddButton;
 
   return (
@@ -46,14 +47,13 @@ export const AddTextDescriptionDeleteFeatureButtons = ({
           textType={textDescriptionType}
           buttonText={addButtonText}
           price={price ?? null}
+          onTextDescriptionAdded={onTextDescriptionAdded}
         />
       ) : null}
 
       <DeleteFeatureButton
-        featureId={featureId}
         deleteText={deleteButtonText}
         featureData={featureData}
-        parentFeatureId={parentFeatureId}
         isHorizontal={isHorizontal}
         onDeleteFinished={onDeleteFinished}
       />

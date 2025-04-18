@@ -16,7 +16,6 @@ export type Props = {
   params: MainParams;
   isEdit: boolean;
   staticTexts: StaticTexts;
-  parentFeatureId: number;
   pageId: number;
 };
 
@@ -26,7 +25,6 @@ export const ShowTabs_Client = ({
   params,
   isEdit,
   staticTexts,
-  parentFeatureId,
   pageId,
 }: Props) => {
   const tabTitles = pageFullDataList.filter(
@@ -109,7 +107,6 @@ export const ShowTabs_Client = ({
                   }
                   isEdit={isEdit}
                   staticTexts={staticTexts}
-                  parentFeatureId={tabsData.id}
                   isEditTabShown={isEditTabShown}
                   onShowTabClick={() => setIsEditTabShown(!isEditTabShown)}
                   params={params}
@@ -139,10 +136,8 @@ export const ShowTabs_Client = ({
                 subtype="1"
               />
               <DeleteFeatureButton
-                featureId={tabsData.id}
                 deleteText={staticTexts.deleteTabs ?? "N/A"}
                 featureData={[tabsData]}
-                parentFeatureId={parentFeatureId}
               />
             </div>
           </div>

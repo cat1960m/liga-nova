@@ -12,6 +12,7 @@ export type Props = {
   textTypes: string[];
   type: string;
   subtype: string;
+  onChildFeatureAdded?: (id: number) => void;
 };
 
 export const AddChildFeatureButton = ({
@@ -21,13 +22,14 @@ export const AddChildFeatureButton = ({
   textTypes,
   type,
   subtype,
+  onChildFeatureAdded,
 }: Props) => {
   const { isEditButtonsDisabled, changeIsEditButtonDisabled } =
     useEditContext();
 
-  const handleAddTab = async (pathName: string) => {
+  const handleAddFeature = async (pathName: string) => {
     changeIsEditButtonDisabled(true);
-    await addChildFeature({
+    const newFeatureId = await addChildFeature({
       parentId: parentFeatureId,
       type,
       subtype,
@@ -36,12 +38,15 @@ export const AddChildFeatureButton = ({
       pathName,
     });
     changeIsEditButtonDisabled(false);
+    if (newFeatureId) {
+      onChildFeatureAdded?.(newFeatureId);
+    }
   };
 
   return (
     <CommonButton
       text={text}
-      onClick={handleAddTab}
+      onClick={handleAddFeature}
       isDisabled={isEditButtonsDisabled}
     />
   );

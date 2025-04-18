@@ -1,15 +1,12 @@
 "use client";
 
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import { ACTION_BANNER_IMAGE, ACTION_BANNER_TITLE } from "@/app/lib/constants";
 import { FullData, MainParams } from "@/app/lib/definitions";
-import { usePathname } from "next/navigation";
-import { updateTextDescriptionValue } from "@/app/lib/actions_fitness";
 import Image from "next/image";
-import { UploadComponent } from "../__commonComponents/UploadComponent";
-import { TextItemField } from "../TextItemField";
 import styles from "./actionBanner.module.css";
 import { CommonButton } from "../__commonComponents/_buttons/CommonButton";
+import { ACTION_BANNER_TITLE_IMAGE } from "@/app/lib/constants";
+import { UpdateTextDescriptionDeleteFeatureButtons } from "../__commonComponents/_buttons/UpdateTextDescriptionDeleteFeatureButtons";
 
 export type Props = {
   isEdit: boolean;
@@ -24,31 +21,10 @@ export const ActionBannerGroup = ({
   groupData,
   params,
 }: Props) => {
-  const featureId = groupData[0]?.id;
-  const pathName = usePathname();
 
-  const imageData = groupData.find(
-    (item) => item.text_type === ACTION_BANNER_IMAGE
+  const titleImageData = groupData.find(
+    (item) => item.text_type === ACTION_BANNER_TITLE_IMAGE
   );
-  const title = groupData.find(
-    (item) => item.text_type === ACTION_BANNER_TITLE
-  );
-
-  if (!featureId || !imageData) {
-    return null;
-  }
-
-  const handleImageUploaded = (value: string) => {
-    if (!pathName) {
-      return;
-    }
-
-    updateTextDescriptionValue({
-      pathName,
-      textDescriptionId: imageData.text_description_id,
-      value,
-    });
-  };
 
   return (
     <>
@@ -63,9 +39,9 @@ export const ActionBannerGroup = ({
           border: "1px solid lightgray",
         }}
       >
-        {imageData?.value ? (
+        {titleImageData?.value ? (
           <Image
-            src={imageData.value}
+            src={titleImageData.value}
             alt=""
             layout="fill" // Fill the container
             objectFit="cover" // Make sure it covers the entire container
@@ -75,39 +51,25 @@ export const ActionBannerGroup = ({
         ) : null}
         {/* changes for mobile needed */}
         <div className={styles.info_big}>
-          {title?.text_content ?? "N/A"}
+          {titleImageData?.text_content ?? "N/A"}
           <CommonButton text={staticTexts.register ?? "N/A"} isAction />
         </div>
         <div className={styles.info_small}>
-          {title?.text_content ?? "N/A"}
+          {titleImageData?.text_content ?? "N/A"}
           <CommonButton text={staticTexts.register ?? "N/A"} isAction />
         </div>
       </div>
       {isEdit ? (
-        <div
-          style={{
-            display: "flex",
-            gap: "20px",
-            flexWrap: "wrap",
-            alignItems: "center",
-            padding: "10px",
+        <UpdateTextDescriptionDeleteFeatureButtons
+          dataToUpdate={titleImageData}
+          staticTexts={staticTexts}
+          useItems={{
+            text: "simple",
+            value: "image",
           }}
-        >
-          {title ? (
-            <TextItemField
-              fieldData={title}
-              staticTexts={staticTexts}
-              importantDescriptionType=""
-              params={params}
-            />
-          ) : null}
-
-          <UploadComponent
-            onUploaded={handleImageUploaded}
-            s3Key={imageData?.value}
-            staticTexts={staticTexts}
-          />
-        </div>
+          params={params}
+          featureData={groupData}
+        />
       ) : null}
     </>
   );

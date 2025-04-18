@@ -21,7 +21,6 @@ export type Props = {
   staticTexts: StaticTexts;
   groupData: FullData[];
   params: MainParams;
-  parentFeatureId: number;
 };
 
 export const ShowLigaGroup = ({
@@ -29,7 +28,6 @@ export const ShowLigaGroup = ({
   staticTexts,
   groupData,
   params,
-  parentFeatureId,
 }: Props) => {
   const [pages, setPages] = useState<PageData[] | null>(null);
 
@@ -43,8 +41,6 @@ export const ShowLigaGroup = ({
     getPages();
   }, []);
 
-  const featureId = groupData[0]?.id;
-
   const dataTitle = groupData.find((item) => item.text_type === LIGA_TITLE);
 
   const dataTelephone = groupData.find(
@@ -56,10 +52,6 @@ export const ShowLigaGroup = ({
   const dataServiceList = groupData.filter(
     (item) => item.text_type === LIGA_SERVICE
   );
-
-  if (!featureId) {
-    return null;
-  }
 
   const commonProps = {
     isEdit,
@@ -121,10 +113,8 @@ export const ShowLigaGroup = ({
       </div>
       {isEdit ? (
         <AddTextDescriptionDeleteFeatureButtons
-          featureId={featureId}
           deleteButtonText={staticTexts.delete ?? "N/A"}
           featureData={groupData}
-          parentFeatureId={parentFeatureId}
           addButtonText={staticTexts.addGroupItem ?? "N/A"}
           textDescriptionType={LIGA_SERVICE}
         />

@@ -1,70 +1,33 @@
 "use client";
 
-import { FullData } from "@/app/lib/definitions";
+import { FullData, MainParams } from "@/app/lib/definitions";
 import { IMAGE } from "@/app/lib/constants";
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import { UploadComponent } from "../__commonComponents/UploadComponent";
-import { updatePriceValueLink } from "@/app/lib/actions_fitness";
-import { usePathname } from "next/navigation";
-import Image from "next/image";
+import { UpdateTextDescriptionDeleteFeatureButtons } from "../__commonComponents/_buttons/UpdateTextDescriptionDeleteFeatureButtons";
 
 export type Props = {
   isEdit: boolean;
   staticTexts: StaticTexts;
   groupData: FullData[];
+  params: MainParams;
 };
 
-export const ShowImageGroup = ({ isEdit, staticTexts, groupData }: Props) => {
-  const featureId = groupData[0]?.id;
-  const pathName = usePathname();
-
+export const ShowImageGroup = ({
+  isEdit,
+  staticTexts,
+  groupData,
+  params,
+}: Props) => {
   const imageData = groupData.find((item) => item.text_type === IMAGE);
-
-  const handleUploaded = (value: string) => {
-    if (!imageData || !pathName) {
-      return;
-    }
-
-    updatePriceValueLink({
-      textDescriptionId: imageData.text_description_id,
-      pathName,
-      value,
-    });
-  };
-
-  if (!featureId) {
-    return null;
-  }
 
   return (
     <>
-      {isEdit ? (
-        <div
-          style={{
-            display: "flex",
-            gap: "10px",
-            width: "100%",
-            border: "1px dotted magenta",
-            padding: "5px",
-            flexDirection: "column",
-            alignItems: isEdit ? "flex-start" : "stretch",
-            backgroundImage: imageData?.value,
-          }}
-        >
-          {imageData?.value ? (
-            <img src={imageData?.value} alt="image" height="100%" />
-          ) : null}
-          <UploadComponent
-            onUploaded={handleUploaded}
-            s3Key={imageData?.value}
-          />
-        </div>
-      ) : null}
-      {!isEdit && imageData?.value ? (
+      {imageData?.value ? (
         <div
           style={{
             width: "100%",
-            border: "1px solid lightgray",
+            borderRadius: "10px",
+            overflow: "hidden",
           }}
         >
           <div
@@ -72,18 +35,33 @@ export const ShowImageGroup = ({ isEdit, staticTexts, groupData }: Props) => {
               width: "100%",
               height: "100%",
               position: "relative",
-              minHeight: "300px",
+              // minHeight: "300px",
             }}
           >
-            <Image
+            {/*  <Image
               src={imageData?.value}
               alt=""
               layout="fill" // Fill the container
               objectFit="cover" // Make sure it covers the entire container
               quality={100} // Optional, for higher quality
-            />
+            /> */}
+            <img src={imageData?.value} alt="" width="100%" />
           </div>
         </div>
+      ) : (
+        <div>{"No file"}</div>
+      )}
+
+      {isEdit ? (
+        <UpdateTextDescriptionDeleteFeatureButtons
+          dataToUpdate={imageData}
+          staticTexts={staticTexts}
+          useItems={{
+            value: "image",
+          }}
+          params={params}
+          featureData={groupData}
+        />
       ) : null}
     </>
   );

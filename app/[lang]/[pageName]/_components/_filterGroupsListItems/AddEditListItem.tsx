@@ -31,6 +31,7 @@ export const AddEditListItem = ({
           subscriptionItemFeatureId={addEditItemFeatureId}
           staticTexts={staticTexts}
           commonWidth={commonWidth}
+          params={params}
         />
       ) : null}
       {pageName === TRAINERS_PAGE_NAME ? (

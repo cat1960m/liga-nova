@@ -20,7 +20,6 @@ export type Props = {
   groupData: FullData[];
   staticTexts: StaticTexts;
   isEdit: boolean;
-  parentFeatureId: number;
   params: MainParams;
 };
 
@@ -28,13 +27,9 @@ export const ImageLinksGroup = ({
   groupData,
   isEdit,
   staticTexts,
-  parentFeatureId,
   params,
 }: Props) => {
   const [isModalShown, setIsModalShown] = useState<boolean>(false);
-  const featureId = groupData[0]?.id;
-  const subtype = groupData[0]?.subtype;
-  console.log("groupData", groupData);
   const groupDataMain = groupData.filter(
     (item) => item.content_type !== TOOLTIP
   );
@@ -82,9 +77,7 @@ export const ImageLinksGroup = ({
       </div>
       {isEdit ? (
         <AddTextDescriptionDeleteFeatureButtons
-          featureId={featureId}
           featureData={groupData}
-          parentFeatureId={parentFeatureId}
           deleteButtonText={staticTexts.delete ?? "N/A"}
           addButtonText={staticTexts.addGroupItem ?? "N/A"}
           textDescriptionType={IMAGE_LINKS_ITEM}

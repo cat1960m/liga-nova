@@ -13,7 +13,6 @@ export type Props = {
   params: MainParams;
   isEdit: boolean;
   staticTexts: StaticTexts;
-  parentFeatureId: number;
   pageId: number;
 };
 
@@ -23,7 +22,6 @@ export const LayoutParent = ({
   params,
   isEdit,
   staticTexts,
-  parentFeatureId,
   pageId,
 }: Props) => {
   const layoutItems = pageFullDataList.filter(
@@ -113,10 +111,8 @@ export const LayoutParent = ({
         >
           <div style={{ display: "flex", gap: "20px" }}>
             <DeleteFeatureButton
-              featureId={tabsData.id}
               deleteText={staticTexts.delete ?? "N/A"}
               featureData={[tabsData]}
-              parentFeatureId={parentFeatureId}
             />
           </div>
         </div>

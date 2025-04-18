@@ -10,6 +10,7 @@ export type Props = {
   textType: string;
   buttonText: string;
   price: number | null;
+  onTextDescriptionAdded?: (newId: number) => void;
 };
 
 export const AddTextDescriptionButton = (props: Props) => {
@@ -19,8 +20,12 @@ export const AddTextDescriptionButton = (props: Props) => {
   const pathName = usePathname();
   const handleAddColumnItem = async () => {
     changeIsEditButtonDisabled(true);
-    await addTextDescription({ ...props, pathName, canDelete: true });
+    const newTextDescriptionId = await addTextDescription({ ...props, pathName, canDelete: true });
     changeIsEditButtonDisabled(false);
+
+    if(newTextDescriptionId) {
+      props.onTextDescriptionAdded?.(newTextDescriptionId);
+    }
   };
 
   return (

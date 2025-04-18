@@ -57,7 +57,6 @@ export const ManageIconsModal = ({ params }: { params: MainParams }) => {
               imagesData={iconsData}
               onDeleteFinished={handleDeleteFinished}
               onImageUpload={handleIconUploaded}
-              params={params}
             />
 
             <div

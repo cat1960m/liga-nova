@@ -5,13 +5,28 @@ import { MouseEventHandler, useEffect, useRef, useState } from "react";
 import styles from "./scrollContainer.module.css";
 import { ScrollIcon } from "./ScrollIcon";
 
+const ICON_WIDTH = 48;
+const PAGE_PADDING = 30;
+const OTHER_PADDINGS = 20; //15;
+const BORDERS_WIDTH = 20;
+
 export type Props = {
   ids: string[];
   getItem: (value: { id: string; widthItem?: number }) => React.ReactElement;
   countVisibleItems?: number;
+  isEdit: boolean;
+  lastAddedId?: number | null;
+  isScrollTypeSpec?: boolean;
 };
 
-export const ScrollContainer = ({ ids, getItem, countVisibleItems }: Props) => {
+export const ScrollContainer = ({
+  ids,
+  getItem,
+  countVisibleItems,
+  isEdit,
+  lastAddedId,
+  isScrollTypeSpec,
+}: Props) => {
   const [scrollPosition, setScrollPosition] = useState<number>(0);
   const [count, setCount] = useState(0);
   const [widthItem, setWidthItem] = useState(0);
@@ -22,6 +37,8 @@ export const ScrollContainer = ({ ids, getItem, countVisibleItems }: Props) => {
     const w =
       //document.documentElement.clientWidth;
       window.innerWidth;
+    const bordersWidth = isEdit ? BORDERS_WIDTH : 0;
+    console.log("bordersWidth", bordersWidth);
 
     let countVisible = countVisibleItems;
 
@@ -33,12 +50,16 @@ export const ScrollContainer = ({ ids, getItem, countVisibleItems }: Props) => {
       }
     }
 
-    let widthItem = w - 60 - 15;
+    const widthOtherOneSideWithoutIcon =
+      PAGE_PADDING + OTHER_PADDINGS + bordersWidth;
+
+    let widthItem = w - widthOtherOneSideWithoutIcon * 2;
 
     if (countVisible > 1) {
       const ww = w > MAX_PAGE_WIDTH ? MAX_PAGE_WIDTH : w;
 
-      widthItem = (ww - (30 + 48) * 2 - 15) / countVisible;
+      widthItem =
+        (ww - (widthOtherOneSideWithoutIcon + ICON_WIDTH) * 2) / countVisible;
     }
 
     return [countVisible, widthItem];
@@ -49,6 +70,7 @@ export const ScrollContainer = ({ ids, getItem, countVisibleItems }: Props) => {
     setCount(countVisible);
     setScrollPosition(0);
     setWidthItem(widthItem);
+    console.log("-----widthItem", widthItem);
   };
 
   useEffect(() => {
@@ -60,13 +82,23 @@ export const ScrollContainer = ({ ids, getItem, countVisibleItems }: Props) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  useEffect(() => {
+    if (!lastAddedId) {
+      return;
+    }
+
+    const index = ids.findIndex((id) => id === lastAddedId?.toString());
+
+    setScrollPosition(checkPosition(-index * widthItem));
+  }, [lastAddedId, ids]);
+
   if (!ids.length || !count || !widthItem) {
     return null;
   }
 
   const idsVisible: string[] = [...ids, ...ids, ...ids];
 
-  const isIconsVisible = ids.length > count;
+  const isIconsVisible = ids.length > count && !isScrollTypeSpec;
 
   const checkPosition = (newScrollPosition: number) => {
     if (newScrollPosition < 0) {
@@ -146,6 +178,19 @@ export const ScrollContainer = ({ ids, getItem, countVisibleItems }: Props) => {
                 {getItem({ id, widthItem })}
               </div>
             ))}
+            {isScrollTypeSpec ? (
+              <div
+                style={{
+                  position: "absolute",
+                  bottom: "10px",
+                  height: "10px",
+                  left: 0,
+                  right: 0,
+                }}
+              >
+                {" "}
+              </div>
+            ) : null}
           </div>
         </div>
       </div>

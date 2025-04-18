@@ -2,8 +2,6 @@
 
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { FullData, MainParams } from "@/app/lib/definitions";
-import { getContainerData } from "@/app/lib/utils";
-import { FilterGroup } from "./FilterGroup";
 import {
   FILTER,
   FILTER_GROUP_SUBTYPE,

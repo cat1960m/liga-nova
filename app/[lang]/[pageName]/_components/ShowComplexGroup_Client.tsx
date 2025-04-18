@@ -17,6 +17,7 @@ import {
   INFO_SUBTYPE,
   INFO_ACTION_SUBTYPES,
   IMAGE_ACTIONS_GROUP_SUBTYPE,
+  ACTION_BANNER_LIST_GROUP_SUBTYPE,
 } from "@/app/lib/constants";
 import { InfoCheckGroup } from "./_infoCheckGroup/InfoCheckGroup";
 import { ShowServicesGroup } from "./_service/ShowServicesGroup";
@@ -33,6 +34,7 @@ import { ShowImageGroup } from "./_imageGroup/ShowImageGroup";
 import { ImageLinksGroup } from "./_imageLinksGroup/Image:LinksGroup";
 import { ShowInfoGroup } from "./_info/ShowInfoGroup";
 import { ImageActionsGroup } from "./_imageActionsGroup/ImageActionsGroup";
+import { ActionBannerListGroup } from "./_actionBannerList/ActionBannerListGroup";
 
 export type Props = {
   groupData: FullData[];
@@ -54,7 +56,6 @@ export const ShowComplexGroup_Client = ({
   pageId,
 }: Props) => {
   const firstData = groupData[0];
-  const featureId = firstData.id;
   const isInfoCheckGroup = firstData?.subtype === INFO_CHECK_GROUP_SUBTYPE;
   const isInfoGroup =
     firstData?.subtype === INFO_SUBTYPE ||
@@ -78,16 +79,15 @@ export const ShowComplexGroup_Client = ({
 
   const isActionBannerGroup =
     firstData?.subtype === ACTION_BANNER_GROUP_SUBTYPE;
+  const isActionBannerListGroup =
+    firstData?.subtype === ACTION_BANNER_LIST_GROUP_SUBTYPE;
+
   const isPhotoGalleryGroup =
     firstData?.subtype === PHOTO_GALLERY_GROUP_SUBTYPE;
   const isCalendarEventsGroup =
     firstData?.subtype === CALENDAR_EVENTS_GROUP_SUBTYPE;
 
   const isDeleteOnly =
-    isImageGroup ||
-    isImageListGroup ||
-    isPhotoGalleryGroup ||
-    isActionBannerGroup ||
     isAdditionalPageDataGroup ||
     isFilterGroupsListItemsGroup ||
     isCalendarEventsGroup;
@@ -118,7 +118,6 @@ export const ShowComplexGroup_Client = ({
           groupData={groupData}
           isEdit={isEdit}
           staticTexts={staticTexts}
-          parentFeatureId={parentFeatureId}
           params={params}
         />
       ) : null}
@@ -128,7 +127,6 @@ export const ShowComplexGroup_Client = ({
           groupData={groupData}
           isEdit={isEdit}
           staticTexts={staticTexts}
-          parentFeatureId={parentFeatureId}
           params={params}
         />
       ) : null}
@@ -138,6 +136,7 @@ export const ShowComplexGroup_Client = ({
           isEdit={isEdit}
           staticTexts={staticTexts}
           groupData={groupData}
+          params={params}
         />
       ) : null}
 
@@ -147,16 +146,16 @@ export const ShowComplexGroup_Client = ({
           staticTexts={staticTexts}
           groupData={groupData}
           params={params}
-          parentFeatureId={parentFeatureId}
         />
       ) : null}
 
-      {isImageListGroup ? (
+      {isImageListGroup || isPhotoGalleryGroup ? (
         <ShowImageListGroup
           isEdit={isEdit}
           staticTexts={staticTexts}
           groupData={groupData}
           params={params}
+          countVisibleItems={isPhotoGalleryGroup ? 1 : undefined}
         />
       ) : null}
 
@@ -165,7 +164,6 @@ export const ShowComplexGroup_Client = ({
           isEdit={isEdit}
           staticTexts={staticTexts}
           groupData={groupData}
-          parentFeatureId={parentFeatureId}
           params={params}
         />
       ) : null}
@@ -175,17 +173,6 @@ export const ShowComplexGroup_Client = ({
           isEdit={isEdit}
           staticTexts={staticTexts}
           groupData={groupData}
-          parentFeatureId={parentFeatureId}
-          params={params}
-        />
-      ) : null}
-
-      {isPhotoGalleryGroup ? (
-        <ShowImageListGroup
-          isEdit={isEdit}
-          staticTexts={staticTexts}
-          groupData={groupData}
-          countVisibleItems={1}
           params={params}
         />
       ) : null}
@@ -199,12 +186,22 @@ export const ShowComplexGroup_Client = ({
         />
       ) : null}
 
+      {isActionBannerListGroup ? (
+        <ActionBannerListGroup
+          isEdit={isEdit}
+          staticTexts={staticTexts}
+          groupData={groupData}
+          params={params}
+          pageFullDataList={pageFullDataList}
+        />
+      ) : null}
+
       {isScheduleGroup ? (
         <ShowScheduleGroup
           isEdit={isEdit}
           staticTexts={staticTexts}
           groupData={groupData}
-          parentFeatureId={parentFeatureId}
+          params={params}
         />
       ) : null}
 
@@ -236,7 +233,6 @@ export const ShowComplexGroup_Client = ({
           groupData={groupData}
           params={params}
           pageFullData={pageFullDataList}
-          parentFeatureId={parentFeatureId}
         />
       ) : null}
 
@@ -251,10 +247,8 @@ export const ShowComplexGroup_Client = ({
           }}
         >
           <DeleteFeatureButton
-            featureId={featureId}
             deleteText={staticTexts.delete ?? "N/A"}
             featureData={groupData}
-            parentFeatureId={parentFeatureId}
           />
         </div>
       ) : null}

@@ -45,6 +45,7 @@ export const AdditionalPageDataGroup = ({
           staticTexts={staticTexts}
           pageFullDataList={pageFullDataList}
           additionalPageName={additionalPageName}
+          params={params}
         />
       ) : (
         <AdditionalPageDataGroupShow

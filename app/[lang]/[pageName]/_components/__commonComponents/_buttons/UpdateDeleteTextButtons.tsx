@@ -119,7 +119,7 @@ export const UpdateDeleteTextButtons = ({
           <DeleteTextDescriptionButton
             textDescriptionId={currentData.text_description_id}
             deleteText={staticTexts.delete ?? "N/A"}
-            s3Key={s3Key}
+            s3Key={s3Key || (useItems.value === "image" ? currentData.value: undefined)}
           />
         ) : null}
 

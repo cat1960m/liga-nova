@@ -12,7 +12,6 @@ export type Props = {
   onSelectedTabFeatureIdChanged: (num: number) => void;
   isEdit: boolean;
   staticTexts: StaticTexts;
-  parentFeatureId: number;
   isEditTabShown: boolean;
   onShowTabClick: () => void;
   params: MainParams;
@@ -24,7 +23,6 @@ export const ShowTabTitle_Client = ({
   onSelectedTabFeatureIdChanged,
   isEdit,
   staticTexts,
-  parentFeatureId,
   isEditTabShown,
   onShowTabClick,
   params,
@@ -68,11 +66,9 @@ export const ShowTabTitle_Client = ({
 
           {!isTabSelected ? (
             <DeleteFeatureButton
-              featureId={tabTitle.id}
               deleteText={staticTexts.deleteTab ?? "N/A"}
               key={2}
               featureData={[tabTitle]}
-              parentFeatureId={parentFeatureId}
               isHorizontal
             />
           ) : (

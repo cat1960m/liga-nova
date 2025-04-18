@@ -49,7 +49,6 @@ export const DrawChildFeature_Client = ({
         data={childFeatureDataList}
         isEdit={isEdit}
         staticTexts={staticTexts}
-        parentFeatureId={parentFeatureId}
         params={params}
       />
     );
@@ -77,7 +76,6 @@ export const DrawChildFeature_Client = ({
         params={params}
         isEdit={isEdit}
         staticTexts={staticTexts}
-        parentFeatureId={parentFeatureId}
         pageId={pageId}
       />
     );
@@ -91,7 +89,6 @@ export const DrawChildFeature_Client = ({
         params={params}
         isEdit={isEdit}
         staticTexts={staticTexts}
-        parentFeatureId={parentFeatureId}
         pageId={pageId}
       />
     );

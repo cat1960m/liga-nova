@@ -9,7 +9,6 @@ export type Props = {
   groupData: FullData[];
   isEdit: boolean;
   staticTexts: StaticTexts;
-  parentFeatureId: number;
   params: MainParams;
 };
 
@@ -17,11 +16,9 @@ export const ShowServicesGroup = ({
   groupData,
   isEdit,
   staticTexts,
-  parentFeatureId,
   params,
 }: Props) => {
   const firstData = groupData[0];
-  const featureId = firstData.id;
 
   const texts = groupData.filter((data) => data.content_type !== TOOLTIP);
 
@@ -87,10 +84,8 @@ export const ShowServicesGroup = ({
 
       {isEdit ? (
         <AddTextDescriptionDeleteFeatureButtons
-          featureId={featureId}
           deleteButtonText={staticTexts.delete ?? "N/A"}
           featureData={groupData}
-          parentFeatureId={parentFeatureId}
           textDescriptionType={SERVICE_ITEM}
           addButtonText={staticTexts.addGroupItem ?? "N/A"}
           price={0}

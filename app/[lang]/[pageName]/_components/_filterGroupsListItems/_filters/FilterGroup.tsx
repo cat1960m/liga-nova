@@ -148,10 +148,8 @@ export const FilterGroup = ({
 
       {isEdit ? (
         <AddTextDescriptionDeleteFeatureButtons
-          featureId={featureId}
           deleteButtonText={staticTexts.delete ?? "N/A"}
           featureData={groupData}
-          parentFeatureId={parentFeatureId}
           addButtonText={staticTexts.addGroupItem ?? "N/A"}
           textDescriptionType={FILTER}
         />

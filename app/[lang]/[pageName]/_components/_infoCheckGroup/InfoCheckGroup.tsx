@@ -75,10 +75,8 @@ export const InfoCheckGroup = ({
 
       {isEdit ? (
         <AddTextDescriptionDeleteFeatureButtons
-          featureId={featureId}
           deleteButtonText={staticTexts.delete ?? "N/A"}
           featureData={groupData}
-          parentFeatureId={parentFeatureId}
           addButtonText={staticTexts.addGroupItem ?? "N/A"}
           textDescriptionType={columnItemType}
         />

@@ -15,7 +15,6 @@ export type Props = {
   data: FullData[];
   isEdit: boolean;
   staticTexts: StaticTexts;
-  parentFeatureId: number;
   params: MainParams;
 };
 
@@ -23,7 +22,6 @@ export const ShowSimpleGroup_Client = ({
   data,
   isEdit,
   staticTexts,
-  parentFeatureId,
   params,
 }: Props) => {
   const firstItem = data[0];
@@ -108,10 +106,8 @@ export const ShowSimpleGroup_Client = ({
         : null}
       {isEdit ? (
         <AddTextDescriptionDeleteFeatureButtons
-          featureId={featureId}
           deleteButtonText={staticTexts.delete ?? "N/A"}
           featureData={data}
-          parentFeatureId={parentFeatureId}
           addButtonText={staticTexts.addGroupItem ?? "N/A"}
           textDescriptionType={SIMPLE_GROUP_ITEM}
           isNoAddButton={isHeader}

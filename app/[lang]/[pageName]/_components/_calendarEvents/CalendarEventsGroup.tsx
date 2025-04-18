@@ -20,7 +20,6 @@ export type Props = {
   groupData: FullData[];
   params: MainParams;
   pageFullData: FullData[];
-  parentFeatureId: number;
 };
 
 export const CalendarEventsGroup = ({
@@ -29,7 +28,6 @@ export const CalendarEventsGroup = ({
   staticTexts,
   params,
   pageFullData,
-  parentFeatureId,
 }: Props) => {
   const getDateToday = () => {
     const today = new Date();
@@ -251,10 +249,8 @@ export const CalendarEventsGroup = ({
             ) : null}
 
             <DeleteFeatureButton
-              featureId={calendarFeatureId}
               deleteText={staticTexts.deleteCalendar ?? "N/A"}
               featureData={groupData}
-              parentFeatureId={parentFeatureId}
             />
           </div>
         </div>

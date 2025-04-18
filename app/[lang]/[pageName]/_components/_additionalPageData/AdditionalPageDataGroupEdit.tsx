@@ -7,7 +7,7 @@ import {
   FILTER_GROUP_DEFAULT_WIDTH,
   GRAY_BACKGROUND_COLOR,
 } from "@/app/lib/constants";
-import { FullData } from "@/app/lib/definitions";
+import { FullData, MainParams } from "@/app/lib/definitions";
 import { useMemo, useState } from "react";
 import { FilterGroup } from "../_filterGroupsListItems/_filters/FilterGroup";
 import { getContainerData, getFilterIds } from "@/app/lib/utils";
@@ -18,6 +18,7 @@ export type Props = {
   staticTexts: StaticTexts;
   pageFullDataList: FullData[];
   additionalPageName: string;
+  params: MainParams;
 };
 //Персональні тренування ,Групові студії, Кріосауна, Солярій
 export const AdditionalPageDataGroupEdit = ({
@@ -25,6 +26,7 @@ export const AdditionalPageDataGroupEdit = ({
   staticTexts,
   pageFullDataList,
   additionalPageName,
+  params,
 }: Props) => {
   const filterTextDescriptionIds = getFilterIds(currentData.filter_ids);
 
@@ -104,6 +106,7 @@ export const AdditionalPageDataGroupEdit = ({
                   selectedFilterTextDescriptionIds
                 }
                 parentFeatureId={null}
+                params={params}
               />
             </div>
           );

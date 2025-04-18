@@ -25,8 +25,7 @@ import {
   IMAGE_LIST_GROUP_SUBTYPE,
   IMAGE_LINKS_GROUP_SUBTYPE,
   ACTION_BANNER_GROUP_SUBTYPE,
-  ACTION_BANNER_IMAGE,
-  ACTION_BANNER_TITLE,
+  ACTION_BANNER_TITLE_IMAGE,
   LIGA_GROUP_SUBTYPE,
   LIGA_TITLE,
   LIGA_TELEPHONE,
@@ -51,6 +50,12 @@ import {
   INFO_ACTION_SUBTYPES,
   IMAGE_ACTIONS_GROUP_SUBTYPE,
   IMAGE_ACTIONS_ITEM,
+  ACTION_BANNER_LIST_GROUP_SUBTYPE,
+  ACTION_BANNER_LIST_SHARE,
+  ACTION_BANNER_LIST_TICKET,
+  ACTION_BANNER_LIST_DESCRIPTION,
+  ACTION_BANNER_LIST_IMAGE,
+  ACTION_BANNER_LIST_GROUP_ITEM,
 } from "@/app/lib/constants";
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { usePathname } from "next/navigation";
@@ -151,9 +156,36 @@ export const AddChildFeatureToContainer = ({
         type: GROUP,
         subtype: newValue,
         name: params.pageName,
-        text_types: [ACTION_BANNER_TITLE, ACTION_BANNER_IMAGE],
+        text_types: [ACTION_BANNER_TITLE_IMAGE],
         pathName,
       });
+    }
+
+    if (newValue === ACTION_BANNER_LIST_GROUP_SUBTYPE) {
+      const actionBannerListGroupId = await addChildFeature({
+        parentId: parentFeatureId,
+        type: GROUP,
+        subtype: newValue,
+        name: params.pageName,
+        text_types: [],
+        pathName,
+      });
+
+      if (actionBannerListGroupId) {
+        await addChildFeature({
+          parentId: actionBannerListGroupId,
+          type: ACTION_BANNER_LIST_GROUP_ITEM,
+          subtype: ACTION_BANNER_LIST_GROUP_ITEM,
+          name: params.pageName,
+          text_types: [
+            ACTION_BANNER_LIST_SHARE,
+            ACTION_BANNER_LIST_TICKET,
+            ACTION_BANNER_LIST_DESCRIPTION,
+            ACTION_BANNER_LIST_IMAGE,
+          ],
+          pathName,
+        });
+      }
     }
 
     if (SIMPLE_GROUP_SUBTYPES.includes(newValue)) {
@@ -211,7 +243,7 @@ export const AddChildFeatureToContainer = ({
       });
     }
 
-    if (IMAGE_ACTIONS_GROUP_SUBTYPE === newValue){
+    if (IMAGE_ACTIONS_GROUP_SUBTYPE === newValue) {
       await addChildFeature({
         parentId: parentFeatureId,
         type: GROUP,
@@ -221,7 +253,6 @@ export const AddChildFeatureToContainer = ({
         pathName,
       });
     }
-
 
     if (newValue === PHOTO_GALLERY_GROUP_SUBTYPE) {
       await addChildFeature({

@@ -62,7 +62,13 @@ export const AdditionalPageDataGroupShow = ({
       );
     };
 
-    return <ScrollContainer ids={containerFullData[1]} getItem={getItem} />;
+    return (
+      <ScrollContainer
+        ids={containerFullData[1]}
+        getItem={getItem}
+        isEdit={false}
+      />
+    );
   }
 
   return (

@@ -17,6 +17,7 @@ export type StaticTexts = {
   addItemToTab?: string;
   addItems?: string;
   addTab?: string;
+  addImage?: string;
   addDescription?: string;
   addImportantDescription?: string;
   deleteTab?: string;

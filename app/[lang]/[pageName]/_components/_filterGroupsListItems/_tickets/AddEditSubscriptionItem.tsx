@@ -9,13 +9,14 @@ import {
   SUBSCRIPTION_ITEM_PRICE,
   SUBSCRIPTION_ITEM_SHARE,
 } from "@/app/lib/constants";
-import { FullData } from "@/app/lib/definitions";
+import { FullData, MainParams } from "@/app/lib/definitions";
 
 export type Props = {
   commonWidth: string;
   staticTexts: StaticTexts;
   subscriptionItemFeatureId: number;
   currentData: FullData[];
+  params: MainParams;
 };
 
 export const AddEditSubscriptionItem = ({
@@ -23,6 +24,7 @@ export const AddEditSubscriptionItem = ({
   staticTexts,
   subscriptionItemFeatureId,
   currentData,
+  params
 }: Props) => {
   const importantDescriptionType = SUBSCRIPTION_ITEM_IMPORTANT_DESCRIPTION;
 
@@ -65,24 +67,28 @@ export const AddEditSubscriptionItem = ({
         staticTexts={staticTexts}
         title={staticTexts.name}
         importantDescriptionType={importantDescriptionType}
+        params={params}
       />
       <TextItemField
         fieldData={price}
         staticTexts={staticTexts}
         title={staticTexts.price}
         importantDescriptionType={importantDescriptionType}
+        params={params}
       />
       <TextItemField
         fieldData={share}
         staticTexts={staticTexts}
         title={staticTexts.share}
         importantDescriptionType={importantDescriptionType}
+        params={params}
       />
       <TextItemField
         fieldData={oldPrice}
         staticTexts={staticTexts}
         title={staticTexts.oldPrice}
         importantDescriptionType={importantDescriptionType}
+        params={params}
       />
 
       <div style={{ fontWeight: 700 }}>{staticTexts.descriptions}: </div>
@@ -94,6 +100,7 @@ export const AddEditSubscriptionItem = ({
             staticTexts={staticTexts}
             key={description.text_description_id}
             importantDescriptionType={importantDescriptionType}
+            params={params}
           />
         );
       })}
