@@ -19,7 +19,6 @@ export type Props = {
   isChangeOrder?: boolean;
   isHorizontal?: boolean;
   s3Key?: string;
-  flexDirection?: CSSProperties["flexDirection"];
   useItems: UseItems;
   params: MainParams;
   changeModalState?: (state: boolean) => void;
@@ -32,7 +31,6 @@ export const UpdateDeleteTextButtons = ({
   isChangeOrder,
   isHorizontal,
   s3Key,
-  flexDirection = "row",
   useItems,
   params,
   changeModalState,
@@ -95,7 +93,6 @@ export const UpdateDeleteTextButtons = ({
     <div
       style={{
         display: "flex",
-        flexDirection,
         gap: "5px",
         alignItems: "center",
         flexWrap: "wrap",
@@ -115,7 +112,6 @@ export const UpdateDeleteTextButtons = ({
           gap: "5px",
           alignItems: "center",
           flexWrap: "wrap",
-          flexDirection,
         }}
       >
         {canDelete ? (

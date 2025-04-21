@@ -1,10 +1,7 @@
 import {
   GROUP,
   GROUP1_SUBTYPE,
-  GROUP2_SUBTYPE,
-  GROUP_EXPANDED_SUBTYPE,
   LAYOUT_PARENT,
-  SIMPLE_GROUP_SUBTYPES,
   TABS,
 } from "@/app/lib/constants";
 import { FullData, MainParams } from "@/app/lib/definitions";
@@ -41,7 +38,7 @@ export const DrawChildFeature_Client = ({
 
   const isSimpleGroup =
     childFeatureFirstItem.type === GROUP &&
-    SIMPLE_GROUP_SUBTYPES.includes(childFeatureFirstItem.subtype);
+    GROUP1_SUBTYPE === childFeatureFirstItem.subtype;
 
   if (isSimpleGroup) {
     return (

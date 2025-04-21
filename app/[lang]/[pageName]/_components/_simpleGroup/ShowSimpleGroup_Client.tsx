@@ -2,14 +2,12 @@ import { FullData, MainParams } from "@/app/lib/definitions";
 import {
   DEFAULT_TEXT,
   GROUP1_SUBTYPE,
-  GROUP2_SUBTYPE,
   GROUP_EXPANDED_SUBTYPE,
-  SIMPLE_GROUP_ITEM,
 } from "@/app/lib/constants";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { ExpandedText } from "../__commonComponents/_expandedText/ExpandedText";
-import { UpdateDeleteTextButtons } from "../__commonComponents/_buttons/UpdateDeleteTextButtons";
-import { AddTextDescriptionDeleteFeatureButtons } from "../__commonComponents/_buttons/AddTextDescriptionDeleteFeatureButtons";
+import { UpdateTextDescriptionData } from "../__commonComponents/_upadeModal/UpdateTextDescriptionData";
+import { DeleteFeatureButton } from "../__commonComponents/_buttons/DeleteFeatureButton";
 
 export type Props = {
   data: FullData[];
@@ -27,28 +25,24 @@ export const ShowSimpleGroup_Client = ({
   const firstItem = data[0];
   const isHeader = firstItem.subtype === GROUP1_SUBTYPE;
   const isExpanded = firstItem.subtype === GROUP_EXPANDED_SUBTYPE;
-  const isQuill = firstItem.subtype === GROUP2_SUBTYPE;
 
-  const text = data
-    .map((item, index) => item.text_content ?? (index ? "" : DEFAULT_TEXT))
-    .join("");
+  const textDescriptions = data.filter((item) => !!item.text_description_id);
 
-  const sanitizedContent = text; //DOMPurify.sanitize(text);
   const isTextExpandedShown = isExpanded && !isEdit;
-  const featureId = data[0].id;
 
   return (
     <div
       style={{
-        fontSize: isHeader ? "xx-large" : undefined,
-        fontWeight: isHeader ? 700 : undefined,
+        fontSize: "xx-large",
+        fontWeight: 700,
         marginBottom: "10px",
         border: isEdit ? "1px dotted magenta" : undefined,
-        padding: isEdit ? "10px" : undefined,
+        padding: isEdit ? "10px 10px 10px 10px" : undefined,
         marginTop: isEdit ? "10px" : undefined,
         gap: isEdit ? "10px" : undefined,
         display: "flex",
         flexDirection: "column",
+        position: "relative",
       }}
     >
       {isTextExpandedShown ? (
@@ -60,7 +54,7 @@ export const ShowSimpleGroup_Client = ({
         />
       ) : null}
       {!isTextExpandedShown
-        ? data.map((item) => {
+        ? textDescriptions.map((item) => {
             return (
               <div
                 key={item.text_description_id}
@@ -70,48 +64,43 @@ export const ShowSimpleGroup_Client = ({
                   border: isEdit ? "1px dotted magenta" : undefined,
                   padding: isEdit ? "10px" : undefined,
                   gap: isEdit ? "10px" : undefined,
+                  position: "relative",
                 }}
               >
-                {isHeader ? (
-                  <div
-                    style={{
-                      width: "200px",
-                      height: 0,
-                      marginBottom: "20px",
-                      border: "2px solid blue",
-                    }}
-                  />
-                ) : null}
-                {isHeader ? (
-                  item.text_content ?? DEFAULT_TEXT
-                ) : (
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: item.text_content ?? DEFAULT_TEXT,
-                    }}
-                  />
-                )}
-                {isEdit ? (
-                  <UpdateDeleteTextButtons
-                    currentData={item}
-                    staticTexts={staticTexts}
-                    useItems={{ text: isHeader ? "simple" : "quill" }}
-                    isChangeOrder
-                    params={params}
-                  />
-                ) : null}
+                <div
+                  style={{
+                    width: "200px",
+                    height: 0,
+                    marginBottom: "20px",
+                    border: "2px solid blue",
+                  }}
+                />
+                {item.text_content ?? DEFAULT_TEXT}
               </div>
             );
           })
         : null}
       {isEdit ? (
-        <AddTextDescriptionDeleteFeatureButtons
-          deleteButtonText={staticTexts.delete ?? "N/A"}
-          featureData={data}
-          addButtonText={staticTexts.addGroupItem ?? "N/A"}
-          textDescriptionType={SIMPLE_GROUP_ITEM}
-          isNoAddButton={isHeader}
-        />
+        <div
+          style={{
+            display: "flex",
+            gap: "5px",
+            alignItems: "center",
+            justifyContent: "center",
+            width: "100%",
+          }}
+        >
+          <UpdateTextDescriptionData
+            currentData={firstItem}
+            staticTexts={staticTexts}
+            useItems={{ text: "simple" }}
+            params={params}
+          />
+          <DeleteFeatureButton
+            deleteText={staticTexts.delete ?? "N/A"}
+            featureData={data}
+          />
+        </div>
       ) : null}
     </div>
   );

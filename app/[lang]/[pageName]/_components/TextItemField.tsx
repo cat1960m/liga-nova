@@ -1,6 +1,6 @@
 import { FullData, MainParams } from "@/app/lib/definitions";
-import { UpdateDeleteTextButtons } from "./__commonComponents/_buttons/UpdateDeleteTextButtons";
 import { StaticTexts } from "@/app/dictionaries/definitions";
+import { ItemContainerUpdateDeleteTextDescription } from "./__commonComponents/_itemGroupContainer/ItemContainerUpdateDeleteTextDescription";
 
 export type Props = {
   fieldData: FullData;
@@ -19,39 +19,36 @@ export const TextItemField = ({
 }: Props) => {
   const isImportant = fieldData.text_type === importantDescriptionType;
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        padding: "5px",
-        gap: "5px",
-        border: "1px dotted magenta",
-      }}
+    <ItemContainerUpdateDeleteTextDescription
+      isEdit={true}
+      staticTexts={staticTexts}
+      currentData={fieldData}
+      s3Key={fieldData.value}
+      useItems={{ text: "simple", value: "image" }}
+      params={params}
+      isChangeOrder={fieldData.can_delete}
+      isHorizontal={false}
     >
       <div
         style={{
           display: "flex",
           flexWrap: "wrap",
           gap: "5px",
+          alignItems: "center",
         }}
       >
         {title ? <div style={{ fontWeight: 700 }}>{title}: </div> : null}
 
         <div
           style={{
-            fontWeight: isImportant ? 700 : undefined,
+            fontWeight: isImportant ? 700 : 300,
             whiteSpace: "pre-line",
+            fontSize: 14,
           }}
         >
           {fieldData.text_content ?? "N/A"}
         </div>
       </div>
-      <UpdateDeleteTextButtons
-        staticTexts={staticTexts}
-        currentData={fieldData}
-        useItems={{ text: "simple" }}
-        params={params}
-      />
-    </div>
+    </ItemContainerUpdateDeleteTextDescription>
   );
 };

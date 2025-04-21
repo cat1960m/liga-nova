@@ -43,8 +43,6 @@ export const ShowTabs_Client = ({
     [Record<string, FullData[]>, string[]] | null
   >(null);
 
-  const [isEditTabShown, setIsEditTabShown] = useState(false);
-
   const handleSelectedTabFeatureIdChanged = (featureId: number) => {
     setSelectedTabFeatureId(featureId);
     const tabContainerData = getContainerData({
@@ -64,8 +62,6 @@ export const ShowTabs_Client = ({
 
     setSelectedTabData(tabContainerData);
   }, [pageFullDataList]);
-
-  const isTabShown = !isEdit || isEditTabShown;
 
   return (
     <div
@@ -107,8 +103,6 @@ export const ShowTabs_Client = ({
                   }
                   isEdit={isEdit}
                   staticTexts={staticTexts}
-                  isEditTabShown={isEditTabShown}
-                  onShowTabClick={() => setIsEditTabShown(!isEditTabShown)}
                   params={params}
                 />
               </div>
@@ -143,7 +137,7 @@ export const ShowTabs_Client = ({
           </div>
         ) : null}
 
-        {selectedTabData && selectedTabFeatureId && isTabShown ? (
+        {selectedTabData && selectedTabFeatureId ? (
           <div
             style={{
               border: isEdit ? "1px dashed magenta" : undefined,

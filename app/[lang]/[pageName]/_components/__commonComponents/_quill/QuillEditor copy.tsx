@@ -41,7 +41,6 @@ const QuillEditor = ({ text, onChange }: Props) => {
         }
       );
 
-      console.log("FontWeightAttributor", FontWeightAttributor);
 
       // Register the font-weight format
       Quill.register(FontWeightAttributor, true);

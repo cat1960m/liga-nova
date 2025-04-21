@@ -7,8 +7,8 @@ import { ScrollContainer } from "../__commonComponents/_scrollContainer/ScrollCo
 import Image from "next/image";
 import { DragEventHandler, useRef, useState } from "react";
 import { AddTextDescriptionDeleteFeatureButtons } from "../__commonComponents/_buttons/AddTextDescriptionDeleteFeatureButtons";
-import { UpdateDeleteTextButtons } from "../__commonComponents/_buttons/UpdateDeleteTextButtons";
 import { ShowItem } from "./ShowItem";
+import { ItemContainerUpdateDeleteTextDescription } from "../__commonComponents/_itemGroupContainer/ItemContainerUpdateDeleteTextDescription";
 
 export type Props = {
   isEdit: boolean;
@@ -37,6 +37,10 @@ export const ShowImageListGroup = ({
       (item) => item.text_description_id.toString() === id
     );
 
+    if (!imageData) {
+      return <> </>;
+    }
+
     return (
       <div
         style={{
@@ -44,44 +48,17 @@ export const ShowImageListGroup = ({
           width: "100%",
         }}
       >
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "5px",
-            border: isEdit ? "1px dotted magenta" : undefined,
-            padding: isEdit ? "30px 10px 10px 10px" : undefined,
-            position: "relative",
-            marginTop: isEdit ? "24px" : 0,
-          }}
+        <ItemContainerUpdateDeleteTextDescription
+          isEdit={isEdit}
+          useItems={{ value: "image" }}
+          staticTexts={staticTexts}
+          s3Key={imageData.value}
+          onDeleteFinished={onDeleteFinished}
+          params={params}
+          currentData={imageData}
         >
-          {imageData ? (
-            <ShowItem widthItem={widthItem} imageData={imageData} />
-          ) : null}
-
-          {imageData && isEdit ? (
-            <div
-              style={{
-                position: "absolute",
-                top: "-24px",
-                left: 0,
-                right: 0,
-                height: "48px",
-              }}
-            >
-              <UpdateDeleteTextButtons
-                staticTexts={staticTexts}
-                currentData={imageData}
-                s3Key={imageData.value}
-                isChangeOrder
-                isHorizontal
-                params={params}
-                useItems={{ value: "image" }}
-                onDeleteFinished={onDeleteFinished}
-              />
-            </div>
-          ) : null}
-        </div>
+          <ShowItem widthItem={widthItem} imageData={imageData} />
+        </ItemContainerUpdateDeleteTextDescription>
       </div>
     );
   };

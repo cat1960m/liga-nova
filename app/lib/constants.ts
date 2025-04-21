@@ -80,7 +80,6 @@ export const ADDITIONAL_PAGE_DATA_GROUP_SUBTYPE = "additional_page_data_group";
 export const TRAINERS_PAGE_NAME = "trainers";
 export const TRAINER_ITEM_NAME = "trainer_item_name";
 export const TRAINER_ITEM_IS_PREMIUM = "trainer_item_is_premium";
-export const TRAINER_ITEM_IMAGE = "trainer_item_image";
 export const TRAINER_ITEM_DESCRIPTION = "trainer_item_description";
 
 export const ACTION_BANNER_GROUP_SUBTYPE = "action_banner_group";
@@ -173,11 +172,7 @@ export const GroupFeatureSubtypes = [
   TEXT_LIST_GROUP_SUBTYPE,
 ];
 
-export const SIMPLE_GROUP_SUBTYPES = [
-  GROUP1_SUBTYPE,
-  GROUP2_SUBTYPE,
-  GROUP_EXPANDED_SUBTYPE,
-];
+export const TEXT_GROUP_SUBTYPES = [GROUP2_SUBTYPE, GROUP_EXPANDED_SUBTYPE];
 
 export const DEFAULT_TEXT = "Please enter text";
 
@@ -209,13 +204,12 @@ export const PAGE_NAMES_TO_LIST_ITEMS_DATA: Record<
     textTypes: [
       TRAINER_ITEM_NAME,
       TRAINER_ITEM_IS_PREMIUM,
-      TRAINER_ITEM_IMAGE,
       TRAINER_ITEM_DESCRIPTION,
     ],
   },
 };
 
-export const S3_TYPES = [TRAINER_ITEM_IMAGE, IMAGE, ICON];
+export const S3_TYPES = [IMAGE, ICON];
 
 export const MAX_PAGE_WIDTH = 1075;
 

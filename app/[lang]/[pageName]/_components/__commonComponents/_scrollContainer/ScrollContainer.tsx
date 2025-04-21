@@ -94,7 +94,6 @@ export const ScrollContainer = ({
       dataType.isScrollOnSide = useScrollIconOnSide;
       dataType.itemWidth = (parentWidth - scrollIconWidths) / count - 1;
     }
-    console.log("-----dataType", dataType, "length=", ids.length);
 
     return dataType;
   };

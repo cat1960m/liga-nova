@@ -38,11 +38,8 @@ export const UpdateTextDescriptionData = ({
 
   return (
     <>
-      <CommonButton
-        onClick={handleEdit}
-        width="48px"
-      >
-        <PencilIcon title={staticTexts.edit ?? ""} color="black" width="32" />
+      <CommonButton onClick={handleEdit} width="40px">
+        <PencilIcon title={staticTexts.edit ?? ""} color="black" width="24px" />
       </CommonButton>
 
       {isEditModalShown ? (

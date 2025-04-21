@@ -19,6 +19,7 @@ import {
   IMAGE_ACTIONS_GROUP_SUBTYPE,
   ACTION_BANNER_LIST_GROUP_SUBTYPE,
   TEXT_LIST_GROUP_SUBTYPE,
+  TEXT_GROUP_SUBTYPES,
 } from "@/app/lib/constants";
 import { InfoCheckGroup } from "./_infoCheckGroup/InfoCheckGroup";
 import { ShowServicesGroup } from "./_service/ShowServicesGroup";
@@ -37,6 +38,7 @@ import { ShowInfoGroup } from "./_info/ShowInfoGroup";
 import { ImageActionsGroup } from "./_imageActionsGroup/ImageActionsGroup";
 import { ActionBannerListGroup } from "./_actionBannerList/ActionBannerListGroup";
 import { TextListGroup } from "./_textList/TextListGroup";
+import { TextGroup } from "./_textGroup/TextGroup";
 
 export type Props = {
   groupData: FullData[];
@@ -91,6 +93,8 @@ export const ShowComplexGroup_Client = ({
   const isCalendarEventsGroup =
     firstData?.subtype === CALENDAR_EVENTS_GROUP_SUBTYPE;
 
+  const isTextGroup = TEXT_GROUP_SUBTYPES.includes(firstData?.subtype);
+
   const isDeleteOnly =
     isAdditionalPageDataGroup ||
     isFilterGroupsListItemsGroup ||
@@ -113,6 +117,15 @@ export const ShowComplexGroup_Client = ({
           isEdit={isEdit}
           staticTexts={staticTexts}
           parentFeatureId={parentFeatureId}
+          params={params}
+        />
+      ) : null}
+
+      {isTextGroup ? (
+        <TextGroup
+          data={groupData}
+          isEdit={isEdit}
+          staticTexts={staticTexts}
           params={params}
         />
       ) : null}

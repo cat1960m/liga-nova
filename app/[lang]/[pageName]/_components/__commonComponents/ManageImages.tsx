@@ -1,8 +1,6 @@
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { DeleteFeatureButton } from "./_buttons/DeleteFeatureButton";
 import { UploadComponent } from "./UploadComponent";
-import { StaticTexts } from "@/app/dictionaries/definitions";
-import { UpdateDeleteTextButtons } from "./_buttons/UpdateDeleteTextButtons";
 
 export type Props = {
   imagesData: FullData[];

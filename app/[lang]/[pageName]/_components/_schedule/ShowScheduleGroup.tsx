@@ -15,6 +15,7 @@ import { ShowSCheduleGroupItem } from "./ShowScheduleGroupItem";
 import { AddTextDescriptionDeleteFeatureButtons } from "../__commonComponents/_buttons/AddTextDescriptionDeleteFeatureButtons";
 
 import styles from "./showScheduleGroup.module.css";
+import { ShowSCheduleName } from "./ShowScheduleName";
 
 export type Props = {
   isEdit: boolean;
@@ -29,21 +30,18 @@ export const ShowScheduleGroup = ({
   groupData,
   params,
 }: Props) => {
-
   const name = groupData.find((item) => item.text_type === SCHEDULE_NAME);
   const items = groupData.filter((item) => item.text_type === SCHEDULE_ITEM);
 
   return (
     <div className={styles.main}>
       <div className={styles.container}>
-        <div className={styles.name}>
-          <ShowSCheduleGroupItem
-            isEdit={isEdit}
-            staticTexts={staticTexts}
-            data={name}
-            params={params}
-          />
-        </div>
+        <ShowSCheduleName
+          isEdit={isEdit}
+          staticTexts={staticTexts}
+          data={name}
+          params={params}
+        />
         <div className={styles.items}>
           {items.map((item) => {
             return (

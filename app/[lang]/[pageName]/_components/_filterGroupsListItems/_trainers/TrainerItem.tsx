@@ -4,7 +4,6 @@ import { FullData } from "@/app/lib/definitions";
 import {
   ACTION_BUTTON_BACKGROUND,
   TRAINER_ITEM_DESCRIPTION,
-  TRAINER_ITEM_IMAGE,
   TRAINER_ITEM_IS_PREMIUM,
   TRAINER_ITEM_NAME,
 } from "@/app/lib/constants";
@@ -32,6 +31,9 @@ export const TrainerItem = ({
   const [isMouseIn, setIsMouseIn] = useState(false);
 
   const filters = useMemo(() => {
+    if (!currentData.length) {
+      return [];
+    }
     const filterIds = getFilterIds(currentData[0].filter_ids);
 
     return pageFullDataList.filter((data) =>
@@ -55,20 +57,19 @@ export const TrainerItem = ({
   const isPremium = currentData.find(
     (item) => item.text_type === TRAINER_ITEM_IS_PREMIUM
   );
-  const photo = currentData.find(
-    (item) => item.text_type === TRAINER_ITEM_IMAGE
-  );
   const descriptions = currentData.filter((item) =>
     [TRAINER_ITEM_DESCRIPTION].includes(item.text_type)
   );
 
-  if (!name || !isPremium || !photo) {
+  if (!name || !isPremium) {
     return null;
   }
 
-  const isPremiumValue = isPremium.value;
+  const isPremiumValue = isPremium.value === "yes";
 
   const premiumIcon = icons.find((icon) => icon.value?.includes(PREMIUM));
+
+  const photoValue = name.value;
 
   return (
     <div
@@ -80,7 +81,7 @@ export const TrainerItem = ({
         flexDirection: "column",
       }}
     >
-      {photo.value ? (
+      {photoValue ? (
         <div
           style={{
             width: "100%",
@@ -92,7 +93,7 @@ export const TrainerItem = ({
           onMouseEnter={() => setIsMouseIn(true)}
           onMouseLeave={() => setIsMouseIn(false)}
         >
-          <img src={photo.value} alt="photo" width="100%" />
+          <img src={photoValue} alt="photo" width="100%" />
 
           <div
             style={{
@@ -169,6 +170,8 @@ export const TrainerItem = ({
       <ExpandedText
         staticTexts={staticTexts}
         descriptions={descriptions.map((item) => item.text_content ?? "N/A")}
+        fontSize={14}
+        fontWeight={300}
       />
 
       <CommonButton isAction text={staticTexts.signUpForTraining} />

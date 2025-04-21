@@ -6,8 +6,8 @@ import {
   LIGA_TITLE,
 } from "@/app/lib/constants";
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import { UpdateDeleteTextButtons } from "../__commonComponents/_buttons/UpdateDeleteTextButtons";
 import { PhoneIcon, MapPinIcon } from "@heroicons/react/24/solid";
+import { ItemContainerUpdateDeleteTextDescription } from "../__commonComponents/_itemGroupContainer/ItemContainerUpdateDeleteTextDescription";
 
 export type Props = {
   data?: FullData;
@@ -40,99 +40,78 @@ export const ShowLigaGroupItem = ({
   const isService = data.text_type === LIGA_SERVICE;
 
   return (
-    <div>
-      {isTitle ? (
+    <ItemContainerUpdateDeleteTextDescription
+      isEdit={isEdit}
+      staticTexts={staticTexts}
+      currentData={data}
+      isChangeOrder={isService}
+      useItems={{
+        text: "simple",
+        value: isService ? "icons" : undefined,
+        link: isService,
+      }}
+      params={params}
+      isHorizontal={false}
+    >
+      <>
+        {isTitle ? (
+          <div
+            style={{
+              width: "100px",
+              height: 0,
+              marginBottom: "10px",
+              borderTop: "3px solid blue",
+            }}
+          />
+        ) : null}
+
         <div
           style={{
-            width: "100px",
-            height: 0,
-            marginBottom: "10px",
-            borderTop: "3px solid blue",
+            display: "flex",
+            flexDirection: "column",
+            gap: "10px",
+            alignItems: "stretch",
           }}
-        />
-      ) : null}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+            {isAddress ? (
+              <MapPinIcon style={{ color: "blue", width: "24px" }} />
+            ) : null}
 
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "10px",
-          alignItems: "stretch",
-          border: isEdit ? "1px dotted magenta" : undefined,
-          padding: isEdit ? "10px" : undefined,
-        }}
-      >
-        <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
-          {isAddress ? (
-            <MapPinIcon style={{ color: "blue", width: "24px" }} />
-          ) : null}
+            {isPhone ? (
+              <PhoneIcon style={{ color: "blue", width: "24px" }} />
+            ) : null}
 
-          {isPhone ? (
-            <PhoneIcon style={{ color: "blue", width: "24px" }} />
-          ) : null}
+            {!isService ? (
+              <p style={textStyle}> {data?.text_content ?? "N/A"}</p>
+            ) : null}
 
-          {!isService ? (
-            <p style={textStyle}> {data?.text_content ?? "N/A"}</p>
-          ) : null}
-
-          {isService ? (
-            <div
-              style={{
-                width: "100%",
-                display: "flex",
-                flexWrap: "wrap",
-                gap: "10px",
-                alignItems: "center",
-                justifyContent: "space-between",
-              }}
-            >
+            {isService ? (
               <div
                 style={{
+                  width: "100%",
                   display: "flex",
-                  gap: "5px",
+                  flexWrap: "wrap",
+                  gap: "10px",
                   alignItems: "center",
+                  justifyContent: "space-between",
                 }}
               >
-                <img src={data.value} alt="icon" />
-                <div style={textStyle}> {data?.text_content ?? "N/A"}</div>
-              </div>
-
-              {/*   {isEdit && pages ? (
                 <div
                   style={{
                     display: "flex",
-                    gap: "10px",
-                    flexWrap: "wrap",
+                    gap: "5px",
                     alignItems: "center",
                   }}
                 >
-                  <div>{staticTexts.linkTo} </div>
-
-                  <PagesSelect
-                    textDescriptionId={data.text_description_id}
-                    link={data.link ?? ""}
-                    pages={pages}
-                  />
+                  <img src={data.value} alt="icon" />
+                  <div style={textStyle}> {data?.text_content ?? "N/A"}</div>
                 </div>
-              ) : null} */}
-            </div>
-          ) : null}
+              </div>
+            ) : null}
+          </div>
         </div>
-
-        {isEdit ? (
-          <UpdateDeleteTextButtons
-            staticTexts={staticTexts}
-            currentData={data}
-            isChangeOrder={isService}
-            useItems={{
-              text: "simple",
-              value: isService ? "icons" : undefined,
-              link: isService,
-            }}
-            params={params}
-          />
-        ) : null}
-      </div>
-    </div>
+      </>
+    </ItemContainerUpdateDeleteTextDescription>
   );
 };

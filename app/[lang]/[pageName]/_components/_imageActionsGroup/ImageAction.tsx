@@ -18,7 +18,11 @@ export const ImageAction = ({ data, groupData, isModalShown }: Props) => {
   );
   return (
     <div className={styles.item}>
-      {data.value ? <img src={data.value} alt="" width={"100%"} /> : null}
+      {data.value ? (
+        <img src={data.value} alt="" width={"100%"} />
+      ) : (
+        <div style={{ padding: "20px" }}>No image </div>
+      )}
       {isModalShown ? null : (
         <div className={styles.text}>{data.text_content ?? ""}</div>
       )}

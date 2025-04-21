@@ -145,7 +145,6 @@ export const RemoveFeature = async ({
             WHERE id = ANY (${sql.array(ids)}::integer[]);
           `;
 
-        console.log("deleted", ids);
       } else {
         ids = [];
       }
@@ -187,14 +186,12 @@ export const RemoveTextDescription = async ({
   pathName,
 }: {
   id: number;
-  pathName?: string;
+  pathName: string;
 }) => {
   try {
     await sql`DELETE  FROM text_descriptions
                WHERE text_descriptions.id = ${id}`;
-    if (pathName) {
-      revalidatePath(pathName);
-    }
+    revalidatePath(pathName);
     return true;
   } catch (error) {
     // If a database error occurs, return a more specific error.

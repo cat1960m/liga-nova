@@ -37,8 +37,6 @@ import {
   LAYOUT_ITEM_RIGHT,
   CALENDAR_EVENTS_GROUP_SUBTYPE,
   GroupFeatureSubtypes,
-  GROUP_EXPANDED_SUBTYPE,
-  SIMPLE_GROUP_SUBTYPES,
   INFO_CHECK_HEADER,
   INFO_CHECK_ITEM,
   IMAGE_LINKS_ITEM,
@@ -60,6 +58,8 @@ import {
   TEXT_LIST_GROUP_ITEM,
   TEXT_LIST_NAME,
   TEXT_LIST_BODY,
+  TEXT_GROUP_SUBTYPES,
+  GROUP1_SUBTYPE,
 } from "@/app/lib/constants";
 import { FullData, GroupDefinition, MainParams } from "@/app/lib/definitions";
 import { usePathname } from "next/navigation";
@@ -214,7 +214,18 @@ export const AddChildFeatureToContainer = ({
       }
     }
 
-    if (SIMPLE_GROUP_SUBTYPES.includes(newValue)) {
+    if (newValue === GROUP1_SUBTYPE) {
+      await addChildFeature({
+        parentId: parentFeatureId,
+        type: GROUP,
+        subtype: newValue,
+        name: params.pageName,
+        text_types: [SIMPLE_GROUP_ITEM],
+        pathName,
+      });
+    }
+
+    if (TEXT_GROUP_SUBTYPES.includes(newValue)) {
       await addChildFeature({
         parentId: parentFeatureId,
         type: GROUP,

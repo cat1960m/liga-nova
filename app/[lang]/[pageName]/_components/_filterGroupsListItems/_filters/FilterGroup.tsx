@@ -2,11 +2,11 @@
 
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { FullData, MainParams } from "@/app/lib/definitions";
-import { UpdateDeleteTextButtons } from "../../__commonComponents/_buttons/UpdateDeleteTextButtons";
 import { ChevronUpIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { FILTER, FILTER_GROUP_TITLE } from "@/app/lib/constants";
 import { AddTextDescriptionDeleteFeatureButtons } from "../../__commonComponents/_buttons/AddTextDescriptionDeleteFeatureButtons";
+import { ItemContainerUpdateDeleteTextDescription } from "../../__commonComponents/_itemGroupContainer/ItemContainerUpdateDeleteTextDescription";
 
 export type Props = {
   groupData: FullData[];
@@ -40,6 +40,7 @@ export const FilterGroup = ({
   const titleData = groupData.find(
     (item) => item.text_type === FILTER_GROUP_TITLE
   );
+  console.log("titleData", titleData);
 
   const filters = groupData.filter((item) => item.text_type === FILTER);
 
@@ -53,67 +54,63 @@ export const FilterGroup = ({
         padding: "10px",
       }}
     >
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "10px",
-          border: isEdit ? "1px dotted magenta" : undefined,
-          padding: "5px",
-        }}
-      >
-        <div
-          style={{
-            fontWeight: 700,
-            fontSize: 16,
-            display: "flex",
-            width: "100%",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
+      {titleData ? (
+        <ItemContainerUpdateDeleteTextDescription
+          isEdit={isEdit}
+          staticTexts={staticTexts}
+          currentData={titleData}
+          useItems={{ text: "simple" }}
+          isChangeOrder={false}
+          params={params}
         >
-          {titleData?.text_content ?? "N/A-----"}
-          {isExpanded ? (
-            <ChevronUpIcon
-              onClick={() => setIsExpanded(false)}
-              style={{ width: "24px" }}
-            />
-          ) : (
-            <ChevronDownIcon
-              onClick={() => setIsExpanded(true)}
-              style={{ width: "24px" }}
-            />
-          )}
-        </div>
-        {isEdit ? (
-          <UpdateDeleteTextButtons
-            staticTexts={staticTexts}
-            currentData={titleData}
-            useItems={{ text: "simple" }}
-            isChangeOrder
-            params={params}
-          />
-        ) : null}
-      </div>
+          <div
+            style={{
+              fontWeight: 700,
+              fontSize: 16,
+              display: "flex",
+              width: "100%",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            {titleData?.text_content ?? "N/A-----"}
+            {isExpanded ? (
+              <ChevronUpIcon
+                onClick={() => setIsExpanded(false)}
+                style={{ width: "24px" }}
+              />
+            ) : (
+              <ChevronDownIcon
+                onClick={() => setIsExpanded(true)}
+                style={{ width: "24px" }}
+              />
+            )}
+          </div>
+        </ItemContainerUpdateDeleteTextDescription>
+      ) : null}
 
       {isExpanded || isEdit
         ? filters.map((filter) => {
             const textDescriptionId = filter.text_description_id;
             const inputValue =
               !!selectedFilterTextDescriptionIds?.includes(textDescriptionId);
+
             return (
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "10px",
-                  border: isEdit ? "1px dotted magenta" : undefined,
-                  padding: "5px",
-                }}
+              <ItemContainerUpdateDeleteTextDescription
                 key={filter.text_description_id}
+                isEdit={isEdit}
+                staticTexts={staticTexts}
+                currentData={filter}
+                useItems={{ text: "simple", value: "icons" }}
+                params={params}
+                isHorizontal={false}
               >
                 <div
-                  style={{ display: "flex", gap: "5px", alignItems: "center" }}
+                  style={{
+                    display: "flex",
+                    gap: "5px",
+                    alignItems: "center",
+                  }}
                 >
                   <input
                     type="checkbox"
@@ -133,15 +130,7 @@ export const FilterGroup = ({
                     <img src={filter.value} alt="icon" />
                   ) : null}
                 </div>
-                {isEdit ? (
-                  <UpdateDeleteTextButtons
-                    staticTexts={staticTexts}
-                    currentData={filter}
-                    useItems={{ text: "simple", value: "icons" }}
-                    params={params}
-                  />
-                ) : null}
-              </div>
+              </ItemContainerUpdateDeleteTextDescription>
             );
           })
         : null}

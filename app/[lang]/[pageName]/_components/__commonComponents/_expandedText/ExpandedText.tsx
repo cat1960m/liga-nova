@@ -11,6 +11,8 @@ export type Props = {
   isHTML?: boolean;
   isButton?: boolean;
   minHeight?: number;
+  fontSize?: number;
+  fontWeight?: number;
 };
 
 export const ExpandedText = ({
@@ -18,6 +20,8 @@ export const ExpandedText = ({
   staticTexts,
   isHTML,
   isButton,
+  fontSize,
+  fontWeight,
 }: Props) => {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
 
@@ -57,7 +61,7 @@ export const ExpandedText = ({
               {isHTML ? (
                 <div dangerouslySetInnerHTML={{ __html: item }} />
               ) : (
-                <p> {item} </p>
+                <p style={{ fontSize, fontWeight }}> {item} </p>
               )}
             </div>
           );

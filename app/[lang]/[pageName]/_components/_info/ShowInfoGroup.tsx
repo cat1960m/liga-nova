@@ -28,7 +28,6 @@ export const ShowInfoGroup = ({
   groupData,
   params,
 }: Props) => {
-
   const subtype = groupData[0]?.subtype;
 
   const dataTitle = groupData.find((item) => item.text_type === INFO_TITLE);
@@ -74,6 +73,7 @@ export const ShowInfoGroup = ({
             display: "flex",
             flexDirection: "column",
             width: "100%",
+            gap: "10px",
           }}
         >
           {dataBodyList.map((item, index) => {

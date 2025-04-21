@@ -3,18 +3,14 @@
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { AddTextDescriptionDeleteFeatureButtons } from "../__commonComponents/_buttons/AddTextDescriptionDeleteFeatureButtons";
-import {
-  IMAGE_ACTIONS_GROUP_SUBTYPE,
-  IMAGE_ACTIONS_ITEM,
-  TOOLTIP,
-} from "@/app/lib/constants";
+import { IMAGE_ACTIONS_ITEM, TOOLTIP } from "@/app/lib/constants";
 import { ImageAction } from "./ImageAction";
 import cn from "clsx";
-import { UpdateDeleteTextButtons } from "../__commonComponents/_buttons/UpdateDeleteTextButtons";
 
 import styles from "./imageActions.module.css";
 import { useState } from "react";
 import { ActionButton } from "../__commonComponents/_buttons/_actionButon/ActionButton";
+import { ItemContainerUpdateDeleteTextDescription } from "../__commonComponents/_itemGroupContainer/ItemContainerUpdateDeleteTextDescription";
 
 export type Props = {
   groupData: FullData[];
@@ -22,7 +18,7 @@ export type Props = {
   isEdit: boolean;
   params: MainParams;
 };
-
+//shares page
 export const ImageActionsGroup = ({
   groupData,
   isEdit,
@@ -30,7 +26,6 @@ export const ImageActionsGroup = ({
   params,
 }: Props) => {
   const [isModalShown, setIsModalShown] = useState<boolean>(false);
-  console.log("groupData", groupData);
   const groupDataMain = groupData.filter(
     (item) => item.content_type !== TOOLTIP
   );
@@ -49,32 +44,31 @@ export const ImageActionsGroup = ({
       <div className={cn(styles.container, { [styles.edit]: isEdit })}>
         {groupDataMain.map((item) => (
           <div
-            className={cn(styles.itemContainer, { [styles.edit]: isEdit })}
+            className={cn(styles.itemContainer)}
             key={item.text_description_id}
           >
-            <ImageAction
-              data={item}
-              groupData={groupData}
-              isModalShown={isModalShown}
-            />
+            <ItemContainerUpdateDeleteTextDescription
+              isEdit={isEdit}
+              useItems={{
+                tooltip: "quill",
+                value: "image",
+              }}
+              staticTexts={staticTexts}
+              s3Key={item.value}
+              params={params}
+              currentData={item}
+              changeModalState={changeModalState}
+            >
+              <>
+                <ImageAction
+                  data={item}
+                  groupData={groupData}
+                  isModalShown={isModalShown}
+                />
 
-            <ActionButton text={staticTexts.details} onClick={() => {}} />
-
-            {isEdit ? (
-              <UpdateDeleteTextButtons
-                currentData={item}
-                staticTexts={staticTexts}
-                isChangeOrder
-                isHorizontal
-                s3Key={item.value}
-                useItems={{
-                  tooltip: "quill",
-                  value: "image",
-                }}
-                params={params}
-                changeModalState={changeModalState}
-              />
-            ) : null}
+                <ActionButton text={staticTexts.details} onClick={() => {}} />
+              </>
+            </ItemContainerUpdateDeleteTextDescription>
           </div>
         ))}
       </div>

@@ -34,24 +34,24 @@ export const ChangeOrderButtons = ({ isHorizontal, changeOrder }: Props) => {
     >
       <CommonButton
         onClick={handleToStartClick}
-        width="48px"
+        width="40px"
         isDisabled={isEditButtonsDisabled}
       >
         {isHorizontal ? (
-          <ChevronLeftIcon style={{ width: "32px" }} />
+          <ChevronLeftIcon style={{ width: "24px" }} />
         ) : (
-          <ChevronUpIcon style={{ width: "32px" }} />
+          <ChevronUpIcon style={{ width: "24px" }} />
         )}
       </CommonButton>
       <CommonButton
         onClick={handleToEndClick}
-        width="48px"
+        width="40px"
         isDisabled={isEditButtonsDisabled}
       >
         {isHorizontal ? (
-          <ChevronRightIcon style={{ width: "32px" }} />
+          <ChevronRightIcon style={{ width: "24px" }} />
         ) : (
-          <ChevronDownIcon style={{ width: "32px" }} />
+          <ChevronDownIcon style={{ width: "24px" }} />
         )}
       </CommonButton>
     </div>

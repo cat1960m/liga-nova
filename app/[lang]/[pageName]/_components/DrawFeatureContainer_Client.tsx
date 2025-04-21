@@ -26,6 +26,7 @@ export const DrawFeatureContainer_Client = ({
   pageId,
 }: Props) => {
   const [data, keys] = containerFullData;
+  console.log("---containerFullData", containerFullData);
 
   return (
     <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>

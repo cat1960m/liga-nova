@@ -6,11 +6,9 @@ import { TextItemField } from "../../TextItemField";
 import { FullData, MainParams } from "@/app/lib/definitions";
 import {
   TRAINER_ITEM_DESCRIPTION,
-  TRAINER_ITEM_IMAGE,
   TRAINER_ITEM_IS_PREMIUM,
   TRAINER_ITEM_NAME,
 } from "@/app/lib/constants";
-import { UploadComponent } from "../../__commonComponents/UploadComponent";
 import { updateTextDescriptionValue } from "@/app/lib/actions_fitness";
 import { ChangeEventHandler } from "react";
 import { usePathname } from "next/navigation";
@@ -38,14 +36,11 @@ export const AddEditTrainerItem = ({
   const isPremium = currentData.find(
     (item) => item.text_type === TRAINER_ITEM_IS_PREMIUM
   );
-  const photo = currentData.find(
-    (item) => item.text_type === TRAINER_ITEM_IMAGE
-  );
   const descriptions = currentData.filter((item) =>
     [TRAINER_ITEM_DESCRIPTION].includes(item.text_type)
   );
 
-  if (!name || !isPremium || !photo || !isPremium) {
+  if (!name || !isPremium || !isPremium) {
     return null;
   }
 
@@ -57,16 +52,6 @@ export const AddEditTrainerItem = ({
     await updateTextDescriptionValue({
       value,
       textDescriptionId: isPremium.text_description_id,
-      pathName,
-    });
-    setIsSaveDisabled?.(false);
-  };
-
-  const handlePhotoUploaded = async (value: string) => {
-    setIsSaveDisabled?.(true);
-    await updateTextDescriptionValue({
-      value,
-      textDescriptionId: photo.text_description_id,
       pathName,
     });
     setIsSaveDisabled?.(false);
@@ -96,6 +81,7 @@ export const AddEditTrainerItem = ({
           display: "flex",
           flexWrap: "wrap",
           gap: "5px",
+          alignItems: "center",
         }}
       >
         <div style={{ fontWeight: 700 }}>
@@ -108,25 +94,6 @@ export const AddEditTrainerItem = ({
           onChange={handleIsPremiumChange}
         />
       </div>
-
-      <div
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          gap: "5px",
-        }}
-      >
-        <div style={{ fontWeight: 700 }}>{staticTexts.photo ?? "N/A"}: </div>
-
-        <UploadComponent
-          onUploaded={handlePhotoUploaded}
-          s3Key={photo.value}
-          staticTexts={staticTexts}
-          maxWidth="200px"
-        />
-      </div>
-
-      <div style={{ fontWeight: 700 }}>{staticTexts.descriptions}: </div>
 
       {descriptions.map((description) => {
         return (

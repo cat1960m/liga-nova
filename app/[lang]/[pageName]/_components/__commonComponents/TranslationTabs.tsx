@@ -61,7 +61,6 @@ export const TranslationTabs = ({
   };
 
   const handleTextChange = (value: string) => {
-    console.log("handleTextChange", value, selectedTab);
 
     setInputValue(value);
 

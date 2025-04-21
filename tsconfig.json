@@ -32,7 +32,8 @@
     "scripts/seed.js",
     "app/dashboard/error.tsx",
     "app/[lang]/[pageName]/_components/__commonComponents/_buttons/AddChildFeatureToContainer.tsx",
-    "app/[lang]/[pageName]/_components/_calendarEvents/AddCalendarEventItemtsx"
+    "app/[lang]/[pageName]/_components/_calendarEvents/AddCalendarEventItemtsx",
+    "app/[lang]/[pageName]/_components/__commonComponents/_itemGroupContainer/ItemContainerUpdateDeleteTextDescription.tsx"
   ],
   "exclude": ["node_modules"]
 }

@@ -39,6 +39,7 @@ export const CommonButton = ({
         width,
         opacity: isDisabled ? 0.5 : 1,
         minWidth,
+        padding: children ? "10px" : undefined,
       }}
       className="flex h-10 items-center rounded-lg bg-blue-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
     >

@@ -39,9 +39,9 @@ export const DeleteTextDescriptionButton = ({
     <CommonButton
       onClick={handleDelete}
       isDisabled={isEditButtonsDisabled}
-      width="48px"
+      width="40px"
     >
-      <TrashIcon color="black" width="32" title={deleteText} />
+      <TrashIcon color="black" width="24px" title={deleteText} />
     </CommonButton>
   );
 };

@@ -13,6 +13,7 @@ import { Feature, FullData } from "@/app/lib/definitions";
 import { S3_TYPES } from "@/app/lib/constants";
 import { useEditContext } from "../../../edit/_components/EditContextProvider";
 import { ChangeOrderButtons } from "./ChangeOrderButtons";
+import { TrashIcon } from "@heroicons/react/24/outline";
 
 export const DeleteFeatureButton = ({
   deleteText,
@@ -20,12 +21,14 @@ export const DeleteFeatureButton = ({
   featureData,
   isHorizontal,
   noChangeOrder,
+  noDelete,
 }: {
   deleteText: string;
   onDeleteFinished?: () => void;
   featureData: FullData[];
   isHorizontal?: boolean;
   noChangeOrder?: boolean;
+  noDelete?: boolean;
 }) => {
   const pathName = usePathname();
   const { isEditButtonsDisabled, changeIsEditButtonDisabled } =
@@ -112,27 +115,17 @@ export const DeleteFeatureButton = ({
     <div
       style={{
         display: "flex",
-        gap: "10px",
+        gap: "5px",
         alignItems: "center",
         alignContent: "center",
         flexWrap: "wrap",
       }}
     >
-      <div
-        style={{
-          display: "flex",
-          gap: "10px",
-          alignItems: "center",
-          justifyContent: "center",
-          flexGrow: 2,
-        }}
-      >
-        <CommonButton
-          text={deleteText}
-          onClick={handleDelete}
-          isDisabled={isEditButtonsDisabled}
-        />
-      </div>
+      {!noDelete ? (
+        <CommonButton onClick={handleDelete} isDisabled={isEditButtonsDisabled}>
+          <TrashIcon style={{ width: "24px" }} title={deleteText} />
+        </CommonButton>
+      ) : null}
 
       {!noChangeOrder && parentFeatureId ? (
         <ChangeOrderButtons

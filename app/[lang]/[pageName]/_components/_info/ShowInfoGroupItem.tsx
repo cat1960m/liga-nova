@@ -2,7 +2,7 @@ import { FullData, MainParams } from "@/app/lib/definitions";
 import { INFO_BODY, INFO_TELEPHONE, INFO_TITLE } from "@/app/lib/constants";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { PhoneIcon } from "@heroicons/react/24/solid";
-import { UpdateDeleteTextButtons } from "../__commonComponents/_buttons/UpdateDeleteTextButtons";
+import { ItemContainerUpdateDeleteTextDescription } from "../__commonComponents/_itemGroupContainer/ItemContainerUpdateDeleteTextDescription";
 
 export type Props = {
   data?: FullData;
@@ -32,15 +32,23 @@ export const ShowInfoGroupItem = ({
   const isBody = data.text_type === INFO_BODY;
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        gap: "10px",
-        alignItems: "stretch",
-      }}
+    <ItemContainerUpdateDeleteTextDescription
+      isEdit={isEdit}
+      useItems={{ text: isQuill ? "quill" : "simple" }}
+      staticTexts={staticTexts}
+      params={params}
+      currentData={data}
+      isChangeOrder={isBody}
+      isHorizontal={false}
     >
-      <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "5px",
+          minWidth: "100px",
+        }}
+      >
         {isPhone ? (
           <PhoneIcon style={{ color: "blue", width: "24px" }} />
         ) : null}
@@ -54,15 +62,6 @@ export const ShowInfoGroupItem = ({
           />
         )}
       </div>
-      {isEdit ? (
-        <UpdateDeleteTextButtons
-          staticTexts={staticTexts}
-          currentData={data}
-          isChangeOrder={isBody}
-          useItems={{ text: isQuill ? "quill" : "simple" }}
-          params={params}
-        />
-      ) : null}
-    </div>
+    </ItemContainerUpdateDeleteTextDescription>
   );
 };

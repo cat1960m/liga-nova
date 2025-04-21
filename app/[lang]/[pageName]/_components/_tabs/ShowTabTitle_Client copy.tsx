@@ -5,7 +5,6 @@ import { CommonButton } from "../__commonComponents/_buttons/CommonButton";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { UpdateTextDescriptionData } from "../__commonComponents/_upadeModal/UpdateTextDescriptionData";
 import { DeleteFeatureButton } from "../__commonComponents/_buttons/DeleteFeatureButton";
-import { ItemGroupContainerCommon } from "../__commonComponents/_itemGroupContainer/ItemGroupContainerCommon";
 
 export type Props = {
   tabTitle: FullData;
@@ -13,6 +12,8 @@ export type Props = {
   onSelectedTabFeatureIdChanged: (num: number) => void;
   isEdit: boolean;
   staticTexts: StaticTexts;
+  isEditTabShown: boolean;
+  onShowTabClick: () => void;
   params: MainParams;
 };
 
@@ -22,6 +23,8 @@ export const ShowTabTitle_Client = ({
   onSelectedTabFeatureIdChanged,
   isEdit,
   staticTexts,
+  isEditTabShown,
+  onShowTabClick,
   params,
 }: Props) => {
   const isTabSelected = selectedTabFeatureId === tabTitle.id;
@@ -31,43 +34,48 @@ export const ShowTabTitle_Client = ({
   };
 
   const backgroundColor = isTabSelected ? "lightblue" : "lightgray";
-  const getEditButtons = () => {
-    return (
-      <div
-        style={{
-          display: "flex",
-          gap: "5px",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <UpdateTextDescriptionData
-          currentData={tabTitle}
-          staticTexts={staticTexts}
-          useItems={{
-            text: "simple",
-          }}
-          params={params}
-        />
-
-        <DeleteFeatureButton
-          deleteText={staticTexts.deleteTab ?? "N/A"}
-          featureData={[tabTitle]}
-          isHorizontal
-          noDelete={isTabSelected}
-        />
-      </div>
-    );
-  };
+  const buttonText = isEditTabShown ? staticTexts.hideTAB : staticTexts.showTAB;
 
   return (
-    <ItemGroupContainerCommon isEdit={isEdit} getEditButtons={getEditButtons}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "stretch",
+        border: isEdit ? "1px dotted magenta" : undefined,
+        padding: isEdit ? "5px" : undefined,
+        gap: "10px",
+      }}
+    >
       <CommonButton
         backgroundColor={backgroundColor}
         text={tabTitle.text_content ?? "N/A"}
         onClick={handleTabClick}
-        minWidth={isEdit ? 200 : undefined}
       />
-    </ItemGroupContainerCommon>
+
+      {isEdit ? (
+        <div style={{ display: "flex", gap: "20px" }}>
+          <UpdateTextDescriptionData
+            currentData={tabTitle}
+            staticTexts={staticTexts}
+            useItems={{
+              text: "simple",
+            }}
+            params={params}
+          />
+
+          {!isTabSelected ? (
+            <DeleteFeatureButton
+              deleteText={staticTexts.deleteTab ?? "N/A"}
+              key={2}
+              featureData={[tabTitle]}
+              isHorizontal
+            />
+          ) : (
+            <CommonButton text={buttonText} onClick={onShowTabClick} />
+          )}
+        </div>
+      ) : null}
+    </div>
   );
 };

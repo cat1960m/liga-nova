@@ -3,18 +3,13 @@
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { AddTextDescriptionDeleteFeatureButtons } from "../__commonComponents/_buttons/AddTextDescriptionDeleteFeatureButtons";
-import {
-  IMAGE_ACTIONS_GROUP_SUBTYPE,
-  IMAGE_LINKS_ITEM,
-  TOOLTIP,
-} from "@/app/lib/constants";
+import { IMAGE_LINKS_ITEM, TOOLTIP } from "@/app/lib/constants";
 import { ImageLink } from "./ImageLink";
 import cn from "clsx";
-import { UpdateDeleteTextButtons } from "../__commonComponents/_buttons/UpdateDeleteTextButtons";
 
 import styles from "./imageLinks.module.css";
 import { useState } from "react";
-import { ActionButton } from "../__commonComponents/_buttons/_actionButon/ActionButton";
+import { ItemContainerUpdateDeleteTextDescription } from "../__commonComponents/_itemGroupContainer/ItemContainerUpdateDeleteTextDescription";
 
 export type Props = {
   groupData: FullData[];
@@ -22,7 +17,7 @@ export type Props = {
   isEdit: boolean;
   params: MainParams;
 };
-
+// main page
 export const ImageLinksGroup = ({
   groupData,
   isEdit,
@@ -46,32 +41,27 @@ export const ImageLinksGroup = ({
     >
       <div className={cn(styles.container, { [styles.edit]: isEdit })}>
         {groupDataMain.map((item) => (
-          <div
-            className={cn(styles.itemContainer, { [styles.edit]: isEdit })}
-            key={item.text_description_id}
-          >
-            <ImageLink
-              data={item}
-              groupData={groupData}
-              isModalShown={isModalShown}
-            />
-            {isEdit ? (
-              <UpdateDeleteTextButtons
-                currentData={item}
-                staticTexts={staticTexts}
-                isChangeOrder
-                isHorizontal
-                s3Key={item.value}
-                useItems={{
-                  text: "simple",
-                  tooltip: "quill",
-                  value: "image",
-                  link: true,
-                }}
-                params={params}
-                changeModalState={changeModalState}
+          <div className={styles.itemContainer} key={item.text_description_id}>
+            <ItemContainerUpdateDeleteTextDescription
+              isEdit={isEdit}
+              s3Key={item.value}
+              useItems={{
+                text: "simple",
+                tooltip: "quill",
+                value: "image",
+                link: true,
+              }}
+              staticTexts={staticTexts}
+              params={params}
+              currentData={item}
+              changeModalState={changeModalState}
+            >
+              <ImageLink
+                data={item}
+                groupData={groupData}
+                isModalShown={isModalShown}
               />
-            ) : null}
+            </ItemContainerUpdateDeleteTextDescription>
           </div>
         ))}
       </div>

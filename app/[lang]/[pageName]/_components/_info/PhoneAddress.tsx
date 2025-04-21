@@ -17,12 +17,18 @@ export const PhoneAddress = ({
   params,
 }: Props) => {
   const dataAddress = groupData.find((item) => item.text_type === INFO_ADDRESS);
-    const dataTelephone = groupData.find(
-      (item) => item.text_type === INFO_TELEPHONE
-    );
+  const dataTelephone = groupData.find(
+    (item) => item.text_type === INFO_TELEPHONE
+  );
 
   return (
-    <div style={{ display: "flex", gap: "30px", flexWrap: "wrap" }}>
+    <div
+      style={{
+        display: "flex",
+        gap: "30px",
+        flexWrap: "wrap",
+      }}
+    >
       <ShowInfoGroupItem
         isEdit={isEdit}
         staticTexts={staticTexts}
