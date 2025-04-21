@@ -26,7 +26,7 @@ export const ChangeOrderButtons = ({ isHorizontal, changeOrder }: Props) => {
     <div
       style={{
         display: "flex",
-        gap: "10px",
+        gap: "5px",
         alignItems: "center",
         justifyContent: "center",
         flexGrow: 2,

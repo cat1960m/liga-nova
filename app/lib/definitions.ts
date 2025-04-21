@@ -188,6 +188,7 @@ export type FullData = {
   parent_feature_id: number;
   text_description_id: number;
   text_content_id: number;
+  text_description_order: number;
   type: string;
   subtype: string;
   name: string;
@@ -202,4 +203,10 @@ export type FullData = {
   language?: string;
   feature_order: number;
   filter_ids?: string;
+};
+
+export type GroupDefinition = {
+  groupFeatureSubtype: string;
+  childFeatureSubtype: string | null;
+  textTypes: string[];
 };

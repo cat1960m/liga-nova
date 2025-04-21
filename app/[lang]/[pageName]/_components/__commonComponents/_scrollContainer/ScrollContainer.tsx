@@ -1,76 +1,122 @@
 "use client";
 
 import { MAX_PAGE_WIDTH } from "@/app/lib/constants";
-import { MouseEventHandler, useEffect, useRef, useState } from "react";
+import {
+  MouseEventHandler,
+  RefObject,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import styles from "./scrollContainer.module.css";
-import { ScrollIcon } from "./ScrollIcon";
+import { ScrollIcon } from "../_scrollIcon/ScrollIcon";
 
 const ICON_WIDTH = 48;
-const PAGE_PADDING = 30;
-const OTHER_PADDINGS = 20; //15;
-const BORDERS_WIDTH = 20;
+const MAX_COUNT_VISIBLE = 3;
+
+type DataType = {
+  isScrollIconsNeeded: boolean;
+  isScrollOnSide: boolean;
+  countItemsShown: number;
+  itemWidth: number;
+};
 
 export type Props = {
   ids: string[];
-  getItem: (value: { id: string; widthItem?: number }) => React.ReactElement;
+  getItem: (value: {
+    id: string;
+    widthItem?: number;
+    index: number;
+    scrollPosition: number;
+    countItemsShown: number;
+    f: (value: "left" | "right") => void;
+    indexSelected: (index: number) => void;
+  }) => React.ReactElement;
   countVisibleItems?: number;
-  isEdit: boolean;
   lastAddedId?: number | null;
-  isScrollTypeSpec?: boolean;
+  isNoScrollItems?: boolean;
+  refParent: RefObject<HTMLDivElement | null>;
+  minItemWidth?: number;
+  maxItemWidth?: number;
 };
 
 export const ScrollContainer = ({
   ids,
   getItem,
   countVisibleItems,
-  isEdit,
   lastAddedId,
-  isScrollTypeSpec,
+  isNoScrollItems,
+  refParent,
+  minItemWidth = 300,
+  maxItemWidth,
 }: Props) => {
   const [scrollPosition, setScrollPosition] = useState<number>(0);
-  const [count, setCount] = useState(0);
-  const [widthItem, setWidthItem] = useState(0);
-
   const start = useRef<number | null>(null);
+  const [dataType, setDataType] = useState<DataType | null>(null);
 
   const getData = () => {
-    const w =
-      //document.documentElement.clientWidth;
-      window.innerWidth;
-    const bordersWidth = isEdit ? BORDERS_WIDTH : 0;
-    console.log("bordersWidth", bordersWidth);
-
-    let countVisible = countVisibleItems;
-
-    if (!countVisible) {
-      countVisible = 1;
-
-      if (ids.length > 1 && w > 500) {
-        countVisible = w >= MAX_PAGE_WIDTH && ids.length > 2 ? 3 : 2;
-      }
+    if (!refParent?.current) {
+      return;
     }
+    const dataType: DataType = {
+      isScrollIconsNeeded: false,
+      isScrollOnSide: false,
+      countItemsShown: 0,
+      itemWidth: 0,
+    };
+    const parentWidth = refParent.current.getBoundingClientRect().width;
 
-    const widthOtherOneSideWithoutIcon =
-      PAGE_PADDING + OTHER_PADDINGS + bordersWidth;
+    const useScrollIconOnSide = isNoScrollItems
+      ? false
+      : parentWidth > MAX_PAGE_WIDTH / 2 + ICON_WIDTH * 2;
 
-    let widthItem = w - widthOtherOneSideWithoutIcon * 2;
+    const scrollIconWidths = useScrollIconOnSide ? 2 * ICON_WIDTH : 0;
 
-    if (countVisible > 1) {
-      const ww = w > MAX_PAGE_WIDTH ? MAX_PAGE_WIDTH : w;
+    const maxCount =
+      countVisibleItems ??
+      Math.min(
+        Math.floor((parentWidth - scrollIconWidths) / minItemWidth),
+        MAX_COUNT_VISIBLE
+      );
 
-      widthItem =
-        (ww - (widthOtherOneSideWithoutIcon + ICON_WIDTH) * 2) / countVisible;
+    if (ids.length <= maxCount) {
+      const count = ids.length;
+      dataType.countItemsShown = count;
+      dataType.isScrollIconsNeeded = false;
+      dataType.isScrollOnSide = false;
+      dataType.itemWidth = maxItemWidth
+        ? Math.min(parentWidth / count, maxItemWidth)
+        : parentWidth / count;
+    } else {
+      const count = maxCount;
+      dataType.countItemsShown = count;
+      dataType.isScrollIconsNeeded = !isNoScrollItems;
+      dataType.isScrollOnSide = useScrollIconOnSide;
+      dataType.itemWidth = (parentWidth - scrollIconWidths) / count - 1;
     }
+    console.log("-----dataType", dataType, "length=", ids.length);
 
-    return [countVisible, widthItem];
+    return dataType;
   };
 
   const changeData = () => {
-    const [countVisible, widthItem] = getData();
-    setCount(countVisible);
-    setScrollPosition(0);
-    setWidthItem(widthItem);
-    console.log("-----widthItem", widthItem);
+    const newDataType = getData();
+
+    if (!newDataType) {
+      return;
+    }
+
+    setDataType(newDataType);
+
+    if (lastAddedId) {
+      const index = ids.findIndex((id) => id === lastAddedId?.toString());
+
+      setScrollPosition(
+        checkPosition(-index * newDataType.itemWidth, newDataType)
+      );
+    } else {
+      setScrollPosition(0);
+    }
   };
 
   useEffect(() => {
@@ -80,40 +126,36 @@ export const ScrollContainer = ({
     window.addEventListener("resize", handleResize);
 
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, [ids]);
 
-  useEffect(() => {
-    if (!lastAddedId) {
-      return;
+  const checkPosition = (
+    newScrollPosition: number,
+    data: DataType | null = dataType
+  ) => {
+    if (!data) {
+      return scrollPosition;
     }
-
-    const index = ids.findIndex((id) => id === lastAddedId?.toString());
-
-    setScrollPosition(checkPosition(-index * widthItem));
-  }, [lastAddedId, ids]);
-
-  if (!ids.length || !count || !widthItem) {
-    return null;
-  }
-
-  const idsVisible: string[] = [...ids, ...ids, ...ids];
-
-  const isIconsVisible = ids.length > count && !isScrollTypeSpec;
-
-  const checkPosition = (newScrollPosition: number) => {
+    const totalWidth = ids.length * data.itemWidth;
     if (newScrollPosition < 0) {
-      return newScrollPosition + ids.length * widthItem;
+      return newScrollPosition + totalWidth;
     }
 
-    if (newScrollPosition >= ids.length * widthItem) {
-      return newScrollPosition - ids.length * widthItem;
+    if (newScrollPosition >= totalWidth) {
+      return newScrollPosition - totalWidth;
     }
 
     return newScrollPosition;
   };
 
+  if (!ids.length || !dataType) {
+    return null;
+  }
+
+  const idsVisible: string[] = [...ids, ...ids, ...ids];
+
   const onScrollItemClick = (direction: "left" | "right") => {
-    const value = direction === "left" ? -widthItem : widthItem;
+    const value =
+      direction === "left" ? -dataType.itemWidth : dataType.itemWidth;
     let newScrollPosition = scrollPosition + value;
     setScrollPosition(checkPosition(newScrollPosition));
   };
@@ -129,27 +171,29 @@ export const ScrollContainer = ({
 
   const handleMouseUp: MouseEventHandler<HTMLDivElement> = (e) => {
     start.current = null;
-    const n = Math.round(scrollPosition / widthItem);
-    let newScrollPosition = n * widthItem;
+    const n = Math.round(scrollPosition / dataType.itemWidth);
+    let newScrollPosition = n * dataType.itemWidth;
     setScrollPosition(checkPosition(newScrollPosition));
   };
 
-  console.log("isIconsVisible", isIconsVisible, ids.length, count);
+  const indexSelected = (index: number) => {
+    setScrollPosition(checkPosition(-index * dataType.itemWidth));
+  };
 
   return (
     <div className={styles.container}>
-      {isIconsVisible ? (
+      {dataType.isScrollIconsNeeded ? (
         <ScrollIcon
           direction={"left"}
-          widthItem={widthItem}
-          countVisibleItems={countVisibleItems}
+          isStaticPosition={dataType.isScrollOnSide}
           onScrollItemClick={onScrollItemClick}
+          marginTop={dataType.itemWidth / 2}
         />
       ) : null}
 
       <div
         style={{
-          width: `${widthItem * count}px`,
+          width: `${dataType.itemWidth * dataType.countItemsShown}px`,
           overflowX: "hidden",
           display: "flex",
         }}
@@ -157,8 +201,8 @@ export const ScrollContainer = ({
         <div
           style={{
             position: "relative",
-            left: -widthItem * ids.length + scrollPosition,
-            width: widthItem * ids.length * 3,
+            left: -dataType.itemWidth * ids.length + scrollPosition,
+            width: dataType.itemWidth * ids.length * 3,
             height: "auto",
           }}
         >
@@ -171,35 +215,30 @@ export const ScrollContainer = ({
             {idsVisible.map((id, index) => (
               <div
                 style={{
-                  width: `${widthItem}px`,
+                  width: `${dataType.itemWidth}px`,
                 }}
                 key={id + "_" + index}
               >
-                {getItem({ id, widthItem })}
+                {getItem({
+                  id,
+                  widthItem: dataType.itemWidth,
+                  index,
+                  indexSelected,
+                  f: onScrollItemClick,
+                  scrollPosition,
+                  countItemsShown: dataType.countItemsShown,
+                })}
               </div>
             ))}
-            {isScrollTypeSpec ? (
-              <div
-                style={{
-                  position: "absolute",
-                  bottom: "10px",
-                  height: "10px",
-                  left: 0,
-                  right: 0,
-                }}
-              >
-                {" "}
-              </div>
-            ) : null}
           </div>
         </div>
       </div>
 
-      {isIconsVisible ? (
+      {dataType.isScrollIconsNeeded ? (
         <ScrollIcon
           direction={"right"}
-          widthItem={widthItem}
-          countVisibleItems={countVisibleItems}
+          marginTop={dataType.itemWidth / 2}
+          isStaticPosition={dataType.isScrollOnSide}
           onScrollItemClick={onScrollItemClick}
         />
       ) : null}

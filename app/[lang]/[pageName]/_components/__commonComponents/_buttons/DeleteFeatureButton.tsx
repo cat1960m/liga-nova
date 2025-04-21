@@ -19,7 +19,7 @@ export const DeleteFeatureButton = ({
   onDeleteFinished,
   featureData,
   isHorizontal,
-  noChangeOrder
+  noChangeOrder,
 }: {
   deleteText: string;
   onDeleteFinished?: () => void;
@@ -31,7 +31,7 @@ export const DeleteFeatureButton = ({
   const { isEditButtonsDisabled, changeIsEditButtonDisabled } =
     useEditContext();
 
-  const featureFirst = featureData.length ? featureData[0]: undefined;
+  const featureFirst = featureData.length ? featureData[0] : undefined;
 
   if (!featureFirst) {
     return null;

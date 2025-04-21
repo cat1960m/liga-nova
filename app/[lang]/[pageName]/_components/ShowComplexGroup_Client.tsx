@@ -18,6 +18,7 @@ import {
   INFO_ACTION_SUBTYPES,
   IMAGE_ACTIONS_GROUP_SUBTYPE,
   ACTION_BANNER_LIST_GROUP_SUBTYPE,
+  TEXT_LIST_GROUP_SUBTYPE,
 } from "@/app/lib/constants";
 import { InfoCheckGroup } from "./_infoCheckGroup/InfoCheckGroup";
 import { ShowServicesGroup } from "./_service/ShowServicesGroup";
@@ -35,6 +36,7 @@ import { ImageLinksGroup } from "./_imageLinksGroup/Image:LinksGroup";
 import { ShowInfoGroup } from "./_info/ShowInfoGroup";
 import { ImageActionsGroup } from "./_imageActionsGroup/ImageActionsGroup";
 import { ActionBannerListGroup } from "./_actionBannerList/ActionBannerListGroup";
+import { TextListGroup } from "./_textList/TextListGroup";
 
 export type Props = {
   groupData: FullData[];
@@ -81,6 +83,8 @@ export const ShowComplexGroup_Client = ({
     firstData?.subtype === ACTION_BANNER_GROUP_SUBTYPE;
   const isActionBannerListGroup =
     firstData?.subtype === ACTION_BANNER_LIST_GROUP_SUBTYPE;
+
+  const isTextListGroup = firstData?.subtype === TEXT_LIST_GROUP_SUBTYPE;
 
   const isPhotoGalleryGroup =
     firstData?.subtype === PHOTO_GALLERY_GROUP_SUBTYPE;
@@ -183,6 +187,16 @@ export const ShowComplexGroup_Client = ({
           staticTexts={staticTexts}
           groupData={groupData}
           params={params}
+        />
+      ) : null}
+
+      {isTextListGroup ? (
+        <TextListGroup
+          isEdit={isEdit}
+          staticTexts={staticTexts}
+          groupData={groupData}
+          params={params}
+          pageFullDataList={pageFullDataList}
         />
       ) : null}
 

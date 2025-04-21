@@ -1,0 +1,56 @@
+
+
+.icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(240, 240, 240, 0.3);
+}
+
+.left {
+    min-width: 48px;
+}
+
+.right {
+    min-width: 48px;
+}
+
+.oneItemLeft {
+    position: absolute;
+    top: 80px;
+    left: 80px;
+    z-index: 2;
+}
+
+.oneItemRight {
+    position: absolute;
+    top: 80px;
+    right: 80px;
+    z-index: 2;
+}
+
+
+
+.icon:hover {
+    background-color: rgba(240, 240, 240, 0.5);
+    color: blue;
+}
+
+@media(max-width: 500px) {
+    .left {
+        position: absolute;
+        top: 80px;
+        left: 40px;
+        z-index: 2;
+    }
+
+    .right {
+        position: absolute;
+        top: 80px;
+        right: 40px;
+        z-index: 2;
+    }
+}

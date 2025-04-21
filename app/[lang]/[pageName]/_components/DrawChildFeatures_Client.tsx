@@ -11,7 +11,7 @@ import { FullData, MainParams } from "@/app/lib/definitions";
 import { ShowComplexGroup_Client } from "./ShowComplexGroup_Client";
 import { ShowTabs_Client } from "./_tabs/ShowTabs_Client";
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import { ShowSimpleGroup_Client } from "./ShowSimpleGroup_Client";
+import { ShowSimpleGroup_Client } from "./_simpleGroup/ShowSimpleGroup_Client";
 import { LayoutParent } from "./_layout_parent/LayoutParent";
 
 export type Props = {

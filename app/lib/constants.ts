@@ -88,11 +88,15 @@ export const ACTION_BANNER_TITLE_IMAGE = "action_banner_title_image";
 
 export const ACTION_BANNER_LIST_GROUP_SUBTYPE = "action_banner_list_group";
 export const ACTION_BANNER_LIST_GROUP_ITEM = "action_banner_list_group_item";
-
 export const ACTION_BANNER_LIST_SHARE = "action_banner_list_share";
 export const ACTION_BANNER_LIST_TICKET = "action_banner_list_ticket";
 export const ACTION_BANNER_LIST_DESCRIPTION = "action_banner_list_description";
 export const ACTION_BANNER_LIST_IMAGE = "action_banner_list_description";
+
+export const TEXT_LIST_GROUP_SUBTYPE = "text_list_group_subtype";
+export const TEXT_LIST_GROUP_ITEM = "text_list_group_item";
+export const TEXT_LIST_NAME = "text_list_name";
+export const TEXT_LIST_BODY = "text_list_body";
 
 export const TABS = "tabs";
 export const TAB = "tab";
@@ -142,7 +146,6 @@ export const CAN_NOT_DELETE = [
   ACTION_BANNER_LIST_TICKET,
   ACTION_BANNER_LIST_DESCRIPTION,
   ACTION_BANNER_LIST_IMAGE,
-
 ];
 export const GROUP_TYPES_WITH_TOOLTIP = [SERVICES_GROUP_SUBTYPE];
 
@@ -167,6 +170,7 @@ export const GroupFeatureSubtypes = [
   ACTION_BANNER_LIST_GROUP_SUBTYPE,
   PHOTO_GALLERY_GROUP_SUBTYPE,
   CALENDAR_EVENTS_GROUP_SUBTYPE,
+  TEXT_LIST_GROUP_SUBTYPE,
 ];
 
 export const SIMPLE_GROUP_SUBTYPES = [

@@ -1,7 +1,7 @@
 import { LIST_ITEM, TRAINERS_PAGE_NAME } from "@/app/lib/constants";
 import { FullData } from "@/app/lib/definitions";
 import { getContainerData, getFilterIds } from "@/app/lib/utils";
-import { useMemo } from "react";
+import { useMemo, useRef } from "react";
 import { ListItem } from "../_filterGroupsListItems/ListItem";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { ScrollContainer } from "../__commonComponents/_scrollContainer/ScrollContainer";
@@ -19,6 +19,7 @@ export const AdditionalPageDataGroupShow = ({
   pageName,
   staticTexts,
 }: Props) => {
+  const ref = useRef<HTMLDivElement>(null);
   const pageFeatureId = currentData.id;
   const filterTextDescriptionIds = getFilterIds(currentData.filter_ids);
 
@@ -63,11 +64,13 @@ export const AdditionalPageDataGroupShow = ({
     };
 
     return (
-      <ScrollContainer
-        ids={containerFullData[1]}
-        getItem={getItem}
-        isEdit={false}
-      />
+      <div style={{ width: "100%" }} ref={ref}>
+        <ScrollContainer
+          ids={containerFullData[1]}
+          getItem={getItem}
+          refParent={ref}
+        />
+      </div>
     );
   }
 

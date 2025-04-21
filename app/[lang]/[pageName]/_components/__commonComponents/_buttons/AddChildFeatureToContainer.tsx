@@ -56,8 +56,12 @@ import {
   ACTION_BANNER_LIST_DESCRIPTION,
   ACTION_BANNER_LIST_IMAGE,
   ACTION_BANNER_LIST_GROUP_ITEM,
+  TEXT_LIST_GROUP_SUBTYPE,
+  TEXT_LIST_GROUP_ITEM,
+  TEXT_LIST_NAME,
+  TEXT_LIST_BODY,
 } from "@/app/lib/constants";
-import { FullData, MainParams } from "@/app/lib/definitions";
+import { FullData, GroupDefinition, MainParams } from "@/app/lib/definitions";
 import { usePathname } from "next/navigation";
 import { ChangeEventHandler, useMemo, useState } from "react";
 
@@ -183,6 +187,28 @@ export const AddChildFeatureToContainer = ({
             ACTION_BANNER_LIST_DESCRIPTION,
             ACTION_BANNER_LIST_IMAGE,
           ],
+          pathName,
+        });
+      }
+    }
+
+    if (newValue === TEXT_LIST_GROUP_SUBTYPE) {
+      const textListGroupFeatureId = await addChildFeature({
+        parentId: parentFeatureId,
+        type: GROUP,
+        subtype: newValue,
+        name: params.pageName,
+        text_types: [],
+        pathName,
+      });
+      
+      if (textListGroupFeatureId) {
+        await addChildFeature({
+          parentId: textListGroupFeatureId,
+          type: TEXT_LIST_GROUP_ITEM,
+          subtype: TEXT_LIST_GROUP_ITEM,
+          name: params.pageName,
+          text_types: [TEXT_LIST_NAME, TEXT_LIST_BODY],
           pathName,
         });
       }

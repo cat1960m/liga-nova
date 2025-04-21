@@ -7,9 +7,9 @@ import {
   SIMPLE_GROUP_ITEM,
 } from "@/app/lib/constants";
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import { ExpandedText } from "./__commonComponents/_expandedText/ExpandedText";
-import { UpdateDeleteTextButtons } from "./__commonComponents/_buttons/UpdateDeleteTextButtons";
-import { AddTextDescriptionDeleteFeatureButtons } from "./__commonComponents/_buttons/AddTextDescriptionDeleteFeatureButtons";
+import { ExpandedText } from "../__commonComponents/_expandedText/ExpandedText";
+import { UpdateDeleteTextButtons } from "../__commonComponents/_buttons/UpdateDeleteTextButtons";
+import { AddTextDescriptionDeleteFeatureButtons } from "../__commonComponents/_buttons/AddTextDescriptionDeleteFeatureButtons";
 
 export type Props = {
   data: FullData[];

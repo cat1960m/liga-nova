@@ -10,15 +10,11 @@ import {
 } from "@/app/lib/constants";
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { ScrollContainer } from "../__commonComponents/_scrollContainer/ScrollContainer";
-import Image from "next/image";
-import { DragEventHandler, useState } from "react";
+import { useRef, useState } from "react";
 import { getContainerData } from "@/app/lib/utils";
-import styles from "./actionBannerList.module.css";
-import { CommonButton } from "../__commonComponents/_buttons/CommonButton";
 import { DeleteFeatureButton } from "../__commonComponents/_buttons/DeleteFeatureButton";
 import { AddChildFeatureButton } from "../__commonComponents/_buttons/AddChildFeatureButton";
-import { UpdateTextDescriptionDeleteFeatureButtons } from "../__commonComponents/_buttons/UpdateTextDescriptionDeleteFeatureButtons";
-import { UpdateTextDescriptionData } from "../__commonComponents/_upadeModal/UpdateTextDescriptionData";
+import { ShowItem } from "./ShowItem";
 
 export type Props = {
   isEdit: boolean;
@@ -36,6 +32,7 @@ export const ActionBannerListGroup = ({
   pageFullDataList,
 }: Props) => {
   const [lastAddedId, setLastAddedId] = useState<number | null>(null);
+  const ref = useRef<HTMLDivElement>(null);
 
   const groupFeatureId = groupData[0]?.id;
 
@@ -53,123 +50,29 @@ export const ActionBannerListGroup = ({
 
   const ids = actionBannerListItemIds;
 
-  const getItem = ({ id, widthItem }: { id: string; widthItem?: number }) => {
-    const actionBannerListItemData = actionBannerListItemsData[id];
-
-    const share = actionBannerListItemData.find(
-      (item) => item.text_type === ACTION_BANNER_LIST_SHARE
-    );
-    const ticket = actionBannerListItemData.find(
-      (item) => item.text_type === ACTION_BANNER_LIST_TICKET
-    );
-    const description = actionBannerListItemData.find(
-      (item) => item.text_type === ACTION_BANNER_LIST_DESCRIPTION
-    );
-    const image = actionBannerListItemData.find(
-      (item) => item.text_type === ACTION_BANNER_LIST_DESCRIPTION
-    );
-
-    const value = image?.value;
-
+  const getItem = ({
+    id,
+    widthItem,
+    indexSelected,
+    f,
+  }: {
+    id: string;
+    widthItem?: number;
+    indexSelected: (index: number) => void;
+    f: (value: "left" | "right") => void;
+  }) => {
     return (
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          width: widthItem,
-        }}
-      >
-        <div className={styles.container}>
-          {value ? (
-            <Image
-              src={value}
-              layout="fill" // Fill the container
-              objectFit="cover" // Make sure it covers the entire container
-              quality={100} // Optional, for higher quality
-              alt="image"
-              draggable="false" // This directly disables drag-and-drop
-              //   onDragStart={preventDragHandler} // Ensures additional prevention
-            />
-          ) : null}
-          {/* changes for mobile needed */}
-          <div
-            className={styles.infoContainer}
-            style={{ padding: isEdit ? "20px" : undefined }}
-          >
-            <div
-              style={{ display: "flex", flexDirection: "column", gap: "5px" }}
-            >
-              <div className={styles.group}>
-                <div className={styles.title}>
-                  {share?.text_content ?? "N/A"}
-                </div>
-                {isEdit && share ? (
-                  <UpdateTextDescriptionData
-                    staticTexts={staticTexts}
-                    currentData={share}
-                    useItems={{ text: "simple" }}
-                    params={params}
-                  />
-                ) : null}
-              </div>
-
-              <div className={styles.group}>
-                <div className={styles.title}>
-                  {ticket?.text_content ?? "N/A"}
-                </div>
-                {isEdit && ticket ? (
-                  <UpdateTextDescriptionData
-                    staticTexts={staticTexts}
-                    currentData={ticket}
-                    useItems={{ text: "simple" }}
-                    params={params}
-                  />
-                ) : null}
-              </div>
-            </div>
-
-            <div className={styles.group}>
-              <div style={{ display: "flex", width: "100%", gap: "5px" }}>
-                <div className={styles.line}>_______</div>
-                <div className={styles.description}>
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: description?.text_content ?? "N/A",
-                    }}
-                  />
-                </div>
-              </div>
-
-              {isEdit && description ? (
-                <UpdateTextDescriptionData
-                  staticTexts={staticTexts}
-                  currentData={description}
-                  useItems={{ text: "quill" }}
-                  params={params}
-                />
-              ) : null}
-            </div>
-
-            <div className={styles.buttons}>
-              <CommonButton text={staticTexts.register ?? "N/A"} isAction />
-              <CommonButton text={staticTexts.register ?? "N/A"} isAction />
-            </div>
-          </div>
-        </div>
-
-        {image && isEdit ? (
-          <UpdateTextDescriptionDeleteFeatureButtons
-            dataToUpdate={image}
-            staticTexts={staticTexts}
-            useItems={{
-              value: "image",
-            }}
-            params={params}
-            featureData={actionBannerListItemData}
-            isHorizontal
-          />
-        ) : null}
-      </div>
+      <ShowItem
+        actionBannerListItemsData={actionBannerListItemsData}
+        id={id}
+        widthItem={widthItem}
+        isEdit={isEdit}
+        staticTexts={staticTexts}
+        params={params}
+        indexSelected={indexSelected}
+        f={f}
+        ids={ids}
+      />
     );
   };
   const handleChildFeatureAdded = (newId: number) => {
@@ -181,14 +84,21 @@ export const ActionBannerListGroup = ({
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "10px", border: "2px solid green" }}>
+    <div
+      ref={ref}
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "10px",
+      }}
+    >
       <ScrollContainer
         ids={ids}
         getItem={getItem}
         countVisibleItems={1}
-        isEdit={isEdit}
         lastAddedId={lastAddedId}
-        isScrollTypeSpec={true}
+        isNoScrollItems={true}
+        refParent={ref}
       />
       {isEdit ? (
         <div

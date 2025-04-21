@@ -23,6 +23,7 @@ export type Props = {
   useItems: UseItems;
   params: MainParams;
   changeModalState?: (state: boolean) => void;
+  onDeleteFinished?: () => void;
 };
 
 export const UpdateDeleteTextButtons = ({
@@ -35,6 +36,7 @@ export const UpdateDeleteTextButtons = ({
   useItems,
   params,
   changeModalState,
+  onDeleteFinished,
 }: Props) => {
   const { changeIsEditButtonDisabled } = useEditContext();
   const pathName = usePathname();
@@ -94,9 +96,10 @@ export const UpdateDeleteTextButtons = ({
       style={{
         display: "flex",
         flexDirection,
-        gap: "10px",
+        gap: "5px",
         alignItems: "center",
         flexWrap: "wrap",
+        justifyContent: "center",
       }}
     >
       <UpdateTextDescriptionData
@@ -109,7 +112,7 @@ export const UpdateDeleteTextButtons = ({
       <div
         style={{
           display: "flex",
-          gap: "10px",
+          gap: "5px",
           alignItems: "center",
           flexWrap: "wrap",
           flexDirection,
@@ -119,7 +122,11 @@ export const UpdateDeleteTextButtons = ({
           <DeleteTextDescriptionButton
             textDescriptionId={currentData.text_description_id}
             deleteText={staticTexts.delete ?? "N/A"}
-            s3Key={s3Key || (useItems.value === "image" ? currentData.value: undefined)}
+            s3Key={
+              s3Key ||
+              (useItems.value === "image" ? currentData.value : undefined)
+            }
+            onDeleteFinished={onDeleteFinished}
           />
         ) : null}
 

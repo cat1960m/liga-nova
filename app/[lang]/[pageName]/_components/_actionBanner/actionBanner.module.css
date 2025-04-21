@@ -22,7 +22,7 @@
   font-weight: 700;
 }
 
-@media (max-width: 768px) {
+@media (max-width: var(--mobileWidth)) {
   .info_big {
     display: none;
   }
