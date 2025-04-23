@@ -24,7 +24,6 @@ import {
 import { InfoCheckGroup } from "./_infoCheckGroup/InfoCheckGroup";
 import { ShowServicesGroup } from "./_service/ShowServicesGroup";
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import { DeleteFeatureButton } from "./__commonComponents/_buttons/DeleteFeatureButton";
 import { ShowScheduleGroup } from "./_schedule/ShowScheduleGroup";
 import { AdditionalPageDataGroup } from "./_additionalPageData/AdditionalPageDataGroup";
 import { FilterGroupsListItemsGroup } from "./_filterGroupsListItems/FilterGroupsListItemsGroup";
@@ -95,17 +94,12 @@ export const ShowComplexGroup_Client = ({
 
   const isTextGroup = TEXT_GROUP_SUBTYPES.includes(firstData?.subtype);
 
-  const isDeleteOnly =
-    isAdditionalPageDataGroup ||
-    isFilterGroupsListItemsGroup ||
-    isCalendarEventsGroup;
-
   return (
     <div
       style={{
         width: "100%",
-        border: isEdit ? "1px dotted magenta" : undefined,
-        padding: isEdit ? "10px" : undefined,
+        // border: isEdit ? "1px dotted magenta" : undefined,
+        // padding: isEdit ? "10px" : undefined,
         margin: "20px 0 20px 0",
       }}
     >
@@ -240,6 +234,7 @@ export const ShowComplexGroup_Client = ({
           pageFullDataList={pageFullDataList}
           pageId={pageId}
           params={params}
+          groupData={groupData}
         />
       ) : null}
 
@@ -261,23 +256,6 @@ export const ShowComplexGroup_Client = ({
           params={params}
           pageFullData={pageFullDataList}
         />
-      ) : null}
-
-      {isEdit && isDeleteOnly ? (
-        <div
-          style={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            marginTop: "20px",
-          }}
-        >
-          <DeleteFeatureButton
-            deleteText={staticTexts.delete ?? "N/A"}
-            featureData={groupData}
-          />
-        </div>
       ) : null}
     </div>
   );

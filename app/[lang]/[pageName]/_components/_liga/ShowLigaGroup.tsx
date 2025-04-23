@@ -14,7 +14,7 @@ import { getPageTitles } from "@/app/lib/actions_fitness";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import styles from "./showListGRoup.module.css";
-import { AddTextDescriptionDeleteFeatureButtons } from "../__commonComponents/_buttons/AddTextDescriptionDeleteFeatureButtons";
+import { ItemContainerAddTextDescriptionDeleteFeature } from "../__commonComponents/_itemGroupContainer/ItemContainerAddTextDescriptionDeleteFeature";
 
 export type Props = {
   isEdit: boolean;
@@ -60,7 +60,14 @@ export const ShowLigaGroup = ({
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+    <ItemContainerAddTextDescriptionDeleteFeature
+      deleteButtonText={staticTexts.delete ?? "N/A"}
+      featureData={groupData}
+      addButtonText={staticTexts.addGroupItem ?? "N/A"}
+      textDescriptionType={LIGA_SERVICE}
+      isEdit={isEdit}
+      isChangeOrderHorizontal={false}
+    >
       <div
         style={{
           display: "flex",
@@ -69,7 +76,7 @@ export const ShowLigaGroup = ({
           width: "100%",
           borderRadius: "10px",
           backgroundColor: GRAY_BACKGROUND_COLOR,
-          border: isEdit ? "1px dotted magenta" : undefined,
+          border: "1px dotted lightgray",
           padding: "10px",
         }}
       >
@@ -111,14 +118,6 @@ export const ShowLigaGroup = ({
           </div>
         ) : null}
       </div>
-      {isEdit ? (
-        <AddTextDescriptionDeleteFeatureButtons
-          deleteButtonText={staticTexts.delete ?? "N/A"}
-          featureData={groupData}
-          addButtonText={staticTexts.addGroupItem ?? "N/A"}
-          textDescriptionType={LIGA_SERVICE}
-        />
-      ) : null}
-    </div>
+    </ItemContainerAddTextDescriptionDeleteFeature>
   );
 };

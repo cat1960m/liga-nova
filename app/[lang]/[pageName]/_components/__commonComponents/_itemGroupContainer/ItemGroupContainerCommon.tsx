@@ -23,7 +23,7 @@ export const ItemGroupContainerCommon = ({
         border: isEdit ? "1px dotted magenta" : undefined,
         padding: isEdit ? "25px 10px 10px 10px" : undefined,
         position: "relative",
-        marginTop: isEdit ? "20px" : 0,
+        marginTop: isEdit ? "30px" : "10px",
       }}
     >
       {children}

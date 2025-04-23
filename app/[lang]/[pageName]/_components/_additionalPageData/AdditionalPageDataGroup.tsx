@@ -6,6 +6,7 @@ import { AdditionalPageDataGroupEdit } from "./AdditionalPageDataGroupEdit";
 import { AdditionalPageDataGroupShow } from "./AdditionalPageDataGroupShow";
 import { PAGE_NAMES_TO_LIST_ITEMS_DATA } from "@/app/lib/constants";
 import Link from "next/link";
+import { ItemContainerAddTextDescriptionDeleteFeature } from "../__commonComponents/_itemGroupContainer/ItemContainerAddTextDescriptionDeleteFeature";
 
 export type Props = {
   currentData: FullData;
@@ -14,6 +15,7 @@ export type Props = {
   pageFullDataList: FullData[];
   pageId: number;
   params: MainParams;
+  groupData: FullData[];
 };
 
 export const AdditionalPageDataGroup = ({
@@ -23,6 +25,7 @@ export const AdditionalPageDataGroup = ({
   pageFullDataList,
   pageId,
   params,
+  groupData,
 }: Props) => {
   const pageData = pageFullDataList.find((data) => data.id === pageId);
   const additionalPageNames = (pageData?.additional_page_name ?? "").split(",");
@@ -38,7 +41,15 @@ export const AdditionalPageDataGroup = ({
   const linkText = PAGE_NAMES_TO_LIST_ITEMS_DATA[additionalPageName]?.linkText;
 
   return (
-    <>
+    <ItemContainerAddTextDescriptionDeleteFeature
+      isNoAddButton
+      deleteButtonText={staticTexts.delete ?? "N/A"}
+      featureData={groupData}
+      isEdit={isEdit}
+      addButtonText=""
+      textDescriptionType=""
+      isChangeOrderHorizontal={false}
+    >
       {isEdit ? (
         <AdditionalPageDataGroupEdit
           currentData={currentData}
@@ -55,7 +66,6 @@ export const AdditionalPageDataGroup = ({
           staticTexts={staticTexts}
         />
       )}
-
       <div
         style={{
           width: "100%",
@@ -68,6 +78,6 @@ export const AdditionalPageDataGroup = ({
           {staticTexts[linkText]}
         </Link>
       </div>
-    </>
+    </ItemContainerAddTextDescriptionDeleteFeature>
   );
 };

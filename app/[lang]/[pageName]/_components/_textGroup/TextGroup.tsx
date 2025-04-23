@@ -1,13 +1,9 @@
 import { FullData, MainParams } from "@/app/lib/definitions";
-import {
-  DEFAULT_TEXT,
-  GROUP_EXPANDED_SUBTYPE,
-  SIMPLE_GROUP_ITEM,
-} from "@/app/lib/constants";
+import { GROUP_EXPANDED_SUBTYPE, SIMPLE_GROUP_ITEM } from "@/app/lib/constants";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { ExpandedText } from "../__commonComponents/_expandedText/ExpandedText";
-import { AddTextDescriptionDeleteFeatureButtons } from "../__commonComponents/_buttons/AddTextDescriptionDeleteFeatureButtons";
-import { ItemContainerUpdateDeleteTextDescription } from "../__commonComponents/_itemGroupContainer/ItemContainerUpdateDeleteTextDescription";
+import { ItemContainerAddTextDescriptionDeleteFeature } from "../__commonComponents/_itemGroupContainer/ItemContainerAddTextDescriptionDeleteFeature";
+import { ShowTextDescription } from "./ShowTextDescription";
 
 export type Props = {
   data: FullData[];
@@ -28,10 +24,6 @@ export const TextGroup = ({ data, isEdit, staticTexts, params }: Props) => {
     <div
       style={{
         marginBottom: "10px",
-        border: isEdit ? "1px dotted magenta" : undefined,
-        padding: isEdit ? "10px 10px 10px 10px" : undefined,
-        marginTop: isEdit ? "10px" : undefined,
-        gap: isEdit ? "10px" : undefined,
         display: "flex",
         flexDirection: "column",
         position: "relative",
@@ -45,33 +37,27 @@ export const TextGroup = ({ data, isEdit, staticTexts, params }: Props) => {
           isButton
         />
       ) : null}
-      {!isTextExpandedShown
-        ? textDescriptions.map((item) => {
-            return (
-              <ItemContainerUpdateDeleteTextDescription
-                key={item.text_description_id}
-                isEdit={isEdit}
-                useItems={{ text: "quill" }}
-                staticTexts={staticTexts}
-                params={params}
-                currentData={item}
-              >
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: item.text_content ?? DEFAULT_TEXT,
-                  }}
-                />
-              </ItemContainerUpdateDeleteTextDescription>
-            );
-          })
-        : null}
-      {isEdit ? (
-        <AddTextDescriptionDeleteFeatureButtons
+      {!isTextExpandedShown ? (
+        <ItemContainerAddTextDescriptionDeleteFeature
+          isEdit={isEdit}
           deleteButtonText={staticTexts.delete ?? "N/A"}
           featureData={data}
           addButtonText={staticTexts.addGroupItem ?? "N/A"}
           textDescriptionType={SIMPLE_GROUP_ITEM}
-        />
+          isChangeOrderHorizontal={false}
+        >
+          {textDescriptions.map((item) => {
+            return (
+              <ShowTextDescription
+                key={item.text_description_id}
+                item={item}
+                isEdit={isEdit}
+                staticTexts={staticTexts}
+                params={params}
+              />
+            );
+          })}
+        </ItemContainerAddTextDescriptionDeleteFeature>
       ) : null}
     </div>
   );

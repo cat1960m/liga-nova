@@ -3,9 +3,7 @@
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { CommonButton } from "../__commonComponents/_buttons/CommonButton";
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import { UpdateTextDescriptionData } from "../__commonComponents/_upadeModal/UpdateTextDescriptionData";
-import { DeleteFeatureButton } from "../__commonComponents/_buttons/DeleteFeatureButton";
-import { ItemGroupContainerCommon } from "../__commonComponents/_itemGroupContainer/ItemGroupContainerCommon";
+import { ItemContainerUpdateTextDescriptionDeleteFeature } from "../__commonComponents/_itemGroupContainer/ItemContainerUpdateTextDescriptionDeleteFeature";
 
 export type Props = {
   tabTitle: FullData;
@@ -31,43 +29,26 @@ export const ShowTabTitle_Client = ({
   };
 
   const backgroundColor = isTabSelected ? "lightblue" : "lightgray";
-  const getEditButtons = () => {
-    return (
-      <div
-        style={{
-          display: "flex",
-          gap: "5px",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <UpdateTextDescriptionData
-          currentData={tabTitle}
-          staticTexts={staticTexts}
-          useItems={{
-            text: "simple",
-          }}
-          params={params}
-        />
-
-        <DeleteFeatureButton
-          deleteText={staticTexts.deleteTab ?? "N/A"}
-          featureData={[tabTitle]}
-          isHorizontal
-          noDelete={isTabSelected}
-        />
-      </div>
-    );
-  };
 
   return (
-    <ItemGroupContainerCommon isEdit={isEdit} getEditButtons={getEditButtons}>
+    <ItemContainerUpdateTextDescriptionDeleteFeature
+      isEdit={isEdit}
+      currentData={tabTitle}
+      staticTexts={staticTexts}
+      useItems={{
+        text: "simple",
+      }}
+      params={params}
+      featureData={[tabTitle]}
+      isChangeOrderHorizontal
+      noDelete={isTabSelected}
+    >
       <CommonButton
         backgroundColor={backgroundColor}
         text={tabTitle.text_content ?? "N/A"}
         onClick={handleTabClick}
         minWidth={isEdit ? 200 : undefined}
       />
-    </ItemGroupContainerCommon>
+    </ItemContainerUpdateTextDescriptionDeleteFeature>
   );
 };

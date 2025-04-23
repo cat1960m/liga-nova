@@ -3,7 +3,7 @@ import { FullData, MainParams } from "@/app/lib/definitions";
 import { ShowGroupServicesText } from "./ShowGroupServicesText";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { UpdateDeleteTextButtons } from "../__commonComponents/_buttons/UpdateDeleteTextButtons";
-import { AddTextDescriptionDeleteFeatureButtons } from "../__commonComponents/_buttons/AddTextDescriptionDeleteFeatureButtons";
+import { ItemContainerAddTextDescriptionDeleteFeature } from "../__commonComponents/_itemGroupContainer/ItemContainerAddTextDescriptionDeleteFeature";
 
 export type Props = {
   groupData: FullData[];
@@ -23,7 +23,15 @@ export const ShowServicesGroup = ({
   const texts = groupData.filter((data) => data.content_type !== TOOLTIP);
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+    <ItemContainerAddTextDescriptionDeleteFeature
+      deleteButtonText={staticTexts.delete ?? "N/A"}
+      featureData={groupData}
+      textDescriptionType={SERVICE_ITEM}
+      addButtonText={staticTexts.addGroupItem ?? "N/A"}
+      price={0}
+      isEdit={isEdit}
+      isChangeOrderHorizontal={false}
+    >
       <div
         style={{
           width: "100%",
@@ -81,16 +89,6 @@ export const ShowServicesGroup = ({
           })}
         </div>
       </div>
-
-      {isEdit ? (
-        <AddTextDescriptionDeleteFeatureButtons
-          deleteButtonText={staticTexts.delete ?? "N/A"}
-          featureData={groupData}
-          textDescriptionType={SERVICE_ITEM}
-          addButtonText={staticTexts.addGroupItem ?? "N/A"}
-          price={0}
-        />
-      ) : null}
-    </div>
+    </ItemContainerAddTextDescriptionDeleteFeature>
   );
 };

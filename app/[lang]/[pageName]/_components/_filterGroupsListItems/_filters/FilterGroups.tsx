@@ -50,6 +50,8 @@ export const FilterGroups = ({
         borderRadius: "10px",
         width: isEdit ? undefined : currentWidth,
         minWidth: FILTER_GROUP_DEFAULT_WIDTH,
+        padding: isEdit ? "10px" : 0,
+
       }}
     >
       <FilterGroupsItems

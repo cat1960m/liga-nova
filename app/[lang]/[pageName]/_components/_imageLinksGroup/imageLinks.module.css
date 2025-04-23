@@ -60,11 +60,13 @@
     flex-direction: column;
     justify-content: space-between;
     padding: 20px;
+    color: white;
+
 }
 
-.edit {
-    border: 1px dotted magenta;
-    padding: 10px;
+.link {
+    text-align: center;
+    color: white
 }
 
 @media(max-width: 980px) {

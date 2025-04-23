@@ -1,5 +1,4 @@
 import { FullData } from "@/app/lib/definitions";
-import Image from "next/image";
 
 import styles from "./imageActions.module.css";
 import { TOOLTIP } from "@/app/lib/constants";

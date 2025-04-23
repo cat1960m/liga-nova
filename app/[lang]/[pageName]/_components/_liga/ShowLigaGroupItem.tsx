@@ -51,7 +51,7 @@ export const ShowLigaGroupItem = ({
         link: isService,
       }}
       params={params}
-      isHorizontal={false}
+      isChangeOrderHorizontal={false}
     >
       <>
         {isTitle ? (

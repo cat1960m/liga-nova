@@ -3,19 +3,29 @@ import Image from "next/image";
 
 import styles from "./imageLinks.module.css";
 import { TOOLTIP } from "@/app/lib/constants";
+import Link from "next/link";
+import { StaticTexts } from "@/app/dictionaries/definitions";
 
 export type Props = {
   data: FullData;
   groupData: FullData[];
   isModalShown: boolean;
+  staticTexts: StaticTexts;
 };
 
-export const ImageLink = ({ data, groupData, isModalShown }: Props) => {
+export const ImageLink = ({
+  data,
+  groupData,
+  isModalShown,
+  staticTexts,
+}: Props) => {
   const tooltip = groupData.find(
     (item) =>
       item.text_description_id === data.text_description_id &&
       item.content_type === TOOLTIP
   );
+
+  const link = data.link;
   return (
     <div className={styles.item}>
       {data.value ? (
@@ -31,12 +41,18 @@ export const ImageLink = ({ data, groupData, isModalShown }: Props) => {
       {isModalShown ? null : (
         <div className={styles.text}>{data.text_content ?? ""}</div>
       )}
-      <div
-        className={styles.tooltip}
-        dangerouslySetInnerHTML={{
-          __html: tooltip?.text_content ?? "",
-        }}
-      />
+      <div className={styles.tooltip}>
+        <div
+          dangerouslySetInnerHTML={{
+            __html: tooltip?.text_content ?? "",
+          }}
+        />
+        {link ? (
+          <Link href={link} className={styles.link}>
+            {`${staticTexts.details} >`}
+          </Link>
+        ) : null}
+      </div>
     </div>
   );
 };

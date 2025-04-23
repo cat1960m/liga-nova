@@ -2,14 +2,13 @@
 
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { FullData, MainParams } from "@/app/lib/definitions";
-import { AddTextDescriptionDeleteFeatureButtons } from "../__commonComponents/_buttons/AddTextDescriptionDeleteFeatureButtons";
 import { IMAGE_LINKS_ITEM, TOOLTIP } from "@/app/lib/constants";
-import { ImageLink } from "./ImageLink";
 import cn from "clsx";
 
 import styles from "./imageLinks.module.css";
 import { useState } from "react";
-import { ItemContainerUpdateDeleteTextDescription } from "../__commonComponents/_itemGroupContainer/ItemContainerUpdateDeleteTextDescription";
+import { ImageLinkGroupItem } from "./ImageLinkGroupItem";
+import { ItemContainerAddTextDescriptionDeleteFeature } from "../__commonComponents/_itemGroupContainer/ItemContainerAddTextDescriptionDeleteFeature";
 
 export type Props = {
   groupData: FullData[];
@@ -31,48 +30,28 @@ export const ImageLinksGroup = ({
   const changeModalState = (state: boolean) => setIsModalShown(state);
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        gap: "10px",
-        width: "100%",
-      }}
+    <ItemContainerAddTextDescriptionDeleteFeature
+      isEdit={isEdit}
+      featureData={groupData}
+      deleteButtonText={staticTexts.delete ?? "N/A"}
+      addButtonText={staticTexts.addGroupItem ?? "N/A"}
+      textDescriptionType={IMAGE_LINKS_ITEM}
     >
-      <div className={cn(styles.container, { [styles.edit]: isEdit })}>
+      <div className={cn(styles.container)}>
         {groupDataMain.map((item) => (
           <div className={styles.itemContainer} key={item.text_description_id}>
-            <ItemContainerUpdateDeleteTextDescription
+            <ImageLinkGroupItem
               isEdit={isEdit}
-              s3Key={item.value}
-              useItems={{
-                text: "simple",
-                tooltip: "quill",
-                value: "image",
-                link: true,
-              }}
               staticTexts={staticTexts}
+              groupData={groupData}
               params={params}
-              currentData={item}
+              item={item}
               changeModalState={changeModalState}
-            >
-              <ImageLink
-                data={item}
-                groupData={groupData}
-                isModalShown={isModalShown}
-              />
-            </ItemContainerUpdateDeleteTextDescription>
+              isModalShown={isModalShown}
+            />
           </div>
         ))}
       </div>
-      {isEdit ? (
-        <AddTextDescriptionDeleteFeatureButtons
-          featureData={groupData}
-          deleteButtonText={staticTexts.delete ?? "N/A"}
-          addButtonText={staticTexts.addGroupItem ?? "N/A"}
-          textDescriptionType={IMAGE_LINKS_ITEM}
-        />
-      ) : null}
-    </div>
+    </ItemContainerAddTextDescriptionDeleteFeature>
   );
 };

@@ -30,14 +30,34 @@ export const getPageTitles = async (lang: string) => {
 
 export const getFeatureChildren = async ({
   parentFeatureId,
+  type,
+  subtype,
 }: {
   parentFeatureId: number;
+  type: string;
+  subtype: string;
 }) => {
   try {
+    const dd = await sql<Feature[]>`SELECT
+    *
+    FROM features
+    WHERE features.id=${parentFeatureId}`;
+
+    const isPage = !dd[0].parent_feature_id;
+
+    if (isPage) {
+      return await sql<Feature[]>`SELECT
+               *
+               FROM features
+               WHERE features.parent_feature_id=${parentFeatureId} 
+               ORDER BY feature_order`;
+    }
+
     return await sql<Feature[]>`SELECT
                *
                FROM features
-               WHERE features.parent_feature_id=${parentFeatureId}
+               WHERE features.parent_feature_id=${parentFeatureId} 
+               AND features.type=${type} AND features.subtype=${subtype}
                ORDER BY feature_order`;
   } catch (error) {
     // If a database error occurs, return a more specific error.
@@ -144,7 +164,6 @@ export const RemoveFeature = async ({
             DELETE FROM features
             WHERE id = ANY (${sql.array(ids)}::integer[]);
           `;
-
       } else {
         ids = [];
       }

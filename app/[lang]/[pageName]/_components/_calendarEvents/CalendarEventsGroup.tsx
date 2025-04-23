@@ -129,107 +129,135 @@ export const CalendarEventsGroup = ({
   });
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-      {isCalendarShown ? (
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "10px",
-            width: "100%",
-          }}
-        >
+    <>
+      <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+        {isCalendarShown ? (
           <div
             style={{
               display: "flex",
-              padding: "10px",
-              flexWrap: "wrap-reverse",
+              flexDirection: "column",
               gap: "10px",
+              width: "100%",
             }}
           >
             <div
               style={{
                 display: "flex",
+                padding: "10px",
+                flexWrap: "wrap-reverse",
                 gap: "10px",
-                justifyContent: "center",
-                flexGrow: 2,
-                alignItems: "center",
               }}
             >
-              <CommonButton text={"<"} onClick={handleLeftClick} isAction />
-              <ShowDatesInterval
-                staticTexts={staticTexts}
-                startOfWeek={startOfWeek}
-                endOfWeek={endOfWeek}
-                currentDate={currentDate}
-                isWeek={isWeek}
-              />
-              <CommonButton text={">"} onClick={handleRightClick} isAction />
+              <div
+                style={{
+                  display: "flex",
+                  gap: "10px",
+                  justifyContent: "center",
+                  flexGrow: 2,
+                  alignItems: "center",
+                }}
+              >
+                <CommonButton text={"<"} onClick={handleLeftClick} isAction />
+                <ShowDatesInterval
+                  staticTexts={staticTexts}
+                  startOfWeek={startOfWeek}
+                  endOfWeek={endOfWeek}
+                  currentDate={currentDate}
+                  isWeek={isWeek}
+                />
+                <CommonButton text={">"} onClick={handleRightClick} isAction />
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  gap: "5px",
+                  justifyContent: "flex-end",
+                  justifyItems: "flex-end",
+                  flexGrow: 1,
+                }}
+              >
+                <CommonButton
+                  text={staticTexts.today}
+                  onClick={handleTodayClick}
+                  isAction
+                  isDisabled={
+                    isWeek
+                      ? dateToString(startOfWeek) ===
+                        dateToString(getNowStartOfWeek())
+                      : dateToString(currentDate) ===
+                        dateToString(getDateToday())
+                  }
+                />
+                <CommonButton
+                  text={staticTexts.week}
+                  onClick={handleWeekClick}
+                  backgroundColor={
+                    isWeek
+                      ? ACTION_BUTTON_BACKGROUND
+                      : ACTION_BUTTON_BACKGROUND_NOT_SELECTED
+                  }
+                />
+                <CommonButton
+                  text={staticTexts.day}
+                  onClick={handleDayClick}
+                  backgroundColor={
+                    !isWeek
+                      ? ACTION_BUTTON_BACKGROUND
+                      : ACTION_BUTTON_BACKGROUND_NOT_SELECTED
+                  }
+                />
+              </div>
             </div>
-            <div
-              style={{
-                display: "flex",
-                gap: "5px",
-                justifyContent: "flex-end",
-                justifyItems: "flex-end",
-                flexGrow: 1,
-              }}
-            >
-              <CommonButton
-                text={staticTexts.today}
-                onClick={handleTodayClick}
-                isAction
-                isDisabled={
-                  isWeek
-                    ? dateToString(startOfWeek) ===
-                      dateToString(getNowStartOfWeek())
-                    : dateToString(currentDate) === dateToString(getDateToday())
-                }
-              />
-              <CommonButton
-                text={staticTexts.week}
-                onClick={handleWeekClick}
-                backgroundColor={
-                  isWeek
-                    ? ACTION_BUTTON_BACKGROUND
-                    : ACTION_BUTTON_BACKGROUND_NOT_SELECTED
-                }
-              />
-              <CommonButton
-                text={staticTexts.day}
-                onClick={handleDayClick}
-                backgroundColor={
-                  !isWeek
-                    ? ACTION_BUTTON_BACKGROUND
-                    : ACTION_BUTTON_BACKGROUND_NOT_SELECTED
-                }
+
+            <ShowEvents
+              eventsIds={eventsIds}
+              eventsData={eventsData}
+              staticTexts={staticTexts}
+              isEdit={isEdit}
+              setEditEventId={setEditEventId}
+              startDate={isWeek ? startOfWeek : currentDate}
+              countDates={isWeek ? 7 : 1}
+              parentFeatureId={calendarFeatureId}
+            />
+          </div>
+        ) : null}
+
+        {!isCalendarShown ? (
+          <AddEditCalendarEvents
+            staticTexts={staticTexts}
+            calendarFeatureId={calendarFeatureId}
+            params={params}
+            hideAddEvent={hideAddEvent}
+            eventFeatureData={editEventId ? eventsData[editEventId] : undefined}
+          />
+        ) : null}
+
+        {isEdit ? (
+          <div
+            style={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              marginTop: "20px",
+            }}
+          >
+            <div style={{ display: "flex", gap: "20px" }}>
+              {isEdit && !isAddShown ? (
+                <CommonButton
+                  text={staticTexts.addEvent ?? "N/A"}
+                  onClick={handleClickAddEvent}
+                />
+              ) : null}
+
+              <DeleteFeatureButton
+                deleteText={staticTexts.deleteCalendar ?? "N/A"}
+                featureData={groupData}
               />
             </div>
           </div>
-
-          <ShowEvents
-            eventsIds={eventsIds}
-            eventsData={eventsData}
-            staticTexts={staticTexts}
-            isEdit={isEdit}
-            setEditEventId={setEditEventId}
-            startDate={isWeek ? startOfWeek : currentDate}
-            countDates={isWeek ? 7 : 1}
-            parentFeatureId={calendarFeatureId}
-          />
-        </div>
-      ) : null}
-
-      {!isCalendarShown ? (
-        <AddEditCalendarEvents
-          staticTexts={staticTexts}
-          calendarFeatureId={calendarFeatureId}
-          params={params}
-          hideAddEvent={hideAddEvent}
-          eventFeatureData={editEventId ? eventsData[editEventId] : undefined}
-        />
-      ) : null}
-
+        ) : null}
+      </div>
       {isEdit ? (
         <div
           style={{
@@ -240,21 +268,12 @@ export const CalendarEventsGroup = ({
             marginTop: "20px",
           }}
         >
-          <div style={{ display: "flex", gap: "20px" }}>
-            {isEdit && !isAddShown ? (
-              <CommonButton
-                text={staticTexts.addEvent ?? "N/A"}
-                onClick={handleClickAddEvent}
-              />
-            ) : null}
-
-            <DeleteFeatureButton
-              deleteText={staticTexts.deleteCalendar ?? "N/A"}
-              featureData={groupData}
-            />
-          </div>
+          <DeleteFeatureButton
+            deleteText={staticTexts.delete ?? "N/A"}
+            featureData={groupData}
+          />
         </div>
       ) : null}
-    </div>
+    </>
   );
 };

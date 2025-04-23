@@ -62,10 +62,6 @@
     padding: 20px;
 }
 
-.edit {
-    border: 1px dotted magenta;
-    padding: 10px;
-}
 
 @media(max-width: 980px) {
     .itemContainer {

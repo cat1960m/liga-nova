@@ -2,10 +2,10 @@ import { FullData, MainParams } from "@/app/lib/definitions";
 import { DrawFeatureContainer_Client } from "../DrawFeatureContainer_Client";
 import { getContainerData } from "@/app/lib/utils";
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import { DeleteFeatureButton } from "../__commonComponents/_buttons/DeleteFeatureButton";
 import { LAYOUT_ITEM_LEFT, LAYOUT_ITEM_RIGHT } from "@/app/lib/constants";
 import styles from "./layoutParent.module.css";
 import cn from "clsx";
+import { ItemContainerAddTextDescriptionDeleteFeature } from "../__commonComponents/_itemGroupContainer/ItemContainerAddTextDescriptionDeleteFeature";
 
 export type Props = {
   tabsData: FullData;
@@ -56,10 +56,14 @@ export const LayoutParent = ({
   });
 
   return (
-    <div
-      style={
-        isEdit ? { border: "4px dashed magenta", padding: "10px" } : undefined
-      }
+    <ItemContainerAddTextDescriptionDeleteFeature
+      isEdit={isEdit}
+      deleteButtonText={staticTexts.delete ?? "N/A"}
+      featureData={[tabsData]}
+      isNoAddButton
+      addButtonText=""
+      textDescriptionType=""
+      isChangeOrderHorizontal={false}
     >
       <div className={styles.container}>
         <div
@@ -99,24 +103,6 @@ export const LayoutParent = ({
           />
         </div>
       </div>
-      {isEdit ? (
-        <div
-          style={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            marginTop: "20px",
-          }}
-        >
-          <div style={{ display: "flex", gap: "20px" }}>
-            <DeleteFeatureButton
-              deleteText={staticTexts.delete ?? "N/A"}
-              featureData={[tabsData]}
-            />
-          </div>
-        </div>
-      ) : null}
-    </div>
+    </ItemContainerAddTextDescriptionDeleteFeature>
   );
 };

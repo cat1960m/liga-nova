@@ -4,6 +4,7 @@ import { addTextDescription } from "@/app/lib/actions_fitness";
 import { usePathname } from "next/navigation";
 import { CommonButton } from "./CommonButton";
 import { useEditContext } from "../../../edit/_components/EditContextProvider";
+import { PlusIcon } from "@heroicons/react/24/outline";
 
 export type Props = {
   featureId: number;
@@ -20,10 +21,14 @@ export const AddTextDescriptionButton = (props: Props) => {
   const pathName = usePathname();
   const handleAddColumnItem = async () => {
     changeIsEditButtonDisabled(true);
-    const newTextDescriptionId = await addTextDescription({ ...props, pathName, canDelete: true });
+    const newTextDescriptionId = await addTextDescription({
+      ...props,
+      pathName,
+      canDelete: true,
+    });
     changeIsEditButtonDisabled(false);
 
-    if(newTextDescriptionId) {
+    if (newTextDescriptionId) {
       props.onTextDescriptionAdded?.(newTextDescriptionId);
     }
   };
@@ -31,8 +36,11 @@ export const AddTextDescriptionButton = (props: Props) => {
   return (
     <CommonButton
       onClick={handleAddColumnItem}
-      text={props.buttonText}
+      text={"+"}
       isDisabled={isEditButtonsDisabled}
-    />
+      width="40px"
+    >
+      <PlusIcon width="20px" title={props.buttonText} />
+    </CommonButton>
   );
 };

@@ -39,7 +39,7 @@ export const ShowInfoGroupItem = ({
       params={params}
       currentData={data}
       isChangeOrder={isBody}
-      isHorizontal={false}
+      isChangeOrderHorizontal={false}
     >
       <div
         style={{

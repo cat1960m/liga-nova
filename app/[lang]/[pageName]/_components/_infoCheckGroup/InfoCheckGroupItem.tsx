@@ -33,7 +33,7 @@ export const InfoCheckGroupItem = ({
         params={params}
         currentData={currentData}
         isChangeOrder={!isHeader}
-        isHorizontal={false}
+        isChangeOrderHorizontal={false}
       >
         <div style={{ display: "flex", gap: "5px", alignItems: "flex-start" }}>
           {!isHeader ? (

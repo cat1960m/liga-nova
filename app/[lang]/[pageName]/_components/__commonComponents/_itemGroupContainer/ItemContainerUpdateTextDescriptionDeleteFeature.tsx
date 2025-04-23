@@ -3,45 +3,40 @@ import { UpdateDeleteTextButtons } from "../_buttons/UpdateDeleteTextButtons";
 import { UseItems } from "../_upadeModal/UpdateTextDescriptionDataModalContent";
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { ItemGroupContainerCommon } from "./ItemGroupContainerCommon";
+import { UpdateTextDescriptionDeleteFeatureButtons } from "./UpdateTextDescriptionDeleteFeatureButtons";
 
 export type Props = {
   children: React.ReactNode;
   isEdit: boolean;
-  useItems: UseItems;
   staticTexts: StaticTexts;
-  s3Key?: string;
-  onDeleteFinished?: () => void;
   params: MainParams;
+  useItems: UseItems;
   currentData: FullData;
-  changeModalState?: (state: boolean) => void;
-  isChangeOrder?: boolean;
   isChangeOrderHorizontal?: boolean;
+  featureData: FullData[];
+  noDelete?: boolean;
 };
 
-export const ItemContainerUpdateDeleteTextDescription = ({
+export const ItemContainerUpdateTextDescriptionDeleteFeature = ({
   isEdit,
   children,
   useItems,
   staticTexts,
-  s3Key,
-  onDeleteFinished,
   params,
   currentData,
-  changeModalState,
-  isChangeOrder = true,
   isChangeOrderHorizontal = true,
+  featureData,
+  noDelete,
 }: Props) => {
   const getEditButtons = () => (
-    <UpdateDeleteTextButtons
+    <UpdateTextDescriptionDeleteFeatureButtons
       staticTexts={staticTexts}
-      currentData={currentData}
-      s3Key={s3Key}
-      isChangeOrder={isChangeOrder}
       isChangeOrderHorizontal={isChangeOrderHorizontal}
       params={params}
       useItems={useItems}
-      onDeleteFinished={onDeleteFinished}
-      changeModalState={changeModalState}
+      dataToUpdate={currentData}
+      featureData={featureData}
+      noDelete={noDelete}
     />
   );
   return (

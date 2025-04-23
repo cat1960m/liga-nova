@@ -2,7 +2,7 @@ import { FullData, MainParams } from "@/app/lib/definitions";
 import { UpdateTextDescriptionData } from "../_upadeModal/UpdateTextDescriptionData";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { UseItems } from "../_upadeModal/UpdateTextDescriptionDataModalContent";
-import { DeleteFeatureButton } from "./DeleteFeatureButton";
+import { DeleteFeatureButton } from "../_buttons/DeleteFeatureButton";
 
 export type Props = {
   dataToUpdate?: FullData;
@@ -10,7 +10,8 @@ export type Props = {
   useItems: UseItems;
   params: MainParams;
   featureData: FullData[];
-  isHorizontal?: boolean;
+  isChangeOrderHorizontal?: boolean;
+  noDelete?: boolean;
 };
 
 export const UpdateTextDescriptionDeleteFeatureButtons = ({
@@ -19,7 +20,8 @@ export const UpdateTextDescriptionDeleteFeatureButtons = ({
   useItems,
   params,
   featureData,
-  isHorizontal
+  isChangeOrderHorizontal,
+  noDelete,
 }: Props) => {
   return (
     <div
@@ -28,8 +30,7 @@ export const UpdateTextDescriptionDeleteFeatureButtons = ({
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        marginTop: "20px",
-        gap: "10px",
+        gap: "5px",
       }}
     >
       {dataToUpdate ? (
@@ -43,7 +44,8 @@ export const UpdateTextDescriptionDeleteFeatureButtons = ({
       <DeleteFeatureButton
         deleteText={staticTexts.delete ?? "N/A"}
         featureData={featureData}
-        isHorizontal={isHorizontal}
+        isChangeOrderHorizontal={isChangeOrderHorizontal}
+        noDelete={noDelete}
       />
     </div>
   );

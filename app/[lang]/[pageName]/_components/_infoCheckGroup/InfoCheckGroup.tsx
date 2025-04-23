@@ -1,7 +1,7 @@
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { InfoCheckGroupItem } from "./InfoCheckGroupItem";
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import { AddTextDescriptionDeleteFeatureButtons } from "../__commonComponents/_buttons/AddTextDescriptionDeleteFeatureButtons";
+import { ItemContainerAddTextDescriptionDeleteFeature } from "../__commonComponents/_itemGroupContainer/ItemContainerAddTextDescriptionDeleteFeature";
 
 export type Props = {
   headerType: string;
@@ -33,20 +33,19 @@ export const InfoCheckGroup = ({
   }
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        gap: "10px",
-      }}
+    <ItemContainerAddTextDescriptionDeleteFeature
+      isEdit={isEdit}
+      deleteButtonText={staticTexts.delete ?? "N/A"}
+      featureData={groupData}
+      addButtonText={staticTexts.addGroupItem ?? "N/A"}
+      textDescriptionType={columnItemType}
+      isChangeOrderHorizontal={false}
     >
       <div
         style={{
           display: "flex",
           flexDirection: "column",
           gap: "10px",
-          padding: isEdit ? "10px" : 0,
-          border: isEdit ? "1px dotted magenta" : undefined,
         }}
       >
         {headerData ? (
@@ -72,15 +71,6 @@ export const InfoCheckGroup = ({
             })
           : null}
       </div>
-
-      {isEdit ? (
-        <AddTextDescriptionDeleteFeatureButtons
-          deleteButtonText={staticTexts.delete ?? "N/A"}
-          featureData={groupData}
-          addButtonText={staticTexts.addGroupItem ?? "N/A"}
-          textDescriptionType={columnItemType}
-        />
-      ) : null}
-    </div>
+    </ItemContainerAddTextDescriptionDeleteFeature>
   );
 };

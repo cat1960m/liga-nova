@@ -19,14 +19,14 @@ export const DeleteFeatureButton = ({
   deleteText,
   onDeleteFinished,
   featureData,
-  isHorizontal,
+  isChangeOrderHorizontal,
   noChangeOrder,
   noDelete,
 }: {
   deleteText: string;
   onDeleteFinished?: () => void;
   featureData: FullData[];
-  isHorizontal?: boolean;
+  isChangeOrderHorizontal?: boolean;
   noChangeOrder?: boolean;
   noDelete?: boolean;
 }) => {
@@ -42,6 +42,8 @@ export const DeleteFeatureButton = ({
 
   const featureId = featureFirst.id;
   const parentFeatureId = featureFirst.parent_feature_id;
+  const subtype = featureFirst.subtype;
+  const type = featureFirst.type;
 
   const handleDelete = async () => {
     changeIsEditButtonDisabled(true);
@@ -80,6 +82,8 @@ export const DeleteFeatureButton = ({
 
     const features: Feature[] | null = await getFeatureChildren({
       parentFeatureId,
+      type,
+      subtype,
     });
 
     if (features && features.length > 1) {
@@ -117,19 +121,23 @@ export const DeleteFeatureButton = ({
         display: "flex",
         gap: "5px",
         alignItems: "center",
-        alignContent: "center",
+        justifyContent: "center",
         flexWrap: "wrap",
       }}
     >
       {!noDelete ? (
-        <CommonButton onClick={handleDelete} isDisabled={isEditButtonsDisabled}>
+        <CommonButton
+          onClick={handleDelete}
+          isDisabled={isEditButtonsDisabled}
+          width="40px"
+        >
           <TrashIcon style={{ width: "24px" }} title={deleteText} />
         </CommonButton>
       ) : null}
 
       {!noChangeOrder && parentFeatureId ? (
         <ChangeOrderButtons
-          isHorizontal={isHorizontal}
+          isChangeOrderHorizontal={isChangeOrderHorizontal}
           changeOrder={changeOrder}
         />
       ) : null}

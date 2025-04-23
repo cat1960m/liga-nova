@@ -1,3 +1,5 @@
+"use client";
+
 import {
   ChevronDownIcon,
   ChevronLeftIcon,
@@ -8,11 +10,14 @@ import { CommonButton } from "./CommonButton";
 import { useEditContext } from "../../../edit/_components/EditContextProvider";
 
 export type Props = {
-  isHorizontal?: boolean;
+  isChangeOrderHorizontal?: boolean;
   changeOrder: (isToStart: boolean) => void;
 };
 
-export const ChangeOrderButtons = ({ isHorizontal, changeOrder }: Props) => {
+export const ChangeOrderButtons = ({
+  isChangeOrderHorizontal,
+  changeOrder,
+}: Props) => {
   const { isEditButtonsDisabled } = useEditContext();
   const handleToStartClick = () => {
     changeOrder(true);
@@ -29,7 +34,7 @@ export const ChangeOrderButtons = ({ isHorizontal, changeOrder }: Props) => {
         gap: "5px",
         alignItems: "center",
         justifyContent: "center",
-        flexGrow: 2,
+        //   flexGrow: 2,
       }}
     >
       <CommonButton
@@ -37,7 +42,7 @@ export const ChangeOrderButtons = ({ isHorizontal, changeOrder }: Props) => {
         width="40px"
         isDisabled={isEditButtonsDisabled}
       >
-        {isHorizontal ? (
+        {isChangeOrderHorizontal ? (
           <ChevronLeftIcon style={{ width: "24px" }} />
         ) : (
           <ChevronUpIcon style={{ width: "24px" }} />
@@ -48,7 +53,7 @@ export const ChangeOrderButtons = ({ isHorizontal, changeOrder }: Props) => {
         width="40px"
         isDisabled={isEditButtonsDisabled}
       >
-        {isHorizontal ? (
+        {isChangeOrderHorizontal ? (
           <ChevronRightIcon style={{ width: "24px" }} />
         ) : (
           <ChevronDownIcon style={{ width: "24px" }} />

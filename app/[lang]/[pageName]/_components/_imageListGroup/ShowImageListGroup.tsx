@@ -4,11 +4,10 @@ import { StaticTexts } from "@/app/dictionaries/definitions";
 import { IMAGE } from "@/app/lib/constants";
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { ScrollContainer } from "../__commonComponents/_scrollContainer/ScrollContainer";
-import Image from "next/image";
-import { DragEventHandler, useRef, useState } from "react";
-import { AddTextDescriptionDeleteFeatureButtons } from "../__commonComponents/_buttons/AddTextDescriptionDeleteFeatureButtons";
 import { ShowItem } from "./ShowItem";
 import { ItemContainerUpdateDeleteTextDescription } from "../__commonComponents/_itemGroupContainer/ItemContainerUpdateDeleteTextDescription";
+import { useRef, useState } from "react";
+import { ItemContainerAddTextDescriptionDeleteFeature } from "../__commonComponents/_itemGroupContainer/ItemContainerAddTextDescriptionDeleteFeature";
 
 export type Props = {
   isEdit: boolean;
@@ -17,7 +16,7 @@ export type Props = {
   countVisibleItems?: number;
   params: MainParams;
 };
-
+// school of trainers and other
 export const ShowImageListGroup = ({
   isEdit,
   staticTexts,
@@ -72,27 +71,25 @@ export const ShowImageListGroup = ({
   };
 
   return (
-    <div
-      style={{ display: "flex", flexDirection: "column", gap: "10px" }}
-      ref={ref}
+    <ItemContainerAddTextDescriptionDeleteFeature
+      isEdit={isEdit}
+      featureData={groupData}
+      deleteButtonText={staticTexts.delete ?? "N/A"}
+      addButtonText={staticTexts.addGroupItem ?? "N/A"}
+      textDescriptionType={IMAGE}
+      onTextDescriptionAdded={onTextDescriptionAdded}
     >
-      <ScrollContainer
-        ids={ids}
-        getItem={getItem}
-        countVisibleItems={countVisibleItems}
-        lastAddedId={lastAddedId}
-        refParent={ref}
-      />
-
-      {isEdit ? (
-        <AddTextDescriptionDeleteFeatureButtons
-          featureData={groupData}
-          deleteButtonText={staticTexts.delete ?? "N/A"}
-          addButtonText={staticTexts.addGroupItem ?? "N/A"}
-          textDescriptionType={IMAGE}
-          onTextDescriptionAdded={onTextDescriptionAdded}
-        />
-      ) : null}
-    </div>
+      <div ref={ref}>
+        {ids.length ? (
+          <ScrollContainer
+            ids={ids}
+            getItem={getItem}
+            countVisibleItems={countVisibleItems}
+            lastAddedId={lastAddedId}
+            refParent={ref}
+          />
+        ) : null}
+      </div>
+    </ItemContainerAddTextDescriptionDeleteFeature>
   );
 };

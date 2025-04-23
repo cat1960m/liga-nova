@@ -17,7 +17,7 @@ export type Props = {
   currentData?: FullData;
   staticTexts: StaticTexts;
   isChangeOrder?: boolean;
-  isHorizontal?: boolean;
+  isChangeOrderHorizontal?: boolean;
   s3Key?: string;
   useItems: UseItems;
   params: MainParams;
@@ -29,7 +29,7 @@ export const UpdateDeleteTextButtons = ({
   currentData,
   staticTexts,
   isChangeOrder,
-  isHorizontal,
+  isChangeOrderHorizontal,
   s3Key,
   useItems,
   params,
@@ -128,7 +128,7 @@ export const UpdateDeleteTextButtons = ({
 
         {isChangeOrder ? (
           <ChangeOrderButtons
-            isHorizontal={isHorizontal}
+            isChangeOrderHorizontal={isChangeOrderHorizontal}
             changeOrder={changeOrder}
           />
         ) : null}

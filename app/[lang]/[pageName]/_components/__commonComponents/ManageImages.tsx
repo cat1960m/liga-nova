@@ -1,6 +1,6 @@
 import { FullData, MainParams } from "@/app/lib/definitions";
-import { DeleteFeatureButton } from "./_buttons/DeleteFeatureButton";
 import { UploadComponent } from "./UploadComponent";
+import { ItemContainerDeleteChildFeature } from "./_itemGroupContainer/ItemContainerDeleteChildFeature";
 
 export type Props = {
   imagesData: FullData[];
@@ -18,27 +18,20 @@ export const ManageImages = ({
       <div style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}>
         {imagesData.map((imageItem) => {
           return (
-            <div
+            <ItemContainerDeleteChildFeature
+              deleteText="Delete"
+              onDeleteFinished={onDeleteFinished}
+              featureData={[imageItem]}
+              noChangeOrder
+              isEdit={true}
               key={imageItem.text_description_id}
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                gap: "5px",
-              }}
             >
               <img
                 src={imageItem.value}
                 alt="image"
                 style={{ maxWidth: "100px" }}
               />
-              <DeleteFeatureButton
-                deleteText="Delete"
-                onDeleteFinished={onDeleteFinished}
-                featureData={[imageItem]}
-                noChangeOrder
-              />
-            </div>
+            </ItemContainerDeleteChildFeature>
           );
         })}
       </div>

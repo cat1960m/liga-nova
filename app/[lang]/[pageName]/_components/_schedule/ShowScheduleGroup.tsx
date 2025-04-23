@@ -1,21 +1,14 @@
 import { FullData, MainParams } from "@/app/lib/definitions";
 import {
-  GRAY_BACKGROUND_COLOR,
   SCHEDULE_ITEM,
   SCHEDULE_NAME,
-  /* SCHEDULE_ITEM1,
-  SCHEDULE_ITEM2,
-  SCHEDULE_ITEM3,
-  SCHEDULE_ITEM4,
-  SCHEDULE_ITEM5,
-  SCHEDULE_ITEM6, */
 } from "@/app/lib/constants";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { ShowSCheduleGroupItem } from "./ShowScheduleGroupItem";
-import { AddTextDescriptionDeleteFeatureButtons } from "../__commonComponents/_buttons/AddTextDescriptionDeleteFeatureButtons";
 
 import styles from "./showScheduleGroup.module.css";
 import { ShowSCheduleName } from "./ShowScheduleName";
+import { ItemContainerAddTextDescriptionDeleteFeature } from "../__commonComponents/_itemGroupContainer/ItemContainerAddTextDescriptionDeleteFeature";
 
 export type Props = {
   isEdit: boolean;
@@ -34,7 +27,14 @@ export const ShowScheduleGroup = ({
   const items = groupData.filter((item) => item.text_type === SCHEDULE_ITEM);
 
   return (
-    <div className={styles.main}>
+    <ItemContainerAddTextDescriptionDeleteFeature
+      deleteButtonText={staticTexts.delete ?? "N/A"}
+      featureData={groupData}
+      addButtonText={staticTexts.addGroupItem ?? "N/A"}
+      textDescriptionType={SCHEDULE_ITEM}
+      isEdit={isEdit}
+      isChangeOrderHorizontal={false}
+    >
       <div className={styles.container}>
         <ShowSCheduleName
           isEdit={isEdit}
@@ -56,15 +56,6 @@ export const ShowScheduleGroup = ({
           })}
         </div>
       </div>
-
-      {isEdit ? (
-        <AddTextDescriptionDeleteFeatureButtons
-          deleteButtonText={staticTexts.delete ?? "N/A"}
-          featureData={groupData}
-          addButtonText={staticTexts.addGroupItem ?? "N/A"}
-          textDescriptionType={SCHEDULE_ITEM}
-        />
-      ) : null}
-    </div>
+    </ItemContainerAddTextDescriptionDeleteFeature>
   );
 };

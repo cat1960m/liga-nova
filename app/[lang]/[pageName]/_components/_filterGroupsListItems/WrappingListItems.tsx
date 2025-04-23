@@ -113,7 +113,7 @@ export const WrappingListItems = ({
                   <DeleteFeatureButton
                     deleteText={staticTexts.delete ?? "N/A"}
                     featureData={currentData}
-                    isHorizontal
+                    isChangeOrderHorizontal
                   />
                 </div>
               ) : null}

@@ -3,7 +3,7 @@
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { IMAGE } from "@/app/lib/constants";
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import { UpdateTextDescriptionDeleteFeatureButtons } from "../__commonComponents/_buttons/UpdateTextDescriptionDeleteFeatureButtons";
+import { ItemContainerUpdateTextDescriptionDeleteFeature } from "../__commonComponents/_itemGroupContainer/ItemContainerUpdateTextDescriptionDeleteFeature";
 
 export type Props = {
   isEdit: boolean;
@@ -19,9 +19,22 @@ export const ShowImageGroup = ({
   params,
 }: Props) => {
   const imageData = groupData.find((item) => item.text_type === IMAGE);
+  if (!imageData) {
+    return;
+  }
 
   return (
-    <>
+    <ItemContainerUpdateTextDescriptionDeleteFeature
+      isEdit={isEdit}
+      currentData={imageData}
+      staticTexts={staticTexts}
+      useItems={{
+        value: "image",
+      }}
+      params={params}
+      featureData={groupData}
+      isChangeOrderHorizontal={false}
+    >
       {imageData?.value ? (
         <div
           style={{
@@ -34,35 +47,15 @@ export const ShowImageGroup = ({
             style={{
               width: "100%",
               height: "100%",
-              position: "relative",
-              // minHeight: "300px",
+              //  position: "relative",
             }}
           >
-            {/*  <Image
-              src={imageData?.value}
-              alt=""
-              layout="fill" // Fill the container
-              objectFit="cover" // Make sure it covers the entire container
-              quality={100} // Optional, for higher quality
-            /> */}
             <img src={imageData?.value} alt="" width="100%" />
           </div>
         </div>
       ) : (
         <div>{"No file"}</div>
       )}
-
-      {isEdit ? (
-        <UpdateTextDescriptionDeleteFeatureButtons
-          dataToUpdate={imageData}
-          staticTexts={staticTexts}
-          useItems={{
-            value: "image",
-          }}
-          params={params}
-          featureData={groupData}
-        />
-      ) : null}
-    </>
+    </ItemContainerUpdateTextDescriptionDeleteFeature>
   );
 };

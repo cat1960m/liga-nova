@@ -4,6 +4,7 @@ import { addChildFeature } from "@/app/lib/actions_fitness";
 import { CommonButton } from "./CommonButton";
 import { MainParams } from "@/app/lib/definitions";
 import { useEditContext } from "../../../edit/_components/EditContextProvider";
+import { PlusIcon } from "@heroicons/react/24/outline";
 
 export type Props = {
   parentFeatureId: number;
@@ -45,9 +46,11 @@ export const AddChildFeatureButton = ({
 
   return (
     <CommonButton
-      text={text}
       onClick={handleAddFeature}
       isDisabled={isEditButtonsDisabled}
-    />
+      width="40px"
+    >
+      <PlusIcon width="24px" title={text} />
+    </CommonButton>
   );
 };

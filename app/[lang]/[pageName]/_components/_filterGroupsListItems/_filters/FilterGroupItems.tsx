@@ -57,13 +57,16 @@ export const FilterGroupsItems = ({
           <div key={filterGroupId}>
             {!!index ? (
               <div
-                style={{ padding: "5px 0", borderTop: "1px solid lightgray" }}
+                style={{
+                  padding: isEdit ? "5px 0" : undefined,
+                  borderTop: "1px solid lightgray",
+                }}
               />
             ) : null}
             <FilterGroup
               isEdit={isEdit}
               staticTexts={staticTexts}
-              groupData={filterGroupData}
+              filterGroupData={filterGroupData}
               onFilterSelectionChanged={onFilterSelectionChanged}
               selectedFilterTextDescriptionIds={
                 selectedFilterTextDescriptionIds

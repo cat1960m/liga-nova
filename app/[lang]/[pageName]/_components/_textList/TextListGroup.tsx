@@ -10,9 +10,10 @@ import {
   TEXT_LIST_NAME,
 } from "@/app/lib/constants";
 import { getContainerData } from "@/app/lib/utils";
-import { UpdateTextDescriptionData } from "../__commonComponents/_upadeModal/UpdateTextDescriptionData";
-import { DeleteFeatureButton } from "../__commonComponents/_buttons/DeleteFeatureButton";
-import { AddChildFeatureButton } from "../__commonComponents/_buttons/AddChildFeatureButton";
+import { ShowBody } from "./ShowBody";
+import { ShowName } from "./ShowName";
+import { ItemContainerAddChildFeatureDeleteFeature } from "../__commonComponents/_itemGroupContainer/ItemContainerAddChildFeatureDeleteFeature";
+import { ItemContainerDeleteChildFeature } from "../__commonComponents/_itemGroupContainer/ItemContainerDeleteChildFeature";
 
 export type Props = {
   isEdit: boolean;
@@ -89,139 +90,47 @@ export const TextListGroup = ({
     return (
       <div
         style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "5px",
           width: widthItem + "px",
+          padding: "10px",
         }}
       >
-        <div
-          style={{
-            padding: "10px",
-            width: "100%",
-          }}
+        <ItemContainerDeleteChildFeature
+          isEdit={isEdit}
+          deleteText={staticTexts.delete ?? "N/A"}
+          featureData={childFeatureData}
+          isChangeOrderHorizontal={true}
+          onDeleteFinished={handleDeleteFinished}
         >
           <div
             style={{
+              width: "100%",
               border: "1px dotted lightgray",
               display: "flex",
               flexDirection: "column",
-              gap: "10px",
               padding: "10px",
             }}
           >
-            <div
-              style={{
-                display: "flex",
-                flexWrap: "wrap",
-                gap: "10px",
-                justifyContent: "center",
-              }}
-            >
-              <div
-                style={{
-                  fontSize: isMain ? 18 : 12,
-                  fontWeight: 400,
-                  color: isMain ? "red" : "black",
-                }}
-              >
-                {textName?.text_content ?? "N/A"}
-              </div>
-              {isEdit && textName ? (
-                <UpdateTextDescriptionData
-                  staticTexts={staticTexts}
-                  currentData={textName}
-                  useItems={{ text: "simple" }}
-                  params={params}
-                />
-              ) : null}
-            </div>
+            {textName ? (
+              <ShowName
+                isMain={isMain}
+                textName={textName}
+                isEdit={isEdit}
+                staticTexts={staticTexts}
+                params={params}
+              />
+            ) : null}
 
-            <div
-              style={{
-                display: "flex",
-                flexWrap: "wrap",
-                gap: "10px",
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  width: "100%",
-                  flexDirection: "column",
-                }}
-              >
-                {isMain ? (
-                  <div
-                    style={{
-                      height: "20px",
-                      display: "flex",
-                      justifyContent: "flex-start",
-                      alignItems: "center",
-                      fontSize: "40px",
-                      color: "#6f6fff",
-                      lineHeight: "30px",
-                    }}
-                  >
-                    "
-                  </div>
-                ) : null}
-                <div
-                  style={{
-                    fontSize: isMain ? 16 : 12,
-                    fontWeight: 200,
-                    whiteSpace: "pre-line",
-                    padding: isMain ? "0 30px" : undefined,
-                  }}
-                >
-                  {textBody?.text_content ?? "N/A"}
-                </div>
-                {isMain ? (
-                  <div
-                    style={{
-                      height: "40px",
-                      display: "flex",
-                      justifyContent: "flex-end",
-                      alignItems: "center",
-                      fontSize: "40px",
-                      color: "#6f6fff",
-                      lineHeight: "30px",
-                    }}
-                  >
-                    "
-                  </div>
-                ) : null}
-              </div>
-
-              {isEdit && textBody ? (
-                <UpdateTextDescriptionData
-                  staticTexts={staticTexts}
-                  currentData={textBody}
-                  useItems={{ text: "area" }}
-                  params={params}
-                />
-              ) : null}
-            </div>
+            {textBody ? (
+              <ShowBody
+                isMain={isMain}
+                textBody={textBody}
+                isEdit={isEdit}
+                staticTexts={staticTexts}
+                params={params}
+              />
+            ) : null}
           </div>
-        </div>
-
-        {isEdit ? (
-          <div
-            style={{
-              width: "100%",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <DeleteFeatureButton
-              deleteText={staticTexts.delete ?? "N/A"}
-              featureData={childFeatureData}
-              isHorizontal={true}
-              onDeleteFinished={handleDeleteFinished}
-            />
-          </div>
-        ) : null}
+        </ItemContainerDeleteChildFeature>
       </div>
     );
   };
@@ -235,46 +144,25 @@ export const TextListGroup = ({
   };
 
   return (
-    <div
-      ref={ref}
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        gap: "10px",
-      }}
+    <ItemContainerAddChildFeatureDeleteFeature
+      isEdit={isEdit}
+      groupData={groupData}
+      params={params}
+      onChildFeatureAdded={handleChildFeatureAdded}
+      addButtonText={staticTexts.addGroupItem ?? "N/A"}
+      deleteButtonText={staticTexts.delete ?? "N/A"}
+      textTypes={[TEXT_LIST_NAME, TEXT_LIST_BODY]}
+      featureType={TEXT_LIST_GROUP_ITEM}
+      featureSubtype={TEXT_LIST_GROUP_ITEM}
     >
-      <ScrollContainer
-        ids={ids}
-        getItem={getItem}
-        lastAddedId={lastAddedId}
-        refParent={ref}
-      />
-      {isEdit ? (
-        <div
-          style={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            marginTop: "20px",
-            gap: "10px",
-          }}
-        >
-          <AddChildFeatureButton
-            parentFeatureId={groupFeatureId}
-            text={staticTexts.addImage ?? "N/A"}
-            params={params}
-            textTypes={[TEXT_LIST_NAME, TEXT_LIST_BODY]}
-            type={TEXT_LIST_GROUP_ITEM}
-            subtype={TEXT_LIST_GROUP_ITEM}
-            onChildFeatureAdded={handleChildFeatureAdded}
-          />
-          <DeleteFeatureButton
-            deleteText={staticTexts.delete ?? "N/A"}
-            featureData={groupData}
-          />
-        </div>
-      ) : null}
-    </div>
+      <div ref={ref}>
+        <ScrollContainer
+          ids={ids}
+          getItem={getItem}
+          lastAddedId={lastAddedId}
+          refParent={ref}
+        />
+      </div>
+    </ItemContainerAddChildFeatureDeleteFeature>
   );
 };

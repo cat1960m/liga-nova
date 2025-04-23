@@ -12,9 +12,8 @@ import { FullData, MainParams } from "@/app/lib/definitions";
 import { ScrollContainer } from "../__commonComponents/_scrollContainer/ScrollContainer";
 import { useRef, useState } from "react";
 import { getContainerData } from "@/app/lib/utils";
-import { DeleteFeatureButton } from "../__commonComponents/_buttons/DeleteFeatureButton";
-import { AddChildFeatureButton } from "../__commonComponents/_buttons/AddChildFeatureButton";
 import { ShowItem } from "./ShowItem";
+import { ItemContainerAddChildFeatureDeleteFeature } from "../__commonComponents/_itemGroupContainer/ItemContainerAddChildFeatureDeleteFeature";
 
 export type Props = {
   isEdit: boolean;
@@ -23,7 +22,7 @@ export type Props = {
   params: MainParams;
   pageFullDataList: FullData[];
 };
-
+//main page
 export const ActionBannerListGroup = ({
   isEdit,
   staticTexts,
@@ -84,54 +83,33 @@ export const ActionBannerListGroup = ({
   };
 
   return (
-    <div
-      ref={ref}
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        gap: "10px",
-      }}
+    <ItemContainerAddChildFeatureDeleteFeature
+      addButtonText={staticTexts.addImage ?? "N/A"}
+      params={params}
+      textTypes={[
+        ACTION_BANNER_LIST_SHARE,
+        ACTION_BANNER_LIST_TICKET,
+        ACTION_BANNER_LIST_DESCRIPTION,
+        ACTION_BANNER_LIST_IMAGE,
+      ]}
+      featureType={ACTION_BANNER_LIST_GROUP_ITEM}
+      featureSubtype={ACTION_BANNER_LIST_GROUP_ITEM}
+      onChildFeatureAdded={handleChildFeatureAdded}
+      deleteButtonText={staticTexts.delete ?? "N/A"}
+      groupData={groupData}
+      onDeleteFinished={handleDeleteFinished}
+      isEdit={isEdit}
     >
-      <ScrollContainer
-        ids={ids}
-        getItem={getItem}
-        countVisibleItems={1}
-        lastAddedId={lastAddedId}
-        isNoScrollItems={true}
-        refParent={ref}
-      />
-      {isEdit ? (
-        <div
-          style={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            marginTop: "20px",
-            gap: "10px",
-          }}
-        >
-          <AddChildFeatureButton
-            parentFeatureId={groupFeatureId}
-            text={staticTexts.addImage ?? "N/A"}
-            params={params}
-            textTypes={[
-              ACTION_BANNER_LIST_SHARE,
-              ACTION_BANNER_LIST_TICKET,
-              ACTION_BANNER_LIST_DESCRIPTION,
-              ACTION_BANNER_LIST_IMAGE,
-            ]}
-            type={ACTION_BANNER_LIST_GROUP_ITEM}
-            subtype={ACTION_BANNER_LIST_GROUP_ITEM}
-            onChildFeatureAdded={handleChildFeatureAdded}
-          />
-          <DeleteFeatureButton
-            deleteText={staticTexts.delete ?? "N/A"}
-            featureData={groupData}
-            onDeleteFinished={handleDeleteFinished}
-          />
-        </div>
-      ) : null}
-    </div>
+      <div ref={ref}>
+        <ScrollContainer
+          ids={ids}
+          getItem={getItem}
+          countVisibleItems={1}
+          lastAddedId={lastAddedId}
+          isNoScrollItems={true}
+          refParent={ref}
+        />
+      </div>
+    </ItemContainerAddChildFeatureDeleteFeature>
   );
 };

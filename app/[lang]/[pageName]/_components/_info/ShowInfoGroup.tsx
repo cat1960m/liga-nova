@@ -11,9 +11,9 @@ import {
 } from "@/app/lib/constants";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { ShowInfoGroupItem } from "./ShowInfoGroupItem";
-import { AddTextDescriptionDeleteFeatureButtons } from "../__commonComponents/_buttons/AddTextDescriptionDeleteFeatureButtons";
 import { PhoneAddress } from "./PhoneAddress";
 import { CommonButton } from "../__commonComponents/_buttons/CommonButton";
+import { ItemContainerAddTextDescriptionDeleteFeature } from "../__commonComponents/_itemGroupContainer/ItemContainerAddTextDescriptionDeleteFeature";
 
 export type Props = {
   isEdit: boolean;
@@ -41,7 +41,14 @@ export const ShowInfoGroup = ({
   map[INFO_ACTION_FREE_SUBTYPE] = staticTexts.tryFree ?? "N/A";
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+    <ItemContainerAddTextDescriptionDeleteFeature
+      isEdit={isEdit}
+      deleteButtonText={staticTexts.delete ?? "N/A"}
+      featureData={groupData}
+      addButtonText={staticTexts.addGroupItem ?? "N/A"}
+      textDescriptionType={INFO_BODY}
+      isChangeOrderHorizontal={false}
+    >
       <div
         style={{
           display: "flex",
@@ -50,7 +57,6 @@ export const ShowInfoGroup = ({
           width: "100%",
           borderRadius: "10px",
           backgroundColor: "#f2f2f2",
-          border: isEdit ? "1px dotted magenta" : undefined,
           padding: "20px",
         }}
       >
@@ -96,14 +102,6 @@ export const ShowInfoGroup = ({
           </div>
         ) : null}
       </div>
-      {isEdit ? (
-        <AddTextDescriptionDeleteFeatureButtons
-          deleteButtonText={staticTexts.delete ?? "N/A"}
-          featureData={groupData}
-          addButtonText={staticTexts.addGroupItem ?? "N/A"}
-          textDescriptionType={INFO_BODY}
-        />
-      ) : null}
-    </div>
+    </ItemContainerAddTextDescriptionDeleteFeature>
   );
 };

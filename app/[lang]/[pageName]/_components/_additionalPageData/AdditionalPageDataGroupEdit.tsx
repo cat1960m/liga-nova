@@ -100,7 +100,7 @@ export const AdditionalPageDataGroupEdit = ({
               <FilterGroup
                 isEdit={false}
                 staticTexts={staticTexts}
-                groupData={filterGroupData}
+                filterGroupData={filterGroupData}
                 onFilterSelectionChanged={handleFilterSelectionChanged}
                 selectedFilterTextDescriptionIds={
                   selectedFilterTextDescriptionIds

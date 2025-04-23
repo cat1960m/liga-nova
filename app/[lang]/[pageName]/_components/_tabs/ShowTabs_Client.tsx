@@ -6,9 +6,8 @@ import { ShowTabTitle_Client } from "./ShowTabTitle_Client";
 import { DrawFeatureContainer_Client } from "../DrawFeatureContainer_Client";
 import { getContainerData } from "@/app/lib/utils";
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import { AddChildFeatureButton } from "../__commonComponents/_buttons/AddChildFeatureButton";
-import { DeleteFeatureButton } from "../__commonComponents/_buttons/DeleteFeatureButton";
 import { TAB, TAB_TITLE } from "@/app/lib/constants";
+import { ItemContainerAddChildFeatureDeleteFeature } from "../__commonComponents/_itemGroupContainer/ItemContainerAddChildFeatureDeleteFeature";
 
 export type Props = {
   tabsData: FullData;
@@ -64,16 +63,15 @@ export const ShowTabs_Client = ({
   }, [pageFullDataList]);
 
   return (
-    <div
-      style={
-        isEdit
-          ? {
-              border: "4px dashed magenta",
-              padding: "5px",
-              margin: "20px 0 20px 0",
-            }
-          : undefined
-      }
+    <ItemContainerAddChildFeatureDeleteFeature
+      addButtonText={staticTexts.addTab ?? "N/A"}
+      params={params}
+      textTypes={[TAB_TITLE]}
+      featureType={TAB}
+      featureSubtype="1"
+      deleteButtonText={staticTexts.deleteTabs ?? "N/A"}
+      groupData={[tabsData]}
+      isEdit={isEdit}
     >
       <div
         style={{
@@ -110,53 +108,19 @@ export const ShowTabs_Client = ({
           })}
         </div>
 
-        {isEdit ? (
-          <div
-            style={{
-              width: "100%",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              marginTop: "20px",
-            }}
-          >
-            <div style={{ display: "flex", gap: "20px" }}>
-              <AddChildFeatureButton
-                parentFeatureId={tabsData.id}
-                text={staticTexts.addTab ?? "N/A"}
-                params={params}
-                textTypes={[TAB_TITLE]}
-                type={TAB}
-                subtype="1"
-              />
-              <DeleteFeatureButton
-                deleteText={staticTexts.deleteTabs ?? "N/A"}
-                featureData={[tabsData]}
-              />
-            </div>
-          </div>
-        ) : null}
-
         {selectedTabData && selectedTabFeatureId ? (
-          <div
-            style={{
-              border: isEdit ? "1px dashed magenta" : undefined,
-              padding: isEdit ? "5px" : undefined,
-            }}
-          >
-            <DrawFeatureContainer_Client
-              params={params}
-              featureId={selectedTabFeatureId}
-              pageFullDataList={pageFullDataList}
-              containerFullData={selectedTabData}
-              isEdit={isEdit}
-              staticTexts={staticTexts}
-              buttonText={staticTexts.addItemToTab ?? "N/A"}
-              pageId={pageId}
-            />
-          </div>
+          <DrawFeatureContainer_Client
+            params={params}
+            featureId={selectedTabFeatureId}
+            pageFullDataList={pageFullDataList}
+            containerFullData={selectedTabData}
+            isEdit={isEdit}
+            staticTexts={staticTexts}
+            buttonText={staticTexts.addItemToTab ?? "N/A"}
+            pageId={pageId}
+          />
         ) : null}
       </div>
-    </div>
+    </ItemContainerAddChildFeatureDeleteFeature>
   );
 };

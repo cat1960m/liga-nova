@@ -1,32 +1,31 @@
 import { FullData } from "@/app/lib/definitions";
-import { AddTextDescriptionButton } from "./AddTextDescriptionButton";
-import { DeleteFeatureButton } from "./DeleteFeatureButton";
+import { AddTextDescriptionButton } from "../_buttons/AddTextDescriptionButton";
+import { DeleteFeatureButton } from "../_buttons/DeleteFeatureButton";
 
 export type Props = {
   onDeleteFinished?: () => void;
   featureData: FullData[];
-  isHorizontal?: boolean;
+  isChangeOrderHorizontal?: boolean;
   deleteButtonText: string;
   addButtonText: string;
   textDescriptionType: string;
   isNoAddButton?: boolean;
   price?: number;
   onTextDescriptionAdded?: (newId: number) => void;
-
 };
 
 export const AddTextDescriptionDeleteFeatureButtons = ({
   onDeleteFinished,
   featureData,
-  isHorizontal,
+  isChangeOrderHorizontal,
   deleteButtonText,
   addButtonText,
   textDescriptionType,
   isNoAddButton,
   price,
-  onTextDescriptionAdded
+  onTextDescriptionAdded,
 }: Props) => {
-  const featureFirst = featureData.length ? featureData[0]: undefined;
+  const featureFirst = featureData.length ? featureData[0] : undefined;
   const featureId = featureFirst?.id;
   const isAddShown = !!featureId && !isNoAddButton;
 
@@ -38,7 +37,7 @@ export const AddTextDescriptionDeleteFeatureButtons = ({
         alignItems: "center",
         justifyContent: "center",
         width: "100%",
-        gap: "10px",
+        gap: "5px",
       }}
     >
       {isAddShown ? (
@@ -54,7 +53,7 @@ export const AddTextDescriptionDeleteFeatureButtons = ({
       <DeleteFeatureButton
         deleteText={deleteButtonText}
         featureData={featureData}
-        isHorizontal={isHorizontal}
+        isChangeOrderHorizontal={isChangeOrderHorizontal}
         onDeleteFinished={onDeleteFinished}
       />
     </div>

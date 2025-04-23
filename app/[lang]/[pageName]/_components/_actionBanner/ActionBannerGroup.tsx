@@ -6,7 +6,7 @@ import Image from "next/image";
 import styles from "./actionBanner.module.css";
 import { CommonButton } from "../__commonComponents/_buttons/CommonButton";
 import { ACTION_BANNER_TITLE_IMAGE } from "@/app/lib/constants";
-import { UpdateTextDescriptionDeleteFeatureButtons } from "../__commonComponents/_buttons/UpdateTextDescriptionDeleteFeatureButtons";
+import { ItemContainerUpdateTextDescriptionDeleteFeature } from "../__commonComponents/_itemGroupContainer/ItemContainerUpdateTextDescriptionDeleteFeature";
 
 export type Props = {
   isEdit: boolean;
@@ -21,13 +21,27 @@ export const ActionBannerGroup = ({
   groupData,
   params,
 }: Props) => {
-
   const titleImageData = groupData.find(
     (item) => item.text_type === ACTION_BANNER_TITLE_IMAGE
   );
 
+  if (!titleImageData) {
+    return null;
+  }
+
   return (
-    <>
+    <ItemContainerUpdateTextDescriptionDeleteFeature
+      isEdit={isEdit}
+      currentData={titleImageData}
+      staticTexts={staticTexts}
+      useItems={{
+        text: "simple",
+        value: "image",
+      }}
+      params={params}
+      featureData={groupData}
+      isChangeOrderHorizontal={false}
+    >
       <div
         style={{
           width: "100%",
@@ -59,18 +73,6 @@ export const ActionBannerGroup = ({
           <CommonButton text={staticTexts.register ?? "N/A"} isAction />
         </div>
       </div>
-      {isEdit ? (
-        <UpdateTextDescriptionDeleteFeatureButtons
-          dataToUpdate={titleImageData}
-          staticTexts={staticTexts}
-          useItems={{
-            text: "simple",
-            value: "image",
-          }}
-          params={params}
-          featureData={groupData}
-        />
-      ) : null}
-    </>
+    </ItemContainerUpdateTextDescriptionDeleteFeature>
   );
 };

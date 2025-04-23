@@ -27,7 +27,7 @@ export const TextItemField = ({
       useItems={{ text: "simple", value: "image" }}
       params={params}
       isChangeOrder={fieldData.can_delete}
-      isHorizontal={false}
+      isChangeOrderHorizontal={false}
     >
       <div
         style={{

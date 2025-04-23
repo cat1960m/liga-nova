@@ -19,6 +19,7 @@ import { WrappingListItems } from "./WrappingListItems";
 import { FilterGroups } from "./_filters/FilterGroups";
 import styles from "./filterGroupsListItemGroup.module.css";
 import { FilterGroupsMobile } from "./_filters/FilterGroupsMobile";
+import { DeleteFeatureButton } from "../__commonComponents/_buttons/DeleteFeatureButton";
 
 export type Props = {
   groupData: FullData[];
@@ -128,26 +129,13 @@ export const FilterGroupsListItemsGroup = ({
     : editListItemText;
 
   return (
-    <div className={styles.container}>
-      {parentFeatureId ? (
-        <>
-          <div className={isEdit ? undefined : styles.filterGroups}>
-            <FilterGroups
-              isEdit={isEdit}
-              staticTexts={staticTexts}
-              parentFeatureId={parentFeatureId}
-              pageFullDataList={pageFullDataList}
-              params={params}
-              onFilterSelectionChanged={handleFilterSelectionChanged}
-              selectedFilterTextDescriptionIds={
-                selectedFilterTextDescriptionIds
-              }
-            />
-          </div>
-
-          {!isEdit ? (
-            <div className={styles.filterGroupsMobile}>
-              <FilterGroupsMobile
+    <>
+      <div className={styles.container}>
+        {parentFeatureId ? (
+          <>
+            <div className={isEdit ? undefined : styles.filterGroups}>
+              <FilterGroups
+                isEdit={isEdit}
                 staticTexts={staticTexts}
                 parentFeatureId={parentFeatureId}
                 pageFullDataList={pageFullDataList}
@@ -158,41 +146,74 @@ export const FilterGroupsListItemsGroup = ({
                 }
               />
             </div>
-          ) : null}
-        </>
-      ) : null}
 
-      <div className={styles.main}>
-        {addEditItemFeatureId ? (
-          <div className={styles.addEdit}>
-            <div className={styles.title}>{addEditTitle ?? "N/A"}</div>
-            <AddEditListItemFilter
+            {!isEdit ? (
+              <div className={styles.filterGroupsMobile}>
+                <FilterGroupsMobile
+                  staticTexts={staticTexts}
+                  parentFeatureId={parentFeatureId}
+                  pageFullDataList={pageFullDataList}
+                  params={params}
+                  onFilterSelectionChanged={handleFilterSelectionChanged}
+                  selectedFilterTextDescriptionIds={
+                    selectedFilterTextDescriptionIds
+                  }
+                />
+              </div>
+            ) : null}
+          </>
+        ) : null}
+
+        <div className={styles.main}>
+          {addEditItemFeatureId ? (
+            <div className={styles.addEdit}>
+              <div className={styles.title}>{addEditTitle ?? "N/A"}</div>
+              <AddEditListItemFilter
+                staticTexts={staticTexts}
+                pageFullDataList={pageFullDataList}
+                params={params}
+                groupData={groupData}
+                onCancel={handleAddEditCancel}
+                onSave={handleAddEditSave}
+                addEditItemFeatureId={addEditItemFeatureId}
+              />
+            </div>
+          ) : null}
+
+          {isListItemsShown ? (
+            <WrappingListItems
+              isEdit={isEdit}
               staticTexts={staticTexts}
               pageFullDataList={pageFullDataList}
+              onAddItemClick={handleAddListItem}
+              setEditingItemFeatureId={setEditingListItemFeatureId}
+              parentFeatureId={parentFeatureId}
+              selectedFilterTextDescriptionIds={
+                selectedFilterTextDescriptionIds
+              }
               params={params}
-              groupData={groupData}
-              onCancel={handleAddEditCancel}
-              onSave={handleAddEditSave}
-              addEditItemFeatureId={addEditItemFeatureId}
+              editTextButton={editListItemText}
+              addTextButton={addListItemText}
             />
-          </div>
-        ) : null}
-
-        {isListItemsShown ? (
-          <WrappingListItems
-            isEdit={isEdit}
-            staticTexts={staticTexts}
-            pageFullDataList={pageFullDataList}
-            onAddItemClick={handleAddListItem}
-            setEditingItemFeatureId={setEditingListItemFeatureId}
-            parentFeatureId={parentFeatureId}
-            selectedFilterTextDescriptionIds={selectedFilterTextDescriptionIds}
-            params={params}
-            editTextButton={editListItemText}
-            addTextButton={addListItemText}
-          />
-        ) : null}
+          ) : null}
+        </div>
       </div>
-    </div>
+      {isEdit ? (
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop: "20px",
+          }}
+        >
+          <DeleteFeatureButton
+            deleteText={staticTexts.delete ?? "N/A"}
+            featureData={groupData}
+          />
+        </div>
+      ) : null}
+    </>
   );
 };
