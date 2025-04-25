@@ -34,6 +34,7 @@ export const ShowScheduleGroup = ({
       textDescriptionType={SCHEDULE_ITEM}
       isEdit={isEdit}
       isChangeOrderHorizontal={false}
+      marginTop={20}
     >
       <div className={styles.container}>
         <ShowSCheduleName

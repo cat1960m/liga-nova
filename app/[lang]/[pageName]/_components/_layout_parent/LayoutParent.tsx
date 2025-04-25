@@ -64,6 +64,7 @@ export const LayoutParent = ({
       addButtonText=""
       textDescriptionType=""
       isChangeOrderHorizontal={false}
+      marginTop={20}
     >
       <div className={styles.container}>
         <div

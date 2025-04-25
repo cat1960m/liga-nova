@@ -100,6 +100,7 @@ export const TextListGroup = ({
           featureData={childFeatureData}
           isChangeOrderHorizontal={true}
           onDeleteFinished={handleDeleteFinished}
+          marginTop={0}
         >
           <div
             style={{
@@ -154,6 +155,7 @@ export const TextListGroup = ({
       textTypes={[TEXT_LIST_NAME, TEXT_LIST_BODY]}
       featureType={TEXT_LIST_GROUP_ITEM}
       featureSubtype={TEXT_LIST_GROUP_ITEM}
+      marginTop={20}
     >
       <div ref={ref}>
         <ScrollContainer

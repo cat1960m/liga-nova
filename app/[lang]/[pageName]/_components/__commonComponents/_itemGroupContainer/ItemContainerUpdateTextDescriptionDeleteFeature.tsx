@@ -15,6 +15,7 @@ export type Props = {
   isChangeOrderHorizontal?: boolean;
   featureData: FullData[];
   noDelete?: boolean;
+  marginTop: number;
 };
 
 export const ItemContainerUpdateTextDescriptionDeleteFeature = ({
@@ -27,6 +28,7 @@ export const ItemContainerUpdateTextDescriptionDeleteFeature = ({
   isChangeOrderHorizontal = true,
   featureData,
   noDelete,
+  marginTop,
 }: Props) => {
   const getEditButtons = () => (
     <UpdateTextDescriptionDeleteFeatureButtons
@@ -40,7 +42,7 @@ export const ItemContainerUpdateTextDescriptionDeleteFeature = ({
     />
   );
   return (
-    <ItemGroupContainerCommon isEdit={isEdit} getEditButtons={getEditButtons}>
+    <ItemGroupContainerCommon isEdit={isEdit} getEditButtons={getEditButtons} marginTop={marginTop}>
       {children}
     </ItemGroupContainerCommon>
   );

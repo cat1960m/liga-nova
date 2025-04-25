@@ -25,7 +25,6 @@ export const ImageActionGroupItem = ({
   isModalShown,
   changeModalState,
 }: Props) => {
-    
   return (
     <ItemContainerUpdateDeleteTextDescription
       isEdit={isEdit}

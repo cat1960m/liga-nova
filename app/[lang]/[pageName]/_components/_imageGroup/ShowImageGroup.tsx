@@ -34,6 +34,7 @@ export const ShowImageGroup = ({
       params={params}
       featureData={groupData}
       isChangeOrderHorizontal={false}
+      marginTop={0}
     >
       {imageData?.value ? (
         <div

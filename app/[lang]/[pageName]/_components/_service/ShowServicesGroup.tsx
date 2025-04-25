@@ -31,11 +31,12 @@ export const ShowServicesGroup = ({
       price={0}
       isEdit={isEdit}
       isChangeOrderHorizontal={false}
+      marginTop={20}
     >
       <div
         style={{
           width: "100%",
-          border: "1px solid gray",
+          border: "1px solid lightgray",
           borderRadius: "10px",
           minHeight: "40px",
           overflow: "hidden",
@@ -58,10 +59,12 @@ export const ShowServicesGroup = ({
               <div
                 style={{
                   width: "100%",
-                  backgroundColor: !(index % 2) ? "pink" : "white",
+                  backgroundColor: !(index % 2) ? "#f8f8f8" : "white",
                   padding: "5px 10px",
                   display: "flex",
                   gap: "10px",
+                  minHeight: "45px",
+                  alignItems: "center",
                 }}
                 key={data.id + "_" + index}
               >
@@ -83,7 +86,9 @@ export const ShowServicesGroup = ({
                     }}
                     params={params}
                   />
-                ) : null}
+                ) : (
+                  <div style={{ color: "#2575fc" }}>{staticTexts.register}</div>
+                )}
               </div>
             );
           })}

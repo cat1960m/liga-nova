@@ -20,6 +20,7 @@ import {
   ACTION_BANNER_LIST_GROUP_SUBTYPE,
   TEXT_LIST_GROUP_SUBTYPE,
   TEXT_GROUP_SUBTYPES,
+  ACTION_BANNER_TRY_GROUP_SUBTYPE,
 } from "@/app/lib/constants";
 import { InfoCheckGroup } from "./_infoCheckGroup/InfoCheckGroup";
 import { ShowServicesGroup } from "./_service/ShowServicesGroup";
@@ -81,7 +82,7 @@ export const ShowComplexGroup_Client = ({
     IMAGE_ACTIONS_GROUP_SUBTYPE === firstData?.subtype;
 
   const isActionBannerGroup =
-    firstData?.subtype === ACTION_BANNER_GROUP_SUBTYPE;
+     [ACTION_BANNER_GROUP_SUBTYPE, ACTION_BANNER_TRY_GROUP_SUBTYPE].includes(firstData?.subtype);
   const isActionBannerListGroup =
     firstData?.subtype === ACTION_BANNER_LIST_GROUP_SUBTYPE;
 
@@ -100,7 +101,7 @@ export const ShowComplexGroup_Client = ({
         width: "100%",
         // border: isEdit ? "1px dotted magenta" : undefined,
         // padding: isEdit ? "10px" : undefined,
-        margin: "20px 0 20px 0",
+        //margin: "20px 0 20px 0",
       }}
     >
       {isInfoCheckGroup ? (

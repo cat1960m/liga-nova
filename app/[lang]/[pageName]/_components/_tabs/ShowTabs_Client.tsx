@@ -72,6 +72,7 @@ export const ShowTabs_Client = ({
       deleteButtonText={staticTexts.deleteTabs ?? "N/A"}
       groupData={[tabsData]}
       isEdit={isEdit}
+      marginTop={20}
     >
       <div
         style={{

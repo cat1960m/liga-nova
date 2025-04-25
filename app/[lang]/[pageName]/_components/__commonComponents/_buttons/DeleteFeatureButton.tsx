@@ -10,7 +10,7 @@ import { usePathname } from "next/navigation";
 import { CommonButton } from "./CommonButton";
 import axios from "axios";
 import { Feature, FullData } from "@/app/lib/definitions";
-import { S3_TYPES } from "@/app/lib/constants";
+import { ICON_BUTTON_WIDTH, ICON_IN_BUTTON_WIDTH, S3_TYPES } from "@/app/lib/constants";
 import { useEditContext } from "../../../edit/_components/EditContextProvider";
 import { ChangeOrderButtons } from "./ChangeOrderButtons";
 import { TrashIcon } from "@heroicons/react/24/outline";
@@ -129,9 +129,9 @@ export const DeleteFeatureButton = ({
         <CommonButton
           onClick={handleDelete}
           isDisabled={isEditButtonsDisabled}
-          width="40px"
+          width={ICON_BUTTON_WIDTH}
         >
-          <TrashIcon style={{ width: "24px" }} title={deleteText} />
+          <TrashIcon style={{ width: ICON_IN_BUTTON_WIDTH }} title={deleteText} />
         </CommonButton>
       ) : null}
 

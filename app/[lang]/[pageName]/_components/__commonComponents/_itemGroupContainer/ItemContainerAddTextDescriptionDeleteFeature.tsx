@@ -14,6 +14,7 @@ export type Props = {
   isNoAddButton?: boolean;
   price?: number;
   onTextDescriptionAdded?: (newId: number) => void;
+  marginTop: number;
 };
 
 export const ItemContainerAddTextDescriptionDeleteFeature = ({
@@ -28,6 +29,7 @@ export const ItemContainerAddTextDescriptionDeleteFeature = ({
   isNoAddButton,
   price,
   onTextDescriptionAdded,
+  marginTop,
 }: Props) => {
   const getEditButtons = () => (
     <AddTextDescriptionDeleteFeatureButtons
@@ -43,7 +45,11 @@ export const ItemContainerAddTextDescriptionDeleteFeature = ({
     />
   );
   return (
-    <ItemGroupContainerCommon isEdit={isEdit} getEditButtons={getEditButtons}>
+    <ItemGroupContainerCommon
+      isEdit={isEdit}
+      getEditButtons={getEditButtons}
+      marginTop={marginTop}
+    >
       {children}
     </ItemGroupContainerCommon>
   );

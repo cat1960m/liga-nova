@@ -5,6 +5,7 @@ import { ShowEvent } from "./ShowEvent";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { useMemo } from "react";
 import { dateToString } from "@/app/lib/utils";
+import { CALENDAR_EVENTS_TIME } from "@/app/lib/constants";
 
 export type Props = {
   eventsIds: string[];
@@ -79,6 +80,19 @@ export const ShowEvents = ({
         const dateEventIds = eventsIds.filter((eventsId) =>
           eventsData[eventsId][0]?.filter_ids?.includes(item.dateStr ?? "")
         );
+        const sortedDateEventIds = dateEventIds.sort((a, b) => {
+          const eventsA = eventsData[a] ?? [];
+          const timeA =
+            eventsA.find((item) => item.text_type === CALENDAR_EVENTS_TIME)
+              ?.value ?? "";
+          const eventsB = eventsData[b] ?? [];
+          const timeB =
+            eventsB.find((item) => item.text_type === CALENDAR_EVENTS_TIME)
+              ?.value ?? "";
+          console.log(timeA, timeB);
+
+          return timeA > timeB ? 1 : -1;
+        });
 
         return (
           <div
@@ -102,7 +116,7 @@ export const ShowEvents = ({
             >
               {`${item.name} ${item.day}`}
             </div>
-            {dateEventIds.map((dateEventId, index) => {
+            {sortedDateEventIds.map((dateEventId, index) => {
               const eventFeatureData = eventsData[dateEventId] ?? [];
               return (
                 <ShowEvent

@@ -25,6 +25,7 @@ import {
   IMAGE_LIST_GROUP_SUBTYPE,
   IMAGE_LINKS_GROUP_SUBTYPE,
   ACTION_BANNER_GROUP_SUBTYPE,
+  ACTION_BANNER_TRY_GROUP_SUBTYPE,
   ACTION_BANNER_TITLE_IMAGE,
   LIGA_GROUP_SUBTYPE,
   LIGA_TITLE,
@@ -59,7 +60,8 @@ import {
   TEXT_LIST_NAME,
   TEXT_LIST_BODY,
   TEXT_GROUP_SUBTYPES,
-  GROUP1_SUBTYPE,
+  TEXT_HEADER_GROUP_SUBTYPE,
+  DIVIDER,
 } from "@/app/lib/constants";
 import { FullData, GroupDefinition, MainParams } from "@/app/lib/definitions";
 import { usePathname } from "next/navigation";
@@ -92,6 +94,15 @@ export const AddChildFeatureToContainer = ({
 
     if (!!PAGE_NAMES_TO_LIST_ITEMS_DATA[params.pageName]) {
       data.push(FILTER_GROUPS_LIST_ITEMS_SUBTYPE);
+    }
+
+    const pageData = pageFullDataList.find((data) => data.id === pageId);
+    const additionalPageNames = (pageData?.additional_page_name ?? "").split(
+      ","
+    );
+    if (!!additionalPageNames[0]?.length) {
+      console.log("additionalPageNames", additionalPageNames);
+      data.push(ADDITIONAL_PAGE_DATA_GROUP_SUBTYPE);
     }
 
     return data;
@@ -154,7 +165,7 @@ export const AddChildFeatureToContainer = ({
       }
     }
 
-    if (newValue === ACTION_BANNER_GROUP_SUBTYPE) {
+    if ([ACTION_BANNER_GROUP_SUBTYPE, ACTION_BANNER_TRY_GROUP_SUBTYPE].includes(newValue)) {
       await addChildFeature({
         parentId: parentFeatureId,
         type: GROUP,
@@ -201,7 +212,7 @@ export const AddChildFeatureToContainer = ({
         text_types: [],
         pathName,
       });
-      
+
       if (textListGroupFeatureId) {
         await addChildFeature({
           parentId: textListGroupFeatureId,
@@ -214,7 +225,7 @@ export const AddChildFeatureToContainer = ({
       }
     }
 
-    if (newValue === GROUP1_SUBTYPE) {
+    if (newValue === TEXT_HEADER_GROUP_SUBTYPE) {
       await addChildFeature({
         parentId: parentFeatureId,
         type: GROUP,
@@ -387,6 +398,18 @@ export const AddChildFeatureToContainer = ({
         pathName,
       });
     }
+
+    if (newValue === DIVIDER) {
+      await addChildFeature({
+        parentId: parentFeatureId,
+        type: GROUP,
+        subtype: DIVIDER,
+        name: params.pageName,
+        text_types: [],
+        pathName,
+      });
+    }
+
 
     if (newValue === TABS) {
       const tabsFeatureId = await addChildFeature({

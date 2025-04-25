@@ -1,9 +1,14 @@
 import { FullData, MainParams } from "@/app/lib/definitions";
-import { GROUP_EXPANDED_SUBTYPE, SIMPLE_GROUP_ITEM } from "@/app/lib/constants";
+import {
+  TEXT_GROUP_EXPANDED_SUBTYPE,
+  TEXT_GROUP_HIDDEN_SUBTYPE,
+  SIMPLE_GROUP_ITEM,
+} from "@/app/lib/constants";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { ExpandedText } from "../__commonComponents/_expandedText/ExpandedText";
 import { ItemContainerAddTextDescriptionDeleteFeature } from "../__commonComponents/_itemGroupContainer/ItemContainerAddTextDescriptionDeleteFeature";
 import { ShowTextDescription } from "./ShowTextDescription";
+import { HiddenText } from "./HiddenText";
 
 export type Props = {
   data: FullData[];
@@ -14,16 +19,19 @@ export type Props = {
 
 export const TextGroup = ({ data, isEdit, staticTexts, params }: Props) => {
   const firstItem = data[0];
-  const isExpanded = firstItem.subtype === GROUP_EXPANDED_SUBTYPE;
+  const isExpanded = firstItem.subtype === TEXT_GROUP_EXPANDED_SUBTYPE;
+  const isHidden = firstItem.subtype === TEXT_GROUP_HIDDEN_SUBTYPE;
 
   const textDescriptions = data.filter((item) => !!item.text_description_id);
 
   const isTextExpandedShown = isExpanded && !isEdit;
+  const isTextHiddenShown = isHidden && !isEdit;
+
+  const isCommon = !isTextExpandedShown && !isTextHiddenShown;
 
   return (
     <div
       style={{
-        marginBottom: "10px",
         display: "flex",
         flexDirection: "column",
         position: "relative",
@@ -37,7 +45,13 @@ export const TextGroup = ({ data, isEdit, staticTexts, params }: Props) => {
           isButton
         />
       ) : null}
-      {!isTextExpandedShown ? (
+      {isTextHiddenShown ? (
+        <HiddenText
+          staticTexts={staticTexts}
+          descriptions={data.map((item) => item.text_content ?? "")}
+        />
+      ) : null}
+      {isCommon ? (
         <ItemContainerAddTextDescriptionDeleteFeature
           isEdit={isEdit}
           deleteButtonText={staticTexts.delete ?? "N/A"}
@@ -45,6 +59,7 @@ export const TextGroup = ({ data, isEdit, staticTexts, params }: Props) => {
           addButtonText={staticTexts.addGroupItem ?? "N/A"}
           textDescriptionType={SIMPLE_GROUP_ITEM}
           isChangeOrderHorizontal={false}
+          marginTop={0}
         >
           {textDescriptions.map((item) => {
             return (

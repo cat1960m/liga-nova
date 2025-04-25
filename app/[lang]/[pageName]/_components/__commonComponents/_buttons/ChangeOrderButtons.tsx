@@ -8,6 +8,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { CommonButton } from "./CommonButton";
 import { useEditContext } from "../../../edit/_components/EditContextProvider";
+import { ICON_BUTTON_WIDTH, ICON_IN_BUTTON_WIDTH } from "@/app/lib/constants";
 
 export type Props = {
   isChangeOrderHorizontal?: boolean;
@@ -39,24 +40,24 @@ export const ChangeOrderButtons = ({
     >
       <CommonButton
         onClick={handleToStartClick}
-        width="40px"
+        width={ICON_BUTTON_WIDTH}
         isDisabled={isEditButtonsDisabled}
       >
         {isChangeOrderHorizontal ? (
-          <ChevronLeftIcon style={{ width: "24px" }} />
+          <ChevronLeftIcon style={{ width: ICON_IN_BUTTON_WIDTH }} />
         ) : (
-          <ChevronUpIcon style={{ width: "24px" }} />
+          <ChevronUpIcon style={{ width: ICON_IN_BUTTON_WIDTH}} />
         )}
       </CommonButton>
       <CommonButton
         onClick={handleToEndClick}
-        width="40px"
+        width={ICON_BUTTON_WIDTH}
         isDisabled={isEditButtonsDisabled}
       >
         {isChangeOrderHorizontal ? (
-          <ChevronRightIcon style={{ width: "24px" }} />
+          <ChevronRightIcon style={{ width: ICON_IN_BUTTON_WIDTH }} />
         ) : (
-          <ChevronDownIcon style={{ width: "24px" }} />
+          <ChevronDownIcon style={{ width: ICON_IN_BUTTON_WIDTH }} />
         )}
       </CommonButton>
     </div>

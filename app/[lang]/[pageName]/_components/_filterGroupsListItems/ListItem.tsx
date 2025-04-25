@@ -18,9 +18,9 @@ export const ListItem = ({
   staticTexts,
 }: Props) => {
   return (
-    <>
+    <div style={{ height: "100%" }}>
       {pageName === TICKETS_PAGE_NAME ? (
-        <SubscriptionItem currentData={currentData} />
+        <SubscriptionItem currentData={currentData} staticTexts={staticTexts}/>
       ) : null}
       {pageName === TRAINERS_PAGE_NAME ? (
         <TrainerItem
@@ -29,6 +29,6 @@ export const ListItem = ({
           staticTexts={staticTexts}
         />
       ) : null}
-    </>
+    </div>
   );
 };

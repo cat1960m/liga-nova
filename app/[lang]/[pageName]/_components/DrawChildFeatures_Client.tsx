@@ -1,8 +1,9 @@
 import {
   GROUP,
-  GROUP1_SUBTYPE,
+  TEXT_HEADER_GROUP_SUBTYPE,
   LAYOUT_PARENT,
   TABS,
+  DIVIDER,
 } from "@/app/lib/constants";
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { ShowComplexGroup_Client } from "./ShowComplexGroup_Client";
@@ -10,6 +11,7 @@ import { ShowTabs_Client } from "./_tabs/ShowTabs_Client";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { ShowSimpleGroup_Client } from "./_simpleGroup/ShowSimpleGroup_Client";
 import { LayoutParent } from "./_layout_parent/LayoutParent";
+import { ItemContainerAddTextDescriptionDeleteFeature } from "./__commonComponents/_itemGroupContainer/ItemContainerAddTextDescriptionDeleteFeature";
 
 export type Props = {
   childFeatureDataList: FullData[];
@@ -38,7 +40,34 @@ export const DrawChildFeature_Client = ({
 
   const isSimpleGroup =
     childFeatureFirstItem.type === GROUP &&
-    GROUP1_SUBTYPE === childFeatureFirstItem.subtype;
+    TEXT_HEADER_GROUP_SUBTYPE === childFeatureFirstItem.subtype;
+
+  const isDivider =
+    childFeatureFirstItem.type === GROUP &&
+    DIVIDER === childFeatureFirstItem.subtype;
+
+  if (isDivider) {
+    return (
+      <ItemContainerAddTextDescriptionDeleteFeature
+        isNoAddButton
+        deleteButtonText={staticTexts.delete ?? "N/A"}
+        featureData={childFeatureDataList}
+        isEdit={isEdit}
+        addButtonText=""
+        textDescriptionType=""
+        isChangeOrderHorizontal={false}
+        marginTop={40}
+      >
+        <div
+          style={{
+            width: "100%",
+            borderTop: "1px solid lightgray",
+            marginBottom: "30px",
+          }}
+        />
+      </ItemContainerAddTextDescriptionDeleteFeature>
+    );
+  }
 
   if (isSimpleGroup) {
     return (

@@ -6,6 +6,7 @@ import { CommonButton } from "./CommonButton";
 import axios from "axios";
 import { useEditContext } from "../../../edit/_components/EditContextProvider";
 import { TrashIcon } from "@heroicons/react/24/outline";
+import { ICON_BUTTON_WIDTH, ICON_IN_BUTTON_WIDTH } from "@/app/lib/constants";
 
 export const DeleteTextDescriptionButton = ({
   textDescriptionId,
@@ -39,9 +40,9 @@ export const DeleteTextDescriptionButton = ({
     <CommonButton
       onClick={handleDelete}
       isDisabled={isEditButtonsDisabled}
-      width="40px"
+      width={ICON_BUTTON_WIDTH}
     >
-      <TrashIcon color="black" width="24px" title={deleteText} />
+      <TrashIcon color="black" width={ICON_IN_BUTTON_WIDTH} title={deleteText} />
     </CommonButton>
   );
 };

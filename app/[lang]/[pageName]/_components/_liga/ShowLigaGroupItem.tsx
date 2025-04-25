@@ -1,5 +1,6 @@
 import { FullData, MainParams, PageData } from "@/app/lib/definitions";
 import {
+  ICON_IN_BUTTON_WIDTH,
   LIGA_ADDRESS,
   LIGA_SERVICE,
   LIGA_TELEPHONE,
@@ -75,11 +76,11 @@ export const ShowLigaGroupItem = ({
         >
           <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
             {isAddress ? (
-              <MapPinIcon style={{ color: "blue", width: "24px" }} />
+              <MapPinIcon style={{ color: "blue", width: ICON_IN_BUTTON_WIDTH }} />
             ) : null}
 
             {isPhone ? (
-              <PhoneIcon style={{ color: "blue", width: "24px" }} />
+              <PhoneIcon style={{ color: "blue", width: ICON_IN_BUTTON_WIDTH }} />
             ) : null}
 
             {!isService ? (

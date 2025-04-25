@@ -10,6 +10,7 @@ import {
   UseItems,
 } from "./UpdateTextDescriptionDataModalContent";
 import { PencilIcon } from "@heroicons/react/24/outline";
+import { ICON_BUTTON_WIDTH, ICON_IN_BUTTON_WIDTH } from "@/app/lib/constants";
 
 export const UpdateTextDescriptionData = ({
   staticTexts,
@@ -38,8 +39,12 @@ export const UpdateTextDescriptionData = ({
 
   return (
     <>
-      <CommonButton onClick={handleEdit} width="40px">
-        <PencilIcon title={staticTexts.edit ?? ""} color="black" width="24px" />
+      <CommonButton onClick={handleEdit} width={ICON_BUTTON_WIDTH}>
+        <PencilIcon
+          title={staticTexts.edit ?? ""}
+          color="black"
+          width={ICON_IN_BUTTON_WIDTH}
+        />
       </CommonButton>
 
       {isEditModalShown ? (

@@ -32,6 +32,7 @@ export const ShowSimpleGroup_Client = ({
       params={params}
       featureData={data}
       isChangeOrderHorizontal={false}
+      marginTop={0}
     >
       <div
         style={{

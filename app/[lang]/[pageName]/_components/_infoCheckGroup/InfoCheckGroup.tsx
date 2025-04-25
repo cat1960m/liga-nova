@@ -40,6 +40,7 @@ export const InfoCheckGroup = ({
       addButtonText={staticTexts.addGroupItem ?? "N/A"}
       textDescriptionType={columnItemType}
       isChangeOrderHorizontal={false}
+      marginTop={20}
     >
       <div
         style={{

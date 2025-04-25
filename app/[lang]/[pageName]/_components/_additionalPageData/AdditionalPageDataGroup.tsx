@@ -49,6 +49,7 @@ export const AdditionalPageDataGroup = ({
       addButtonText=""
       textDescriptionType=""
       isChangeOrderHorizontal={false}
+      marginTop={20}
     >
       {isEdit ? (
         <AdditionalPageDataGroupEdit

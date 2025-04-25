@@ -63,6 +63,10 @@ a {
   color: blue;
 }
 
+div {
+  margin: 0;
+}
+
 
 /*font-weight*/
 .ql-weight .ql-picker-item[data-value="normal"]::before {
@@ -104,6 +108,10 @@ a {
 .ql-fontsize .ql-picker-item[data-value="20px"]::before {
   content: "Size 20px";
 }
+.ql-fontsize .ql-picker-item[data-value="28px"]::before {
+  content: "Size 28px";
+}
+
 
 
 .ql-padding .ql-picker-item[data-value="5px"]::before {

@@ -44,37 +44,37 @@ export const AdditionalPageDataGroupShow = ({
 
   const [data, itemIds] = containerFullData;
 
-  if (pageName === TRAINERS_PAGE_NAME) {
-    const getItem = ({ id }: { id: string }) => {
-      return (
-        <div
-          style={{
-            padding: "0 10px",
-            width: "100%",
-          }}
-        >
-          <ListItem
-            currentData={data[id]}
-            pageName={pageName}
-            pageFullDataList={pageFullDataList}
-            staticTexts={staticTexts}
-          />
-        </div>
-      );
-    };
-
+  const getItem = ({ id }: { id: string }) => {
     return (
-      <div style={{ width: "100%" }} ref={ref}>
-        <ScrollContainer
-          ids={containerFullData[1]}
-          getItem={getItem}
-          refParent={ref}
+      <div
+        style={{
+          padding: "0 10px",
+          width: "100%",
+          height: "100%",
+        }}
+      >
+        <ListItem
+          currentData={data[id]}
+          pageName={pageName}
+          pageFullDataList={pageFullDataList}
+          staticTexts={staticTexts}
         />
       </div>
     );
-  }
+  };
 
   return (
+    <div style={{ width: "100%" }} ref={ref}>
+      <ScrollContainer
+        ids={containerFullData[1]}
+        getItem={getItem}
+        refParent={ref}
+        canStretch
+      />
+    </div>
+  );
+
+  /*   return (
     <div
       style={{
         display: "flex",
@@ -112,4 +112,5 @@ export const AdditionalPageDataGroupShow = ({
       })}
     </div>
   );
+ */
 };

@@ -9,7 +9,13 @@ import {
   FullData,
 } from "./definitions";
 import { revalidatePath } from "next/cache";
-import { CAN_NOT_DELETE, ICON, SERVICE_ITEM, TAB_TITLE } from "./constants";
+import {
+  CAN_NOT_DELETE,
+  CONTAINER_TYPES,
+  ICON,
+  SERVICE_ITEM,
+  TAB_TITLE,
+} from "./constants";
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: "require" });
 
@@ -38,14 +44,17 @@ export const getFeatureChildren = async ({
   subtype: string;
 }) => {
   try {
-    const dd = await sql<Feature[]>`SELECT
+    const parentFeatures = await sql<Feature[]>`SELECT
     *
     FROM features
     WHERE features.id=${parentFeatureId}`;
+    const parentFeature = parentFeatures[0];
 
-    const isPage = !dd[0].parent_feature_id;
+    const isPage = !parentFeature?.parent_feature_id;
+    console.log("parentFeature?.subtype", parentFeature?.type);
+    const isContainer = CONTAINER_TYPES.includes(parentFeature?.type);
 
-    if (isPage) {
+    if (isPage || isContainer) {
       return await sql<Feature[]>`SELECT
                *
                FROM features

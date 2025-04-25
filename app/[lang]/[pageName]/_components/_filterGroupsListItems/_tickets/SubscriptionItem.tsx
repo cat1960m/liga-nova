@@ -2,20 +2,25 @@ import { FullData } from "@/app/lib/definitions";
 import {
   ACTION_BUTTON_BACKGROUND,
   GRAY_BACKGROUND_COLOR,
+  SUBSCRIPTION_ITEM_CAN_POSTPONE,
   SUBSCRIPTION_ITEM_DESCRIPTION,
-  SUBSCRIPTION_ITEM_IMPORTANT_DESCRIPTION,
   SUBSCRIPTION_ITEM_NAME,
   SUBSCRIPTION_ITEM_OLD_PRICE,
   SUBSCRIPTION_ITEM_PRICE,
   SUBSCRIPTION_ITEM_SHARE,
+  YES,
 } from "@/app/lib/constants";
 import { ShowSentence } from "./ShowSentence";
+import { CommonButton } from "../../__commonComponents/_buttons/CommonButton";
+import { StaticTexts } from "@/app/dictionaries/definitions";
+import { ActionButton } from "../../__commonComponents/_buttons/_actionButon/ActionButton";
 
 export type Props = {
   currentData: FullData[];
+  staticTexts: StaticTexts;
 };
 
-export const SubscriptionItem = ({ currentData }: Props) => {
+export const SubscriptionItem = ({ currentData, staticTexts }: Props) => {
   const name = currentData.find(
     (item) => item.text_type === SUBSCRIPTION_ITEM_NAME
   );
@@ -28,26 +33,17 @@ export const SubscriptionItem = ({ currentData }: Props) => {
   const oldPrice = currentData.find(
     (item) => item.text_type === SUBSCRIPTION_ITEM_OLD_PRICE
   );
-  const descriptions = currentData.filter((item) =>
-    [
-      SUBSCRIPTION_ITEM_DESCRIPTION,
-      SUBSCRIPTION_ITEM_IMPORTANT_DESCRIPTION,
-    ].includes(item.text_type)
+  const description = currentData.find(
+    (item) => item.text_type === SUBSCRIPTION_ITEM_DESCRIPTION
+  );
+
+  const isPostpone = currentData.find(
+    (item) => item.text_type === SUBSCRIPTION_ITEM_CAN_POSTPONE
   );
 
   if (!name || !price) {
     return null;
   }
-
-  const priceString = price.text_content?.replaceAll(" ", "") ?? "0";
-
-  const priceValue = parseInt(priceString);
-  const priceText = priceString?.substring(String(priceValue).length);
-  const priceVal =
-    price.text_content?.substring(
-      0,
-      price.text_content.length - priceText.length
-    ) ?? "";
 
   return (
     <div
@@ -60,7 +56,8 @@ export const SubscriptionItem = ({ currentData }: Props) => {
         overflow: "hidden",
         display: "flex",
         flexDirection: "column",
-        paddingBottom: "20px",
+        paddingBottom: "15px",
+        maxWidth: "300px",
       }}
     >
       {share?.text_content ? (
@@ -101,7 +98,7 @@ export const SubscriptionItem = ({ currentData }: Props) => {
           marginBottom: "-6px",
         }}
       >
-        {priceVal}
+        {price.price}
       </div>
       <div
         style={{
@@ -112,7 +109,7 @@ export const SubscriptionItem = ({ currentData }: Props) => {
           color: "lightgray",
         }}
       >
-        {priceText}
+        {price.text_content}
       </div>
       {oldPrice?.text_content ? (
         <div
@@ -140,37 +137,40 @@ export const SubscriptionItem = ({ currentData }: Props) => {
         style={{
           flexGrow: 2,
           display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
           minHeight: "100px",
-          fontSize: 14,
           padding: "10px",
+          alignItems: "center",
+          justifyContent: "center",
+          width: "100%",
         }}
       >
-        <div>
-          {descriptions.map((item) => {
-            const isImportant =
-              item.text_type === SUBSCRIPTION_ITEM_IMPORTANT_DESCRIPTION;
-            return (
-              <div
-                style={{
-                  color: isImportant ? "black" : "#212529",
-                  fontWeight: isImportant ? 700 : 400,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  justifyItems: "center",
-                  alignContent: "center",
-                  flexWrap: "wrap",
-                }}
-                key={item.text_description_id}
-              >
-                <ShowSentence sentence={item.text_content ?? "N/A"} />
-              </div>
-            );
-          })}
+        <div
+          dangerouslySetInnerHTML={{
+            __html: description?.text_content ?? "N/A",
+          }}
+        />
+      </div>
+
+      {isPostpone?.value === YES ? (
+        <div style={{ padding: "5px 20px" }}>
+          <CommonButton
+            text={staticTexts.postponement}
+            isAction
+            styleValue={{ width: "100%", fontSize: "12px" }}
+          />
         </div>
+      ) : null}
+      <div style={{ padding: "5px 20px", width: "100%" }}>
+        <ActionButton
+          text={staticTexts.buy}
+          onClick={() => {}}
+          styleValue={{
+            width: "100%",
+            height: "40px",
+            fontSize: "12px",
+            fontWeight: 500,
+          }}
+        />
       </div>
     </div>
   );

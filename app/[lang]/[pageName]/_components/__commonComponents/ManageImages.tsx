@@ -25,6 +25,7 @@ export const ManageImages = ({
               noChangeOrder
               isEdit={true}
               key={imageItem.text_description_id}
+              marginTop={0}
             >
               <img
                 src={imageItem.value}

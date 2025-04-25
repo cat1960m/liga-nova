@@ -23,7 +23,9 @@ export const InfoCheckGroupItem = ({
     <div
       style={{
         flexGrow: 2,
-        fontWeight: isHeader ? 700 : 400,
+        fontWeight: isHeader ? 700 : 300,
+        fontSize: isHeader ? 20 : 18,
+        marginBottom: "15px",
       }}
     >
       <ItemContainerUpdateDeleteTextDescription

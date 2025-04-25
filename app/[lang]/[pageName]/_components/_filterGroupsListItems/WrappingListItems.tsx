@@ -7,21 +7,25 @@ import { getContainerData } from "@/app/lib/utils";
 import { useMemo } from "react";
 import { DeleteFeatureButton } from "../__commonComponents/_buttons/DeleteFeatureButton";
 import { ListItem } from "./ListItem";
-import { LIST_ITEM } from "@/app/lib/constants";
+import {
+  ICON_BUTTON_WIDTH,
+  ICON_IN_BUTTON_WIDTH,
+  LIST_ITEM,
+} from "@/app/lib/constants";
 
 import styles from "./wrappingListItems.module.css";
+import { PencilIcon, PlusIcon } from "@heroicons/react/24/outline";
+import { ItemGroupContainerCommon } from "../__commonComponents/_itemGroupContainer/ItemGroupContainerCommon";
 
 export type Props = {
   isEdit: boolean;
   staticTexts: StaticTexts;
   pageFullDataList: FullData[];
   setEditingItemFeatureId: (id: number | null) => void;
-  onAddItemClick: () => void;
   parentFeatureId: number;
   selectedFilterTextDescriptionIds: number[];
   params: MainParams;
   editTextButton: string;
-  addTextButton: string;
 };
 
 export const WrappingListItems = ({
@@ -29,12 +33,10 @@ export const WrappingListItems = ({
   staticTexts,
   pageFullDataList,
   setEditingItemFeatureId,
-  onAddItemClick,
   parentFeatureId,
   selectedFilterTextDescriptionIds,
   params,
   editTextButton,
-  addTextButton,
 }: Props) => {
   const containerFullData = useMemo(
     () =>
@@ -55,14 +57,40 @@ export const WrappingListItems = ({
 
   const [data, itemIds] = containerFullData;
 
+  const getEditButtons = ({ currentData }: { currentData: FullData[] }) => {
+    const id = currentData[0]?.id ?? null;
+    return (
+      <div
+        style={{
+          display: "flex",
+          gap: "5px",
+          flexWrap: "wrap",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <CommonButton
+          onClick={() => setEditingItemFeatureId(id)}
+          width={ICON_BUTTON_WIDTH}
+        >
+          <PencilIcon width={ICON_IN_BUTTON_WIDTH} title={editTextButton} />
+        </CommonButton>
+
+        <DeleteFeatureButton
+          deleteText={staticTexts.delete ?? "N/A"}
+          featureData={currentData}
+          isChangeOrderHorizontal
+        />
+      </div>
+    );
+  };
+
   return (
     <div
       style={{
         display: "flex",
         flexDirection: "column",
         gap: "20px",
-        border: isEdit ? "1px dotted magenta" : undefined,
-        padding: isEdit ? "5px" : 0,
         width: "100%",
       }}
     >
@@ -74,66 +102,30 @@ export const WrappingListItems = ({
           width: "100%",
           justifyContent: "center",
           justifyItems: "center",
-          alignContent: "center",
+          alignContent: "stretch",
         }}
       >
         {itemIds.map((itemId) => {
           const currentData = data[itemId];
-          const id = currentData[0]?.id ?? null;
           return (
-            <div
-              key={itemId}
-              style={{
-                border: isEdit ? "1px dotted magenta" : undefined,
-              }}
-              className={styles.listItem}
-            >
-              <ListItem
-                currentData={currentData}
-                pageName={params.pageName}
-                pageFullDataList={pageFullDataList}
-                staticTexts={staticTexts}
-              />
-
-              {isEdit ? (
-                <div
-                  style={{
-                    display: "flex",
-                    gap: "5px",
-                    flexWrap: "wrap",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <CommonButton
-                    text={editTextButton}
-                    onClick={() => setEditingItemFeatureId(id)}
-                  />
-
-                  <DeleteFeatureButton
-                    deleteText={staticTexts.delete ?? "N/A"}
-                    featureData={currentData}
-                    isChangeOrderHorizontal
-                  />
-                </div>
-              ) : null}
+            <div key={itemId} className={styles.listItem}>
+              <ItemGroupContainerCommon
+                isEdit={isEdit}
+                getEditButtons={() => getEditButtons({ currentData })}
+                marginTop={0}
+                heightValue="100%"
+              >
+                <ListItem
+                  currentData={currentData}
+                  pageName={params.pageName}
+                  pageFullDataList={pageFullDataList}
+                  staticTexts={staticTexts}
+                />
+              </ItemGroupContainerCommon>
             </div>
           );
         })}
       </div>
-
-      {isEdit ? (
-        <div
-          style={{
-            margin: "10px",
-            display: "flex",
-            width: "100%",
-            justifyContent: "center",
-          }}
-        >
-          <CommonButton text={addTextButton} onClick={onAddItemClick} />
-        </div>
-      ) : null}
     </div>
   );
 };

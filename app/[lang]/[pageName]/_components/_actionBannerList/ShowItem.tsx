@@ -69,6 +69,7 @@ export const ShowItem = ({
       params={params}
       featureData={actionBannerListItemData}
       isChangeOrderHorizontal
+      marginTop={0}
     >
       <div
         style={{

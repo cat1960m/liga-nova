@@ -6,6 +6,7 @@ import {
   TRAINER_ITEM_DESCRIPTION,
   TRAINER_ITEM_IS_PREMIUM,
   TRAINER_ITEM_NAME,
+  YES,
 } from "@/app/lib/constants";
 import { useEffect, useMemo, useState } from "react";
 import { getPageFullData } from "@/app/lib/actions_fitness";
@@ -65,7 +66,7 @@ export const TrainerItem = ({
     return null;
   }
 
-  const isPremiumValue = isPremium.value === "yes";
+  const isPremiumValue = isPremium.value === YES;
 
   const premiumIcon = icons.find((icon) => icon.value?.includes(PREMIUM));
 
@@ -172,6 +173,7 @@ export const TrainerItem = ({
         descriptions={descriptions.map((item) => item.text_content ?? "N/A")}
         fontSize={14}
         fontWeight={300}
+        isHTML
       />
 
       <CommonButton isAction text={staticTexts.signUpForTraining} />

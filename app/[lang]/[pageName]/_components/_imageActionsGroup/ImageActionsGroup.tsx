@@ -38,6 +38,7 @@ export const ImageActionsGroup = ({
       addButtonText={staticTexts.addGroupItem ?? "N/A"}
       textDescriptionType={IMAGE_ACTIONS_ITEM}
       isChangeOrderHorizontal={false}
+      marginTop={20}
     >
       <div className={cn(styles.container)}>
         {groupDataMain.map((item) => (

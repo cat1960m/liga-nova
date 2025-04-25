@@ -1,5 +1,10 @@
 import { FullData, MainParams } from "@/app/lib/definitions";
-import { INFO_BODY, INFO_TELEPHONE, INFO_TITLE } from "@/app/lib/constants";
+import {
+  ICON_IN_BUTTON_WIDTH,
+  INFO_BODY,
+  INFO_TELEPHONE,
+  INFO_TITLE,
+} from "@/app/lib/constants";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { PhoneIcon } from "@heroicons/react/24/solid";
 import { ItemContainerUpdateDeleteTextDescription } from "../__commonComponents/_itemGroupContainer/ItemContainerUpdateDeleteTextDescription";
@@ -26,6 +31,7 @@ export const ShowInfoGroupItem = ({
   const textStyle = {
     fontWeight: data.text_type === INFO_TITLE ? 700 : undefined,
     whiteSpace: "pre-line",
+    fontSize: 18,
   };
 
   const isPhone = data.text_type === INFO_TELEPHONE;
@@ -50,7 +56,7 @@ export const ShowInfoGroupItem = ({
         }}
       >
         {isPhone ? (
-          <PhoneIcon style={{ color: "blue", width: "24px" }} />
+          <PhoneIcon style={{ color: "blue", width: ICON_IN_BUTTON_WIDTH }} />
         ) : null}
         {!isQuill ? (
           <p style={textStyle}> {data?.text_content ?? "N/A"}</p>

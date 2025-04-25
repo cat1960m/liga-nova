@@ -101,7 +101,12 @@
     "selectPageName": "Select page name",
     "registerChild": "Register child",
     "tryFree": "Try free",
-    "details": "Details"
-
+    "details": "Details",
+    "postponement": "POSTPONEMENT",
+    "buy": "BUY",
+    "fullName": "Full name",
+    "readMore": "Read more",
+    "readLess": "Read less",
+    "try": "Try"
   }
 }

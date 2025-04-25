@@ -51,6 +51,7 @@ export const FilterGroup = ({
       addButtonText={staticTexts.addGroupItem ?? "N/A"}
       textDescriptionType={FILTER}
       isChangeOrderHorizontal={false}
+      marginTop={0}
     >
       <div
         style={{

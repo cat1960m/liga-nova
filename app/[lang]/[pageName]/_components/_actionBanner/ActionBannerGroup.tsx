@@ -5,7 +5,10 @@ import { FullData, MainParams } from "@/app/lib/definitions";
 import Image from "next/image";
 import styles from "./actionBanner.module.css";
 import { CommonButton } from "../__commonComponents/_buttons/CommonButton";
-import { ACTION_BANNER_TITLE_IMAGE } from "@/app/lib/constants";
+import {
+  ACTION_BANNER_TITLE_IMAGE,
+  ACTION_BANNER_TRY_GROUP_SUBTYPE,
+} from "@/app/lib/constants";
 import { ItemContainerUpdateTextDescriptionDeleteFeature } from "../__commonComponents/_itemGroupContainer/ItemContainerUpdateTextDescriptionDeleteFeature";
 
 export type Props = {
@@ -29,6 +32,12 @@ export const ActionBannerGroup = ({
     return null;
   }
 
+  const isTry = titleImageData.subtype === ACTION_BANNER_TRY_GROUP_SUBTYPE;
+  const text = isTry ? staticTexts.try : staticTexts.register;
+  const handleClick = () => {
+    //
+  };
+
   return (
     <ItemContainerUpdateTextDescriptionDeleteFeature
       isEdit={isEdit}
@@ -41,6 +50,7 @@ export const ActionBannerGroup = ({
       params={params}
       featureData={groupData}
       isChangeOrderHorizontal={false}
+      marginTop={100}
     >
       <div
         style={{
@@ -66,11 +76,19 @@ export const ActionBannerGroup = ({
         {/* changes for mobile needed */}
         <div className={styles.info_big}>
           {titleImageData?.text_content ?? "N/A"}
-          <CommonButton text={staticTexts.register ?? "N/A"} isAction />
+          <CommonButton
+            text={text ?? "N/A"}
+            isAction
+            onClick={() => handleClick}
+          />
         </div>
         <div className={styles.info_small}>
           {titleImageData?.text_content ?? "N/A"}
-          <CommonButton text={staticTexts.register ?? "N/A"} isAction />
+          <CommonButton
+            text={text ?? "N/A"}
+            isAction
+            onClick={() => handleClick}
+          />
         </div>
       </div>
     </ItemContainerUpdateTextDescriptionDeleteFeature>

@@ -2,7 +2,7 @@
 
 import { ACTION_BUTTON_BACKGROUND } from "@/app/lib/constants";
 import { usePathname } from "next/navigation";
-import { ReactNode } from "react";
+import { CSSProperties, ReactNode } from "react";
 
 export const CommonButton = ({
   text,
@@ -13,6 +13,8 @@ export const CommonButton = ({
   width,
   isAction,
   minWidth,
+  color,
+  styleValue,
 }: {
   text?: string;
   onClick?: (pathName: string) => void;
@@ -22,21 +24,28 @@ export const CommonButton = ({
   width?: string;
   isAction?: boolean;
   minWidth?: number;
+  color?: string;
+  styleValue?: CSSProperties;
 }) => {
   const pathName = usePathname();
-  const bgColor = isAction ? ACTION_BUTTON_BACKGROUND : backgroundColor;
-  const color = isAction ? "white" : "black";
+  const bgColor = isAction
+    ? ACTION_BUTTON_BACKGROUND
+    : backgroundColor ?? styleValue?.backgroundColor;
+  const colorValue = isAction
+    ? "white"
+    : color ?? styleValue?.backgroundColor ?? "black";
 
   return (
     <button
       disabled={isDisabled}
       onClick={() => onClick?.(pathName)}
       style={{
-        color: isDisabled ? "lightgray" : color,
+        ...styleValue,
+        color: isDisabled ? "lightgray" : colorValue,
         backgroundColor: bgColor,
         display: "flex",
         justifyContent: "center",
-        width,
+        width: width ?? styleValue?.width,
         opacity: isDisabled ? 0.5 : 1,
         minWidth,
         padding: children ? "10px" : undefined,

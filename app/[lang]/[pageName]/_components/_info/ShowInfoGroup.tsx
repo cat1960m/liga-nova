@@ -48,12 +48,13 @@ export const ShowInfoGroup = ({
       addButtonText={staticTexts.addGroupItem ?? "N/A"}
       textDescriptionType={INFO_BODY}
       isChangeOrderHorizontal={false}
+      marginTop={0}
     >
       <div
         style={{
           display: "flex",
           flexDirection: "column",
-          gap: "20px",
+          gap: "10px",
           width: "100%",
           borderRadius: "10px",
           backgroundColor: "#f2f2f2",

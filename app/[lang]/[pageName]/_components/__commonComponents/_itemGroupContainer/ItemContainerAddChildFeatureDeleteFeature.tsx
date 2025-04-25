@@ -14,6 +14,7 @@ export type Props = {
   textTypes: string[];
   featureType: string;
   featureSubtype: string;
+  marginTop: number;
 };
 
 export const ItemContainerAddChildFeatureDeleteFeature = ({
@@ -28,6 +29,7 @@ export const ItemContainerAddChildFeatureDeleteFeature = ({
   textTypes,
   featureType,
   featureSubtype,
+  marginTop
 }: Props) => {
   const getEditButtons = () => (
     <AddChildFeatureDeleteFeatureButtons
@@ -43,7 +45,11 @@ export const ItemContainerAddChildFeatureDeleteFeature = ({
     />
   );
   return (
-    <ItemGroupContainerCommon isEdit={isEdit} getEditButtons={getEditButtons}>
+    <ItemGroupContainerCommon
+      isEdit={isEdit}
+      getEditButtons={getEditButtons}
+      marginTop={marginTop}
+    >
       {children}
     </ItemGroupContainerCommon>
   );

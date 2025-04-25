@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { CommonButton } from "./CommonButton";
 import { useEditContext } from "../../../edit/_components/EditContextProvider";
 import { PlusIcon } from "@heroicons/react/24/outline";
+import { ICON_BUTTON_WIDTH, ICON_IN_BUTTON_WIDTH } from "@/app/lib/constants";
 
 export type Props = {
   featureId: number;
@@ -38,9 +39,9 @@ export const AddTextDescriptionButton = (props: Props) => {
       onClick={handleAddColumnItem}
       text={"+"}
       isDisabled={isEditButtonsDisabled}
-      width="40px"
+      width={ICON_BUTTON_WIDTH}
     >
-      <PlusIcon width="20px" title={props.buttonText} />
+      <PlusIcon width={ICON_IN_BUTTON_WIDTH} title={props.buttonText} />
     </CommonButton>
   );
 };

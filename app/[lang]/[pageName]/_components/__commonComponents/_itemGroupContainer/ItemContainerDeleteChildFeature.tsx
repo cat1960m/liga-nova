@@ -11,6 +11,7 @@ export type Props = {
   isChangeOrderHorizontal?: boolean;
   noChangeOrder?: boolean;
   noDelete?: boolean;
+  marginTop: number;
 };
 
 export const ItemContainerDeleteChildFeature = ({
@@ -22,6 +23,7 @@ export const ItemContainerDeleteChildFeature = ({
   isChangeOrderHorizontal,
   noChangeOrder,
   noDelete,
+  marginTop,
 }: Props) => {
   const getEditButtons = () => (
     <DeleteFeatureButton
@@ -34,7 +36,7 @@ export const ItemContainerDeleteChildFeature = ({
     />
   );
   return (
-    <ItemGroupContainerCommon isEdit={isEdit} getEditButtons={getEditButtons}>
+    <ItemGroupContainerCommon isEdit={isEdit} getEditButtons={getEditButtons}  marginTop={marginTop}>
       {children}
     </ItemGroupContainerCommon>
   );

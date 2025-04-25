@@ -109,4 +109,10 @@ export type StaticTexts = {
   selectPageName?: string;
   tryFree?: string;
   details?: string;
+  postponement?: string;
+  buy?: string;
+  fullName?: string;
+  readMore?: string;
+  readLess?: string;
+  try?: string;
 };

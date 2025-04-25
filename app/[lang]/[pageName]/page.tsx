@@ -9,10 +9,15 @@ export default async function Page({
   params,
 }: {
   params: Promise<MainParams>;
+  context: any;
 }) {
   const pars = await params;
   const { pageName, lang } = pars;
   const dict = await getDictionary(lang as "en" | "ua");
+
+  if (pageName === "edit") {
+    return <div>EDIT</div>;
+  }
 
   const pageFullData: FullData[] | null = await getPageFullData({
     lang,

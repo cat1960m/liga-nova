@@ -28,7 +28,8 @@ export const ShowTabTitle_Client = ({
     onSelectedTabFeatureIdChanged(tabTitle.id);
   };
 
-  const backgroundColor = isTabSelected ? "lightblue" : "lightgray";
+  const backgroundColor = isTabSelected ? "#bfbfef" : "lightgray";
+  const color = isTabSelected ? "blue" : "gray";
 
   return (
     <ItemContainerUpdateTextDescriptionDeleteFeature
@@ -42,12 +43,14 @@ export const ShowTabTitle_Client = ({
       featureData={[tabTitle]}
       isChangeOrderHorizontal
       noDelete={isTabSelected}
+      marginTop={0}
     >
       <CommonButton
         backgroundColor={backgroundColor}
         text={tabTitle.text_content ?? "N/A"}
         onClick={handleTabClick}
         minWidth={isEdit ? 200 : undefined}
+        color={color}
       />
     </ItemContainerUpdateTextDescriptionDeleteFeature>
   );

@@ -8,6 +8,8 @@ import {
   CALENDAR_EVENTS_TIME,
   CALENDAR_EVENTS_TITLE,
   CALENDAR_EVENTS_TRAINER,
+  ICON_BUTTON_WIDTH,
+  ICON_IN_BUTTON_WIDTH,
 } from "@/app/lib/constants";
 import { CommonButton } from "../__commonComponents/_buttons/CommonButton";
 import { DeleteFeatureButton } from "../__commonComponents/_buttons/DeleteFeatureButton";
@@ -15,6 +17,7 @@ import { StaticTexts } from "@/app/dictionaries/definitions";
 import { FullData } from "@/app/lib/definitions";
 import styles from "./showEvent.module.css";
 import { MouseEventHandler, useState } from "react";
+import { PencilIcon } from "@heroicons/react/24/outline";
 
 export type Props = {
   staticTexts: StaticTexts;
@@ -72,70 +75,86 @@ export const ShowEvent = ({
         height: isEdit ? undefined : "124px",
         overflow: "auto",
       }}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={() => setPosition(null)}
     >
-      {position ? (
-        <div
-          className={styles.pos}
-          data-title={isEdit ? "" : titleStr}
-          style={{
-            top: mouseY > window.innerHeight / 2 ? undefined : mouseY + 10,
-            left: window.innerWidth - mouseX > 200 ? mouseX + 10 : undefined,
-            bottom:
-              mouseY > window.innerHeight / 2
-                ? window.innerHeight - mouseY - 10
-                : undefined,
-            right: window.innerWidth - mouseX < 200 ? 10 : undefined,
-          }}
-        >
-          {titleStr}
-        </div>
-      ) : null}
       <div
         style={{
+          minHeight: isEdit ? "200px" : "120px",
+          backgroundColor: getBackgroundColor(subtype),
           display: "flex",
           flexDirection: "column",
-          justifyContent: "space-between",
-          minHeight: isEdit ? "200px" : "120px",
-          padding: "3px",
-          wordBreak: "break-all",
-          fontSize: 14,
-          backgroundColor: getBackgroundColor(subtype),
-          color: subtype === CALENDAR_EVENTS_COMMON_SUBTYPE ? "black" : "white",
         }}
       >
-        <div style={{ fontWeight: 700 }}>
-          {`${time?.value ?? ""} ${title?.text_content ?? "N/A"}`}
-        </div>
-        <div>
-          <div style={{ fontStyle: "italic" }}>
-            {trainer?.text_content ?? "N/A"}
-          </div>
-          <div>{`${staticTexts.price}: ${title?.price}`}</div>
-          <div>{`${staticTexts.count}: ${count?.value}`}</div>
-
-          {isEdit ? (
+        <div
+          style={{
+            display: "flex",
+            flexGrow: 2,
+            flexDirection: "column",
+            justifyContent: "space-between",
+            padding: "3px",
+            wordBreak: "break-all",
+            fontSize: 14,
+            color:
+              subtype === CALENDAR_EVENTS_COMMON_SUBTYPE ? "black" : "white",
+          }}
+          onMouseMove={handleMouseMove}
+          onMouseLeave={() => setPosition(null)}
+        >
+          {position ? (
             <div
+              className={styles.pos}
+              data-title={isEdit ? "" : titleStr}
               style={{
-                display: "flex",
-                flexDirection: "column",
-                padding: "5px 0",
-                gap: "5px",
+                top: mouseY > window.innerHeight / 2 ? undefined : mouseY + 10,
+                left:
+                  window.innerWidth - mouseX > 200 ? mouseX + 10 : undefined,
+                bottom:
+                  mouseY > window.innerHeight / 2
+                    ? window.innerHeight - mouseY - 10
+                    : undefined,
+                right: window.innerWidth - mouseX < 200 ? 10 : undefined,
               }}
             >
-              <CommonButton
-                text={staticTexts.updateEvent ?? "N/A"}
-                onClick={() => setEditEventId(eventId)}
-              />
-              <DeleteFeatureButton
-                deleteText={staticTexts.delete ?? "N/A"}
-                featureData={eventData}
-                noChangeOrder
-              />
+              {titleStr}
             </div>
           ) : null}
+
+          <div style={{ fontWeight: 700 }}>
+            {`${time?.value ?? ""} ${title?.text_content ?? "N/A"}`}
+          </div>
+          <div>
+            <div style={{ fontStyle: "italic" }}>
+              {trainer?.text_content ?? "N/A"}
+            </div>
+            <div>{`${staticTexts.price}: ${title?.price}`}</div>
+            <div>{`${staticTexts.count}: ${count?.value}`}</div>
+          </div>
         </div>
+        {isEdit ? (
+          <div
+            style={{
+              display: "flex",
+              padding: "5px 0",
+              gap: "5px",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <CommonButton
+              onClick={() => setEditEventId(eventId)}
+              width={ICON_BUTTON_WIDTH}
+            >
+              <PencilIcon
+                width={ICON_IN_BUTTON_WIDTH}
+                title={staticTexts.updateEvent ?? "N/A"}
+              />
+            </CommonButton>
+            <DeleteFeatureButton
+              deleteText={staticTexts.delete ?? "N/A"}
+              featureData={eventData}
+              noChangeOrder
+            />
+          </div>
+        ) : null}
       </div>
     </div>
   );

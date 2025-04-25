@@ -99,6 +99,7 @@ export const ActionBannerListGroup = ({
       groupData={groupData}
       onDeleteFinished={handleDeleteFinished}
       isEdit={isEdit}
+      marginTop={20}
     >
       <div ref={ref}>
         <ScrollContainer

@@ -60,7 +60,7 @@ const QuillEditor = ({ text, onChange }: Props) => {
         "font-size", // CSS property
         {
           scope: Parchment.Scope.INLINE,
-          whitelist: ["12px", "14px", "16px", "18px", "20px", "22px"], // Allowed values
+          whitelist: ["12px", "14px", "16px", "18px", "20px", "28px"], // Allowed values
         }
       );
       Quill.register(FontSizeAttributor, true);
@@ -110,7 +110,7 @@ const QuillEditor = ({ text, onChange }: Props) => {
         modules: {
           toolbar: [
             [{ header: [1, 2, 3, 4, false] }],
-            [{ fontsize: ["12px", "14px", "16px", "18px", "20px", "22px"] }],
+            [{ fontsize: ["12px", "14px", "16px", "18px", "20px", "28px"] }],
             [
               {
                 weight: ["normal", "bold", "100", "300", "400", "700"],

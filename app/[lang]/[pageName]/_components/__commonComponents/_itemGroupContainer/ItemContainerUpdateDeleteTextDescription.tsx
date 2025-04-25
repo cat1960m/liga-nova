@@ -45,7 +45,7 @@ export const ItemContainerUpdateDeleteTextDescription = ({
     />
   );
   return (
-    <ItemGroupContainerCommon isEdit={isEdit} getEditButtons={getEditButtons}>
+    <ItemGroupContainerCommon isEdit={isEdit} getEditButtons={getEditButtons} marginTop={0}>
       {children}
     </ItemGroupContainerCommon>
   );

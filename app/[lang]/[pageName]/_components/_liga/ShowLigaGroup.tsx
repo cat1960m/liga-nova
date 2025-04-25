@@ -67,6 +67,7 @@ export const ShowLigaGroup = ({
       textDescriptionType={LIGA_SERVICE}
       isEdit={isEdit}
       isChangeOrderHorizontal={false}
+      marginTop={20}
     >
       <div
         style={{

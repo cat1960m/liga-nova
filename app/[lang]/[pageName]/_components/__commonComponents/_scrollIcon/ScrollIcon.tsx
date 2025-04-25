@@ -3,6 +3,7 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 import cl from "clsx";
 import styles from "./scrollIcon.module.css";
+import { ICON_BUTTON_WIDTH, ICON_IN_BUTTON_WIDTH } from "@/app/lib/constants";
 
 export type Props = {
   direction: "left" | "right";
@@ -34,12 +35,12 @@ export const ScrollIcon = ({
     <div
       onClick={onClick}
       className={currentClassName}
-      style={{ width: "48px", marginTop: marginTop ?  marginTop + "px" : undefined}}
+      style={{ width: ICON_BUTTON_WIDTH, marginTop: marginTop ?  marginTop + "px" : undefined}}
     >
       {isRight ? (
-        <ChevronRightIcon style={{ width: "32px" }} />
+        <ChevronRightIcon style={{ width: ICON_IN_BUTTON_WIDTH }} />
       ) : (
-        <ChevronLeftIcon style={{ width: "32px" }} />
+        <ChevronLeftIcon style={{ width: ICON_IN_BUTTON_WIDTH}} />
       )}
     </div>
   );

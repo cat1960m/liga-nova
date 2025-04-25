@@ -1,18 +1,17 @@
-import { StaticTexts } from "@/app/dictionaries/definitions";
-import { UpdateDeleteTextButtons } from "../_buttons/UpdateDeleteTextButtons";
-import { UseItems } from "../_upadeModal/UpdateTextDescriptionDataModalContent";
-import { FullData, MainParams } from "@/app/lib/definitions";
-
 export type Props = {
   children: React.ReactNode;
   isEdit: boolean;
   getEditButtons: () => React.ReactNode;
+  marginTop: number;
+  heightValue?: string;
 };
 
 export const ItemGroupContainerCommon = ({
   isEdit,
   children,
   getEditButtons,
+  marginTop,
+  heightValue
 }: Props) => {
   return (
     <div
@@ -23,7 +22,8 @@ export const ItemGroupContainerCommon = ({
         border: isEdit ? "1px dotted magenta" : undefined,
         padding: isEdit ? "25px 10px 10px 10px" : undefined,
         position: "relative",
-        marginTop: isEdit ? "30px" : "10px",
+        marginTop: isEdit ? Math.max(marginTop, 30) : marginTop,
+        height: heightValue,
       }}
     >
       {children}

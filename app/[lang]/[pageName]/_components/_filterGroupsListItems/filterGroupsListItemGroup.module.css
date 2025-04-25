@@ -9,6 +9,7 @@
     justify-content: center;
     font-size: 24;
     font-weight: 700;
+    flex-grow: 2;
 }
 
 .main {
@@ -20,6 +21,10 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+    width: 100%;
+    flex-grow: 2;
+    flex-shrink: 2;
+    min-width: 190px;
 }
 
 .filterGroups {

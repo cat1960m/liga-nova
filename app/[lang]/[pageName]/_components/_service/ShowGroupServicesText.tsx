@@ -9,6 +9,7 @@ export const ShowGroupServicesText = ({ text, title, price }: Props) => {
     <div
       style={{
         flexGrow: 2,
+        flexShrink: 2,
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
@@ -24,19 +25,21 @@ export const ShowGroupServicesText = ({ text, title, price }: Props) => {
             style={{
               display: "flex",
               width: "16px",
+              minWidth: "16px",
               height: "16px",
               borderRadius: "8px",
               border: "1px solid blue",
               color: "blue",
               alignItems: "center",
               justifyContent: "center",
+              margin: "0 10px",
             }}
           >
             i
           </div>
         ) : null}
       </div>
-      <div>{`${price} грн`}</div>
+      <div style={{ whiteSpace: "nowrap" }}>{`${price} грн`}</div>
     </div>
   );
 };

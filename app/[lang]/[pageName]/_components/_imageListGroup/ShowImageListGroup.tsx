@@ -78,6 +78,8 @@ export const ShowImageListGroup = ({
       addButtonText={staticTexts.addGroupItem ?? "N/A"}
       textDescriptionType={IMAGE}
       onTextDescriptionAdded={onTextDescriptionAdded}
+      isChangeOrderHorizontal={false}
+      marginTop={20}
     >
       <div ref={ref}>
         {ids.length ? (

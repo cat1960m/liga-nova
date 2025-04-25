@@ -38,6 +38,7 @@ export type Props = {
   refParent: RefObject<HTMLDivElement | null>;
   minItemWidth?: number;
   maxItemWidth?: number;
+  canStretch?: boolean;
 };
 
 export const ScrollContainer = ({
@@ -49,6 +50,7 @@ export const ScrollContainer = ({
   refParent,
   minItemWidth = 300,
   maxItemWidth,
+  canStretch,
 }: Props) => {
   const [scrollPosition, setScrollPosition] = useState<number>(0);
   const start = useRef<number | null>(null);
@@ -202,7 +204,7 @@ export const ScrollContainer = ({
             position: "relative",
             left: -dataType.itemWidth * ids.length + scrollPosition,
             width: dataType.itemWidth * ids.length * 3,
-            height: "auto",
+            height: "100%", //"auto",
           }}
         >
           <div

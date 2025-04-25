@@ -2,6 +2,7 @@ import { StaticTexts } from "@/app/dictionaries/definitions";
 import { ItemContainerUpdateDeleteTextDescription } from "../../__commonComponents/_itemGroupContainer/ItemContainerUpdateDeleteTextDescription";
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/outline";
+import { ICON_IN_BUTTON_WIDTH } from "@/app/lib/constants";
 export type Props = {
   isEdit: boolean;
   staticTexts: StaticTexts;
@@ -42,12 +43,12 @@ export const ShowTitle = ({
         {isExpanded ? (
           <ChevronUpIcon
             onClick={() => setIsExpanded(false)}
-            style={{ width: "24px" }}
+            style={{ width: ICON_IN_BUTTON_WIDTH }}
           />
         ) : (
           <ChevronDownIcon
             onClick={() => setIsExpanded(true)}
-            style={{ width: "24px" }}
+            style={{ width: ICON_IN_BUTTON_WIDTH }}
           />
         )}
       </div>

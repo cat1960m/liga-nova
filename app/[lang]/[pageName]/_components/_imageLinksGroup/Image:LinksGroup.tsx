@@ -36,6 +36,7 @@ export const ImageLinksGroup = ({
       deleteButtonText={staticTexts.delete ?? "N/A"}
       addButtonText={staticTexts.addGroupItem ?? "N/A"}
       textDescriptionType={IMAGE_LINKS_ITEM}
+      marginTop={20}
     >
       <div className={cn(styles.container)}>
         {groupDataMain.map((item) => (
