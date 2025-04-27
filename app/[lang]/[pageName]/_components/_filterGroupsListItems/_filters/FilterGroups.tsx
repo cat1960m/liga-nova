@@ -1,6 +1,5 @@
 "use client";
 
-import { StaticTexts } from "@/app/dictionaries/definitions";
 import { FullData, MainParams } from "@/app/lib/definitions";
 import {
   FILTER,
@@ -15,8 +14,6 @@ import { AddChildFeatureButton } from "../../__commonComponents/_buttons/AddChil
 import { FilterGroupsItems } from "./FilterGroupItems";
 
 export type Props = {
-  isEdit: boolean;
-  staticTexts: StaticTexts;
   pageFullDataList: FullData[];
   params: MainParams;
   onFilterSelectionChanged: (data: {
@@ -30,8 +27,6 @@ export type Props = {
 
 export const FilterGroups = ({
   pageFullDataList,
-  isEdit,
-  staticTexts,
   params,
   onFilterSelectionChanged,
   selectedFilterTextDescriptionIds,
@@ -39,6 +34,8 @@ export const FilterGroups = ({
   width,
 }: Props) => {
   const currentWidth = width ?? FILTER_GROUP_DEFAULT_WIDTH;
+  const { staticTexts, isEdit } = params;
+
 
   return (
     <div
@@ -55,8 +52,6 @@ export const FilterGroups = ({
       }}
     >
       <FilterGroupsItems
-        isEdit={isEdit}
-        staticTexts={staticTexts}
         pageFullDataList={pageFullDataList}
         params={params}
         onFilterSelectionChanged={onFilterSelectionChanged}

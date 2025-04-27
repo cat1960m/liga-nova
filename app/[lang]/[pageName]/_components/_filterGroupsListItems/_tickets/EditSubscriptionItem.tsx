@@ -1,7 +1,5 @@
 "use client";
 
-import { StaticTexts } from "@/app/dictionaries/definitions";
-import { AddTextDescriptionButton } from "../../__commonComponents/_buttons/AddTextDescriptionButton";
 import { TextItemField } from "../TextItemField";
 import {
   SUBSCRIPTION_ITEM_CAN_POSTPONE,
@@ -19,13 +17,11 @@ import { usePathname } from "next/navigation";
 import { CheckboxItemField } from "../CheckboxItemField";
 
 export type Props = {
-  staticTexts: StaticTexts;
   currentData: FullData[];
   params: MainParams;
 };
 
 export const EditSubscriptionItem = ({
-  staticTexts,
   currentData,
   params,
 }: Props) => {
@@ -64,6 +60,8 @@ export const EditSubscriptionItem = ({
       pathName,
     });
   };
+  const { staticTexts } = params;
+
 
   return (
     <div
@@ -76,28 +74,24 @@ export const EditSubscriptionItem = ({
     >
       <TextItemField
         fieldData={name}
-        staticTexts={staticTexts}
         title={staticTexts.name}
         params={params}
         useItems={{ text: "simple" }}
       />
       <TextItemField
         fieldData={price}
-        staticTexts={staticTexts}
         title={staticTexts.price}
         params={params}
         useItems={{ text: "simple", price: "price" }}
       />
       <TextItemField
         fieldData={share}
-        staticTexts={staticTexts}
         title={staticTexts.share}
         params={params}
         useItems={{ text: "simple" }}
       />
       <TextItemField
         fieldData={oldPrice}
-        staticTexts={staticTexts}
         title={staticTexts.oldPrice}
         params={params}
         useItems={{ text: "simple" }}
@@ -105,7 +99,6 @@ export const EditSubscriptionItem = ({
 
       <TextItemField
         fieldData={description}
-        staticTexts={staticTexts}
         title={staticTexts.descriptions}
         params={params}
         useItems={{ text: "quill" }}

@@ -20,8 +20,6 @@ export type Props = {
   actionBannerListItemsData: Record<string, FullData[]>;
   id: string;
   widthItem?: number;
-  isEdit: boolean;
-  staticTexts: StaticTexts;
   params: MainParams;
   indexSelected: (index: number) => void;
   f: (value: "left" | "right") => void;
@@ -31,8 +29,6 @@ export type Props = {
 export const ShowItem = ({
   actionBannerListItemsData,
   id,
-  isEdit,
-  staticTexts,
   params,
   indexSelected,
   f,
@@ -60,12 +56,11 @@ export const ShowItem = ({
   }
 
   const color = image.price === 1 ? "white" : "black";
+  const {isEdit, staticTexts} =params;
 
   return (
     <ItemContainerUpdateTextDescriptionDeleteFeature
-      isEdit={isEdit}
       currentData={image}
-      staticTexts={staticTexts}
       useItems={{
         value: "image",
         price: "color",
@@ -103,8 +98,6 @@ export const ShowItem = ({
             >
               {share ? (
                 <ShowTitle
-                  isEdit={isEdit}
-                  staticTexts={staticTexts}
                   params={params}
                   title={share}
                   color={color}
@@ -113,8 +106,6 @@ export const ShowItem = ({
 
               {ticket ? (
                 <ShowTitle
-                  isEdit={isEdit}
-                  staticTexts={staticTexts}
                   params={params}
                   title={ticket}
                   color={color}
@@ -124,8 +115,6 @@ export const ShowItem = ({
 
             {description ? (
               <ShowDescription
-                isEdit={isEdit}
-                staticTexts={staticTexts}
                 params={params}
                 description={description}
                 color={color}

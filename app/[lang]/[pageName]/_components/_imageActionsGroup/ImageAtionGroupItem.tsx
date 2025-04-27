@@ -1,15 +1,12 @@
 "use client";
 
-import { StaticTexts } from "@/app/dictionaries/definitions";
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { ImageAction } from "./ImageAction";
-import { ActionButton } from "../__commonComponents/_buttons/_actionButon/ActionButton";
+import { ActionButton } from "../__commonComponents/_buttons/_actionButton/ActionButton";
 import { ItemContainerUpdateDeleteTextDescription } from "../__commonComponents/_itemGroupContainer/ItemContainerUpdateDeleteTextDescription";
 
 export type Props = {
   groupData: FullData[];
-  staticTexts: StaticTexts;
-  isEdit: boolean;
   params: MainParams;
   groupItemMain: FullData;
   isModalShown: boolean;
@@ -18,21 +15,19 @@ export type Props = {
 
 export const ImageActionGroupItem = ({
   groupData,
-  isEdit,
-  staticTexts,
   params,
   groupItemMain,
   isModalShown,
   changeModalState,
 }: Props) => {
+  const { staticTexts } = params;
+
   return (
     <ItemContainerUpdateDeleteTextDescription
-      isEdit={isEdit}
       useItems={{
         tooltip: "quill",
         value: "image",
       }}
-      staticTexts={staticTexts}
       s3Key={groupItemMain.value}
       params={params}
       currentData={groupItemMain}

@@ -10,10 +10,9 @@ import {
   SUBSCRIPTION_ITEM_SHARE,
   YES,
 } from "@/app/lib/constants";
-import { ShowSentence } from "./ShowSentence";
 import { CommonButton } from "../../__commonComponents/_buttons/CommonButton";
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import { ActionButton } from "../../__commonComponents/_buttons/_actionButon/ActionButton";
+import { ActionButton } from "../../__commonComponents/_buttons/_actionButton/ActionButton";
 
 export type Props = {
   currentData: FullData[];
@@ -69,6 +68,7 @@ export const SubscriptionItem = ({ currentData, staticTexts }: Props) => {
             flexWrap: "wrap",
             padding: "10px",
             fontSize: 10,
+            textAlign: "center",
           }}
         >
           {share.text_content}
@@ -82,9 +82,10 @@ export const SubscriptionItem = ({ currentData, staticTexts }: Props) => {
           flexWrap: "wrap",
           paddingTop: "20px",
           fontSize: 16,
+          textAlign: "center",
         }}
       >
-        <ShowSentence sentence={name.text_content ?? "N/A"} />
+        {name.text_content ?? "N/A"}
       </div>
 
       <div

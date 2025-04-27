@@ -1,21 +1,13 @@
 import { INFO_CHECK_HEADER } from "@/app/lib/constants";
-import { StaticTexts } from "@/app/dictionaries/definitions";
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { ItemContainerUpdateDeleteTextDescription } from "../__commonComponents/_itemGroupContainer/ItemContainerUpdateDeleteTextDescription";
 
 export type Props = {
-  isEdit: boolean;
-  staticTexts: StaticTexts;
   currentData: FullData;
   params: MainParams;
 };
 
-export const InfoCheckGroupItem = ({
-  isEdit,
-  staticTexts,
-  currentData,
-  params,
-}: Props) => {
+export const InfoCheckGroupItem = ({ currentData, params }: Props) => {
   const isHeader = currentData.text_type === INFO_CHECK_HEADER;
   const text = currentData.text_content ?? "N/A";
 
@@ -29,9 +21,7 @@ export const InfoCheckGroupItem = ({
       }}
     >
       <ItemContainerUpdateDeleteTextDescription
-        isEdit={isEdit}
         useItems={{ text: "simple" }}
-        staticTexts={staticTexts}
         params={params}
         currentData={currentData}
         isChangeOrder={!isHeader}

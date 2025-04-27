@@ -1,29 +1,24 @@
 import { FullData, MainParams } from "@/app/lib/definitions";
 
 import styles from "./actionBannerList.module.css";
-import { StaticTexts } from "@/app/dictionaries/definitions";
 import { ItemContainerUpdateDeleteTextDescription } from "../__commonComponents/_itemGroupContainer/ItemContainerUpdateDeleteTextDescription";
 import cn from "clsx";
 
 export type Props = {
-  isEdit: boolean;
-  staticTexts: StaticTexts;
   params: MainParams;
   description: FullData;
   color: string;
 };
 
 export const ShowDescription = ({
-  isEdit,
-  staticTexts,
   params,
   description,
   color,
 }: Props) => {
+  const {  isEdit } = params;
+
   return (
     <ItemContainerUpdateDeleteTextDescription
-      isEdit={isEdit}
-      staticTexts={staticTexts}
       currentData={description}
       useItems={{ text: "quill" }}
       params={params}

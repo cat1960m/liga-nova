@@ -8,8 +8,6 @@ export type Props = {
   featureId: number;
   pageFullDataList: FullData[];
   containerFullData: [Record<string, FullData[]>, string[]];
-  isEdit: boolean;
-  staticTexts: StaticTexts;
   buttonText: string;
   params: MainParams;
   pageId: number;
@@ -19,13 +17,13 @@ export const DrawFeatureContainer_Client = ({
   featureId,
   pageFullDataList,
   containerFullData,
-  isEdit,
-  staticTexts,
   buttonText,
   params,
   pageId,
 }: Props) => {
   const [data, keys] = containerFullData;
+  const {  isEdit } = params;
+
 
   return (
     <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
@@ -47,8 +45,6 @@ export const DrawFeatureContainer_Client = ({
               pageFullDataList={pageFullDataList}
               params={params}
               key={id}
-              isEdit={isEdit}
-              staticTexts={staticTexts}
               parentFeatureId={featureId}
               pageId={pageId}
             />
@@ -62,7 +58,6 @@ export const DrawFeatureContainer_Client = ({
             params={params}
             pageFullDataList={pageFullDataList}
             pageId={pageId}
-            staticTexts={staticTexts}
           />
         ) : null}
       </div>

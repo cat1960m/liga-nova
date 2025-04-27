@@ -1,5 +1,3 @@
-import { StaticTexts } from "@/app/dictionaries/definitions";
-import { UpdateDeleteTextButtons } from "../_buttons/UpdateDeleteTextButtons";
 import { UseItems } from "../_upadeModal/UpdateTextDescriptionDataModalContent";
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { ItemGroupContainerCommon } from "./ItemGroupContainerCommon";
@@ -7,8 +5,6 @@ import { UpdateTextDescriptionDeleteFeatureButtons } from "./UpdateTextDescripti
 
 export type Props = {
   children: React.ReactNode;
-  isEdit: boolean;
-  staticTexts: StaticTexts;
   params: MainParams;
   useItems: UseItems;
   currentData: FullData;
@@ -19,10 +15,8 @@ export type Props = {
 };
 
 export const ItemContainerUpdateTextDescriptionDeleteFeature = ({
-  isEdit,
   children,
   useItems,
-  staticTexts,
   params,
   currentData,
   isChangeOrderHorizontal = true,
@@ -32,7 +26,6 @@ export const ItemContainerUpdateTextDescriptionDeleteFeature = ({
 }: Props) => {
   const getEditButtons = () => (
     <UpdateTextDescriptionDeleteFeatureButtons
-      staticTexts={staticTexts}
       isChangeOrderHorizontal={isChangeOrderHorizontal}
       params={params}
       useItems={useItems}
@@ -42,7 +35,7 @@ export const ItemContainerUpdateTextDescriptionDeleteFeature = ({
     />
   );
   return (
-    <ItemGroupContainerCommon isEdit={isEdit} getEditButtons={getEditButtons} marginTop={marginTop}>
+    <ItemGroupContainerCommon isEdit={params.isEdit} getEditButtons={getEditButtons} marginTop={marginTop}>
       {children}
     </ItemGroupContainerCommon>
   );

@@ -1,6 +1,5 @@
 "use client";
 
-import { StaticTexts } from "@/app/dictionaries/definitions";
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { useEffect, useState } from "react";
 import { CommonButton } from "../__commonComponents/_buttons/CommonButton";
@@ -16,7 +15,6 @@ import { usePathname } from "next/navigation";
 import styles from "./filterGroupsListItemGroup.module.css";
 
 export type Props = {
-  staticTexts: StaticTexts;
   pageFullDataList: FullData[];
   params: MainParams;
   groupData: FullData[];
@@ -26,7 +24,6 @@ export type Props = {
 };
 
 export const EditListItemFilter = ({
-  staticTexts,
   pageFullDataList,
   params,
   groupData,
@@ -99,6 +96,8 @@ export const EditListItemFilter = ({
 
   const parentFeatureId = groupData[0]?.id;
   const commonWidth = "32%";
+  const { staticTexts } = params;
+
 
   return (
     <div className={styles.addEdit}>
@@ -139,7 +138,6 @@ export const EditListItemFilter = ({
           >
             <EditListItem
               currentData={addEditItemFeatureIdData}
-              staticTexts={staticTexts}
               pageName={params.pageName}
               params={params}
             />
@@ -156,8 +154,6 @@ export const EditListItemFilter = ({
 
           {parentFeatureId ? (
             <FilterGroups
-              isEdit={false}
-              staticTexts={staticTexts}
               pageFullDataList={pageFullDataList}
               params={params}
               onFilterSelectionChanged={handleFilterSelectionChanged}

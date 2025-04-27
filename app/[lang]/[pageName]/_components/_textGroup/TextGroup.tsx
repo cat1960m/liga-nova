@@ -4,7 +4,6 @@ import {
   TEXT_GROUP_HIDDEN_SUBTYPE,
   SIMPLE_GROUP_ITEM,
 } from "@/app/lib/constants";
-import { StaticTexts } from "@/app/dictionaries/definitions";
 import { ExpandedText } from "../__commonComponents/_expandedText/ExpandedText";
 import { ItemContainerAddTextDescriptionDeleteFeature } from "../__commonComponents/_itemGroupContainer/ItemContainerAddTextDescriptionDeleteFeature";
 import { ShowTextDescription } from "./ShowTextDescription";
@@ -12,17 +11,16 @@ import { HiddenText } from "./HiddenText";
 
 export type Props = {
   data: FullData[];
-  isEdit: boolean;
-  staticTexts: StaticTexts;
   params: MainParams;
 };
 
-export const TextGroup = ({ data, isEdit, staticTexts, params }: Props) => {
+export const TextGroup = ({ data, params }: Props) => {
   const firstItem = data[0];
   const isExpanded = firstItem.subtype === TEXT_GROUP_EXPANDED_SUBTYPE;
   const isHidden = firstItem.subtype === TEXT_GROUP_HIDDEN_SUBTYPE;
 
   const textDescriptions = data.filter((item) => !!item.text_description_id);
+  const { staticTexts, isEdit } = params;
 
   const isTextExpandedShown = isExpanded && !isEdit;
   const isTextHiddenShown = isHidden && !isEdit;
@@ -66,8 +64,6 @@ export const TextGroup = ({ data, isEdit, staticTexts, params }: Props) => {
               <ShowTextDescription
                 key={item.text_description_id}
                 item={item}
-                isEdit={isEdit}
-                staticTexts={staticTexts}
                 params={params}
               />
             );

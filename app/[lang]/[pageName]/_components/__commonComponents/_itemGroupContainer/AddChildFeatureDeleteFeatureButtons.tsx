@@ -1,14 +1,6 @@
-import { StaticTexts } from "@/app/dictionaries/definitions";
 import { AddChildFeatureButton } from "../_buttons/AddChildFeatureButton";
 import { DeleteFeatureButton } from "../_buttons/DeleteFeatureButton";
 import { FullData, MainParams } from "@/app/lib/definitions";
-import {
-  ACTION_BANNER_LIST_DESCRIPTION,
-  ACTION_BANNER_LIST_GROUP_ITEM,
-  ACTION_BANNER_LIST_IMAGE,
-  ACTION_BANNER_LIST_SHARE,
-  ACTION_BANNER_LIST_TICKET,
-} from "@/app/lib/constants";
 
 export type Props = {
   groupData: FullData[];

@@ -77,8 +77,6 @@ export const ShowPage = async ({
       {headerData ? (
         <header>
           <ActionBannerListGroup
-            isEdit={isEdit}
-            staticTexts={dict.common}
             groupData={headerData}
             params={pars}
             pageFullDataList={pageFullData}
@@ -92,8 +90,6 @@ export const ShowPage = async ({
             featureId={currentPageData?.id}
             pageFullDataList={pageFullData}
             containerFullData={containerFullData}
-            isEdit={false}
-            staticTexts={dict.common}
             buttonText={dict.common.addItemToPage ?? "N/A"}
             pageId={pageId}
           />
@@ -103,8 +99,6 @@ export const ShowPage = async ({
             featureId={currentPageData?.id}
             pageFullDataList={pageFullData}
             containerFullData={containerFullData}
-            isEdit={true}
-            staticTexts={dict.common}
             buttonText={dict.common.addItemToPage ?? "N/A"}
             pageId={pageId}
           />

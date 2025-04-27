@@ -9,22 +9,17 @@ import {
   INFO_SUBTYPE,
   INFO_TITLE,
 } from "@/app/lib/constants";
-import { StaticTexts } from "@/app/dictionaries/definitions";
 import { ShowInfoGroupItem } from "./ShowInfoGroupItem";
 import { PhoneAddress } from "./PhoneAddress";
 import { CommonButton } from "../__commonComponents/_buttons/CommonButton";
 import { ItemContainerAddTextDescriptionDeleteFeature } from "../__commonComponents/_itemGroupContainer/ItemContainerAddTextDescriptionDeleteFeature";
 
 export type Props = {
-  isEdit: boolean;
-  staticTexts: StaticTexts;
   groupData: FullData[];
   params: MainParams;
 };
 
 export const ShowInfoGroup = ({
-  isEdit,
-  staticTexts,
   groupData,
   params,
 }: Props) => {
@@ -33,6 +28,8 @@ export const ShowInfoGroup = ({
   const dataTitle = groupData.find((item) => item.text_type === INFO_TITLE);
 
   const isInfoGroup = subtype === INFO_SUBTYPE;
+  const { staticTexts, isEdit } = params;
+
 
   const dataBodyList = groupData.filter((item) => item.text_type === INFO_BODY);
   const map: Record<string, string> = {};
@@ -62,15 +59,11 @@ export const ShowInfoGroup = ({
         }}
       >
         <ShowInfoGroupItem
-          isEdit={isEdit}
-          staticTexts={staticTexts}
           data={dataTitle}
           params={params}
         />
         {isInfoGroup ? (
           <PhoneAddress
-            isEdit={isEdit}
-            staticTexts={staticTexts}
             groupData={groupData}
             params={params}
           />
@@ -87,8 +80,6 @@ export const ShowInfoGroup = ({
             return (
               <div key={item.text_content_id ?? "" + "_" + index}>
                 <ShowInfoGroupItem
-                  isEdit={isEdit}
-                  staticTexts={staticTexts}
                   data={item}
                   isQuill
                   params={params}

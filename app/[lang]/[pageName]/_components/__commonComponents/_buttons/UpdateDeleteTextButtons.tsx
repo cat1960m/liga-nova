@@ -2,7 +2,6 @@
 import { FullData, MainParams, TextDescription } from "@/app/lib/definitions";
 import { DeleteTextDescriptionButton } from "./DeleteTextDescriptionButton";
 import { UpdateTextDescriptionData } from "../_upadeModal/UpdateTextDescriptionData";
-import { StaticTexts } from "@/app/dictionaries/definitions";
 import { ChangeOrderButtons } from "./ChangeOrderButtons";
 import { useEditContext } from "../_page/EditContextProvider";
 import {
@@ -11,11 +10,9 @@ import {
   UpdateTextDescriptionsOrder,
 } from "@/app/lib/actions_fitness";
 import { usePathname } from "next/navigation";
-import { CSSProperties } from "react";
 import { UseItems } from "../_upadeModal/UpdateTextDescriptionDataModalContent";
 export type Props = {
   currentData?: FullData;
-  staticTexts: StaticTexts;
   isChangeOrder?: boolean;
   isChangeOrderHorizontal?: boolean;
   s3Key?: string;
@@ -27,7 +24,6 @@ export type Props = {
 
 export const UpdateDeleteTextButtons = ({
   currentData,
-  staticTexts,
   isChangeOrder,
   isChangeOrderHorizontal,
   s3Key,
@@ -101,7 +97,6 @@ export const UpdateDeleteTextButtons = ({
     >
       <UpdateTextDescriptionData
         currentData={currentData}
-        staticTexts={staticTexts}
         useItems={useItems}
         params={params}
         changeModalState={changeModalState}
@@ -117,7 +112,7 @@ export const UpdateDeleteTextButtons = ({
         {canDelete ? (
           <DeleteTextDescriptionButton
             textDescriptionId={currentData.text_description_id}
-            deleteText={staticTexts.delete ?? "N/A"}
+            deleteText={params.staticTexts.delete ?? "N/A"}
             s3Key={
               s3Key ||
               (useItems.value === "image" ? currentData.value : undefined)

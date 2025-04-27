@@ -1,6 +1,5 @@
 "use client";
 
-import { StaticTexts } from "@/app/dictionaries/definitions";
 import { addChildFeature } from "@/app/lib/actions_fitness";
 import {
   FILTER,
@@ -73,14 +72,12 @@ export const AddChildFeatureToContainer = ({
   params,
   pageFullDataList,
   pageId,
-  staticTexts,
 }: {
   parentFeatureId: number | undefined;
   text: string;
   params: MainParams;
   pageFullDataList: FullData[];
   pageId: number;
-  staticTexts: StaticTexts;
 }) => {
   const pathName = usePathname();
   const [selectedValue, setSelectedValue] = useState<string>("");
@@ -106,6 +103,7 @@ export const AddChildFeatureToContainer = ({
 
     return data;
   }, []);
+  const { staticTexts } = params;
 
   const handleChangeAdditionalPagename: ChangeEventHandler<
     HTMLSelectElement
@@ -164,7 +162,11 @@ export const AddChildFeatureToContainer = ({
       }
     }
 
-    if ([ACTION_BANNER_GROUP_SUBTYPE, ACTION_BANNER_TRY_GROUP_SUBTYPE].includes(newValue)) {
+    if (
+      [ACTION_BANNER_GROUP_SUBTYPE, ACTION_BANNER_TRY_GROUP_SUBTYPE].includes(
+        newValue
+      )
+    ) {
       await addChildFeature({
         parentId: parentFeatureId,
         type: GROUP,
@@ -408,7 +410,6 @@ export const AddChildFeatureToContainer = ({
         pathName,
       });
     }
-
 
     if (newValue === TABS) {
       const tabsFeatureId = await addChildFeature({

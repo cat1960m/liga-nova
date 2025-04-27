@@ -1,14 +1,11 @@
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { InfoCheckGroupItem } from "./InfoCheckGroupItem";
-import { StaticTexts } from "@/app/dictionaries/definitions";
 import { ItemContainerAddTextDescriptionDeleteFeature } from "../__commonComponents/_itemGroupContainer/ItemContainerAddTextDescriptionDeleteFeature";
 
 export type Props = {
   headerType: string;
   columnItemType: string;
   groupData: FullData[];
-  isEdit: boolean;
-  staticTexts: StaticTexts;
   parentFeatureId: number;
   params: MainParams;
 };
@@ -17,8 +14,6 @@ export const InfoCheckGroup = ({
   headerType,
   columnItemType,
   groupData,
-  isEdit,
-  staticTexts,
   parentFeatureId,
   params,
 }: Props) => {
@@ -31,6 +26,8 @@ export const InfoCheckGroup = ({
   if (!featureId) {
     return null;
   }
+  const { staticTexts, isEdit } = params;
+
 
   return (
     <ItemContainerAddTextDescriptionDeleteFeature
@@ -51,9 +48,7 @@ export const InfoCheckGroup = ({
       >
         {headerData ? (
           <InfoCheckGroupItem
-            isEdit={isEdit}
             currentData={headerData}
-            staticTexts={staticTexts}
             params={params}
           />
         ) : null}
@@ -63,9 +58,7 @@ export const InfoCheckGroup = ({
               return (
                 <InfoCheckGroupItem
                   key={data.id + "_" + index}
-                  isEdit={isEdit}
                   currentData={data}
-                  staticTexts={staticTexts}
                   params={params}
                 />
               );

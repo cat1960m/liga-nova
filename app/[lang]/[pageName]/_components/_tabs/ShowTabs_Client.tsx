@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { ShowTabTitle_Client } from "./ShowTabTitle_Client";
 import { DrawFeatureContainer_Client } from "../DrawFeatureContainer_Client";
 import { getContainerData } from "@/app/lib/utils";
-import { StaticTexts } from "@/app/dictionaries/definitions";
 import { TAB, TAB_TITLE } from "@/app/lib/constants";
 import { ItemContainerAddChildFeatureDeleteFeature } from "../__commonComponents/_itemGroupContainer/ItemContainerAddChildFeatureDeleteFeature";
 
@@ -13,8 +12,6 @@ export type Props = {
   tabsData: FullData;
   pageFullDataList: FullData[];
   params: MainParams;
-  isEdit: boolean;
-  staticTexts: StaticTexts;
   pageId: number;
 };
 
@@ -22,8 +19,6 @@ export const ShowTabs_Client = ({
   pageFullDataList,
   tabsData,
   params,
-  isEdit,
-  staticTexts,
   pageId,
 }: Props) => {
   const tabTitles = pageFullDataList.filter(
@@ -61,6 +56,8 @@ export const ShowTabs_Client = ({
 
     setSelectedTabData(tabContainerData);
   }, [pageFullDataList]);
+  const { staticTexts } = params;
+
 
   return (
     <ItemContainerAddChildFeatureDeleteFeature
@@ -71,7 +68,6 @@ export const ShowTabs_Client = ({
       featureSubtype="1"
       deleteButtonText={staticTexts.deleteTabs ?? "N/A"}
       groupData={[tabsData]}
-      isEdit={isEdit}
       marginTop={20}
     >
       <div
@@ -100,8 +96,6 @@ export const ShowTabs_Client = ({
                   onSelectedTabFeatureIdChanged={
                     handleSelectedTabFeatureIdChanged
                   }
-                  isEdit={isEdit}
-                  staticTexts={staticTexts}
                   params={params}
                 />
               </div>
@@ -115,8 +109,6 @@ export const ShowTabs_Client = ({
             featureId={selectedTabFeatureId}
             pageFullDataList={pageFullDataList}
             containerFullData={selectedTabData}
-            isEdit={isEdit}
-            staticTexts={staticTexts}
             buttonText={staticTexts.addItemToTab ?? "N/A"}
             pageId={pageId}
           />

@@ -1,6 +1,5 @@
 "use client";
 
-import { StaticTexts } from "@/app/dictionaries/definitions";
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { useState } from "react";
 import { CommonButton } from "../../__commonComponents/_buttons/CommonButton";
@@ -12,7 +11,6 @@ import {
 } from "@/app/lib/constants";
 
 export type Props = {
-  staticTexts: StaticTexts;
   pageFullDataList: FullData[];
   params: MainParams;
   onFilterSelectionChanged: (data: {
@@ -25,7 +23,6 @@ export type Props = {
 
 export const FilterGroupsMobile = ({
   pageFullDataList,
-  staticTexts,
   params,
   onFilterSelectionChanged,
   selectedFilterTextDescriptionIds,
@@ -40,6 +37,9 @@ export const FilterGroupsMobile = ({
   const handleFiltersHideClick = () => {
     setIsFiltersShown(false);
   };
+
+  const { staticTexts } = params;
+
 
   const filtersTitle = (
     <div
@@ -85,8 +85,6 @@ export const FilterGroupsMobile = ({
           </div>
 
           <FilterGroupsItems
-            isEdit={false}
-            staticTexts={staticTexts}
             pageFullDataList={pageFullDataList}
             params={params}
             onFilterSelectionChanged={onFilterSelectionChanged}

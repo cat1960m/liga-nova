@@ -8,7 +8,7 @@ import { usePathname } from "next/navigation";
 import { ManageImages } from "../ManageImages";
 import { CreateModal } from "./CreateModal";
 
-export const ManageIconsModal = ({ params }: { params: MainParams }) => {
+export const ManageIconsModal = ({ lang }: { lang: string }) => {
   const [isModalShown, setIsModalShown] = useState(false);
   const [iconsData, setIconsData] = useState<FullData[]>([]);
   const pathName = usePathname();
@@ -19,7 +19,7 @@ export const ManageIconsModal = ({ params }: { params: MainParams }) => {
 
   const getIcons = async () => {
     const pageFullData: FullData[] | null = await getPageFullData({
-      lang: params.lang,
+      lang,
       pageName: "icon",
     });
 

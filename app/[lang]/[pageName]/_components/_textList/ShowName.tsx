@@ -1,25 +1,18 @@
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { ItemContainerUpdateDeleteTextDescription } from "../__commonComponents/_itemGroupContainer/ItemContainerUpdateDeleteTextDescription";
-import { StaticTexts } from "@/app/dictionaries/definitions";
 
 export type Props = {
   isMain: boolean;
   textName: FullData;
-  isEdit: boolean;
   params: MainParams;
-  staticTexts: StaticTexts;
 };
 export const ShowName = ({
   isMain,
   textName,
-  isEdit,
-  staticTexts,
   params,
 }: Props) => {
   return (
     <ItemContainerUpdateDeleteTextDescription
-      isEdit={isEdit}
-      staticTexts={staticTexts}
       currentData={textName}
       useItems={{ text: "simple" }}
       params={params}

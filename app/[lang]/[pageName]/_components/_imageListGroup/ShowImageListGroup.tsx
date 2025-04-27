@@ -1,6 +1,5 @@
 "use client";
 
-import { StaticTexts } from "@/app/dictionaries/definitions";
 import { IMAGE } from "@/app/lib/constants";
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { ScrollContainer } from "../__commonComponents/_scrollContainer/ScrollContainer";
@@ -10,16 +9,12 @@ import { useRef, useState } from "react";
 import { ItemContainerAddTextDescriptionDeleteFeature } from "../__commonComponents/_itemGroupContainer/ItemContainerAddTextDescriptionDeleteFeature";
 
 export type Props = {
-  isEdit: boolean;
-  staticTexts: StaticTexts;
   groupData: FullData[];
   countVisibleItems?: number;
   params: MainParams;
 };
 // school of trainers and other
 export const ShowImageListGroup = ({
-  isEdit,
-  staticTexts,
   groupData,
   countVisibleItems,
   params,
@@ -48,9 +43,7 @@ export const ShowImageListGroup = ({
         }}
       >
         <ItemContainerUpdateDeleteTextDescription
-          isEdit={isEdit}
           useItems={{ value: "image" }}
-          staticTexts={staticTexts}
           s3Key={imageData.value}
           onDeleteFinished={onDeleteFinished}
           params={params}
@@ -69,6 +62,7 @@ export const ShowImageListGroup = ({
   const onDeleteFinished = () => {
     setLastAddedId(null);
   };
+  const { isEdit, staticTexts } = params;
 
   return (
     <ItemContainerAddTextDescriptionDeleteFeature

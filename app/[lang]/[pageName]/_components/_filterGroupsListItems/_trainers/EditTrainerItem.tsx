@@ -1,6 +1,5 @@
 "use client";
 
-import { StaticTexts } from "@/app/dictionaries/definitions";
 import { TextItemField } from "../TextItemField";
 import { FullData, MainParams } from "@/app/lib/definitions";
 import {
@@ -11,13 +10,11 @@ import {
 import { CheckboxItemField } from "../CheckboxItemField";
 
 export type Props = {
-  staticTexts: StaticTexts;
   currentData: FullData[];
   params: MainParams;
 };
 
 export const EditTrainerItem = ({
-  staticTexts,
   currentData,
   params,
 }: Props) => {
@@ -33,6 +30,8 @@ export const EditTrainerItem = ({
   if (!name || !isPremium || !isPremium || !description) {
     return null;
   }
+  const { staticTexts } = params;
+
 
   return (
     <div
@@ -45,7 +44,6 @@ export const EditTrainerItem = ({
     >
       <TextItemField
         fieldData={name}
-        staticTexts={staticTexts}
         title={staticTexts.fullName}
         params={params}
         useItems={{ text: "simple", value: "image" }}
@@ -57,7 +55,6 @@ export const EditTrainerItem = ({
 
       <TextItemField
         fieldData={description}
-        staticTexts={staticTexts}
         params={params}
         useItems={{ text: "quill" }}
         title={staticTexts.descriptions}

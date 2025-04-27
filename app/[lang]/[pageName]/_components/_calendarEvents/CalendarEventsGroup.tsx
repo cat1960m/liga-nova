@@ -1,6 +1,5 @@
 "use client";
 
-import { StaticTexts } from "@/app/dictionaries/definitions";
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { AddEditCalendarEvents } from "./AddEditCalendarEvents";
 import { dateToString, getContainerData } from "@/app/lib/utils";
@@ -9,28 +8,21 @@ import { useState } from "react";
 import { CommonButton } from "../__commonComponents/_buttons/CommonButton";
 import { ShowEvents } from "./ShowEvents";
 import {
-  ACTION_BUTTON_BACKGROUND,
-  ACTION_BUTTON_BACKGROUND_NOT_SELECTED,
   ICON_BUTTON_WIDTH,
   ICON_IN_BUTTON_WIDTH,
 } from "@/app/lib/constants";
-import { ShowDatesInterval } from "./ShowDatesInterval";
 import { CalendarHeader } from "./CalendarHeader";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import { ItemGroupContainerCommon } from "../__commonComponents/_itemGroupContainer/ItemGroupContainerCommon";
 
 export type Props = {
-  isEdit: boolean;
-  staticTexts: StaticTexts;
   groupData: FullData[];
   params: MainParams;
   pageFullData: FullData[];
 };
 
 export const CalendarEventsGroup = ({
-  isEdit,
   groupData,
-  staticTexts,
   params,
   pageFullData,
 }: Props) => {
@@ -72,6 +64,8 @@ export const CalendarEventsGroup = ({
   };
 
   const isCalendarShown = !isAddShown && !editEventId;
+  const { staticTexts, isEdit } = params;
+
 
   const getButtons = () => {
     return (
@@ -139,7 +133,6 @@ export const CalendarEventsGroup = ({
 
         {!isCalendarShown ? (
           <AddEditCalendarEvents
-            staticTexts={staticTexts}
             calendarFeatureId={calendarFeatureId}
             params={params}
             hideAddEvent={hideAddEvent}

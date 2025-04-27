@@ -1,6 +1,5 @@
 "use client";
 
-import { StaticTexts } from "@/app/dictionaries/definitions";
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { getContainerData } from "@/app/lib/utils";
 import { FilterGroup } from "./FilterGroup";
@@ -8,8 +7,6 @@ import { FILTER_GROUP_SUBTYPE, GROUP } from "@/app/lib/constants";
 import { useMemo } from "react";
 
 export type Props = {
-  isEdit: boolean;
-  staticTexts: StaticTexts;
   pageFullDataList: FullData[];
   params: MainParams;
   onFilterSelectionChanged: (data: {
@@ -22,8 +19,6 @@ export type Props = {
 
 export const FilterGroupsItems = ({
   pageFullDataList,
-  isEdit,
-  staticTexts,
   params,
   onFilterSelectionChanged,
   selectedFilterTextDescriptionIds,
@@ -48,6 +43,7 @@ export const FilterGroupsItems = ({
   }
 
   const [data, filterGroupIds] = containerFullData;
+  const { isEdit } = params;
 
   return (
     <>
@@ -64,8 +60,6 @@ export const FilterGroupsItems = ({
               />
             ) : null}
             <FilterGroup
-              isEdit={isEdit}
-              staticTexts={staticTexts}
               filterGroupData={filterGroupData}
               onFilterSelectionChanged={onFilterSelectionChanged}
               selectedFilterTextDescriptionIds={

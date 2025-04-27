@@ -1,6 +1,5 @@
 "use client";
 
-import { StaticTexts } from "@/app/dictionaries/definitions";
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { useState } from "react";
 import { FILTER, FILTER_GROUP_TITLE } from "@/app/lib/constants";
@@ -10,8 +9,6 @@ import { ShowFilter } from "./ShowFilter";
 
 export type Props = {
   filterGroupData: FullData[];
-  isEdit: boolean;
-  staticTexts: StaticTexts;
   onFilterSelectionChanged: (data: {
     filter: FullData;
     value: boolean;
@@ -23,8 +20,6 @@ export type Props = {
 
 export const FilterGroup = ({
   filterGroupData,
-  isEdit,
-  staticTexts,
   onFilterSelectionChanged,
   selectedFilterTextDescriptionIds,
   parentFeatureId,
@@ -42,6 +37,9 @@ export const FilterGroup = ({
   );
 
   const filters = filterGroupData.filter((item) => item.text_type === FILTER);
+
+  const { staticTexts, isEdit } = params;
+
 
   return (
     <ItemContainerAddTextDescriptionDeleteFeature
@@ -63,8 +61,6 @@ export const FilterGroup = ({
       >
         {titleData ? (
           <ShowTitle
-            isEdit={isEdit}
-            staticTexts={staticTexts}
             titleData={titleData}
             params={params}
             isExpanded={isExpanded}
@@ -81,8 +77,6 @@ export const FilterGroup = ({
               return (
                 <ShowFilter
                   key={filter.text_description_id}
-                  isEdit={isEdit}
-                  staticTexts={staticTexts}
                   filter={filter}
                   params={params}
                   inputValue={inputValue}

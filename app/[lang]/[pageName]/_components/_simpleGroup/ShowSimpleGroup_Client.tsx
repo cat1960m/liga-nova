@@ -1,19 +1,14 @@
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { DEFAULT_TEXT } from "@/app/lib/constants";
-import { StaticTexts } from "@/app/dictionaries/definitions";
 import { ItemContainerUpdateTextDescriptionDeleteFeature } from "../__commonComponents/_itemGroupContainer/ItemContainerUpdateTextDescriptionDeleteFeature";
 
 export type Props = {
   data: FullData[];
-  isEdit: boolean;
-  staticTexts: StaticTexts;
   params: MainParams;
 };
 
 export const ShowSimpleGroup_Client = ({
   data,
-  isEdit,
-  staticTexts,
   params,
 }: Props) => {
   const firstItem = data[0];
@@ -25,9 +20,7 @@ export const ShowSimpleGroup_Client = ({
 
   return (
     <ItemContainerUpdateTextDescriptionDeleteFeature
-      isEdit={isEdit}
       currentData={firstItem}
-      staticTexts={staticTexts}
       useItems={{ text: "simple" }}
       params={params}
       featureData={data}

@@ -1,80 +1,26 @@
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { ItemContainerUpdateDeleteTextDescription } from "../__commonComponents/_itemGroupContainer/ItemContainerUpdateDeleteTextDescription";
-import { StaticTexts } from "@/app/dictionaries/definitions";
-
+import cn from "clsx";
+import styles from "./showBody.module.css";
 export type Props = {
   isMain: boolean;
   textBody: FullData;
-  isEdit: boolean;
   params: MainParams;
-  staticTexts: StaticTexts;
 };
 
-export const ShowBody = ({
-  isMain,
-  textBody,
-  isEdit,
-  staticTexts,
-  params,
-}: Props) => {
+export const ShowBody = ({ isMain, textBody, params }: Props) => {
   const text = textBody?.text_content ?? "N/A";
   return (
     <ItemContainerUpdateDeleteTextDescription
-      isEdit={isEdit}
-      staticTexts={staticTexts}
       currentData={textBody}
       useItems={{ text: "area" }}
       params={params}
       isChangeOrder={false}
     >
-      <div
-        style={{
-          display: "flex",
-          width: "100%",
-          flexDirection: "column",
-          marginTop: "10px",
-        }}
-      >
-        {isMain ? (
-          <div
-            style={{
-              height: "20px",
-              display: "flex",
-              justifyContent: "flex-start",
-              alignItems: "center",
-              fontSize: "40px",
-              color: "#6f6fff",
-              lineHeight: "30px",
-            }}
-          >
-            "
-          </div>
-        ) : null}
-        <div
-          style={{
-            fontSize: isMain ? 16 : 12,
-            fontWeight: 200,
-            whiteSpace: "pre-line",
-            padding: isMain ? "0 30px" : undefined,
-          }}
-        >
-          {text}
-        </div>
-        {isMain ? (
-          <div
-            style={{
-              height: "40px",
-              display: "flex",
-              justifyContent: "flex-end",
-              alignItems: "center",
-              fontSize: "40px",
-              color: "#6f6fff",
-              lineHeight: "30px",
-            }}
-          >
-            "
-          </div>
-        ) : null}
+      <div className={styles.mainName}>
+        {isMain ? <div className={styles.start}>"</div> : null}
+        <div className={cn(styles.text, { [styles.main]: isMain })}>{text}</div>
+        {isMain ? <div className={styles.end}>"</div> : null}
       </div>
     </ItemContainerUpdateDeleteTextDescription>
   );

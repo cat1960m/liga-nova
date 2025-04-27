@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { CommonButton } from "../__commonComponents/_buttons/CommonButton";
-import { StaticTexts } from "@/app/dictionaries/definitions";
 import { FullData, MainParams, TabType } from "@/app/lib/definitions";
 import {
   CALENDAR_EVENTS_COMMON_SUBTYPE,
@@ -23,7 +22,6 @@ import { SelectEventType } from "./SelectEventType";
 import { useChangeEventData } from "./hooks/useChangeEventData";
 
 export type Props = {
-  staticTexts: StaticTexts;
   calendarFeatureId: number;
   params: MainParams;
   hideAddEvent: () => void;
@@ -31,7 +29,6 @@ export type Props = {
 };
 
 export const AddEditCalendarEvents = ({
-  staticTexts,
   calendarFeatureId,
   params,
   hideAddEvent,
@@ -209,6 +206,8 @@ export const AddEditCalendarEvents = ({
   };
 
   const isButtonsDisabled = !confirmedDates.length || !isDataChanged;
+  const { staticTexts } = params;
+
 
   return (
     <div

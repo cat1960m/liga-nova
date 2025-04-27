@@ -2,19 +2,14 @@
 
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { IMAGE } from "@/app/lib/constants";
-import { StaticTexts } from "@/app/dictionaries/definitions";
 import { ItemContainerUpdateTextDescriptionDeleteFeature } from "../__commonComponents/_itemGroupContainer/ItemContainerUpdateTextDescriptionDeleteFeature";
 
 export type Props = {
-  isEdit: boolean;
-  staticTexts: StaticTexts;
   groupData: FullData[];
   params: MainParams;
 };
 
 export const ShowImageGroup = ({
-  isEdit,
-  staticTexts,
   groupData,
   params,
 }: Props) => {
@@ -25,9 +20,7 @@ export const ShowImageGroup = ({
 
   return (
     <ItemContainerUpdateTextDescriptionDeleteFeature
-      isEdit={isEdit}
       currentData={imageData}
-      staticTexts={staticTexts}
       useItems={{
         value: "image",
       }}

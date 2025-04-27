@@ -1,6 +1,5 @@
 "use client";
 
-import { StaticTexts } from "@/app/dictionaries/definitions";
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { AdditionalPageDataGroupEdit } from "./AdditionalPageDataGroupEdit";
 import { AdditionalPageDataGroupShow } from "./AdditionalPageDataGroupShow";
@@ -10,8 +9,6 @@ import { ItemContainerAddTextDescriptionDeleteFeature } from "../__commonCompone
 
 export type Props = {
   currentData: FullData;
-  isEdit: boolean;
-  staticTexts: StaticTexts;
   pageFullDataList: FullData[];
   pageId: number;
   params: MainParams;
@@ -20,8 +17,6 @@ export type Props = {
 
 export const AdditionalPageDataGroup = ({
   currentData,
-  isEdit,
-  staticTexts,
   pageFullDataList,
   pageId,
   params,
@@ -39,6 +34,8 @@ export const AdditionalPageDataGroup = ({
   }
 
   const linkText = PAGE_NAMES_TO_LIST_ITEMS_DATA[additionalPageName]?.linkText;
+  const { staticTexts, isEdit } = params;
+
 
   return (
     <ItemContainerAddTextDescriptionDeleteFeature
@@ -54,7 +51,6 @@ export const AdditionalPageDataGroup = ({
       {isEdit ? (
         <AdditionalPageDataGroupEdit
           currentData={currentData}
-          staticTexts={staticTexts}
           pageFullDataList={pageFullDataList}
           additionalPageName={additionalPageName}
           params={params}

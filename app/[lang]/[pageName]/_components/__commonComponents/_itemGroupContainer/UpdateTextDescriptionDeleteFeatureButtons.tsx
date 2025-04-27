@@ -6,7 +6,6 @@ import { DeleteFeatureButton } from "../_buttons/DeleteFeatureButton";
 
 export type Props = {
   dataToUpdate?: FullData;
-  staticTexts: StaticTexts;
   useItems: UseItems;
   params: MainParams;
   featureData: FullData[];
@@ -16,7 +15,6 @@ export type Props = {
 
 export const UpdateTextDescriptionDeleteFeatureButtons = ({
   dataToUpdate,
-  staticTexts,
   useItems,
   params,
   featureData,
@@ -35,14 +33,13 @@ export const UpdateTextDescriptionDeleteFeatureButtons = ({
     >
       {dataToUpdate ? (
         <UpdateTextDescriptionData
-          staticTexts={staticTexts}
           currentData={dataToUpdate}
           useItems={useItems}
           params={params}
         />
       ) : null}
       <DeleteFeatureButton
-        deleteText={staticTexts.delete ?? "N/A"}
+        deleteText={params.staticTexts.delete ?? "N/A"}
         featureData={featureData}
         isChangeOrderHorizontal={isChangeOrderHorizontal}
         noDelete={noDelete}

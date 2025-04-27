@@ -1,6 +1,5 @@
 "use client";
 
-import { StaticTexts } from "@/app/dictionaries/definitions";
 import {
   ACTION_BANNER_LIST_DESCRIPTION,
   ACTION_BANNER_LIST_GROUP_ITEM,
@@ -16,16 +15,12 @@ import { ShowItem } from "./ShowItem";
 import { ItemContainerAddChildFeatureDeleteFeature } from "../__commonComponents/_itemGroupContainer/ItemContainerAddChildFeatureDeleteFeature";
 
 export type Props = {
-  isEdit: boolean;
-  staticTexts: StaticTexts;
   groupData: FullData[];
   params: MainParams;
   pageFullDataList: FullData[];
 };
 //main page
 export const ActionBannerListGroup = ({
-  isEdit,
-  staticTexts,
   groupData,
   params,
   pageFullDataList,
@@ -65,8 +60,6 @@ export const ActionBannerListGroup = ({
         actionBannerListItemsData={actionBannerListItemsData}
         id={id}
         widthItem={widthItem}
-        isEdit={isEdit}
-        staticTexts={staticTexts}
         params={params}
         indexSelected={indexSelected}
         f={f}
@@ -81,6 +74,8 @@ export const ActionBannerListGroup = ({
   const handleDeleteFinished = () => {
     setLastAddedId(null);
   };
+  const { staticTexts } = params;
+
 
   return (
     <ItemContainerAddChildFeatureDeleteFeature
@@ -98,7 +93,6 @@ export const ActionBannerListGroup = ({
       deleteButtonText={staticTexts.delete ?? "N/A"}
       groupData={groupData}
       onDeleteFinished={handleDeleteFinished}
-      isEdit={isEdit}
       marginTop={20}
     >
       <div ref={ref}>

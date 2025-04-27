@@ -2,7 +2,6 @@
 
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { CommonButton } from "../__commonComponents/_buttons/CommonButton";
-import { StaticTexts } from "@/app/dictionaries/definitions";
 import { getContainerData } from "@/app/lib/utils";
 import { useMemo } from "react";
 import { DeleteFeatureButton } from "../__commonComponents/_buttons/DeleteFeatureButton";
@@ -18,8 +17,6 @@ import { PencilIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { ItemGroupContainerCommon } from "../__commonComponents/_itemGroupContainer/ItemGroupContainerCommon";
 
 export type Props = {
-  isEdit: boolean;
-  staticTexts: StaticTexts;
   pageFullDataList: FullData[];
   setEditingItemFeatureId: (id: number | null) => void;
   parentFeatureId: number;
@@ -29,8 +26,6 @@ export type Props = {
 };
 
 export const WrappingListItems = ({
-  isEdit,
-  staticTexts,
   pageFullDataList,
   setEditingItemFeatureId,
   parentFeatureId,
@@ -56,6 +51,8 @@ export const WrappingListItems = ({
   }
 
   const [data, itemIds] = containerFullData;
+  const { staticTexts, isEdit } = params;
+
 
   const getEditButtons = ({ currentData }: { currentData: FullData[] }) => {
     const id = currentData[0]?.id ?? null;

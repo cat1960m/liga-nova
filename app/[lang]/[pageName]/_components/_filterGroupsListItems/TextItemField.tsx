@@ -1,11 +1,9 @@
 import { FullData, MainParams } from "@/app/lib/definitions";
-import { StaticTexts } from "@/app/dictionaries/definitions";
 import { ItemContainerUpdateDeleteTextDescription } from "../__commonComponents/_itemGroupContainer/ItemContainerUpdateDeleteTextDescription";
 import { UseItems } from "../__commonComponents/_upadeModal/UpdateTextDescriptionDataModalContent";
 
 export type Props = {
   fieldData: FullData;
-  staticTexts: StaticTexts;
   title?: string;
   params: MainParams;
   useItems: UseItems;
@@ -13,7 +11,6 @@ export type Props = {
 
 export const TextItemField = ({
   fieldData,
-  staticTexts,
   title,
   params,
   useItems,
@@ -30,8 +27,6 @@ export const TextItemField = ({
       {title ? <div style={{ fontWeight: 700 }}>{title}: </div> : null}
 
       <ItemContainerUpdateDeleteTextDescription
-        isEdit={true}
-        staticTexts={staticTexts}
         currentData={fieldData}
         s3Key={fieldData.value}
         useItems={useItems}

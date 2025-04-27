@@ -130,7 +130,7 @@ export default async function Layout({
           width: "100%",
         }}
       >
-        {isAuthenticated ? <ManageIconsModal params={paramsData} /> : null}
+        {isAuthenticated ? <ManageIconsModal lang={lang} /> : null}
 
         {isAuthenticated ? <EditRegime /> : null}
       </div>

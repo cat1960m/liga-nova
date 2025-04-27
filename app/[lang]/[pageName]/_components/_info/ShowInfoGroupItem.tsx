@@ -5,22 +5,17 @@ import {
   INFO_TELEPHONE,
   INFO_TITLE,
 } from "@/app/lib/constants";
-import { StaticTexts } from "@/app/dictionaries/definitions";
 import { PhoneIcon } from "@heroicons/react/24/solid";
 import { ItemContainerUpdateDeleteTextDescription } from "../__commonComponents/_itemGroupContainer/ItemContainerUpdateDeleteTextDescription";
 
 export type Props = {
   data?: FullData;
-  isEdit: boolean;
-  staticTexts: StaticTexts;
   isQuill?: boolean;
   params: MainParams;
 };
 
 export const ShowInfoGroupItem = ({
   data,
-  isEdit,
-  staticTexts,
   isQuill,
   params,
 }: Props) => {
@@ -39,9 +34,7 @@ export const ShowInfoGroupItem = ({
 
   return (
     <ItemContainerUpdateDeleteTextDescription
-      isEdit={isEdit}
       useItems={{ text: isQuill ? "quill" : "simple" }}
-      staticTexts={staticTexts}
       params={params}
       currentData={data}
       isChangeOrder={isBody}

@@ -1,6 +1,5 @@
 "use client";
 
-import { StaticTexts } from "@/app/dictionaries/definitions";
 import { FullData, MainParams } from "@/app/lib/definitions";
 import Image from "next/image";
 import styles from "./actionBanner.module.css";
@@ -12,15 +11,11 @@ import {
 import { ItemContainerUpdateTextDescriptionDeleteFeature } from "../__commonComponents/_itemGroupContainer/ItemContainerUpdateTextDescriptionDeleteFeature";
 
 export type Props = {
-  isEdit: boolean;
-  staticTexts: StaticTexts;
   groupData: FullData[];
   params: MainParams;
 };
 
 export const ActionBannerGroup = ({
-  isEdit,
-  staticTexts,
   groupData,
   params,
 }: Props) => {
@@ -31,6 +26,8 @@ export const ActionBannerGroup = ({
   if (!titleImageData) {
     return null;
   }
+  const { staticTexts } = params;
+
 
   const isTry = titleImageData.subtype === ACTION_BANNER_TRY_GROUP_SUBTYPE;
   const text = isTry ? staticTexts.try : staticTexts.register;
@@ -40,9 +37,7 @@ export const ActionBannerGroup = ({
 
   return (
     <ItemContainerUpdateTextDescriptionDeleteFeature
-      isEdit={isEdit}
       currentData={titleImageData}
-      staticTexts={staticTexts}
       useItems={{
         text: "simple",
         value: "image",

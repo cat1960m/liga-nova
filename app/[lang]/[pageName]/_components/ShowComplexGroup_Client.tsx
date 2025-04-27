@@ -43,8 +43,6 @@ import { TextGroup } from "./_textGroup/TextGroup";
 
 export type Props = {
   groupData: FullData[];
-  isEdit: boolean;
-  staticTexts: StaticTexts;
   pageFullDataList: FullData[];
   params: MainParams;
   parentFeatureId: number;
@@ -53,8 +51,6 @@ export type Props = {
 
 export const ShowComplexGroup_Client = ({
   groupData,
-  isEdit,
-  staticTexts,
   pageFullDataList,
   params,
   parentFeatureId,
@@ -110,8 +106,6 @@ export const ShowComplexGroup_Client = ({
           headerType={INFO_CHECK_HEADER}
           columnItemType={INFO_CHECK_ITEM}
           groupData={groupData}
-          isEdit={isEdit}
-          staticTexts={staticTexts}
           parentFeatureId={parentFeatureId}
           params={params}
         />
@@ -120,8 +114,6 @@ export const ShowComplexGroup_Client = ({
       {isTextGroup ? (
         <TextGroup
           data={groupData}
-          isEdit={isEdit}
-          staticTexts={staticTexts}
           params={params}
         />
       ) : null}
@@ -129,8 +121,6 @@ export const ShowComplexGroup_Client = ({
       {isInfoGroup ? (
         <ShowInfoGroup
           groupData={groupData}
-          isEdit={isEdit}
-          staticTexts={staticTexts}
           params={params}
         />
       ) : null}
@@ -138,16 +128,12 @@ export const ShowComplexGroup_Client = ({
       {isServices ? (
         <ShowServicesGroup
           groupData={groupData}
-          isEdit={isEdit}
-          staticTexts={staticTexts}
           params={params}
         />
       ) : null}
 
       {isImageGroup ? (
         <ShowImageGroup
-          isEdit={isEdit}
-          staticTexts={staticTexts}
           groupData={groupData}
           params={params}
         />
@@ -155,8 +141,6 @@ export const ShowComplexGroup_Client = ({
 
       {isLigaGroup ? (
         <ShowLigaGroup
-          isEdit={isEdit}
-          staticTexts={staticTexts}
           groupData={groupData}
           params={params}
         />
@@ -164,8 +148,6 @@ export const ShowComplexGroup_Client = ({
 
       {isImageListGroup || isPhotoGalleryGroup ? (
         <ShowImageListGroup
-          isEdit={isEdit}
-          staticTexts={staticTexts}
           groupData={groupData}
           params={params}
           countVisibleItems={isPhotoGalleryGroup ? 1 : undefined}
@@ -174,8 +156,6 @@ export const ShowComplexGroup_Client = ({
 
       {isImageLinksGroup ? (
         <ImageLinksGroup
-          isEdit={isEdit}
-          staticTexts={staticTexts}
           groupData={groupData}
           params={params}
         />
@@ -183,8 +163,6 @@ export const ShowComplexGroup_Client = ({
 
       {isImageActionsGroup ? (
         <ImageActionsGroup
-          isEdit={isEdit}
-          staticTexts={staticTexts}
           groupData={groupData}
           params={params}
         />
@@ -192,8 +170,6 @@ export const ShowComplexGroup_Client = ({
 
       {isActionBannerGroup ? (
         <ActionBannerGroup
-          isEdit={isEdit}
-          staticTexts={staticTexts}
           groupData={groupData}
           params={params}
         />
@@ -201,8 +177,6 @@ export const ShowComplexGroup_Client = ({
 
       {isTextListGroup ? (
         <TextListGroup
-          isEdit={isEdit}
-          staticTexts={staticTexts}
           groupData={groupData}
           params={params}
           pageFullDataList={pageFullDataList}
@@ -211,8 +185,6 @@ export const ShowComplexGroup_Client = ({
 
       {isActionBannerListGroup ? (
         <ActionBannerListGroup
-          isEdit={isEdit}
-          staticTexts={staticTexts}
           groupData={groupData}
           params={params}
           pageFullDataList={pageFullDataList}
@@ -221,8 +193,6 @@ export const ShowComplexGroup_Client = ({
 
       {isScheduleGroup ? (
         <ShowScheduleGroup
-          isEdit={isEdit}
-          staticTexts={staticTexts}
           groupData={groupData}
           params={params}
         />
@@ -231,8 +201,6 @@ export const ShowComplexGroup_Client = ({
       {isAdditionalPageDataGroup ? (
         <AdditionalPageDataGroup
           currentData={firstData}
-          isEdit={isEdit}
-          staticTexts={staticTexts}
           pageFullDataList={pageFullDataList}
           pageId={pageId}
           params={params}
@@ -242,8 +210,6 @@ export const ShowComplexGroup_Client = ({
 
       {isFilterGroupsListItemsGroup ? (
         <FilterGroupsListItemsGroup
-          isEdit={isEdit}
-          staticTexts={staticTexts}
           groupData={groupData}
           pageFullDataList={pageFullDataList}
           params={params}
@@ -252,8 +218,6 @@ export const ShowComplexGroup_Client = ({
 
       {isCalendarEventsGroup ? (
         <CalendarEventsGroup
-          isEdit={isEdit}
-          staticTexts={staticTexts}
           groupData={groupData}
           params={params}
           pageFullData={pageFullDataList}

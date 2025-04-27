@@ -1,6 +1,5 @@
 "use client";
 
-import { StaticTexts } from "@/app/dictionaries/definitions";
 import {
   GROUP,
   FILTER_GROUP_SUBTYPE,
@@ -15,7 +14,6 @@ import { UpdateFeatureFilterIdsButton } from "../__commonComponents/_buttons/Upd
 
 export type Props = {
   currentData: FullData;
-  staticTexts: StaticTexts;
   pageFullDataList: FullData[];
   additionalPageName: string;
   params: MainParams;
@@ -23,7 +21,6 @@ export type Props = {
 //Персональні тренування ,Групові студії, Кріосауна, Солярій
 export const AdditionalPageDataGroupEdit = ({
   currentData,
-  staticTexts,
   pageFullDataList,
   additionalPageName,
   params,
@@ -78,6 +75,8 @@ export const AdditionalPageDataGroupEdit = ({
       setSelectedFilterTextDescriptionIds(newSelectedFilterTextDescriptionIds);
     }
   };
+  const { staticTexts } = params;
+
 
   return (
     <>
@@ -98,8 +97,6 @@ export const AdditionalPageDataGroupEdit = ({
           return (
             <div key={filterGroupId}>
               <FilterGroup
-                isEdit={false}
-                staticTexts={staticTexts}
                 filterGroupData={filterGroupData}
                 onFilterSelectionChanged={handleFilterSelectionChanged}
                 selectedFilterTextDescriptionIds={

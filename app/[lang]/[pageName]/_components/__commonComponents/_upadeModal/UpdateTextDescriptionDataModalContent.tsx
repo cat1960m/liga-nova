@@ -42,7 +42,6 @@ export type UseItems = {
 
 export type Props = {
   onClose: () => void;
-  staticTexts: StaticTexts;
   currentData: FullData;
   params: MainParams;
   useItems: UseItems;
@@ -50,11 +49,11 @@ export type Props = {
 
 export const UpdateTextDescriptionDataModalContent = ({
   onClose,
-  staticTexts,
   currentData,
   params,
   useItems,
 }: Props) => {
+  const { staticTexts } = params;
   const [textContents, setTextContents] = useState<TextContent[] | null>(null);
   const [textContentsTooltips, setTextContentsTooltips] = useState<
     TextContent[] | null
@@ -358,7 +357,7 @@ export const UpdateTextDescriptionDataModalContent = ({
         />
       ) : null}
 
-      {useItems.price === "price"  ? (
+      {useItems.price === "price" ? (
         <div className={styles.editItem}>
           <div className={styles.editTitle}>{`${staticTexts.price}:`}</div>
           <input
@@ -369,7 +368,6 @@ export const UpdateTextDescriptionDataModalContent = ({
           грн
         </div>
       ) : null}
-
 
       {useItems.price === "color" ? (
         <div className={styles.colorItem}>
@@ -425,7 +423,7 @@ export const UpdateTextDescriptionDataModalContent = ({
             onChange={handleValueChange}
           />
         </div>
-      ) : null}       
+      ) : null}
 
       {useItems.value === "image" ? (
         <div className={styles.editItem}>

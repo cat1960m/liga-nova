@@ -1,12 +1,9 @@
 "use client";
 
-import { StaticTexts } from "@/app/dictionaries/definitions";
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { useState } from "react";
 import { EditListItemFilter } from "./EditListItemFilter";
-import { addChildFeature } from "@/app/lib/actions_fitness";
 import { LIST_ITEM, PAGE_NAMES_TO_LIST_ITEMS_DATA } from "@/app/lib/constants";
-import { usePathname } from "next/navigation";
 import { WrappingListItems } from "./WrappingListItems";
 import { FilterGroups } from "./_filters/FilterGroups";
 import { FilterGroupsMobile } from "./_filters/FilterGroupsMobile";
@@ -15,8 +12,6 @@ import styles from "./filterGroupsListItemGroup.module.css";
 
 export type Props = {
   groupData: FullData[];
-  isEdit: boolean;
-  staticTexts: StaticTexts;
   pageFullDataList: FullData[];
   params: MainParams;
 };
@@ -24,8 +19,6 @@ export type Props = {
 export const FilterGroupsListItemsGroup = ({
   groupData,
   pageFullDataList,
-  isEdit,
-  staticTexts,
   params,
 }: Props) => {
   const parentFeatureId = groupData[0]?.id;
@@ -41,6 +34,8 @@ export const FilterGroupsListItemsGroup = ({
   if (!parentFeatureId) {
     return null;
   }
+  const { staticTexts, isEdit } = params;
+
 
   const handleFilterSelectionChanged = ({
     filter,
@@ -87,7 +82,6 @@ export const FilterGroupsListItemsGroup = ({
       textTypes={PAGE_NAMES_TO_LIST_ITEMS_DATA[params.pageName]?.textTypes}
       deleteButtonText={staticTexts.delete ?? "N/A"}
       groupData={groupData}
-      isEdit={isEdit}
       marginTop={0}
     >
       <div className={styles.container}>
@@ -95,8 +89,6 @@ export const FilterGroupsListItemsGroup = ({
           <>
             <div className={isEdit ? undefined : styles.filterGroups}>
               <FilterGroups
-                isEdit={isEdit}
-                staticTexts={staticTexts}
                 parentFeatureId={parentFeatureId}
                 pageFullDataList={pageFullDataList}
                 params={params}
@@ -110,7 +102,6 @@ export const FilterGroupsListItemsGroup = ({
             {!isEdit ? (
               <div className={styles.filterGroupsMobile}>
                 <FilterGroupsMobile
-                  staticTexts={staticTexts}
                   parentFeatureId={parentFeatureId}
                   pageFullDataList={pageFullDataList}
                   params={params}
@@ -127,7 +118,6 @@ export const FilterGroupsListItemsGroup = ({
         <div className={styles.main}>
           {editingListItemFeatureId ? (
             <EditListItemFilter
-              staticTexts={staticTexts}
               pageFullDataList={pageFullDataList}
               params={params}
               groupData={groupData}
@@ -139,8 +129,6 @@ export const FilterGroupsListItemsGroup = ({
 
           {isListItemsShown ? (
             <WrappingListItems
-              isEdit={isEdit}
-              staticTexts={staticTexts}
               pageFullDataList={pageFullDataList}
               setEditingItemFeatureId={setEditingListItemFeatureId}
               parentFeatureId={parentFeatureId}

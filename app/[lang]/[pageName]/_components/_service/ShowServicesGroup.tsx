@@ -1,26 +1,19 @@
 import { SERVICE_ITEM, TOOLTIP } from "@/app/lib/constants";
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { ShowGroupServicesText } from "./ShowGroupServicesText";
-import { StaticTexts } from "@/app/dictionaries/definitions";
 import { UpdateDeleteTextButtons } from "../__commonComponents/_buttons/UpdateDeleteTextButtons";
 import { ItemContainerAddTextDescriptionDeleteFeature } from "../__commonComponents/_itemGroupContainer/ItemContainerAddTextDescriptionDeleteFeature";
 
 export type Props = {
   groupData: FullData[];
-  isEdit: boolean;
-  staticTexts: StaticTexts;
   params: MainParams;
 };
 
-export const ShowServicesGroup = ({
-  groupData,
-  isEdit,
-  staticTexts,
-  params,
-}: Props) => {
+export const ShowServicesGroup = ({ groupData, params }: Props) => {
   const firstData = groupData[0];
 
   const texts = groupData.filter((data) => data.content_type !== TOOLTIP);
+  const { isEdit, staticTexts } = params;
 
   return (
     <ItemContainerAddTextDescriptionDeleteFeature
@@ -69,21 +62,20 @@ export const ShowServicesGroup = ({
                 key={data.id + "_" + index}
               >
                 <ShowGroupServicesText
+                  staticTexts={staticTexts}
                   text={data.text_content ?? "N/A"}
                   title={title?.text_content ?? ""}
                   price={data.value ?? ""}
-                  staticTexts={staticTexts}
                 />
 
                 {isEdit ? (
                   <UpdateDeleteTextButtons
                     currentData={data}
-                    staticTexts={staticTexts}
                     isChangeOrder={data.text_type === SERVICE_ITEM}
                     useItems={{
                       text: "simple",
                       tooltip: "simple",
-                      value: "price"
+                      value: "price",
                     }}
                     params={params}
                   />

@@ -8,7 +8,6 @@ import {
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { ShowComplexGroup_Client } from "./ShowComplexGroup_Client";
 import { ShowTabs_Client } from "./_tabs/ShowTabs_Client";
-import { StaticTexts } from "@/app/dictionaries/definitions";
 import { ShowSimpleGroup_Client } from "./_simpleGroup/ShowSimpleGroup_Client";
 import { LayoutParent } from "./_layout_parent/LayoutParent";
 import { ItemContainerAddTextDescriptionDeleteFeature } from "./__commonComponents/_itemGroupContainer/ItemContainerAddTextDescriptionDeleteFeature";
@@ -17,8 +16,6 @@ export type Props = {
   childFeatureDataList: FullData[];
   params: MainParams;
   pageFullDataList: FullData[];
-  isEdit: boolean;
-  staticTexts: StaticTexts;
   parentFeatureId: number;
   pageId: number;
 };
@@ -27,8 +24,6 @@ export const DrawChildFeature_Client = ({
   childFeatureDataList,
   params,
   pageFullDataList,
-  isEdit,
-  staticTexts,
   parentFeatureId,
   pageId,
 }: Props) => {
@@ -45,6 +40,7 @@ export const DrawChildFeature_Client = ({
   const isDivider =
     childFeatureFirstItem.type === GROUP &&
     DIVIDER === childFeatureFirstItem.subtype;
+  const { staticTexts, isEdit } = params;
 
   if (isDivider) {
     return (
@@ -71,12 +67,7 @@ export const DrawChildFeature_Client = ({
 
   if (isSimpleGroup) {
     return (
-      <ShowSimpleGroup_Client
-        data={childFeatureDataList}
-        isEdit={isEdit}
-        staticTexts={staticTexts}
-        params={params}
-      />
+      <ShowSimpleGroup_Client data={childFeatureDataList} params={params} />
     );
   }
 
@@ -84,8 +75,6 @@ export const DrawChildFeature_Client = ({
     return (
       <ShowComplexGroup_Client
         groupData={childFeatureDataList}
-        isEdit={isEdit}
-        staticTexts={staticTexts}
         pageFullDataList={pageFullDataList}
         params={params}
         parentFeatureId={parentFeatureId}
@@ -100,8 +89,6 @@ export const DrawChildFeature_Client = ({
         tabsData={childFeatureFirstItem}
         pageFullDataList={pageFullDataList}
         params={params}
-        isEdit={isEdit}
-        staticTexts={staticTexts}
         pageId={pageId}
       />
     );
@@ -113,8 +100,6 @@ export const DrawChildFeature_Client = ({
         tabsData={childFeatureFirstItem}
         pageFullDataList={pageFullDataList}
         params={params}
-        isEdit={isEdit}
-        staticTexts={staticTexts}
         pageId={pageId}
       />
     );

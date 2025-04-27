@@ -4,7 +4,6 @@ import { AddChildFeatureDeleteFeatureButtons } from "./AddChildFeatureDeleteFeat
 
 export type Props = {
   children: React.ReactNode;
-  isEdit: boolean;
   groupData: FullData[];
   params: MainParams;
   onDeleteFinished?: () => void;
@@ -18,7 +17,6 @@ export type Props = {
 };
 
 export const ItemContainerAddChildFeatureDeleteFeature = ({
-  isEdit,
   children,
   groupData,
   params,
@@ -46,7 +44,7 @@ export const ItemContainerAddChildFeatureDeleteFeature = ({
   );
   return (
     <ItemGroupContainerCommon
-      isEdit={isEdit}
+      isEdit={params.isEdit}
       getEditButtons={getEditButtons}
       marginTop={marginTop}
     >

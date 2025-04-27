@@ -6,21 +6,16 @@ import {
   LIGA_TELEPHONE,
   LIGA_TITLE,
 } from "@/app/lib/constants";
-import { StaticTexts } from "@/app/dictionaries/definitions";
 import { PhoneIcon, MapPinIcon } from "@heroicons/react/24/solid";
 import { ItemContainerUpdateDeleteTextDescription } from "../__commonComponents/_itemGroupContainer/ItemContainerUpdateDeleteTextDescription";
 
 export type Props = {
   data?: FullData;
-  isEdit: boolean;
-  staticTexts: StaticTexts;
   params: MainParams;
 };
 
 export const ShowLigaGroupItem = ({
   data,
-  isEdit,
-  staticTexts,
   params,
 }: Props) => {
   if (!data) {
@@ -42,8 +37,6 @@ export const ShowLigaGroupItem = ({
 
   return (
     <ItemContainerUpdateDeleteTextDescription
-      isEdit={isEdit}
-      staticTexts={staticTexts}
       currentData={data}
       isChangeOrder={isService}
       useItems={{

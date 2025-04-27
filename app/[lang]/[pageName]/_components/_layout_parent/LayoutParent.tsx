@@ -1,7 +1,6 @@
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { DrawFeatureContainer_Client } from "../DrawFeatureContainer_Client";
 import { getContainerData } from "@/app/lib/utils";
-import { StaticTexts } from "@/app/dictionaries/definitions";
 import { LAYOUT_ITEM_LEFT, LAYOUT_ITEM_RIGHT } from "@/app/lib/constants";
 import styles from "./layoutParent.module.css";
 import cn from "clsx";
@@ -11,8 +10,6 @@ export type Props = {
   tabsData: FullData;
   pageFullDataList: FullData[];
   params: MainParams;
-  isEdit: boolean;
-  staticTexts: StaticTexts;
   pageId: number;
 };
 
@@ -20,8 +17,6 @@ export const LayoutParent = ({
   pageFullDataList,
   tabsData,
   params,
-  isEdit,
-  staticTexts,
   pageId,
 }: Props) => {
   const layoutItems = pageFullDataList.filter(
@@ -54,6 +49,8 @@ export const LayoutParent = ({
     pageFullData: pageFullDataList,
     parentFeatureId: layoutItemRight.id,
   });
+  const { staticTexts, isEdit } = params;
+
 
   return (
     <ItemContainerAddTextDescriptionDeleteFeature
@@ -79,8 +76,6 @@ export const LayoutParent = ({
             featureId={layoutItemLeft.id}
             pageFullDataList={pageFullDataList}
             containerFullData={layoutItemLeftData}
-            isEdit={isEdit}
-            staticTexts={staticTexts}
             buttonText={staticTexts.addItems ?? "N/A"}
             pageId={pageId}
           />
@@ -97,8 +92,6 @@ export const LayoutParent = ({
             featureId={layoutItemRight.id}
             pageFullDataList={pageFullDataList}
             containerFullData={layoutItemRightData}
-            isEdit={isEdit}
-            staticTexts={staticTexts}
             buttonText={staticTexts.addItems ?? "N/A"}
             pageId={pageId}
           />

@@ -1,0 +1,40 @@
+.mainName {
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+        margin-top: 10px;
+}
+
+.start{
+    height: 20px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 40px;
+    color: #6f6fff;
+    line-height: 30px;
+}
+
+.text {
+        font-size:  12;
+        font-weight: 200;
+        white-space: pre-line;
+}
+
+.text.main {
+    font-size: 16;
+    font-weight: 200;
+    white-space: pre-line;
+    padding: 0 30px;
+}
+
+.end {
+    height: 40px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    font-size: 40px;
+    color: #6f6fff;
+    line-height: 30px;
+}
+

@@ -7,8 +7,6 @@ export type Props = {
   featureId: number;
   pageFullDataList: FullData[];
   containerFullData: [Record<string, FullData[]>, string[]];
-  isEdit: boolean;
-  staticTexts: StaticTexts;
   buttonText: string;
   params: MainParams;
   pageId: number;
@@ -16,7 +14,7 @@ export type Props = {
 export const DrawFeatureContainerEdit = (props: Props) => {
   return (
     <EditContextProvider>
-      <DrawFeatureContainer_Client {...props} isEdit={true} />
+      <DrawFeatureContainer_Client {...props} />
     </EditContextProvider>
   );
 };

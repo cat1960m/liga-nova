@@ -8,7 +8,6 @@ import {
   LIGA_TELEPHONE,
   LIGA_TITLE,
 } from "@/app/lib/constants";
-import { StaticTexts } from "@/app/dictionaries/definitions";
 import { ShowLigaGroupItem } from "./ShowLigaGroupItem";
 import { getPageTitles } from "@/app/lib/actions_fitness";
 import Link from "next/link";
@@ -17,15 +16,11 @@ import styles from "./showListGRoup.module.css";
 import { ItemContainerAddTextDescriptionDeleteFeature } from "../__commonComponents/_itemGroupContainer/ItemContainerAddTextDescriptionDeleteFeature";
 
 export type Props = {
-  isEdit: boolean;
-  staticTexts: StaticTexts;
   groupData: FullData[];
   params: MainParams;
 };
 
 export const ShowLigaGroup = ({
-  isEdit,
-  staticTexts,
   groupData,
   params,
 }: Props) => {
@@ -53,12 +48,10 @@ export const ShowLigaGroup = ({
     (item) => item.text_type === LIGA_SERVICE
   );
 
-  const commonProps = {
-    isEdit,
-    staticTexts,
-    params,
-  };
+  const { staticTexts, isEdit } = params;
 
+
+  
   return (
     <ItemContainerAddTextDescriptionDeleteFeature
       deleteButtonText={staticTexts.delete ?? "N/A"}
@@ -81,18 +74,18 @@ export const ShowLigaGroup = ({
           padding: "10px",
         }}
       >
-        <ShowLigaGroupItem {...commonProps} data={dataTitle} />
+        <ShowLigaGroupItem params={params} data={dataTitle} />
         <div style={{ display: "flex", gap: "30px", flexWrap: "wrap" }}>
-          <ShowLigaGroupItem {...commonProps} data={dataAddress} />
+          <ShowLigaGroupItem params={params} data={dataAddress} />
 
-          <ShowLigaGroupItem {...commonProps} data={dataTelephone} />
+          <ShowLigaGroupItem params={params}data={dataTelephone} />
         </div>
 
         {isEdit
           ? dataServiceList.map((item, index) => {
               return (
                 <div key={item.text_content_id ?? "" + "_" + index}>
-                  <ShowLigaGroupItem {...commonProps} data={item} />
+                  <ShowLigaGroupItem params={params} data={item} />
                 </div>
               );
             })
@@ -108,10 +101,10 @@ export const ShowLigaGroup = ({
                 >
                   {item.link ? (
                     <Link href={`/${params.lang}/${item.link}`}>
-                      <ShowLigaGroupItem {...commonProps} data={item} />
+                      <ShowLigaGroupItem params={params} data={item} />
                     </Link>
                   ) : (
-                    <ShowLigaGroupItem {...commonProps} data={item} />
+                    <ShowLigaGroupItem params={params} data={item} />
                   )}
                 </div>
               );

@@ -1,11 +1,8 @@
-import { StaticTexts } from "@/app/dictionaries/definitions";
 import { ItemContainerUpdateDeleteTextDescription } from "../../__commonComponents/_itemGroupContainer/ItemContainerUpdateDeleteTextDescription";
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/outline";
 import { ICON_IN_BUTTON_WIDTH } from "@/app/lib/constants";
 export type Props = {
-  isEdit: boolean;
-  staticTexts: StaticTexts;
   titleData: FullData;
   params: MainParams;
   isExpanded: boolean;
@@ -13,8 +10,6 @@ export type Props = {
 };
 
 export const ShowTitle = ({
-  isEdit,
-  staticTexts,
   titleData,
   params,
   isExpanded,
@@ -22,8 +17,6 @@ export const ShowTitle = ({
 }: Props) => {
   return (
     <ItemContainerUpdateDeleteTextDescription
-      isEdit={isEdit}
-      staticTexts={staticTexts}
       currentData={titleData}
       useItems={{ text: "simple" }}
       isChangeOrder={false}

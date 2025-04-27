@@ -1,6 +1,5 @@
 "use client";
 
-import { StaticTexts } from "@/app/dictionaries/definitions";
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { IMAGE_ACTIONS_ITEM, TOOLTIP } from "@/app/lib/constants";
 import cn from "clsx";
@@ -12,15 +11,11 @@ import { ItemContainerAddTextDescriptionDeleteFeature } from "../__commonCompone
 
 export type Props = {
   groupData: FullData[];
-  staticTexts: StaticTexts;
-  isEdit: boolean;
   params: MainParams;
 };
 //shares page
 export const ImageActionsGroup = ({
   groupData,
-  isEdit,
-  staticTexts,
   params,
 }: Props) => {
   const [isModalShown, setIsModalShown] = useState<boolean>(false);
@@ -29,6 +24,8 @@ export const ImageActionsGroup = ({
   );
 
   const changeModalState = (state: boolean) => setIsModalShown(state);
+  const { isEdit, staticTexts } = params;
+
 
   return (
     <ItemContainerAddTextDescriptionDeleteFeature
@@ -47,8 +44,6 @@ export const ImageActionsGroup = ({
             key={item.text_description_id}
           >
             <ImageActionGroupItem
-              isEdit={isEdit}
-              staticTexts={staticTexts}
               groupData={groupData}
               params={params}
               groupItemMain={item}

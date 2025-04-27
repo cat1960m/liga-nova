@@ -4,7 +4,6 @@ import { FullData, MainParams } from "@/app/lib/definitions";
 import { useState } from "react";
 import { CreateModal } from "./CreateModal";
 import { CommonButton } from "../_buttons/CommonButton";
-import { StaticTexts } from "@/app/dictionaries/definitions";
 import {
   UpdateTextDescriptionDataModalContent,
   UseItems,
@@ -13,13 +12,11 @@ import { PencilIcon } from "@heroicons/react/24/outline";
 import { ICON_BUTTON_WIDTH, ICON_IN_BUTTON_WIDTH } from "@/app/lib/constants";
 
 export const UpdateTextDescriptionData = ({
-  staticTexts,
   currentData,
   useItems,
   params,
   changeModalState,
 }: {
-  staticTexts: StaticTexts;
   currentData: FullData;
   useItems: UseItems;
   params: MainParams;
@@ -41,7 +38,7 @@ export const UpdateTextDescriptionData = ({
     <>
       <CommonButton onClick={handleEdit} width={ICON_BUTTON_WIDTH}>
         <PencilIcon
-          title={staticTexts.edit ?? ""}
+          title={params.staticTexts.edit ?? ""}
           color="black"
           width={ICON_IN_BUTTON_WIDTH}
         />
@@ -51,7 +48,6 @@ export const UpdateTextDescriptionData = ({
         <CreateModal onClose={handleClose}>
           <UpdateTextDescriptionDataModalContent
             onClose={handleClose}
-            staticTexts={staticTexts}
             currentData={currentData}
             useItems={useItems}
             params={params}

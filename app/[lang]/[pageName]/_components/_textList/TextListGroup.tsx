@@ -1,6 +1,5 @@
 "use client";
 
-import { StaticTexts } from "@/app/dictionaries/definitions";
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { useMemo, useRef, useState } from "react";
 import { ScrollContainer } from "../__commonComponents/_scrollContainer/ScrollContainer";
@@ -16,16 +15,12 @@ import { ItemContainerAddChildFeatureDeleteFeature } from "../__commonComponents
 import { ItemContainerDeleteChildFeature } from "../__commonComponents/_itemGroupContainer/ItemContainerDeleteChildFeature";
 
 export type Props = {
-  isEdit: boolean;
-  staticTexts: StaticTexts;
   groupData: FullData[];
   params: MainParams;
   pageFullDataList: FullData[];
 };
 
 export const TextListGroup = ({
-  isEdit,
-  staticTexts,
   groupData,
   params,
   pageFullDataList,
@@ -38,6 +33,8 @@ export const TextListGroup = ({
   if (!groupFeatureId) {
     return null;
   }
+
+  const { staticTexts, isEdit } = params;
 
   const [textListItemsData, textListItemIds] = useMemo(() => {
     return getContainerData({
@@ -115,8 +112,6 @@ export const TextListGroup = ({
               <ShowName
                 isMain={isMain}
                 textName={textName}
-                isEdit={isEdit}
-                staticTexts={staticTexts}
                 params={params}
               />
             ) : null}
@@ -125,8 +120,6 @@ export const TextListGroup = ({
               <ShowBody
                 isMain={isMain}
                 textBody={textBody}
-                isEdit={isEdit}
-                staticTexts={staticTexts}
                 params={params}
               />
             ) : null}
@@ -146,7 +139,6 @@ export const TextListGroup = ({
 
   return (
     <ItemContainerAddChildFeatureDeleteFeature
-      isEdit={isEdit}
       groupData={groupData}
       params={params}
       onChildFeatureAdded={handleChildFeatureAdded}

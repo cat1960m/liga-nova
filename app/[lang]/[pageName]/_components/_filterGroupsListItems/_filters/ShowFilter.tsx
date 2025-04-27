@@ -1,10 +1,6 @@
-import { StaticTexts } from "@/app/dictionaries/definitions";
 import { ItemContainerUpdateDeleteTextDescription } from "../../__commonComponents/_itemGroupContainer/ItemContainerUpdateDeleteTextDescription";
 import { FullData, MainParams } from "@/app/lib/definitions";
-import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/outline";
 export type Props = {
-  isEdit: boolean;
-  staticTexts: StaticTexts;
   filter: FullData;
   params: MainParams;
   inputValue: boolean;
@@ -15,18 +11,16 @@ export type Props = {
 };
 
 export const ShowFilter = ({
-  isEdit,
-  staticTexts,
   filter,
   params,
   inputValue,
   onFilterSelectionChanged,
 }: Props) => {
+  const { isEdit } = params;
+
   return (
     <ItemContainerUpdateDeleteTextDescription
       key={filter.text_description_id}
-      isEdit={isEdit}
-      staticTexts={staticTexts}
       currentData={filter}
       useItems={{ text: "simple", value: "icons" }}
       params={params}
