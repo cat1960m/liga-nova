@@ -15,7 +15,7 @@ import {
   ICON_IN_BUTTON_WIDTH,
   S3_TYPES,
 } from "@/app/lib/constants";
-import { useEditContext } from "../_edit/EditContextProvider";
+import { useEditContext } from "../_page/EditContextProvider";
 import { ChangeOrderButtons } from "./ChangeOrderButtons";
 import { TrashIcon } from "@heroicons/react/24/outline";
 

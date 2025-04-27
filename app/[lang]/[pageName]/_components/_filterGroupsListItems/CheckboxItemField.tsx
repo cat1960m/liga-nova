@@ -5,7 +5,7 @@ import { YES } from "@/app/lib/constants";
 import { FullData } from "@/app/lib/definitions";
 import { usePathname } from "next/navigation";
 import { ChangeEventHandler } from "react";
-import { useEditContext } from "../__commonComponents/_edit/EditContextProvider";
+import { useEditContext } from "../__commonComponents/_page/EditContextProvider";
 
 export type Props = {
   title: string;

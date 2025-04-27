@@ -162,13 +162,13 @@ export const SubscriptionItem = ({ currentData, staticTexts }: Props) => {
       ) : null}
       <div style={{ padding: "5px 20px", width: "100%" }}>
         <ActionButton
-          text={staticTexts.buy}
+          text={staticTexts.buy?.toUpperCase()}
           onClick={() => {}}
           styleValue={{
             width: "100%",
             height: "40px",
             fontSize: "12px",
-            fontWeight: 500,
+            fontWeight: 700,
           }}
         />
       </div>

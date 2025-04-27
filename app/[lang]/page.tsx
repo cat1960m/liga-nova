@@ -1,6 +1,7 @@
 import { auth } from "../auth";
 import { SearchParams } from "../dictionaries/definitions";
-import { ShowPage } from "./[pageName]/_components/__commonComponents/_edit/ShowPage";
+import { HOME } from "../lib/constants";
+import { ShowPage } from "./[pageName]/_components/__commonComponents/_page/ShowPage";
 
 export default async function Page({
   params,
@@ -22,10 +23,11 @@ export default async function Page({
 
   return (
     <ShowPage
-      pageName="home"
+      pageName={HOME}
       lang={lang}
       isEdit={isEdit}
       isAuthenticated={isAuthenticated}
+      isMain
     />
   );
 }

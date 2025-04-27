@@ -4,8 +4,6 @@ import { usePathname } from "next/navigation";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ChangeEvent } from "react";
 
-const EDIT = "edit";
-
 export const EditRegime = () => {
   const pathName = usePathname();
   const router = useRouter();
@@ -36,7 +34,7 @@ export const EditRegime = () => {
       }}
     >
       <input type="checkbox" onChange={handleChange} checked={isEdit} />
-      <div>Is Edit</div>
+      <div>Edit mode</div>
     </div>
   );
 };

@@ -10,7 +10,7 @@ import { FilterGroups } from "./_filters/FilterGroups";
 import { ListItem } from "./ListItem";
 import { EditListItem } from "./EditListItem";
 
-import { useEditContext } from "../__commonComponents/_edit/EditContextProvider";
+import { useEditContext } from "../__commonComponents/_page/EditContextProvider";
 import { updateFeatureSubtypeFilterIds } from "@/app/lib/actions_fitness";
 import { usePathname } from "next/navigation";
 import styles from "./filterGroupsListItemGroup.module.css";

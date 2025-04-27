@@ -3,7 +3,7 @@
 import { addTextDescription } from "@/app/lib/actions_fitness";
 import { usePathname } from "next/navigation";
 import { CommonButton } from "./CommonButton";
-import { useEditContext } from "../_edit/EditContextProvider";
+import { useEditContext } from "../_page/EditContextProvider";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import { ICON_BUTTON_WIDTH, ICON_IN_BUTTON_WIDTH } from "@/app/lib/constants";
 

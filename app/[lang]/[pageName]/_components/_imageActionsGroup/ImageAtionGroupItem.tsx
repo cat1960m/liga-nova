@@ -45,7 +45,10 @@ export const ImageActionGroupItem = ({
           isModalShown={isModalShown}
         />
 
-        <ActionButton text={staticTexts.details} onClick={() => {}} />
+        <ActionButton
+          text={staticTexts.details?.toUpperCase()}
+          onClick={() => {}}
+        />
       </>
     </ItemContainerUpdateDeleteTextDescription>
   );

@@ -15,7 +15,7 @@ export type Props = {
   isModalShown: boolean;
   staticTexts: StaticTexts;
 };
-
+// main page
 export const ImageLink = ({
   data,
   groupData,

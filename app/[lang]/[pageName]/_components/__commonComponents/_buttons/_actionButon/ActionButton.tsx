@@ -13,11 +13,7 @@ export const ActionButton = ({
   styleValue?: CSSProperties;
 }) => {
   return (
-    <button
-      onClick={onClick}
-      className={styles.button}
-      style={styleValue}
-    >
+    <button onClick={onClick} className={styles.button} style={styleValue}>
       {text}
     </button>
   );

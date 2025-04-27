@@ -236,3 +236,4 @@ export const CONTAINER_TYPES = [TAB, LAYOUT_ITEM];
 export const ICON_BUTTON_WIDTH = "36px";
 export const ICON_IN_BUTTON_WIDTH = "20px";
 export const YES = "yes";
+export const HOME = "home";

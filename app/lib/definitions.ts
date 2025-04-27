@@ -1,6 +1,9 @@
 // This file contains type definitions for your data.
 // It describes the shape of the data, and what data type each property should accept.
 // For simplicity of teaching, we're manually defining these types.
+
+import { StaticTexts } from "../dictionaries/definitions";
+
 // However, these types are generated automatically if you're using an ORM such as Prisma.
 export type User = {
   id: string;
@@ -187,6 +190,8 @@ export type PageParams = {
 export type MainParams = {
   pageName: string;
   lang: string;
+  staticTexts: StaticTexts;
+  isEdit: boolean;
 };
 
 export type FullData = {

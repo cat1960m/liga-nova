@@ -12,8 +12,6 @@ export const CommonButton = ({
   children,
   width,
   isAction,
-  minWidth,
-  color,
   styleValue,
 }: {
   text?: string;
@@ -23,16 +21,13 @@ export const CommonButton = ({
   children?: ReactNode;
   width?: string;
   isAction?: boolean;
-  minWidth?: number;
-  color?: string;
   styleValue?: CSSProperties;
 }) => {
   const pathName = usePathname();
   const bgColor = isAction
     ? ACTION_BUTTON_BACKGROUND
     : backgroundColor ?? styleValue?.backgroundColor;
-  const colorValue =
-    color ?? styleValue?.color ?? (isAction ? "white" : "black");
+  const colorValue = styleValue?.color ?? (isAction ? "white" : "black");
 
   return (
     <button
@@ -46,7 +41,7 @@ export const CommonButton = ({
         justifyContent: "center",
         width: width ?? styleValue?.width,
         opacity: isDisabled ? 0.5 : 1,
-        minWidth: minWidth ?? styleValue?.minWidth,
+        minWidth: styleValue?.minWidth,
         padding: children ? "10px" : undefined,
         borderRadius: styleValue?.borderRadius ?? 20,
       }}

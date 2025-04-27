@@ -84,7 +84,7 @@ export const ExpandedText = ({
             text={buttonText}
             isAction
             onClick={handleExpand}
-            minWidth={250}
+            styleValue={{ minWidth: 250 }}
           />
         </div>
       ) : (
