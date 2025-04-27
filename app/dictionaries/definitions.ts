@@ -115,4 +115,11 @@ export type StaticTexts = {
   readMore?: string;
   readLess?: string;
   try?: string;
+  freeTraining?: string;
+  color?: string;
+  byAgreement?: string;
+};
+
+export type SearchParams = {
+  isEdit: string;
 };

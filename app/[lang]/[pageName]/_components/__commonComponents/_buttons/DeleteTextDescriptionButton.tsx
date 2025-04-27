@@ -4,7 +4,7 @@ import { RemoveTextDescription } from "@/app/lib/actions_fitness";
 import { usePathname } from "next/navigation";
 import { CommonButton } from "./CommonButton";
 import axios from "axios";
-import { useEditContext } from "../../../edit/_components/EditContextProvider";
+import { useEditContext } from "../_edit/EditContextProvider";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import { ICON_BUTTON_WIDTH, ICON_IN_BUTTON_WIDTH } from "@/app/lib/constants";
 
@@ -42,7 +42,11 @@ export const DeleteTextDescriptionButton = ({
       isDisabled={isEditButtonsDisabled}
       width={ICON_BUTTON_WIDTH}
     >
-      <TrashIcon color="black" width={ICON_IN_BUTTON_WIDTH} title={deleteText} />
+      <TrashIcon
+        color="black"
+        width={ICON_IN_BUTTON_WIDTH}
+        title={deleteText}
+      />
     </CommonButton>
   );
 };

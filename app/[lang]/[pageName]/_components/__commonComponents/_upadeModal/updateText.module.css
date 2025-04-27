@@ -26,6 +26,16 @@
     padding: 10px;
 }
 
+.colorItem {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    border: 1px dotted lightgray;
+    padding: 10px; 
+}
+
 .iconContainer {
     display: flex;
     flex-wrap: wrap;

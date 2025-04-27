@@ -1,3 +1,5 @@
+"use client";
+
 import { FullData } from "@/app/lib/definitions";
 import Image from "next/image";
 
@@ -5,6 +7,7 @@ import styles from "./imageLinks.module.css";
 import { TOOLTIP } from "@/app/lib/constants";
 import Link from "next/link";
 import { StaticTexts } from "@/app/dictionaries/definitions";
+import { usePathname } from "next/navigation";
 
 export type Props = {
   data: FullData;
@@ -19,13 +22,14 @@ export const ImageLink = ({
   isModalShown,
   staticTexts,
 }: Props) => {
+  const pathName = usePathname();
   const tooltip = groupData.find(
     (item) =>
       item.text_description_id === data.text_description_id &&
       item.content_type === TOOLTIP
   );
 
-  const link = data.link;
+  const link = `${pathName}/${data.link}`;
   return (
     <div className={styles.item}>
       {data.value ? (

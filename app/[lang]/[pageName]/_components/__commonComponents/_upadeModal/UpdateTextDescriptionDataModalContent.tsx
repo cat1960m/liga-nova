@@ -35,9 +35,9 @@ import axios from "axios";
 export type UseItems = {
   text?: "simple" | "area" | "quill";
   tooltip?: "simple" | "area" | "quill";
-  price?: boolean;
+  price?: "price" | "color";
   link?: boolean;
-  value?: "icons" | "time" | "image";
+  value?: "icons" | "time" | "image" | "price";
 };
 
 export type Props = {
@@ -69,7 +69,7 @@ export const UpdateTextDescriptionDataModalContent = ({
   const [priceValue, setPriceValue] = useState<number>(currentData.price ?? 0);
   const [icons, setIcons] = useState<FullData[]>([]);
   const [currentValue, setCurrentValue] = useState<string | undefined>(
-    currentData.value
+    currentData.value ?? ""
   );
   const [linkValue, setLinkValue] = useState<string>(
     useItems.link ? currentData.link ?? "" : ""
@@ -213,7 +213,7 @@ export const UpdateTextDescriptionDataModalContent = ({
 
     if (useItems.price || useItems.value || useItems.link) {
       const newValue = path ?? (useItems.value ? currentValue : undefined);
-      const price = useItems.price ? priceValue : undefined;
+      const price = useItems.price !== undefined ? priceValue : undefined;
       const link = useItems.link ? linkValue : undefined;
 
       promises.push(
@@ -271,8 +271,13 @@ export const UpdateTextDescriptionDataModalContent = ({
   };
 
   const handlePriceChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-    setPriceValue(parseInt(event.target.value));
+    const value = event.target.value;
+    setPriceValue(parseInt(value));
     setIsSaveDisabled(false);
+
+    if (value && useItems.value === "price") {
+      setCurrentValue("");
+    }
   };
 
   const handleValueChange: ChangeEventHandler<HTMLInputElement> = (event) => {
@@ -320,6 +325,11 @@ export const UpdateTextDescriptionDataModalContent = ({
     return path;
   };
 
+  const handleColorChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+    setPriceValue(parseInt(event.target.value));
+    setIsSaveDisabled(false);
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.title}>{staticTexts["updateTranslate"]}</div>
@@ -348,7 +358,7 @@ export const UpdateTextDescriptionDataModalContent = ({
         />
       ) : null}
 
-      {useItems.price ? (
+      {useItems.price === "price"  ? (
         <div className={styles.editItem}>
           <div className={styles.editTitle}>{`${staticTexts.price}:`}</div>
           <input
@@ -357,6 +367,31 @@ export const UpdateTextDescriptionDataModalContent = ({
             onChange={handlePriceChange}
           ></input>
           грн
+        </div>
+      ) : null}
+
+
+      {useItems.price === "color" ? (
+        <div className={styles.colorItem}>
+          <div className={styles.editTitle}>{`${staticTexts.color}:`}</div>
+          <div>
+            {"Black "}
+            <input
+              type="radio"
+              value={"0"}
+              checked={priceValue === 0}
+              onChange={handleColorChange}
+            />
+          </div>
+          <div>
+            {"White "}
+            <input
+              type="radio"
+              value={"1"}
+              checked={priceValue === 1}
+              onChange={handleColorChange}
+            />
+          </div>
         </div>
       ) : null}
 
@@ -380,6 +415,17 @@ export const UpdateTextDescriptionDataModalContent = ({
           />
         </div>
       ) : null}
+
+      {useItems.value === "price" ? (
+        <div className={styles.editItem}>
+          <div className={styles.editTitle}>{`${staticTexts.price}:`}</div>
+          <input
+            type="text"
+            value={currentValue ?? ""}
+            onChange={handleValueChange}
+          />
+        </div>
+      ) : null}       
 
       {useItems.value === "image" ? (
         <div className={styles.editItem}>

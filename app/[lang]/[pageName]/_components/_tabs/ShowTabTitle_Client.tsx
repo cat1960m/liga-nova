@@ -51,6 +51,7 @@ export const ShowTabTitle_Client = ({
         onClick={handleTabClick}
         minWidth={isEdit ? 200 : undefined}
         color={color}
+        styleValue={{borderRadius: 10}}
       />
     </ItemContainerUpdateTextDescriptionDeleteFeature>
   );

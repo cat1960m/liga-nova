@@ -3,7 +3,7 @@
 import { updateFeatureSubtypeFilterIds } from "@/app/lib/actions_fitness";
 import { CommonButton } from "./CommonButton";
 import { usePathname } from "next/navigation";
-import { useEditContext } from "../../../edit/_components/EditContextProvider";
+import { useEditContext } from "../_edit/EditContextProvider";
 
 export type Props = {
   featureId: number;

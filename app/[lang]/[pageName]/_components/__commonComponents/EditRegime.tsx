@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { ChangeEvent } from "react";
 
 const EDIT = "edit";
@@ -9,14 +9,19 @@ const EDIT = "edit";
 export const EditRegime = () => {
   const pathName = usePathname();
   const router = useRouter();
-  const isEdit = pathName.endsWith(EDIT);
+  const searchParams = useSearchParams();
+  const isEdit = searchParams.get("isEdit") === "1";
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const newPathName = isEdit
+    const value = event.target.checked;
+    /* const newPathName = isEdit
       ? pathName.slice(0, pathName.length - EDIT.length - 1)
-      : `${pathName}/${EDIT}`;
+      : `${pathName}/${EDIT}`; */
 
-    router.push(newPathName);
+    const params = new URLSearchParams(searchParams);
+    params.set("isEdit", value ? "1" : "0");
+
+    router.push(`${pathName}?${params.toString()}`); // Update the URL
   };
 
   return (

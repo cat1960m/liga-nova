@@ -6,6 +6,7 @@ import { ArrowRightIcon, PowerIcon } from "@heroicons/react/24/outline";
 import { auth, signOut } from "@/app/auth";
 import { EditRegime } from "./[pageName]/_components/__commonComponents/EditRegime";
 import { ManageIconsModal } from "./[pageName]/_components/__commonComponents/_upadeModal/ManageIconsModal";
+import Image from "next/image";
 
 export const experimental_ppr = true;
 
@@ -44,6 +45,9 @@ export default async function Layout({
           gap: "10px",
         }}
       >
+        <Link href={"/ua"}>
+          <Image src="logo-2.svg" width={60} alt="logo" height={40} />
+        </Link>
         <div
           style={{
             display: "flex",

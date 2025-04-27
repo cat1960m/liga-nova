@@ -27,6 +27,7 @@
     padding: 33px;
     flex-direction: column;
     justify-content: flex-end;
+    color: white;
 }
 
 .item img {

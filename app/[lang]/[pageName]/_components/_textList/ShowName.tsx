@@ -29,7 +29,7 @@ export const ShowName = ({
         style={{
           fontSize: isMain ? 18 : 12,
           fontWeight: 400,
-          color: isMain ? "red" : "black",
+          color: isMain ? "black" : "darkgray",
         }}
       >
         {textName?.text_content ?? "N/A"}

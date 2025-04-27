@@ -71,7 +71,8 @@ export const ShowServicesGroup = ({
                 <ShowGroupServicesText
                   text={data.text_content ?? "N/A"}
                   title={title?.text_content ?? ""}
-                  price={data.price ?? 0}
+                  price={data.value ?? ""}
+                  staticTexts={staticTexts}
                 />
 
                 {isEdit ? (
@@ -82,7 +83,7 @@ export const ShowServicesGroup = ({
                     useItems={{
                       text: "simple",
                       tooltip: "simple",
-                      price: true,
+                      value: "price"
                     }}
                     params={params}
                   />

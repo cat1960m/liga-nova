@@ -4,7 +4,7 @@ import { DeleteTextDescriptionButton } from "./DeleteTextDescriptionButton";
 import { UpdateTextDescriptionData } from "../_upadeModal/UpdateTextDescriptionData";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { ChangeOrderButtons } from "./ChangeOrderButtons";
-import { useEditContext } from "../../../edit/_components/EditContextProvider";
+import { useEditContext } from "../_edit/EditContextProvider";
 import {
   getTextDescriptions,
   revalidate,

@@ -163,6 +163,7 @@ export const TextListGroup = ({
           getItem={getItem}
           lastAddedId={lastAddedId}
           refParent={ref}
+          iconMarginTop={30}
         />
       </div>
     </ItemContainerAddChildFeatureDeleteFeature>

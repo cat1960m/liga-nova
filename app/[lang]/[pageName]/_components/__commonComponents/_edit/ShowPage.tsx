@@ -1,22 +1,24 @@
 import { getPageFullData } from "@/app/lib/actions_fitness";
+import { DrawFeatureContainer_Client } from "../../DrawFeatureContainer_Client";
+import { DrawFeatureContainerEdit } from "./DrawFeatureContainerEdit";
 import { FullData, MainParams } from "@/app/lib/definitions";
-import { auth } from "@/app/auth";
 import { getContainerData } from "@/app/lib/utils";
+import { getDictionary } from "../../../../dictionaries";
 import { PAGE, TITLE } from "@/app/lib/constants";
-import { getDictionary } from "../../dictionaries";
-import { DrawFeatureContainer_Client } from "../_components/DrawFeatureContainer_Client";
-import { DrawFeatureContainerEdit } from "./_components/DrawFeatureContainerEdit";
 
-export default async function Page({
-  params,
-}: {
-  params: Promise<MainParams>;
-}) {
-  const res = await auth();
-  const isAuthenticated = !!res?.user;
+export type Props = {
+  lang: string;
+  pageName: string;
+  isEdit: boolean;
+  isAuthenticated: boolean;
+};
 
-  const pars = await params;
-  const { pageName, lang } = pars;
+export const ShowPage = async ({
+  lang,
+  pageName,
+  isEdit,
+  isAuthenticated,
+}: Props) => {
   const dict = await getDictionary(lang as "en" | "ua");
 
   const pageFullData: FullData[] | null = await getPageFullData({
@@ -24,10 +26,16 @@ export default async function Page({
     pageName,
   });
 
-  const currentPageData = pageFullData?.find(
+  let currentPageData = pageFullData?.find(
     (data) =>
       data.name === pageName && data.text_type === TITLE && data.type === PAGE
   );
+
+  if (!currentPageData) {
+    currentPageData = pageFullData?.find(
+      (data) => data.name === pageName && data.type === PAGE
+    );
+  }
 
   const containerFullData = currentPageData?.id
     ? getContainerData({
@@ -44,10 +52,13 @@ export default async function Page({
   if (!containerFullData || !pageFullData || !currentPageData || !pageId) {
     return null;
   }
-
+  const pars: MainParams = {
+    pageName,
+    lang,
+  };
   return (
     <div style={{ width: "100%", padding: "30px" }}>
-      {!isAuthenticated ? (
+      {!isAuthenticated || !isEdit ? (
         <DrawFeatureContainer_Client
           params={pars}
           featureId={currentPageData?.id}
@@ -72,4 +83,4 @@ export default async function Page({
       )}
     </div>
   );
-}
+};

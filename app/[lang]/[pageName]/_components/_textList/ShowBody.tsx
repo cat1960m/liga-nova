@@ -7,10 +7,16 @@ export type Props = {
   textBody: FullData;
   isEdit: boolean;
   params: MainParams;
-  staticTexts: StaticTexts
+  staticTexts: StaticTexts;
 };
 
-export const ShowBody = ({ isMain, textBody, isEdit, staticTexts, params }: Props) => {
+export const ShowBody = ({
+  isMain,
+  textBody,
+  isEdit,
+  staticTexts,
+  params,
+}: Props) => {
   const text = textBody?.text_content ?? "N/A";
   return (
     <ItemContainerUpdateDeleteTextDescription
@@ -26,6 +32,7 @@ export const ShowBody = ({ isMain, textBody, isEdit, staticTexts, params }: Prop
           display: "flex",
           width: "100%",
           flexDirection: "column",
+          marginTop: "10px",
         }}
       >
         {isMain ? (

@@ -1,62 +1,29 @@
-import { getPageFullData } from "@/app/lib/actions_fitness";
-import { FullData, MainParams } from "@/app/lib/definitions";
-import { DrawFeatureContainer_Client } from "./_components/DrawFeatureContainer_Client";
-import { getDictionary } from "../dictionaries";
-import { getContainerData } from "@/app/lib/utils";
-import { PAGE, TITLE } from "@/app/lib/constants";
+import { PageParams } from "@/app/lib/definitions";
+import { auth } from "@/app/auth";
+import { SearchParams } from "@/app/dictionaries/definitions";
+import { ShowPage } from "./_components/__commonComponents/_edit/ShowPage";
 
 export default async function Page({
   params,
+  searchParams,
 }: {
-  params: Promise<MainParams>;
-  context: any;
+  params: Promise<PageParams>;
+  searchParams: Promise<SearchParams>;
 }) {
+  const res = await auth();
+  const isAuthenticated = !!res?.user;
+
   const pars = await params;
-  const { pageName, lang } = pars;
-  const dict = await getDictionary(lang as "en" | "ua");
 
-  if (pageName === "edit") {
-    return <div>EDIT</div>;
-  }
-
-  const pageFullData: FullData[] | null = await getPageFullData({
-    lang,
-    pageName,
-  });
-
-  const currentPageData = pageFullData?.find(
-    (data) =>
-      data.name === pageName && data.text_type === TITLE && data.type === PAGE
-  );
-
-  const containerFullData = currentPageData?.id
-    ? getContainerData({
-        pageName,
-        pageFullData: pageFullData ?? [],
-        parentFeatureId: currentPageData?.id,
-      })
-    : null;
-
-  const pageId = pageFullData?.find(
-    (item) => item.type === PAGE && item.name === pageName
-  )?.id;
-
-  if (!containerFullData || !pageFullData || !currentPageData || !pageId) {
-    return null;
-  }
+  const urlParams = await searchParams;
+  const isEdit = urlParams.isEdit === "1";
 
   return (
-    <div style={{ width: "100%", padding: "30px" }}>
-      <DrawFeatureContainer_Client
-        params={pars}
-        featureId={currentPageData?.id}
-        pageFullDataList={pageFullData}
-        containerFullData={containerFullData}
-        isEdit={false}
-        staticTexts={dict.common}
-        buttonText={dict.common.addItemToPage ?? "N/A"}
-        pageId={pageId}
-      />
-    </div>
+    <ShowPage
+      pageName={pars.pageName}
+      lang={pars.lang}
+      isEdit={isEdit}
+      isAuthenticated={isAuthenticated}
+    />
   );
 }

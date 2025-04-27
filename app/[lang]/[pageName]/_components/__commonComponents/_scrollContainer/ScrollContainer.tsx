@@ -38,7 +38,7 @@ export type Props = {
   refParent: RefObject<HTMLDivElement | null>;
   minItemWidth?: number;
   maxItemWidth?: number;
-  canStretch?: boolean;
+  iconMarginTop?: number;
 };
 
 export const ScrollContainer = ({
@@ -50,7 +50,7 @@ export const ScrollContainer = ({
   refParent,
   minItemWidth = 300,
   maxItemWidth,
-  canStretch,
+  iconMarginTop,
 }: Props) => {
   const [scrollPosition, setScrollPosition] = useState<number>(0);
   const start = useRef<number | null>(null);
@@ -70,7 +70,7 @@ export const ScrollContainer = ({
 
     const useScrollIconOnSide = isNoScrollItems
       ? false
-      : parentWidth > MAX_PAGE_WIDTH / 2 + ICON_WIDTH * 2;
+      : parentWidth >= MAX_PAGE_WIDTH / 2 + ICON_WIDTH * 2; //!!!!
 
     const scrollIconWidths = useScrollIconOnSide ? 2 * ICON_WIDTH : 0;
 
@@ -188,7 +188,7 @@ export const ScrollContainer = ({
           direction={"left"}
           isStaticPosition={dataType.isScrollOnSide}
           onScrollItemClick={onScrollItemClick}
-          marginTop={dataType.itemWidth / 2}
+          marginTop={iconMarginTop ?? dataType.itemWidth / 2}
         />
       ) : null}
 
@@ -238,7 +238,7 @@ export const ScrollContainer = ({
       {dataType.isScrollIconsNeeded ? (
         <ScrollIcon
           direction={"right"}
-          marginTop={dataType.itemWidth / 2}
+          marginTop={iconMarginTop ?? dataType.itemWidth / 2}
           isStaticPosition={dataType.isScrollOnSide}
           onScrollItemClick={onScrollItemClick}
         />

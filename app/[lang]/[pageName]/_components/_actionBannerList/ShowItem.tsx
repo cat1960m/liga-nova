@@ -14,6 +14,7 @@ import cn from "clsx";
 import { ItemContainerUpdateTextDescriptionDeleteFeature } from "../__commonComponents/_itemGroupContainer/ItemContainerUpdateTextDescriptionDeleteFeature";
 import { ShowTitle } from "./ShowTitle";
 import { ShowDescription } from "./ShowDescription";
+import { collectRoutesUsingEdgeRuntime } from "next/dist/build/utils";
 
 export type Props = {
   actionBannerListItemsData: Record<string, FullData[]>;
@@ -58,6 +59,8 @@ export const ShowItem = ({
     return null;
   }
 
+  const color = image.price === 1 ? "white" : "black";
+
   return (
     <ItemContainerUpdateTextDescriptionDeleteFeature
       isEdit={isEdit}
@@ -65,6 +68,7 @@ export const ShowItem = ({
       staticTexts={staticTexts}
       useItems={{
         value: "image",
+        price: "color",
       }}
       params={params}
       featureData={actionBannerListItemData}
@@ -103,6 +107,7 @@ export const ShowItem = ({
                   staticTexts={staticTexts}
                   params={params}
                   title={share}
+                  color={color}
                 />
               ) : null}
 
@@ -112,6 +117,7 @@ export const ShowItem = ({
                   staticTexts={staticTexts}
                   params={params}
                   title={ticket}
+                  color={color}
                 />
               ) : null}
             </div>
@@ -122,12 +128,24 @@ export const ShowItem = ({
                 staticTexts={staticTexts}
                 params={params}
                 description={description}
+                color={color}
               />
             ) : null}
 
             <div className={styles.buttons}>
-              <CommonButton text={staticTexts.register ?? "N/A"} isAction />
-              <CommonButton text={staticTexts.register ?? "N/A"} isAction />
+              <CommonButton
+                text={staticTexts.details ?? "N/A"}
+                isAction
+                styleValue={{ minWidth: "200px", color }}
+              />
+              <CommonButton
+                text={staticTexts.freeTraining ?? "N/A"}
+                styleValue={{
+                  border: `2px solid ${color}`,
+                  backgroundColor: "transparent",
+                  color: color,
+                }}
+              />
             </div>
 
             <div className={styles.groupButtons}>
@@ -135,6 +153,7 @@ export const ShowItem = ({
                 onScrollItemClick={f}
                 direction="left"
                 isStaticPosition
+                color={color}
               />
               {ids.map((currentId, index) => {
                 return (
@@ -144,6 +163,7 @@ export const ShowItem = ({
                     })}
                     key={currentId}
                     onClick={() => indexSelected(index)}
+                    style={{ borderColor: color }}
                   />
                 );
               })}
@@ -151,6 +171,7 @@ export const ShowItem = ({
                 onScrollItemClick={f}
                 direction="right"
                 isStaticPosition
+                color={color}
               />
             </div>
           </div>

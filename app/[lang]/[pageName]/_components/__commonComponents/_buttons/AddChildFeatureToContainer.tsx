@@ -101,7 +101,6 @@ export const AddChildFeatureToContainer = ({
       ","
     );
     if (!!additionalPageNames[0]?.length) {
-      console.log("additionalPageNames", additionalPageNames);
       data.push(ADDITIONAL_PAGE_DATA_GROUP_SUBTYPE);
     }
 

@@ -7,7 +7,7 @@ import {
   ChevronUpIcon,
 } from "@heroicons/react/24/outline";
 import { CommonButton } from "./CommonButton";
-import { useEditContext } from "../../../edit/_components/EditContextProvider";
+import { useEditContext } from "../_edit/EditContextProvider";
 import { ICON_BUTTON_WIDTH, ICON_IN_BUTTON_WIDTH } from "@/app/lib/constants";
 
 export type Props = {
@@ -46,7 +46,7 @@ export const ChangeOrderButtons = ({
         {isChangeOrderHorizontal ? (
           <ChevronLeftIcon style={{ width: ICON_IN_BUTTON_WIDTH }} />
         ) : (
-          <ChevronUpIcon style={{ width: ICON_IN_BUTTON_WIDTH}} />
+          <ChevronUpIcon style={{ width: ICON_IN_BUTTON_WIDTH }} />
         )}
       </CommonButton>
       <CommonButton

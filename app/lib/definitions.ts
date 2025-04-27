@@ -178,6 +178,12 @@ export type TabType = {
   value: string;
 };
 
+export type PageParams = {
+  pageName: string;
+  lang: string;
+};
+
+
 export type MainParams = {
   pageName: string;
   lang: string;

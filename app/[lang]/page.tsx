@@ -1,20 +1,31 @@
-import { getAllFeatures, UpdateFeatureOrder } from "../lib/actions_fitness";
-import { getDictionary } from "./dictionaries";
+import { auth } from "../auth";
+import { SearchParams } from "../dictionaries/definitions";
+import { ShowPage } from "./[pageName]/_components/__commonComponents/_edit/ShowPage";
 
 export default async function Page({
   params,
+  searchParams,
 }: {
   params: Promise<{ lang: "en" | "ua" }>;
+  searchParams: Promise<SearchParams>;
 }) {
-  const data = await fetch("https://api.vercel.app/blog");
+  const res = await auth();
+  const isAuthenticated = !!res?.user;
+
+  const urlParams = await searchParams;
+  const isEdit = urlParams.isEdit === "1";
 
   const lang = (await params).lang;
   if (!lang) {
     return null;
   }
-  const dict = await getDictionary(lang); // en
 
   return (
-    <div style={{ border: "2px solid magenta", padding: "40px" }}>8888888</div>
+    <ShowPage
+      pageName="home"
+      lang={lang}
+      isEdit={isEdit}
+      isAuthenticated={isAuthenticated}
+    />
   );
 }

@@ -89,7 +89,6 @@ export const ShowEvents = ({
           const timeB =
             eventsB.find((item) => item.text_type === CALENDAR_EVENTS_TIME)
               ?.value ?? "";
-          console.log(timeA, timeB);
 
           return timeA > timeB ? 1 : -1;
         });

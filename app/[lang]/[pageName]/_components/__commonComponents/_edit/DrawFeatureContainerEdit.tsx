@@ -1,7 +1,5 @@
-"use client";
-
 import { FullData, MainParams } from "@/app/lib/definitions";
-import { DrawFeatureContainer_Client } from "../../_components/DrawFeatureContainer_Client";
+import { DrawFeatureContainer_Client } from "../../DrawFeatureContainer_Client";
 import { EditContextProvider } from "./EditContextProvider";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 

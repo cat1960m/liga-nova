@@ -56,7 +56,7 @@ export const DrawChildFeature_Client = ({
         addButtonText=""
         textDescriptionType=""
         isChangeOrderHorizontal={false}
-        marginTop={40}
+        marginTop={10}
       >
         <div
           style={{

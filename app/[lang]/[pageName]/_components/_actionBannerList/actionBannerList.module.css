@@ -40,6 +40,10 @@
   min-width: 200px;
 }
 
+.edit {
+  max-width: 100% !important;
+}
+
 .groupButtons {
   width: 100%;
   display: flex;

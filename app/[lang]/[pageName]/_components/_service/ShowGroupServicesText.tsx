@@ -1,10 +1,18 @@
+import { StaticTexts } from "@/app/dictionaries/definitions";
+
 export type Props = {
   text: string;
   title: string;
-  price: number;
+  price: string;
+  staticTexts: StaticTexts;
 };
 
-export const ShowGroupServicesText = ({ text, title, price }: Props) => {
+export const ShowGroupServicesText = ({
+  text,
+  title,
+  price,
+  staticTexts,
+}: Props) => {
   return (
     <div
       style={{
@@ -17,7 +25,13 @@ export const ShowGroupServicesText = ({ text, title, price }: Props) => {
     >
       <div
         title={title}
-        style={{ display: "flex", alignItems: "center", gap: "5px" }}
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "5px",
+          fontSize: 18,
+          color: "#4f4f4f",
+        }}
       >
         {text}
         {title ? (
@@ -39,7 +53,21 @@ export const ShowGroupServicesText = ({ text, title, price }: Props) => {
           </div>
         ) : null}
       </div>
-      <div style={{ whiteSpace: "nowrap" }}>{`${price} грн`}</div>
+      {price ? (
+        <div style={{ fontSize: 14, fontWeight: 600 }}>{price}</div>
+      ) : (
+        <div
+          style={{
+            backgroundColor: "#d6d6d6",
+            color: "#4f4f4f",
+            padding: "5px",
+            fontSize: 12,
+            fontWeight: 500,
+          }}
+        >
+          {staticTexts.byAgreement}{" "}
+        </div>
+      )}
     </div>
   );
 };

@@ -10,6 +10,7 @@ export type Props = {
   isStaticPosition?: boolean;
   marginTop?: number;
   onScrollItemClick: (direction: "left" | "right") => void;
+  color?: string;
 };
 
 export const ScrollIcon = ({
@@ -17,6 +18,7 @@ export const ScrollIcon = ({
   isStaticPosition,
   marginTop,
   onScrollItemClick,
+  color = "black",
 }: Props) => {
   const onClick = () => {
     onScrollItemClick(direction);
@@ -35,12 +37,15 @@ export const ScrollIcon = ({
     <div
       onClick={onClick}
       className={currentClassName}
-      style={{ width: ICON_BUTTON_WIDTH, marginTop: marginTop ?  marginTop + "px" : undefined}}
+      style={{
+        width: ICON_BUTTON_WIDTH,
+        marginTop: marginTop ? marginTop + "px" : undefined,
+      }}
     >
       {isRight ? (
-        <ChevronRightIcon style={{ width: ICON_IN_BUTTON_WIDTH }} />
+        <ChevronRightIcon style={{ width: ICON_IN_BUTTON_WIDTH, color }} />
       ) : (
-        <ChevronLeftIcon style={{ width: ICON_IN_BUTTON_WIDTH}} />
+        <ChevronLeftIcon style={{ width: ICON_IN_BUTTON_WIDTH, color }} />
       )}
     </div>
   );

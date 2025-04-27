@@ -86,7 +86,7 @@ export const EditSubscriptionItem = ({
         staticTexts={staticTexts}
         title={staticTexts.price}
         params={params}
-        useItems={{ text: "simple", price: true }}
+        useItems={{ text: "simple", price: "price" }}
       />
       <TextItemField
         fieldData={share}
