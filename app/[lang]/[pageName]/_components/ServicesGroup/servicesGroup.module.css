@@ -1,0 +1,33 @@
+.container {
+    width: 100%;
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    min-height: 40px;
+    overflow: hidden;
+}
+
+.body {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.text_container{
+    width: 100%;
+    background-color: white;
+    padding: 5px 10px;
+    display: flex;
+    gap: 10px;
+    min-height: 45px;
+    align-items: center;
+}
+
+.text_container.odd {
+    background-color:  var(--gray-background-color);
+
+}
+
+.register { 
+    color: var(--action-button-background);
+}
+

@@ -2,9 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-:root { 
-  --mobileWidth: 768;
+:root {
+  --gray-background-color:#f8f8f8;
+  --action-button-background:#2575fc;
+  --mobile-width: 768;
+  --filter-group-default-width:  238px; 
+  --icon-in-button-width: 20px;
 }
+
 
 input[type='number'] {
   -moz-appearance: textfield;

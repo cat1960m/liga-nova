@@ -1,0 +1,81 @@
+.container {
+    border: 1px solid lightgray;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    margin: 5px;
+}
+
+.input_container {
+    display: flex; 
+    gap: 10px; 
+    align-items: center;
+}
+
+.group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    justify-content: center;
+    font-weight: 700;
+}
+
+.date_group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.time_group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.selected_dates{
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+.selected_dates.exists {
+    border: 1px solid gray;
+}
+
+.selected_date {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.month_day{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  justify-content: center;
+  font-weight: 700;
+}
+
+.select_number_value{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    justify-content: center;
+    font-weight: 700;
+}
+
+.select_week_dey{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    justify-content: center;
+    font-weight: 700;
+}

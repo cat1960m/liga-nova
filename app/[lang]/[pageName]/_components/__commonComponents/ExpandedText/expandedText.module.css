@@ -1,0 +1,39 @@
+.gradient_background {
+    background: linear-gradient(to bottom, rgba(255,255,255,0.1), rgba(255,255,255,0.7)); /* Vertical gradient */
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.container {
+    flex-grow: 2;
+    display: flex;
+    flex-direction: column;
+    min-height: 100px;
+    font-size: 14;
+    padding: 10px 0;
+}
+
+.descriptions {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.button_container {
+    margin-top: 40px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.button_text {
+    color: darkblue;
+    font-weight: 700;
+    margin-top: 10px ;
+}
+

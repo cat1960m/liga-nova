@@ -1,0 +1,8 @@
+.container {
+    min-height: 100px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    resize: vertical /* Makes it resizable */;
+    overflow: auto /* Prevents overflow issues */;
+}

@@ -102,13 +102,15 @@
     "registerChild": "Register child",
     "tryFree": "Try free",
     "details": "Details",
-    "postponement": "POSTPONEMENT",
+    "postponement": "Postponement",
     "buy": "BUY",
     "fullName": "Full name",
     "readMore": "Read more",
     "readLess": "Read less",
     "try": "Try",
     "freeTraining": "Free training",
-    "byAgreement": "By agreement"
+    "byAgreement": "By agreement",
+    "byWeekDay": "By week day",
+    "byMonthDay": "By month day"
   }
 }

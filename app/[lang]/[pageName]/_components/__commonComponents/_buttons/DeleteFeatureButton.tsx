@@ -16,7 +16,7 @@ import {
   S3_TYPES,
 } from "@/app/lib/constants";
 import { useEditContext } from "../_page/EditContextProvider";
-import { ChangeOrderButtons } from "./ChangeOrderButtons";
+import { ChangeOrderButtons } from "./ChangeOrderButtons/ChangeOrderButtons";
 import { TrashIcon } from "@heroicons/react/24/outline";
 
 export const DeleteFeatureButton = ({
@@ -135,10 +135,7 @@ export const DeleteFeatureButton = ({
           isDisabled={isEditButtonsDisabled}
           width={ICON_BUTTON_WIDTH}
         >
-          <TrashIcon
-            style={{ width: ICON_IN_BUTTON_WIDTH }}
-            title={deleteText}
-          />
+          <TrashIcon width={ICON_IN_BUTTON_WIDTH} title={deleteText} />
         </CommonButton>
       ) : null}
 

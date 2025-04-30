@@ -1,0 +1,88 @@
+/* .tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.tooltip::after {
+    content: attr(data-title);
+    position: fixed;
+    background-color: lightyellow;
+    color: gray;
+    padding: 5px;
+    border-radius: 3px;
+    font-size: 12px;
+    top: 30px;
+    left: 50%;
+    width: 200px;
+    transform: translateX(-50%);
+    opacity: 0;
+    display: none;
+    transition: opacity 0.3s ease;
+    z-index: 1000;
+}
+
+.tooltip:hover::after {
+    opacity: 1;
+    visibility: visible;
+    display: block;
+    white-space: pre-line;
+}
+ */
+.pos{
+    position: fixed;
+    background-color: lightyellow;
+    color: gray;
+    padding: 5px;
+    border-radius: 3px;
+    font-size: 12px;
+    width: 200px;
+    z-index: 1000;
+    white-space: pre-line;
+}
+
+.container {
+    border-bottom: 1px solid lightgray;
+    overflow: auto;
+}
+
+.container.height {
+    height: 124px;
+}
+
+.inner_container {
+    display: flex;
+    flex-direction: column;
+}
+
+.body {
+    display: flex;
+    flex-grow: 2;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 3px;
+    word-break: break-all;
+    font-size: 14;
+    color: white;
+}
+
+.body.common {
+    color:black;
+
+}
+
+.title {
+     font-weight: 700 ;
+}
+
+.trainer {
+   font-style: italic;
+}
+
+.buttons {
+    display: flex;
+    padding: 5px 0;
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+}

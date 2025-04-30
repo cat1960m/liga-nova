@@ -1,0 +1,33 @@
+.title {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    color: gray;
+}
+
+.container { 
+    width: 100%; 
+}
+
+.body{
+    display: flex;
+    flex-direction: column;
+    background-color:  var(--gray-background-color);
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    width: 100%;
+    min-width: var(--filter-group-default-width);
+}
+
+.button {
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.title_container { 
+    padding: 10px; 
+    border-bottom: 1px solid lightgray; 
+}

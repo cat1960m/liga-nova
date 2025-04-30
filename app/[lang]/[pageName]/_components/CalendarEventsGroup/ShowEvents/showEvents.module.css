@@ -1,0 +1,25 @@
+.container{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.name_day{
+    border-bottom: 1px solid gray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+}
+
+.event_container{
+    display: flex;
+    flex-direction: column;
+    width:  14%;
+    border: 1px solid lightgray;
+    padding: 5px 0;
+}
+
+.event_container.one_date {
+    width: 100%;
+}

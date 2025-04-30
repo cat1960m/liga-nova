@@ -2,7 +2,7 @@
 import { FullData, MainParams, TextDescription } from "@/app/lib/definitions";
 import { DeleteTextDescriptionButton } from "./DeleteTextDescriptionButton";
 import { UpdateTextDescriptionData } from "../_upadeModal/UpdateTextDescriptionData";
-import { ChangeOrderButtons } from "./ChangeOrderButtons";
+import { ChangeOrderButtons } from "./ChangeOrderButtons/ChangeOrderButtons";
 import { useEditContext } from "../_page/EditContextProvider";
 import {
   getTextDescriptions,

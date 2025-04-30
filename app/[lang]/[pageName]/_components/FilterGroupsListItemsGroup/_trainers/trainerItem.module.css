@@ -1,0 +1,62 @@
+.container {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.photo_container {
+    width: 100%;
+    border: 1px solid var(--action-button-background);
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+.premium_icon {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    font-size: 14;
+    color: white;
+}
+
+.filter {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    font-size: 14;
+    color: white;
+}
+
+.photo_info_container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    overflow: hidden;
+    padding: 10px;
+}
+
+.photo_info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+    width: 100%;
+    justify-content: flex-start;
+}
+
+.name {
+    display: flex;
+    font-size: 16;
+    font-weight: 700;
+    color: gray;
+    padding: 10px 0;
+}
+
+.name.premium {
+    color: blue;
+}

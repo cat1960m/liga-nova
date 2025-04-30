@@ -1,0 +1,41 @@
+.container {
+    flex-grow: 2;
+    flex-shrink: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.title {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 18;
+    color: #4f4f4f;
+}
+
+.ring {
+    display: flex;
+    width: 16px;
+    min-width: 16px;
+    height: 16px;
+    border-radius: 8px;
+    border: 1px solid blue;
+    color: blue;
+    align-items: center;
+    justify-content: center;
+    margin: 0 10px;
+}
+
+.price { 
+    font-size: 14; 
+    font-weight: 600;
+}
+
+.no_price {
+    background-color: #d6d6d6;
+    color: #4f4f4f;
+    padding: 5px;
+    font-size: 12;
+    font-weight: 500;
+}

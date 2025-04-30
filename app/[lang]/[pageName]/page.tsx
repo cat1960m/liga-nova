@@ -1,7 +1,7 @@
 import { PageParams } from "@/app/lib/definitions";
 import { auth } from "@/app/auth";
 import { SearchParams } from "@/app/dictionaries/definitions";
-import { ShowPage } from "./_components/__commonComponents/_page/ShowPage";
+import { ShowPage } from "./_components/__commonComponents/_page/ShowPage/ShowPage";
 
 export default async function Page({
   params,

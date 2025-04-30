@@ -1,0 +1,14 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    font-size: 34px;
+    font-weight: 700;
+}
+
+.divider {
+    width: 200px;
+    height: 0;
+    margin-bottom: 20px;
+    border: 2px solid blue;
+}

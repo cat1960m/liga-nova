@@ -1,12 +1,11 @@
 import { getPageTitles } from "../lib/actions_fitness";
 import Link from "next/link";
-import { LangSelector } from "./_components/LangSelector";
-import { LinkBody } from "./_components/LInkBody";
-import { ArrowRightIcon, PowerIcon } from "@heroicons/react/24/outline";
+import { LinkBody } from "./_layoutComponents/LinkBody/LInkBody";
 import { auth, signOut } from "@/app/auth";
-import { EditRegime } from "./[pageName]/_components/__commonComponents/EditRegime";
-import { ManageIconsModal } from "./[pageName]/_components/__commonComponents/_upadeModal/ManageIconsModal";
-import Image from "next/image";
+import { EditRegime } from "./_layoutComponents/EditRegime";
+import { ManageIconsModal } from "./_layoutComponents/ManageIconsModal/ManageIconsModal";
+import { BaseMenu } from "./_layoutComponents/BaseMenu/BaseMenu";
+import styles from "./layout.module.css";
 
 export const experimental_ppr = true;
 
@@ -33,115 +32,31 @@ export default async function Layout({
 
   return (
     <div>
-      <div
-        style={{
-          display: "flex",
-          width: "100%",
-          minHeight: "80px",
-          justifyContent: "space-between",
-          alignItems: "center",
-          borderBottom: "1px solid black",
-          padding: "20px",
-          gap: "10px",
-        }}
-      >
-        <Link href={"/ua"}>
-          <Image src="logo-2.svg" width={60} alt="logo" height={40} />
-        </Link>
-        <div
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            gap: "20px",
-            justifyContent: "center",
-            alignItems: "center",
-            flexGrow: 2,
-          }}
-        >
-          {mainPages?.map((page) => {
-            return (
-              <Link href={`/${lang}/${page.name}`} key={page.id}>
-                <div key={page.id}>
-                  <LinkBody
-                    pageName={page.name}
-                    isMain
-                    pageTitle={page.text_content}
-                  />
-                </div>
-              </Link>
-            );
-          })}
-        </div>
-        <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-          <LangSelector />
-          {isAuthenticated ? (
-            <form
-              action={async () => {
-                "use server";
-                await signOut();
-                //  await signOut({ redirectTo: "/" });
-              }}
-            >
-              <button className="flex h-[48px] w-full grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3">
-                <PowerIcon className="w-6" />
-                <div className="hidden md:block">Sign Out</div>
-              </button>
-            </form>
-          ) : (
-            <Link
-              href="/login"
-              className="flex items-center gap-5 self-start rounded-lg bg-blue-500 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-blue-400 md:text-base"
-            >
-              <span>Log in</span> <ArrowRightIcon className="w-5 md:w-6" />
-            </Link>
-          )}
-        </div>
-      </div>
-      <div
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          gap: "20px",
-          justifyContent: "center",
-          alignItems: "center",
-          borderBottom: "1px solid lightgray",
-          width: "100%",
-          padding: "20px",
-          minHeight: "80px",
-        }}
-      >
+      <BaseMenu
+        mainPages={mainPages}
+        isAuthenticated={isAuthenticated}
+        lang={lang}
+      />
+      <div className={styles.basePages}>
         {basePages?.map((page) => {
           return (
-            <Link href={`/${lang}/${page.name}`} key={page.id}>
-              <div key={page.id}>
-                <LinkBody pageName={page.name} pageTitle={page.text_content} />
-              </div>
-            </Link>
+            <LinkBody
+              pageName={page.name}
+              pageTitle={page.text_content}
+              lang={lang}
+              key={page.id}
+            />
           );
         })}
       </div>
 
-      <div
-        style={{
-          display: "flex",
-          gap: "20px",
-          justifyContent: "flex-end",
-          alignItems: "center",
-          width: "100%",
-        }}
-      >
+      <div className={styles.edit_panel}>
         {isAuthenticated ? <ManageIconsModal lang={lang} /> : null}
 
         {isAuthenticated ? <EditRegime /> : null}
       </div>
 
-      <div
-        id="parentModal"
-        style={{
-          position: "relative",
-          minHeight: "300px",
-        }}
-      >
+      <div id="parentModal" className={styles.body_container}>
         {children}
       </div>
     </div>

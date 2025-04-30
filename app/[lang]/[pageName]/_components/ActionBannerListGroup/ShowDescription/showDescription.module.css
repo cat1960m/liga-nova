@@ -1,0 +1,33 @@
+
+.group {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  align-items: center;
+  max-width: 600px;
+  min-width: 200px;
+}
+
+.group.edit {
+    max-width: 100% !important;
+}
+
+.line {
+  border-bottom: 1px solid black;
+  width: 200px;
+  height: 12px;
+}
+
+.description_container {
+  display: flex;
+  width: 100%;
+  gap: 5px ;
+}
+
+
+
+@media (max-width: 768px) {
+  .line {
+    display: none;
+  }
+}

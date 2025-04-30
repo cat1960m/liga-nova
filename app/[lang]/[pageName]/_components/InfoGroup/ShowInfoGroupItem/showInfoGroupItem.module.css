@@ -1,0 +1,21 @@
+.container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    min-width: 100px;
+  }
+  
+  .phoneIcon {
+    color: blue;
+    width: var(--icon-in-button-width); /* Using a CSS variable */
+  }
+  
+  .text {
+    white-space: pre-line;
+    font-size: 18px;
+  }
+  
+  .titleText {
+    font-weight: 700;
+  }
+  

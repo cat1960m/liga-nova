@@ -7,10 +7,10 @@ import {
 } from "@/app/lib/constants";
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { ShowComplexGroup_Client } from "./ShowComplexGroup_Client";
-import { ShowTabs_Client } from "./_tabs/ShowTabs_Client";
-import { ShowSimpleGroup_Client } from "./_simpleGroup/ShowSimpleGroup_Client";
-import { LayoutParent } from "./_layout_parent/LayoutParent";
-import { ItemContainerAddTextDescriptionDeleteFeature } from "./__commonComponents/_itemGroupContainer/ItemContainerAddTextDescriptionDeleteFeature";
+import { ShowTabs_Client } from "./Tabs/Tabs";
+import { TextHeaderGroup } from "./TextHeaderGroup/TextHeaderGroup";
+import { LayoutParent } from "./LayoutParent/LayoutParent";
+import { DividerGroup } from "./DividerGroup/DividerGroup";
 
 export type Props = {
   childFeatureDataList: FullData[];
@@ -44,30 +44,17 @@ export const DrawChildFeature_Client = ({
 
   if (isDivider) {
     return (
-      <ItemContainerAddTextDescriptionDeleteFeature
-        isNoAddButton
-        deleteButtonText={staticTexts.delete ?? "N/A"}
-        featureData={childFeatureDataList}
+      <DividerGroup
+        staticTexts={staticTexts}
         isEdit={isEdit}
-        addButtonText=""
-        textDescriptionType=""
-        isChangeOrderHorizontal={false}
-        marginTop={10}
-      >
-        <div
-          style={{
-            width: "100%",
-            borderTop: "1px solid lightgray",
-            marginBottom: "30px",
-          }}
-        />
-      </ItemContainerAddTextDescriptionDeleteFeature>
+        featureData={childFeatureDataList}
+      />
     );
   }
 
   if (isSimpleGroup) {
     return (
-      <ShowSimpleGroup_Client data={childFeatureDataList} params={params} />
+      <TextHeaderGroup data={childFeatureDataList} params={params} />
     );
   }
 

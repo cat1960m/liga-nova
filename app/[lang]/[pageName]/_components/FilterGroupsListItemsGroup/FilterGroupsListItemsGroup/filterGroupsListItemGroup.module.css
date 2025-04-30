@@ -1,0 +1,33 @@
+.container {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+
+.main {
+    display: flex;
+    flex-grow: 2;
+}
+
+
+.filterGroups {
+    display: block;
+}
+
+.filterGroupsMobile {
+    display: none;
+}
+
+@media(max-width: 768px) {
+    .container {
+        flex-direction: column;
+    } 
+
+    .filterGroups {
+        display: none;
+    }
+    
+    .filterGroupsMobile {
+        display: block;
+    }
+}

@@ -23,23 +23,23 @@ import {
   ACTION_BANNER_TRY_GROUP_SUBTYPE,
   HOME,
 } from "@/app/lib/constants";
-import { InfoCheckGroup } from "./_infoCheckGroup/InfoCheckGroup";
-import { ShowServicesGroup } from "./_service/ShowServicesGroup";
+import { InfoCheckGroup } from "./InfoCheckGroup/InfoCheckGroup";
+import { ServicesGroup } from "./ServicesGroup/ServicesGroup";
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import { ShowScheduleGroup } from "./_schedule/ShowScheduleGroup";
-import { AdditionalPageDataGroup } from "./_additionalPageData/AdditionalPageDataGroup";
-import { FilterGroupsListItemsGroup } from "./_filterGroupsListItems/FilterGroupsListItemsGroup";
-import { ShowImageListGroup } from "./_imageListGroup/ShowImageListGroup";
-import { ActionBannerGroup } from "./_actionBanner/ActionBannerGroup";
-import { ShowLigaGroup } from "./_liga/ShowLigaGroup";
-import { CalendarEventsGroup } from "./_calendarEvents/CalendarEventsGroup";
-import { ShowImageGroup } from "./_imageGroup/ShowImageGroup";
-import { ImageLinksGroup } from "./_imageLinksGroup/Image:LinksGroup";
-import { ShowInfoGroup } from "./_info/ShowInfoGroup";
-import { ImageActionsGroup } from "./_imageActionsGroup/ImageActionsGroup";
-import { ActionBannerListGroup } from "./_actionBannerList/ActionBannerListGroup";
-import { TextListGroup } from "./_textList/TextListGroup";
-import { TextGroup } from "./_textGroup/TextGroup";
+import { ShowScheduleGroup } from "./ScheduleGroup/ScheduleGroup";
+import { AdditionalPageDataGroup } from "./AdditionalPageDataGroup/AdditionalPageDataGroup";
+import { FilterGroupsListItemsGroup } from "./FilterGroupsListItemsGroup/FilterGroupsListItemsGroup/FilterGroupsListItemsGroup";
+import { ShowImageListGroup } from "./ImageListGroup/ImageListGroup";
+import { ActionBannerGroup } from "./ActionBannerGroup/ActionBannerGroup";
+import { LigaGroup } from "./LigaGroup/LigaGroup";
+import { CalendarEventsGroup } from "./CalendarEventsGroup/CalendarEventsGroup";
+import { ShowImageGroup } from "./ImageGroup/ImageGroup";
+import { ImageLinksGroup } from "./ImageLinksGroup/Image:LinksGroup";
+import { InfoGroup } from "./InfoGroup/InfoGroup";
+import { ImageActionsGroup } from "./ImageAtionGroup/ImageActionsGroup";
+import { ActionBannerListGroup } from "./ActionBannerListGroup/ActionBannerListGroup";
+import { TextListGroup } from "./TextListGroup/TextListGroup";
+import { TextGroup } from "./TextGroup/TextGroup";
 
 export type Props = {
   groupData: FullData[];
@@ -111,39 +111,22 @@ export const ShowComplexGroup_Client = ({
         />
       ) : null}
 
-      {isTextGroup ? (
-        <TextGroup
-          data={groupData}
-          params={params}
-        />
-      ) : null}
+      {isTextGroup ? <TextGroup data={groupData} params={params} /> : null}
 
       {isInfoGroup ? (
-        <ShowInfoGroup
-          groupData={groupData}
-          params={params}
-        />
+        <InfoGroup groupData={groupData} params={params} />
       ) : null}
 
       {isServices ? (
-        <ShowServicesGroup
-          groupData={groupData}
-          params={params}
-        />
+        <ServicesGroup groupData={groupData} params={params} />
       ) : null}
 
       {isImageGroup ? (
-        <ShowImageGroup
-          groupData={groupData}
-          params={params}
-        />
+        <ShowImageGroup groupData={groupData} params={params} />
       ) : null}
 
       {isLigaGroup ? (
-        <ShowLigaGroup
-          groupData={groupData}
-          params={params}
-        />
+        <LigaGroup groupData={groupData} params={params} />
       ) : null}
 
       {isImageListGroup || isPhotoGalleryGroup ? (
@@ -155,24 +138,15 @@ export const ShowComplexGroup_Client = ({
       ) : null}
 
       {isImageLinksGroup ? (
-        <ImageLinksGroup
-          groupData={groupData}
-          params={params}
-        />
+        <ImageLinksGroup groupData={groupData} params={params} />
       ) : null}
 
       {isImageActionsGroup ? (
-        <ImageActionsGroup
-          groupData={groupData}
-          params={params}
-        />
+        <ImageActionsGroup groupData={groupData} params={params} />
       ) : null}
 
       {isActionBannerGroup ? (
-        <ActionBannerGroup
-          groupData={groupData}
-          params={params}
-        />
+        <ActionBannerGroup groupData={groupData} params={params} />
       ) : null}
 
       {isTextListGroup ? (
@@ -192,10 +166,7 @@ export const ShowComplexGroup_Client = ({
       ) : null}
 
       {isScheduleGroup ? (
-        <ShowScheduleGroup
-          groupData={groupData}
-          params={params}
-        />
+        <ShowScheduleGroup groupData={groupData} params={params} />
       ) : null}
 
       {isAdditionalPageDataGroup ? (

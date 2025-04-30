@@ -118,6 +118,8 @@ export type StaticTexts = {
   freeTraining?: string;
   color?: string;
   byAgreement?: string;
+  byWeekDay?: string;
+  byMonthDay?: string;
 };
 
 export type SearchParams = {

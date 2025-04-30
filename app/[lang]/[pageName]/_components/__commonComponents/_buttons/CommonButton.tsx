@@ -8,7 +8,6 @@ export const CommonButton = ({
   text,
   onClick,
   isDisabled,
-  backgroundColor,
   children,
   width,
   isAction,
@@ -17,7 +16,6 @@ export const CommonButton = ({
   text?: string;
   onClick?: (pathName: string) => void;
   isDisabled?: boolean;
-  backgroundColor?: string;
   children?: ReactNode;
   width?: string;
   isAction?: boolean;
@@ -26,7 +24,7 @@ export const CommonButton = ({
   const pathName = usePathname();
   const bgColor = isAction
     ? ACTION_BUTTON_BACKGROUND
-    : backgroundColor ?? styleValue?.backgroundColor;
+    : styleValue?.backgroundColor;
   const colorValue = styleValue?.color ?? (isAction ? "white" : "black");
 
   return (
@@ -35,14 +33,13 @@ export const CommonButton = ({
       onClick={() => onClick?.(pathName)}
       style={{
         ...styleValue,
-        color: isDisabled ? "lightgray" : colorValue ?? colorValue,
+        color: isDisabled ? "lightgray" : colorValue,
         backgroundColor: bgColor,
         display: "flex",
         justifyContent: "center",
         width: width ?? styleValue?.width,
         opacity: isDisabled ? 0.5 : 1,
-        minWidth: styleValue?.minWidth,
-        padding: children ? "10px" : undefined,
+        padding: styleValue?.padding ?? (children ? "10px" : undefined),
         borderRadius: styleValue?.borderRadius ?? 20,
       }}
       className="flex h-10 items-center rounded-lg bg-blue-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"

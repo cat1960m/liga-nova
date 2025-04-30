@@ -1,0 +1,38 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    border: 1px dotted magenta;
+}
+
+.type_price_count {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.buttons {
+    display:  flex;
+    gap: 10px;
+    justify-content: flex-end;
+    padding: 10px 0;
+}
+
+.numberValue {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    justify-content: center;
+    font-weight: 700;
+}
+
+.type {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    justify-content: center;
+    font-weight: 700;
+}

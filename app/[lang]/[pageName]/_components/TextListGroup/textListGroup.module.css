@@ -1,0 +1,7 @@
+.item {
+    width: 100%;
+    border: 1px dotted lightgray;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}

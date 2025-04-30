@@ -1,0 +1,10 @@
+.container {
+    font-size: 12;
+    font-weight: 400;
+    color: darkgray;
+}
+
+.container.main {
+    font-size:  18;
+    color: black;
+}

@@ -1,0 +1,13 @@
+.linkBody {
+    font-weight: 400;
+    color: black;
+  }
+  
+  .main {
+    font-weight: 700;
+  }
+  
+  .active {
+    color: blue;
+  }
+  

@@ -1,6 +1,5 @@
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { DrawChildFeature_Client } from "./DrawChildFeatures_Client";
-import { StaticTexts } from "@/app/dictionaries/definitions";
 import { AddChildFeatureToContainer } from "./__commonComponents/_buttons/AddChildFeatureToContainer";
 import { MAX_PAGE_WIDTH } from "@/app/lib/constants";
 
@@ -27,7 +26,6 @@ export const DrawFeatureContainer_Client = ({
 
   return (
     <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
-      <div></div>
       <div
         style={{
           display: "flex",

@@ -1,0 +1,18 @@
+.container{ 
+    width: 100%;
+}
+
+.body { 
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 20px;
+}
+
+.upload {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding-top: 30px;
+}

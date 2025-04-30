@@ -1,0 +1,24 @@
+.basePages  {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid lightgray;
+    width: 100%;
+    padding: 20px;
+    min-height: 80px;
+}
+
+.edit_panel {
+    display: flex;
+    gap: 20px;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+}
+
+.body_container {
+    position: relative;
+    min-height: 300px;
+}

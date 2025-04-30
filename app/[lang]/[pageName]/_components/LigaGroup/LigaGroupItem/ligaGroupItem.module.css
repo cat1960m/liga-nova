@@ -1,0 +1,52 @@
+.divider {
+    width: 100px;
+    height: 0;
+    margin-bottom: 10px;
+    border-top: 3px solid blue;
+}
+
+.container {
+    padding: 10px;
+}
+
+.body {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: stretch;
+}
+
+.inner {
+    display: flex; 
+    align-items: center; 
+    gap: 5px;
+}
+
+.icon_text {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.text_service {
+    font-size: 16;
+    font-weight: 300;
+}
+
+.text_address_phone {
+    font-size: 16;
+}
+
+
+.text_title {
+    font-weight:  700;
+    font-size: 24;
+}
+
+.service {
+    display: "flex";
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    justify-content: space-between;
+}

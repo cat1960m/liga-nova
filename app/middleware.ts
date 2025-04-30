@@ -6,7 +6,7 @@ import { NextRequest, NextResponse } from "next/server";
 export default NextAuth(authConfig).auth;
 
 export function middleware(request: NextRequest) {
-  console.log("request", request);
+  console.log("----------request", request);
   //const {user} = auth();
   const isAuthenticated = true;
 

@@ -14,7 +14,7 @@ import {
   TabType,
   TextContent,
 } from "@/app/lib/definitions";
-import { TranslationTabs } from "../TranslationTabs";
+import { TranslationTabs } from "../TranslationTabs/TranslationTabs";
 import { CommonButton } from "../_buttons/CommonButton";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import {

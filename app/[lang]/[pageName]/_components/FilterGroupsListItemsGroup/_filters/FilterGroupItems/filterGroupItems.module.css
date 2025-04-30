@@ -1,0 +1,10 @@
+
+
+.divider {
+    border-top: 1px solid lightgray;
+}
+
+.divider.edit {
+    padding: 5px 0; 
+}
+

@@ -1,0 +1,27 @@
+.title {
+  font-size: 30;
+  font-weight: 700;
+}
+
+
+.group {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  align-items: center;
+  max-width: 600px;
+  min-width: 200px;
+}
+
+.group.edit {
+  max-width: 100% !important;
+}
+
+
+
+@media (max-width: 768px) {
+
+  .title{
+    font-size: 20px;
+  }
+}
