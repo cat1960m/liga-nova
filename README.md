@@ -1,6 +1,6 @@
 1. nvm use 18
 2. npm install
-3. npm run dev
+3. pnpm run dev
 
 9 chapter
 pnpm install next@canary
