@@ -75,3 +75,7 @@
     align-items: stretch;
   }
 }
+
+.image {
+  object-fit: cover;
+}

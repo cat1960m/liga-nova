@@ -46,5 +46,6 @@
 
   .image {
     display: none;
+    object-fit: fill;
   }
 }

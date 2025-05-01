@@ -49,8 +49,7 @@ export const ActionBannerGroup = ({ groupData, params }: Props) => {
             src={titleImageData.value}
             alt=""
             fill
-            objectFit="cover" // Make sure it covers the entire container
-            quality={100} // Optional, for higher quality
+            // objectFit="cover" // Make sure it covers the entire container
             className={styles.image}
           />
         ) : null}

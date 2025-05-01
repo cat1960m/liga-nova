@@ -4,6 +4,7 @@ import { IMAGE } from "@/app/lib/constants";
 import { FullData } from "@/app/lib/definitions";
 import Image from "next/image";
 import { DragEventHandler } from "react";
+import styles from "./showItem.module.css"
 
 export type Props = {
   widthItem?: number;
@@ -33,10 +34,11 @@ export const ShowItem = ({ widthItem, imageData }: Props) => {
           src={value}
           layout="fill" // Fill the container
           fill
-          quality={100} // Optional, for higher quality
+          //quality={100} // Optional, for higher quality
           alt="image"
           draggable="false" // This directly disables drag-and-drop
           onDragStart={preventDragHandler} // Ensures additional prevention
+          className={styles.image}
         />
       ) : (
         <div style={{ width: "100%", padding: "30px", textAlign: "center" }}>

@@ -90,3 +90,7 @@
         height: 80px;
     }
 }
+
+.image {
+    object-fit: cover;
+  }

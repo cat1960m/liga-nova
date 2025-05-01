@@ -75,9 +75,10 @@ export const ShowItem = ({
             <Image
               src={value}
               fill
-              objectFit="cover" // Make sure it covers the entire container
+              //objectFit="cover" // Make sure it covers the entire container
               quality={100} // Optional, for higher quality
               alt="image"
+              className={styles.image}
               draggable="false" // This directly disables drag-and-drop
               //   onDragStart={preventDragHandler} // Ensures additional prevention
             />
