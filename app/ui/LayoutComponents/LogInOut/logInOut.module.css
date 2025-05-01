@@ -1,0 +1,13 @@
+.icon {
+    width: 24px;
+    color: blue;
+} 
+
+.container {
+    padding: 10px;
+}
+
+.container:hover {
+    background-color: lightblue;
+    opacity: 0.5;
+}

@@ -1,11 +1,13 @@
 import { getPageTitles } from "../lib/actions_fitness";
 import Link from "next/link";
-import { LinkBody } from "./_layoutComponents/LinkBody/LInkBody";
+import { LinkBody } from "../ui/LayoutComponents/LinkBody/LInkBody";
 import { auth, signOut } from "@/app/auth";
-import { EditRegime } from "./_layoutComponents/EditRegime";
-import { ManageIconsModal } from "./_layoutComponents/ManageIconsModal/ManageIconsModal";
-import { BaseMenu } from "./_layoutComponents/BaseMenu/BaseMenu";
+import { EditRegime } from "../ui/LayoutComponents/EditRegime";
+import { ManageIconsModal } from "../ui/LayoutComponents/ManageIconsModal/ManageIconsModal";
+import { MainMenu } from "../ui/LayoutComponents/MainMenu/MainMenu";
 import styles from "./layout.module.css";
+import { MobileMenu } from "../ui/LayoutComponents/MobileMenu/MobileMenu";
+import { BaseMenu } from "../ui/LayoutComponents/BaseMenu/BaseMenu";
 
 export const experimental_ppr = true;
 
@@ -32,22 +34,18 @@ export default async function Layout({
 
   return (
     <div>
-      <BaseMenu
-        mainPages={mainPages}
-        isAuthenticated={isAuthenticated}
-        lang={lang}
-      />
-      <div className={styles.basePages}>
-        {basePages?.map((page) => {
-          return (
-            <LinkBody
-              pageName={page.name}
-              pageTitle={page.text_content}
-              lang={lang}
-              key={page.id}
-            />
-          );
-        })}
+      <div className={styles.header}>
+        <MainMenu
+          mainPages={mainPages}
+          isAuthenticated={isAuthenticated}
+          lang={lang}
+        />
+
+        <BaseMenu pages={basePages} lang={lang} />
+      </div>
+
+      <div className={styles.headerMobile}>
+        <MobileMenu basePages={basePages} mainPages={mainPages} lang={lang} />
       </div>
 
       <div className={styles.edit_panel}>

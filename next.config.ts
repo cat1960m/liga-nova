@@ -8,11 +8,11 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       // Basic redirect
-      {
-        source: "/dashboard/customers_old",
-        destination: "/dashboard/customers",
+      /* {
+        source: "/",
+        destination: "/ua",
         permanent: true,
-      },
+      }, */
     ];
   },
   images: {

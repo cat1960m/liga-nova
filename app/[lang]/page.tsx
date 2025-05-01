@@ -1,7 +1,7 @@
 import { auth } from "../auth";
 import { SearchParams } from "../dictionaries/definitions";
 import { HOME } from "../lib/constants";
-import { ShowPage } from "./[pageName]/_components/__commonComponents/_page/ShowPage/ShowPage";
+import { ShowPage } from "../ui/PageComponents/ShowPage/ShowPage";
 
 export default async function Page({
   params,
