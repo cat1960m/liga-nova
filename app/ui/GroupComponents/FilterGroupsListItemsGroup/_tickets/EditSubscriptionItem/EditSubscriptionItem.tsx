@@ -13,13 +13,21 @@ import { FullData, MainParams } from "@/app/lib/definitions";
 import { CheckboxItemField } from "../../CheckboxItemField/CheckboxItemField";
 
 import styles from "./editSubscriptionItem.module.css";
+import { StaticTexts } from "@/app/dictionaries/definitions";
 
 export type Props = {
   currentData: FullData[];
-  params: MainParams;
+  staticTexts: StaticTexts;
+  lang: string;
+  isEdit: boolean;
 };
 
-export const EditSubscriptionItem = ({ currentData, params }: Props) => {
+export const EditSubscriptionItem = ({
+  currentData,
+  staticTexts,
+  lang,
+  isEdit,
+}: Props) => {
   const name = currentData.find(
     (item) => item.text_type === SUBSCRIPTION_ITEM_NAME
   );
@@ -44,40 +52,48 @@ export const EditSubscriptionItem = ({ currentData, params }: Props) => {
     return null;
   }
 
-  const { staticTexts } = params;
-
   return (
     <div className={styles.container}>
       <TextItemField
         fieldData={name}
         title={staticTexts.name}
-        params={params}
         useItems={{ text: "simple" }}
+        isEdit={isEdit}
+        staticTexts={staticTexts}
+        lang={lang}
       />
       <TextItemField
         fieldData={price}
         title={staticTexts.price}
-        params={params}
         useItems={{ text: "simple", price: "price" }}
+        isEdit={isEdit}
+        staticTexts={staticTexts}
+        lang={lang}
       />
       <TextItemField
         fieldData={share}
         title={staticTexts.share}
-        params={params}
         useItems={{ text: "simple" }}
+        isEdit={isEdit}
+        staticTexts={staticTexts}
+        lang={lang}
       />
       <TextItemField
         fieldData={oldPrice}
         title={staticTexts.oldPrice}
-        params={params}
         useItems={{ text: "simple" }}
+        isEdit={isEdit}
+        staticTexts={staticTexts}
+        lang={lang}
       />
 
       <TextItemField
         fieldData={description}
         title={staticTexts.descriptions}
-        params={params}
         useItems={{ text: "quill" }}
+        isEdit={isEdit}
+        staticTexts={staticTexts}
+        lang={lang}
       />
 
       <CheckboxItemField

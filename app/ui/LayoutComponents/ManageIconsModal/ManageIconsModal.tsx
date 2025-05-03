@@ -9,13 +9,15 @@ import { ManageImages } from "./ManageImages/ManageImages";
 import { CreateModal } from "../../CommonComponents/_upadeModal/CreateModal";
 
 import styles from "./manageIconsModal.module.css";
+import { EDIT_MODE } from "@/app/lib/constants";
 
 export const ManageIconsModal = ({ lang }: { lang: string }) => {
   const [isModalShown, setIsModalShown] = useState(false);
   const [iconsData, setIconsData] = useState<FullData[]>([]);
   const pathName = usePathname();
   const searchParams = useSearchParams();
-  const isEdit = searchParams.get("isEdit") === "1";
+  const editMode = searchParams.get(EDIT_MODE);
+  const isEdit = editMode === "1" || editMode === "2";
 
   const handleClick = () => {
     setIsModalShown(true);
@@ -56,6 +58,7 @@ export const ManageIconsModal = ({ lang }: { lang: string }) => {
           isDisabled={isModalShown}
         />
       ) : null}
+
       {isModalShown ? (
         <CreateModal onClose={handleClose}>
           <div className={styles.container}>

@@ -14,24 +14,29 @@ import styles from "./showItem.module.css";
 import { CommonButton } from "@/app/ui/CommonComponents/_buttons/CommonButton";
 import { ScrollIcon } from "@/app/ui/CommonComponents/ScrollIcon/ScrollIcon";
 import { ItemContainerUpdateTextDescriptionDeleteFeature } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerUpdateTextDescriptionDeleteFeature";
+import { StaticTexts } from "@/app/dictionaries/definitions";
 
 export type Props = {
   actionBannerListItemsData: Record<string, FullData[]>;
   id: string;
   widthItem?: number;
-  params: MainParams;
   indexSelected: (index: number) => void;
   f: (value: "left" | "right") => void;
   ids: string[];
+  isEdit: boolean;
+  staticTexts: StaticTexts;
+  lang: string;
 };
 
 export const ShowItem = ({
   actionBannerListItemsData,
   id,
-  params,
   indexSelected,
   f,
   ids,
+  isEdit,
+  staticTexts,
+  lang,
 }: Props) => {
   const actionBannerListItemData = actionBannerListItemsData[id];
 
@@ -55,7 +60,6 @@ export const ShowItem = ({
   }
 
   const color = image.price === 1 ? "white" : "black";
-  const { isEdit, staticTexts } = params;
 
   return (
     <ItemContainerUpdateTextDescriptionDeleteFeature
@@ -64,10 +68,13 @@ export const ShowItem = ({
         value: "image",
         price: "color",
       }}
-      params={params}
+      staticTexts={staticTexts}
+      lang={lang}
+      isEdit={isEdit}
       featureData={actionBannerListItemData}
       isChangeOrderHorizontal
       marginTop={0}
+      noDelete={false}
     >
       <div className={styles.main}>
         <div className={styles.container}>
@@ -90,17 +97,31 @@ export const ShowItem = ({
           >
             <div className={styles.title_container}>
               {share ? (
-                <ShowTitle params={params} title={share} color={color} />
+                <ShowTitle
+                  staticTexts={staticTexts}
+                  isEdit={isEdit}
+                  lang={lang}
+                  title={share}
+                  color={color}
+                />
               ) : null}
 
               {ticket ? (
-                <ShowTitle params={params} title={ticket} color={color} />
+                <ShowTitle
+                  staticTexts={staticTexts}
+                  isEdit={isEdit}
+                  lang={lang}
+                  title={ticket}
+                  color={color}
+                />
               ) : null}
             </div>
 
             {description ? (
               <ShowDescription
-                params={params}
+                isEdit={isEdit}
+                lang={lang}
+                staticTexts={staticTexts}
                 description={description}
                 color={color}
               />

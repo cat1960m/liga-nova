@@ -3,10 +3,12 @@
 import { IMAGE } from "@/app/lib/constants";
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { ScrollContainer } from "@/app/ui/CommonComponents/ScrollContainer/ScrollContainer";
-import { ShowItem } from "./ShowItem/ShowItem";
+import { ShowItemBody } from "./ShowItemBody/ShowItemBody";
 import { ItemContainerUpdateDeleteTextDescription } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerUpdateDeleteTextDescription";
 import { useRef, useState } from "react";
 import { ItemContainerAddTextDescriptionDeleteFeature } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerAddTextDescriptionDeleteFeature";
+import { getIsEditNoDelete } from "@/app/lib/utils";
+import { ShowItem } from "./ShowItem/ShowItem";
 
 export type Props = {
   groupData: FullData[];
@@ -26,6 +28,9 @@ export const ShowImageListGroup = ({
 
   const ids = imagesData.map((item) => item.text_description_id.toString());
 
+  const { lang, staticTexts } = params;
+  const { isEdit, noDelete } = getIsEditNoDelete(params);
+
   const getItem = ({ id, widthItem }: { id: string; widthItem?: number }) => {
     const imageData = imagesData.find(
       (item) => item.text_description_id.toString() === id
@@ -36,22 +41,14 @@ export const ShowImageListGroup = ({
     }
 
     return (
-      <div
-        style={{
-          padding: "10px",
-          width: "100%",
-        }}
-      >
-        <ItemContainerUpdateDeleteTextDescription
-          useItems={{ value: "image" }}
-          s3Key={imageData.value}
-          onDeleteFinished={onDeleteFinished}
-          params={params}
-          currentData={imageData}
-        >
-          <ShowItem widthItem={widthItem} imageData={imageData} />
-        </ItemContainerUpdateDeleteTextDescription>
-      </div>
+      <ShowItem
+        widthItem={widthItem}
+        imageData={imageData}
+        onDeleteFinished={onDeleteFinished}
+        staticTexts={staticTexts}
+        isEdit={isEdit}
+        lang={lang}
+      />
     );
   };
 
@@ -62,7 +59,6 @@ export const ShowImageListGroup = ({
   const onDeleteFinished = () => {
     setLastAddedId(null);
   };
-  const { isEdit, staticTexts } = params;
 
   return (
     <ItemContainerAddTextDescriptionDeleteFeature
@@ -74,6 +70,7 @@ export const ShowImageListGroup = ({
       onTextDescriptionAdded={onTextDescriptionAdded}
       isChangeOrderHorizontal={false}
       marginTop={20}
+      noDelete={noDelete}
     >
       <div ref={ref}>
         {ids.length ? (

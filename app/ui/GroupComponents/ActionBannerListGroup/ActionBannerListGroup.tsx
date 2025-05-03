@@ -8,8 +8,8 @@ import {
   ACTION_BANNER_LIST_TICKET,
 } from "@/app/lib/constants";
 import { FullData, MainParams } from "@/app/lib/definitions";
-import { useRef, useState } from "react";
-import { getContainerData } from "@/app/lib/utils";
+import { useMemo, useRef, useState } from "react";
+import { getContainerData, getIsEditNoDelete } from "@/app/lib/utils";
 import { ShowItem } from "./ShowItem/ShowItem";
 import { ItemContainerAddChildFeatureDeleteFeature } from "../../CommonComponents/_itemGroupContainer/ItemContainerAddChildFeatureDeleteFeature";
 import { ScrollContainer } from "../../CommonComponents/ScrollContainer/ScrollContainer";
@@ -34,15 +34,18 @@ export const ActionBannerListGroup = ({
     return null;
   }
 
-  const [actionBannerListItemsData, actionBannerListItemIds] = getContainerData(
-    {
+  const [actionBannerListItemsData, actionBannerListItemIds] = useMemo(() => {
+    return getContainerData({
       pageName: params.pageName,
       pageFullData: pageFullDataList,
       parentFeatureId: groupFeatureId,
-    }
-  );
+    });
+  }, [params.pageName,pageFullDataList, groupFeatureId]);
 
   const ids = actionBannerListItemIds;
+
+  const { staticTexts, pageName, lang } = params;
+  const { isEdit, noDelete } = getIsEditNoDelete(params);
 
   const getItem = ({
     id,
@@ -60,10 +63,12 @@ export const ActionBannerListGroup = ({
         actionBannerListItemsData={actionBannerListItemsData}
         id={id}
         widthItem={widthItem}
-        params={params}
         indexSelected={indexSelected}
         f={f}
         ids={ids}
+        staticTexts={staticTexts}
+        isEdit={isEdit}
+        lang={lang}
       />
     );
   };
@@ -74,12 +79,12 @@ export const ActionBannerListGroup = ({
   const handleDeleteFinished = () => {
     setLastAddedId(null);
   };
-  const { staticTexts } = params;
 
   return (
     <ItemContainerAddChildFeatureDeleteFeature
       addButtonText={staticTexts.addImage ?? "N/A"}
-      params={params}
+      pageName={pageName}
+      isEdit={isEdit}
       textTypes={[
         ACTION_BANNER_LIST_SHARE,
         ACTION_BANNER_LIST_TICKET,
@@ -93,6 +98,7 @@ export const ActionBannerListGroup = ({
       groupData={groupData}
       onDeleteFinished={handleDeleteFinished}
       marginTop={20}
+      noDelete={noDelete}
     >
       <div ref={ref}>
         <ScrollContainer

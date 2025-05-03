@@ -9,6 +9,7 @@ import { FilterGroups } from "../_filters/FilterGroups";
 import { FilterGroupsMobile } from "../_filters/FilterGroupsMobile/FilterGroupsMobile";
 import { ItemContainerAddChildFeatureDeleteFeature } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerAddChildFeatureDeleteFeature";
 import styles from "./filterGroupsListItemGroup.module.css";
+import { getIsEditNoDelete } from "@/app/lib/utils";
 
 export type Props = {
   groupData: FullData[];
@@ -34,7 +35,8 @@ export const FilterGroupsListItemsGroup = ({
   if (!parentFeatureId) {
     return null;
   }
-  const { staticTexts, isEdit } = params;
+  const { staticTexts, pageName, lang } = params;
+  const { isEdit, noDelete } = getIsEditNoDelete(params);
 
   const handleFilterSelectionChanged = ({
     filter,
@@ -75,13 +77,15 @@ export const FilterGroupsListItemsGroup = ({
   return (
     <ItemContainerAddChildFeatureDeleteFeature
       addButtonText={addListItemText}
-      params={params}
+      isEdit={isEdit}
+      pageName={pageName}
       featureType={LIST_ITEM}
       featureSubtype={LIST_ITEM}
       textTypes={PAGE_NAMES_TO_LIST_ITEMS_DATA[params.pageName]?.textTypes}
       deleteButtonText={staticTexts.delete ?? "N/A"}
       groupData={groupData}
       marginTop={0}
+      noDelete={noDelete}
     >
       <div className={styles.container}>
         {parentFeatureId ? (
@@ -90,11 +94,14 @@ export const FilterGroupsListItemsGroup = ({
               <FilterGroups
                 parentFeatureId={parentFeatureId}
                 pageFullDataList={pageFullDataList}
-                params={params}
                 onFilterSelectionChanged={handleFilterSelectionChanged}
                 selectedFilterTextDescriptionIds={
                   selectedFilterTextDescriptionIds
                 }
+                isEdit={isEdit}
+                lang={lang}
+                staticTexts={staticTexts}
+                pageName={pageName}
               />
             </div>
 
@@ -103,11 +110,14 @@ export const FilterGroupsListItemsGroup = ({
                 <FilterGroupsMobile
                   parentFeatureId={parentFeatureId}
                   pageFullDataList={pageFullDataList}
-                  params={params}
                   onFilterSelectionChanged={handleFilterSelectionChanged}
                   selectedFilterTextDescriptionIds={
                     selectedFilterTextDescriptionIds
                   }
+                  isEdit={isEdit}
+                  lang={lang}
+                  staticTexts={staticTexts}
+                  pageName={pageName}
                 />
               </div>
             ) : null}
@@ -118,11 +128,13 @@ export const FilterGroupsListItemsGroup = ({
           {editingListItemFeatureId ? (
             <EditListItemFilter
               pageFullDataList={pageFullDataList}
-              params={params}
               groupData={groupData}
               onCancel={handleAddEditCancel}
               editItemFeatureId={editingListItemFeatureId}
               editListItemText={editListItemText}
+              lang={lang}
+              staticTexts={staticTexts}
+              pageName={pageName}
             />
           ) : null}
 
@@ -134,8 +146,10 @@ export const FilterGroupsListItemsGroup = ({
               selectedFilterTextDescriptionIds={
                 selectedFilterTextDescriptionIds
               }
-              params={params}
               editTextButton={editListItemText}
+              isEdit={isEdit}
+              staticTexts={staticTexts}
+              pageName={pageName}
             />
           ) : null}
         </div>

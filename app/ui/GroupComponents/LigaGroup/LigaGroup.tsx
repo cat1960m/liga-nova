@@ -13,6 +13,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import styles from "./ligaGroup.module.css";
 import { ItemContainerAddTextDescriptionDeleteFeature } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerAddTextDescriptionDeleteFeature";
+import { getIsEditNoDelete } from "@/app/lib/utils";
 
 export type Props = {
   groupData: FullData[];
@@ -44,7 +45,8 @@ export const LigaGroup = ({ groupData, params }: Props) => {
     (item) => item.text_type === LIGA_SERVICE
   );
 
-  const { staticTexts, isEdit } = params;
+  const { staticTexts, lang } = params;
+  const { isEdit, noDelete } = getIsEditNoDelete(params);
 
   return (
     <ItemContainerAddTextDescriptionDeleteFeature
@@ -55,20 +57,41 @@ export const LigaGroup = ({ groupData, params }: Props) => {
       isEdit={isEdit}
       isChangeOrderHorizontal={false}
       marginTop={20}
+      noDelete={noDelete}
     >
       <div className={styles.container}>
-        <LigaGroupItem params={params} data={dataTitle} />
+        <LigaGroupItem
+          isEdit={isEdit}
+          staticTexts={staticTexts}
+          lang={lang}
+          data={dataTitle}
+        />
         <div className={styles.group}>
-          <LigaGroupItem params={params} data={dataAddress} />
+          <LigaGroupItem
+            isEdit={isEdit}
+            staticTexts={staticTexts}
+            lang={lang}
+            data={dataAddress}
+          />
 
-          <LigaGroupItem params={params} data={dataTelephone} />
+          <LigaGroupItem
+            isEdit={isEdit}
+            staticTexts={staticTexts}
+            lang={lang}
+            data={dataTelephone}
+          />
         </div>
 
         {isEdit
           ? dataServiceList.map((item, index) => {
               return (
                 <div key={item.text_content_id ?? "" + "_" + index}>
-                  <LigaGroupItem params={params} data={item} />
+                  <LigaGroupItem
+                    isEdit={isEdit}
+                    staticTexts={staticTexts}
+                    lang={lang}
+                    data={item}
+                  />
                 </div>
               );
             })
@@ -84,10 +107,20 @@ export const LigaGroup = ({ groupData, params }: Props) => {
                 >
                   {item.link ? (
                     <Link href={`/${params.lang}/${item.link}`}>
-                      <LigaGroupItem params={params} data={item} />
+                      <LigaGroupItem
+                        isEdit={isEdit}
+                        staticTexts={staticTexts}
+                        lang={lang}
+                        data={item}
+                      />
                     </Link>
                   ) : (
-                    <LigaGroupItem params={params} data={item} />
+                    <LigaGroupItem
+                      isEdit={isEdit}
+                      staticTexts={staticTexts}
+                      lang={lang}
+                      data={item}
+                    />
                   )}
                 </div>
               );

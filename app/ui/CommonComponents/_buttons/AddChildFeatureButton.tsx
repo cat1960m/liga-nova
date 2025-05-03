@@ -10,7 +10,7 @@ import { ICON_BUTTON_WIDTH, ICON_IN_BUTTON_WIDTH } from "@/app/lib/constants";
 export type Props = {
   parentFeatureId: number;
   text: string;
-  params: MainParams;
+  pageName: string;
   textTypes: string[];
   type: string;
   subtype: string;
@@ -20,7 +20,7 @@ export type Props = {
 export const AddChildFeatureButton = ({
   parentFeatureId,
   text,
-  params,
+  pageName,
   textTypes,
   type,
   subtype,
@@ -35,7 +35,7 @@ export const AddChildFeatureButton = ({
       parentId: parentFeatureId,
       type,
       subtype,
-      name: params.pageName,
+      name: pageName,
       text_types: textTypes,
       pathName,
     });

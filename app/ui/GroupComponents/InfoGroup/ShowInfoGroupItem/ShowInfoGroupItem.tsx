@@ -4,14 +4,23 @@ import { PhoneIcon } from "@heroicons/react/24/solid";
 import { ItemContainerUpdateDeleteTextDescription } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerUpdateDeleteTextDescription";
 import clsx from "clsx";
 import styles from "./showInfoGroupItem.module.css";
+import { StaticTexts } from "@/app/dictionaries/definitions";
 
 export type Props = {
   data?: FullData;
   isQuill?: boolean;
-  params: MainParams;
+  isEdit: boolean;
+  lang: string;
+  staticTexts: StaticTexts;
 };
 
-export const ShowInfoGroupItem = ({ data, isQuill, params }: Props) => {
+export const ShowInfoGroupItem = ({
+  data,
+  isQuill,
+  isEdit,
+  staticTexts,
+  lang,
+}: Props) => {
   if (!data) {
     return null;
   }
@@ -22,7 +31,9 @@ export const ShowInfoGroupItem = ({ data, isQuill, params }: Props) => {
   return (
     <ItemContainerUpdateDeleteTextDescription
       useItems={{ text: isQuill ? "quill" : "simple" }}
-      params={params}
+      isEdit={isEdit}
+      staticTexts={staticTexts}
+      lang={lang}
       currentData={data}
       isChangeOrder={isBody}
       isChangeOrderHorizontal={false}

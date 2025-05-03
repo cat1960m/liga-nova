@@ -8,6 +8,7 @@ import Link from "next/link";
 
 import styles from "./additionalPageDataGroup.module.css";
 import { ItemContainerAddTextDescriptionDeleteFeature } from "../../CommonComponents/_itemGroupContainer/ItemContainerAddTextDescriptionDeleteFeature";
+import { getIsEditNoDelete } from "@/app/lib/utils";
 
 export type Props = {
   pageFullDataList: FullData[];
@@ -24,6 +25,10 @@ export const AdditionalPageDataGroup = ({
 }: Props) => {
   const currentData = groupData[0];
 
+  if(!currentData) {
+    return null;
+  }
+
   const pageData = pageFullDataList.find((data) => data.id === pageId);
   const additionalPageNames = (pageData?.additional_page_name ?? "").split(",");
   const additionalPageName =
@@ -36,7 +41,8 @@ export const AdditionalPageDataGroup = ({
   }
 
   const linkText = PAGE_NAMES_TO_LIST_ITEMS_DATA[additionalPageName]?.linkText;
-  const { staticTexts, isEdit } = params;
+  const { staticTexts, lang } = params;
+  const { isEdit, noDelete } = getIsEditNoDelete(params);
 
   return (
     <ItemContainerAddTextDescriptionDeleteFeature
@@ -48,13 +54,15 @@ export const AdditionalPageDataGroup = ({
       textDescriptionType=""
       isChangeOrderHorizontal={false}
       marginTop={20}
+      noDelete={noDelete}
     >
       {isEdit ? (
         <AdditionalPageDataGroupEdit
           currentData={currentData}
           pageFullDataList={pageFullDataList}
           additionalPageName={additionalPageName}
-          params={params}
+          staticTexts={staticTexts}
+          lang={lang}
         />
       ) : (
         <AdditionalPageDataGroupShow

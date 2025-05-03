@@ -11,13 +11,13 @@ import {
 } from "@/app/lib/constants";
 import { useMemo } from "react";
 import { AddChildFeatureButton } from "@/app/ui/CommonComponents/_buttons/AddChildFeatureButton";
-import { FilterGroupsItems } from "./FilterGroupItems/FilterGroupItems";
+import { FilterGroupsBody } from "./FilterGroupsBody/FilterGroupsBody";
 import styles from "./filterGroups.module.css";
 import cn from "clsx";
+import { StaticTexts } from "@/app/dictionaries/definitions";
 
 export type Props = {
   pageFullDataList: FullData[];
-  params: MainParams;
   onFilterSelectionChanged: (data: {
     filter: FullData;
     value: boolean;
@@ -25,30 +25,39 @@ export type Props = {
   selectedFilterTextDescriptionIds: number[];
   parentFeatureId: number;
   width?: string;
+  isEdit: boolean;
+  lang: string;
+  staticTexts: StaticTexts;
+  pageName: string;
 };
 
 export const FilterGroups = ({
   pageFullDataList,
-  params,
   onFilterSelectionChanged,
   selectedFilterTextDescriptionIds,
   parentFeatureId,
   width,
+  isEdit,
+  lang,
+  staticTexts,
+  pageName
 }: Props) => {
   const currentWidth = width ?? FILTER_GROUP_DEFAULT_WIDTH;
-  const { staticTexts, isEdit } = params;
 
   return (
     <div
       className={cn(styles.container, { [styles.edit]: isEdit })}
       style={{ width: currentWidth }}
     >
-      <FilterGroupsItems
+      <FilterGroupsBody
         pageFullDataList={pageFullDataList}
-        params={params}
         onFilterSelectionChanged={onFilterSelectionChanged}
         selectedFilterTextDescriptionIds={selectedFilterTextDescriptionIds}
         parentFeatureId={parentFeatureId}
+        isEdit={isEdit}
+        lang={lang}
+        staticTexts={staticTexts}
+        pageName={pageName}
       />
 
       {isEdit ? (
@@ -56,7 +65,7 @@ export const FilterGroups = ({
           <AddChildFeatureButton
             parentFeatureId={parentFeatureId}
             text={staticTexts.addGroup ?? "N/A"}
-            params={params}
+            pageName={pageName}
             textTypes={[FILTER_GROUP_TITLE, FILTER]}
             type={GROUP}
             subtype={FILTER_GROUP_SUBTYPE}

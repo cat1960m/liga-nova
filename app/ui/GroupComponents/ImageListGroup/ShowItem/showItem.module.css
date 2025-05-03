@@ -1,3 +1,5 @@
-.image {
-    object-fit: cover;
-  }
+.container {
+    padding: 10px;
+    width: 100%;
+
+}

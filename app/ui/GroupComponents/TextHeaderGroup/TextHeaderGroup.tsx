@@ -3,6 +3,7 @@ import { DEFAULT_TEXT } from "@/app/lib/constants";
 import { ItemContainerUpdateTextDescriptionDeleteFeature } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerUpdateTextDescriptionDeleteFeature";
 
 import styles from "./textHeaderGroup.module.css";
+import { getIsEditNoDelete } from "@/app/lib/utils";
 export type Props = {
   data: FullData[];
   params: MainParams;
@@ -16,14 +17,20 @@ export const TextHeaderGroup = ({ data, params }: Props) => {
     return null;
   }
 
+  const { staticTexts, lang } = params;
+  const { isEdit, noDelete } = getIsEditNoDelete(params);
+
   return (
     <ItemContainerUpdateTextDescriptionDeleteFeature
       currentData={firstItem}
       useItems={{ text: "simple" }}
-      params={params}
       featureData={data}
       isChangeOrderHorizontal={false}
       marginTop={0}
+      staticTexts={staticTexts}
+      lang={lang}
+      isEdit={isEdit}
+      noDelete={noDelete}
     >
       <div className={styles.container}>
         <div className={styles.divider} />

@@ -123,5 +123,5 @@ export type StaticTexts = {
 };
 
 export type SearchParams = {
-  isEdit: string;
+  editMode: string | undefined;
 };

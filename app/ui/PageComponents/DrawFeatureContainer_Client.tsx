@@ -21,7 +21,8 @@ export const DrawFeatureContainer_Client = ({
   pageId,
 }: Props) => {
   const [data, keys] = containerFullData;
-  const { isEdit } = params;
+  const { editMode, pageName, staticTexts } = params;
+  const isDeepMode = editMode === "2";
 
   return (
     <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
@@ -47,13 +48,14 @@ export const DrawFeatureContainer_Client = ({
           );
         })}
 
-        {isEdit ? (
+        { isDeepMode ? (
           <AddChildFeatureToContainer
             parentFeatureId={featureId}
             text={buttonText}
-            params={params}
             pageFullDataList={pageFullDataList}
             pageId={pageId}
+            staticTexts={staticTexts}
+            pageName={pageName}
           />
         ) : null}
       </div>

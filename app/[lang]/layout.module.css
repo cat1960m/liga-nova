@@ -1,12 +1,3 @@
-
-.edit_panel {
-    display: flex;
-    gap: 20px;
-    justify-content: flex-end;
-    align-items: center;
-    width: 100%;
-}
-
 .body_container {
     position: relative;
     min-height: 300px;
@@ -31,4 +22,13 @@
         display: block;
     }
     
+}
+
+.panel {
+    display: flex;
+    gap: 20px;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    padding: 10px 20px;
 }

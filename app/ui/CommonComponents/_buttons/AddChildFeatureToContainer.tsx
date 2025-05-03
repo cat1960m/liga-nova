@@ -1,5 +1,6 @@
 "use client";
 
+import { StaticTexts } from "@/app/dictionaries/definitions";
 import { addChildFeature } from "@/app/lib/actions_fitness";
 import {
   FILTER,
@@ -69,15 +70,17 @@ import { ChangeEventHandler, useMemo, useState } from "react";
 export const AddChildFeatureToContainer = ({
   parentFeatureId,
   text,
-  params,
   pageFullDataList,
   pageId,
+  staticTexts,
+  pageName
 }: {
   parentFeatureId: number | undefined;
   text: string;
-  params: MainParams;
   pageFullDataList: FullData[];
   pageId: number;
+  staticTexts: StaticTexts;
+  pageName: string;
 }) => {
   const pathName = usePathname();
   const [selectedValue, setSelectedValue] = useState<string>("");
@@ -86,10 +89,11 @@ export const AddChildFeatureToContainer = ({
     string[]
   >([]);
 
+
   const options = useMemo(() => {
     const data = [...GroupFeatureSubtypes, TABS, LAYOUT_PARENT];
 
-    if (!!PAGE_NAMES_TO_LIST_ITEMS_DATA[params.pageName]) {
+    if (!!PAGE_NAMES_TO_LIST_ITEMS_DATA[pageName]) {
       data.push(FILTER_GROUPS_LIST_ITEMS_SUBTYPE);
     }
 
@@ -103,7 +107,6 @@ export const AddChildFeatureToContainer = ({
 
     return data;
   }, []);
-  const { staticTexts } = params;
 
   const handleChangeAdditionalPagename: ChangeEventHandler<
     HTMLSelectElement
@@ -118,7 +121,7 @@ export const AddChildFeatureToContainer = ({
       parentId: parentFeatureId,
       type: GROUP,
       subtype: ADDITIONAL_PAGE_DATA_GROUP_SUBTYPE,
-      name: params.pageName,
+      name: pageName,
       text_types: [],
       pathName,
       additionalPageName: newValue,
@@ -154,7 +157,7 @@ export const AddChildFeatureToContainer = ({
           parentId: parentFeatureId,
           type: GROUP,
           subtype: newValue,
-          name: params.pageName,
+          name: pageName,
           text_types: [],
           pathName,
           additionalPageName: additionalPageNames[0],
@@ -171,7 +174,7 @@ export const AddChildFeatureToContainer = ({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: newValue,
-        name: params.pageName,
+        name: pageName,
         text_types: [ACTION_BANNER_TITLE_IMAGE],
         pathName,
       });
@@ -182,7 +185,7 @@ export const AddChildFeatureToContainer = ({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: newValue,
-        name: params.pageName,
+        name: pageName,
         text_types: [],
         pathName,
       });
@@ -192,7 +195,7 @@ export const AddChildFeatureToContainer = ({
           parentId: actionBannerListGroupId,
           type: ACTION_BANNER_LIST_GROUP_ITEM,
           subtype: ACTION_BANNER_LIST_GROUP_ITEM,
-          name: params.pageName,
+          name: pageName,
           text_types: [
             ACTION_BANNER_LIST_SHARE,
             ACTION_BANNER_LIST_TICKET,
@@ -209,7 +212,7 @@ export const AddChildFeatureToContainer = ({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: newValue,
-        name: params.pageName,
+        name: pageName,
         text_types: [],
         pathName,
       });
@@ -219,7 +222,7 @@ export const AddChildFeatureToContainer = ({
           parentId: textListGroupFeatureId,
           type: TEXT_LIST_GROUP_ITEM,
           subtype: TEXT_LIST_GROUP_ITEM,
-          name: params.pageName,
+          name: pageName,
           text_types: [TEXT_LIST_NAME, TEXT_LIST_BODY],
           pathName,
         });
@@ -231,7 +234,7 @@ export const AddChildFeatureToContainer = ({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: newValue,
-        name: params.pageName,
+        name: pageName,
         text_types: [SIMPLE_GROUP_ITEM],
         pathName,
       });
@@ -242,7 +245,7 @@ export const AddChildFeatureToContainer = ({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: newValue,
-        name: params.pageName,
+        name: pageName,
         text_types: [SIMPLE_GROUP_ITEM],
         pathName,
       });
@@ -253,7 +256,7 @@ export const AddChildFeatureToContainer = ({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: newValue,
-        name: params.pageName,
+        name: pageName,
         text_types: [IMAGE],
         pathName,
       });
@@ -264,7 +267,7 @@ export const AddChildFeatureToContainer = ({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: newValue,
-        name: params.pageName,
+        name: pageName,
         text_types: [LIGA_TITLE, LIGA_TELEPHONE, LIGA_ADDRESS],
         pathName,
       });
@@ -275,7 +278,7 @@ export const AddChildFeatureToContainer = ({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: newValue,
-        name: params.pageName,
+        name: pageName,
         text_types: [],
         pathName,
       });
@@ -286,7 +289,7 @@ export const AddChildFeatureToContainer = ({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: newValue,
-        name: params.pageName,
+        name: pageName,
         text_types: [IMAGE_LINKS_ITEM],
         pathName,
       });
@@ -297,7 +300,7 @@ export const AddChildFeatureToContainer = ({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: newValue,
-        name: params.pageName,
+        name: pageName,
         text_types: [IMAGE_ACTIONS_ITEM],
         pathName,
       });
@@ -308,7 +311,7 @@ export const AddChildFeatureToContainer = ({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: newValue,
-        name: params.pageName,
+        name: pageName,
         text_types: [],
         pathName,
       });
@@ -319,7 +322,7 @@ export const AddChildFeatureToContainer = ({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: newValue,
-        name: params.pageName,
+        name: pageName,
         text_types: [INFO_CHECK_HEADER, INFO_CHECK_ITEM],
         pathName,
       });
@@ -329,7 +332,7 @@ export const AddChildFeatureToContainer = ({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: newValue,
-        name: params.pageName,
+        name: pageName,
         text_types: [INFO_TITLE, INFO_BODY, INFO_TELEPHONE, INFO_ADDRESS],
         pathName,
       });
@@ -339,7 +342,7 @@ export const AddChildFeatureToContainer = ({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: newValue,
-        name: params.pageName,
+        name: pageName,
         text_types: [INFO_TITLE, INFO_BODY],
         pathName,
       });
@@ -350,7 +353,7 @@ export const AddChildFeatureToContainer = ({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: newValue,
-        name: params.pageName,
+        name: pageName,
         text_types: [SERVICE_ITEM],
         pathName,
       });
@@ -361,7 +364,7 @@ export const AddChildFeatureToContainer = ({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: newValue,
-        name: params.pageName,
+        name: pageName,
         text_types: [SCHEDULE_NAME, SCHEDULE_ITEM],
         pathName,
       });
@@ -372,7 +375,7 @@ export const AddChildFeatureToContainer = ({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: newValue,
-        name: params.pageName,
+        name: pageName,
         text_types: [],
         pathName,
       });
@@ -382,7 +385,7 @@ export const AddChildFeatureToContainer = ({
           parentId: filterGroupsListItemsId,
           type: GROUP,
           subtype: FILTER_GROUP_SUBTYPE,
-          name: params.pageName,
+          name: pageName,
           text_types: [FILTER_GROUP_TITLE, FILTER],
           pathName,
         });
@@ -394,7 +397,7 @@ export const AddChildFeatureToContainer = ({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: CALENDAR_EVENTS_GROUP_SUBTYPE,
-        name: params.pageName,
+        name: pageName,
         text_types: [],
         pathName,
       });
@@ -405,7 +408,7 @@ export const AddChildFeatureToContainer = ({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: DIVIDER,
-        name: params.pageName,
+        name: pageName,
         text_types: [],
         pathName,
       });
@@ -416,7 +419,7 @@ export const AddChildFeatureToContainer = ({
         parentId: parentFeatureId,
         type: TABS,
         subtype: TABS,
-        name: params.pageName,
+        name: pageName,
         text_types: [],
         pathName,
       });
@@ -426,7 +429,7 @@ export const AddChildFeatureToContainer = ({
           parentId: tabsFeatureId,
           type: TAB,
           subtype: "1",
-          name: params.pageName,
+          name: pageName,
           text_types: [TAB_TITLE],
           pathName,
         });
@@ -438,7 +441,7 @@ export const AddChildFeatureToContainer = ({
         parentId: parentFeatureId,
         type: LAYOUT_PARENT,
         subtype: LAYOUT_PARENT,
-        name: params.pageName,
+        name: pageName,
         text_types: [],
         pathName,
       });
@@ -448,7 +451,7 @@ export const AddChildFeatureToContainer = ({
           parentId: layoutFeatureId,
           type: LAYOUT_ITEM,
           subtype: LAYOUT_ITEM_LEFT,
-          name: params.pageName,
+          name: pageName,
           text_types: [],
           pathName,
         });
@@ -457,7 +460,7 @@ export const AddChildFeatureToContainer = ({
           parentId: layoutFeatureId,
           type: LAYOUT_ITEM,
           subtype: LAYOUT_ITEM_RIGHT,
-          name: params.pageName,
+          name: pageName,
           text_types: [],
           pathName,
         });

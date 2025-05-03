@@ -29,7 +29,7 @@ export type SaveArgs = {
   price: number;
   time: string;
   confirmedDates: string[];
-  params: MainParams;
+  pageName: string;
   calendarFeatureId: number;
 };
 
@@ -100,14 +100,14 @@ export const useChangeEventData = () => {
     price,
     time,
     confirmedDates,
-    params,
+    pageName,
     calendarFeatureId,
   }: SaveArgs) => {
     const calendarEventsGroupFeatureId = await addChildFeature({
       parentId: calendarFeatureId,
       type: CALENDAR_EVENTS_TYPE,
       subtype: type,
-      name: params.pageName,
+      name: pageName,
       text_types: [],
       pathName,
       filter_ids: confirmedDates.join(","),

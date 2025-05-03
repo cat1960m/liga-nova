@@ -1,7 +1,8 @@
-import { PageParams } from "@/app/lib/definitions";
+import { MainParams, PageParams } from "@/app/lib/definitions";
 import { auth } from "@/app/auth";
 import { SearchParams } from "@/app/dictionaries/definitions";
 import { ShowPage } from "../../ui/PageComponents/ShowPage/ShowPage";
+import { getDictionary } from "@/app/lib/dictionaries";
 
 export default async function Page({
   params,
@@ -14,16 +15,18 @@ export default async function Page({
   const isAuthenticated = !!res?.user;
 
   const pars = await params;
+  const {lang, pageName} = pars;
 
   const urlParams = await searchParams;
-  const isEdit = urlParams.isEdit === "1";
 
-  return (
-    <ShowPage
-      pageName={pars.pageName}
-      lang={pars.lang}
-      isEdit={isEdit}
-      isAuthenticated={isAuthenticated}
-    />
-  );
+  const dict = await getDictionary(lang as "en" | "ua");
+
+  const mainParams: MainParams = {
+    pageName,
+    lang,
+    editMode: urlParams.editMode ?? "",
+    staticTexts: dict.common,
+  };
+
+  return <ShowPage params={mainParams} isAuthenticated={isAuthenticated} />;
 }

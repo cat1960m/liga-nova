@@ -241,3 +241,4 @@ export const HOME = "home";
 export const WORK_SCHEDULE1= "пн-сб 07:00-23:00";
 export const WORK_SCHEDULE2="нд 09:00-21:00";
 export const PHONE="(073) 33 77 565";
+export const EDIT_MODE ="editMode";

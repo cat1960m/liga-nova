@@ -4,16 +4,21 @@ import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/outline";
 import { ICON_IN_BUTTON_WIDTH } from "@/app/lib/constants";
 
 import styles from "./filterGroup.module.css";
+import { StaticTexts } from "@/app/dictionaries/definitions";
 export type Props = {
   titleData: FullData;
-  params: MainParams;
+  isEdit: boolean;
+  lang: string;
+  staticTexts: StaticTexts;
   isExpanded: boolean;
   setIsExpanded: (value: boolean) => void;
 };
 
 export const ShowTitle = ({
   titleData,
-  params,
+  isEdit,
+  staticTexts,
+  lang,
   isExpanded,
   setIsExpanded,
 }: Props) => {
@@ -22,7 +27,9 @@ export const ShowTitle = ({
       currentData={titleData}
       useItems={{ text: "simple" }}
       isChangeOrder={false}
-      params={params}
+      isEdit={isEdit}
+      staticTexts={staticTexts}
+      lang={lang}
     >
       <div className={styles.title}>
         {titleData.text_content ?? "N/A"}

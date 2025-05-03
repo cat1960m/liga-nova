@@ -5,11 +5,9 @@ import {
   ChangeEventHandler,
   useEffect,
   useMemo,
-  CSSProperties,
 } from "react";
 import {
   FullData,
-  MainParams,
   PageData,
   TabType,
   TextContent,
@@ -43,17 +41,18 @@ export type UseItems = {
 export type Props = {
   onClose: () => void;
   currentData: FullData;
-  params: MainParams;
+  lang: string;
+  staticTexts: StaticTexts;
   useItems: UseItems;
 };
 
 export const UpdateTextDescriptionDataModalContent = ({
   onClose,
   currentData,
-  params,
+  staticTexts,
+  lang,
   useItems,
 }: Props) => {
-  const { staticTexts } = params;
   const [textContents, setTextContents] = useState<TextContent[] | null>(null);
   const [textContentsTooltips, setTextContentsTooltips] = useState<
     TextContent[] | null
@@ -126,11 +125,9 @@ export const UpdateTextDescriptionDataModalContent = ({
     };
 
     const getPages = async () => {
-      if (params) {
-        const pages1 = await getPageTitles(params.lang);
+        const pages1 = await getPageTitles(lang);
 
         setPages(pages1?.map((page) => page) ?? []);
-      }
     };
 
     getData();

@@ -3,21 +3,24 @@ import { FullData, MainParams } from "@/app/lib/definitions";
 import styles from "./showDescription.module.css";
 import cn from "clsx";
 import { ItemContainerUpdateDeleteTextDescription } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerUpdateDeleteTextDescription";
+import { StaticTexts } from "@/app/dictionaries/definitions";
 
 export type Props = {
-  params: MainParams;
+  isEdit: boolean;
+  lang: string;
+  staticTexts: StaticTexts;
   description: FullData;
   color: string;
 };
 
-export const ShowDescription = ({ params, description, color }: Props) => {
-  const { isEdit } = params;
-
+export const ShowDescription = ({ staticTexts, isEdit, lang, description, color }: Props) => {
   return (
     <ItemContainerUpdateDeleteTextDescription
       currentData={description}
       useItems={{ text: "quill" }}
-      params={params}
+      isEdit={isEdit}
+      staticTexts={staticTexts}
+      lang={lang}
       isChangeOrder={false}
     >
       <div className={cn(styles.group, { [styles.edit]: isEdit })}>

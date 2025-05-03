@@ -3,13 +3,21 @@ import { SCHEDULE_ITEM, SCHEDULE_NAME } from "@/app/lib/constants";
 import { UpdateDeleteTextButtons } from "@/app/ui/CommonComponents/_buttons/UpdateDeleteTextButtons";
 
 import styles from "./showScheduleGroup.module.css";
+import { StaticTexts } from "@/app/dictionaries/definitions";
 
 export type Props = {
   data?: FullData;
-  params: MainParams;
+  lang: string;
+  staticTexts: StaticTexts;
+  isEdit: boolean;
 };
 
-export const ShowSCheduleGroupItem = ({ data, params }: Props) => {
+export const ShowSCheduleGroupItem = ({
+  data,
+  staticTexts,
+  lang,
+  isEdit,
+}: Props) => {
   if (!data) {
     return null;
   }
@@ -20,7 +28,7 @@ export const ShowSCheduleGroupItem = ({ data, params }: Props) => {
         <div className={styles.days}>{data?.text_content ?? "N/A"}</div>
         <div className={styles.time}>{data?.value ?? "N/A"}</div>
       </div>
-      {params.isEdit ? (
+      {isEdit ? (
         <div className={styles.itemEdit}>
           <UpdateDeleteTextButtons
             currentData={data}
@@ -29,7 +37,8 @@ export const ShowSCheduleGroupItem = ({ data, params }: Props) => {
               text: "simple",
               value: "time",
             }}
-            params={params}
+            staticTexts={staticTexts}
+            lang={lang}
           />
         </div>
       ) : null}

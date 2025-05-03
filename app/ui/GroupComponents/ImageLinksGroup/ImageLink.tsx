@@ -37,7 +37,7 @@ export const ImageLink = ({
           src={data.value}
           alt=""
           fill
-          objectFit="cover" // Make sure it covers the entire container
+          //objectFit="cover" // Make sure it covers the entire container
           quality={100} // Optional, for higher quality
           priority={false}
           className={styles.image}

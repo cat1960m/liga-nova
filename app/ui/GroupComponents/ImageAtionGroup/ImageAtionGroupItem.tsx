@@ -4,10 +4,13 @@ import { FullData, MainParams } from "@/app/lib/definitions";
 import { ImageAction } from "./ImageAction";
 import { ActionButton } from "@/app/ui/CommonComponents/_buttons/ActionButton/ActionButton";
 import { ItemContainerUpdateDeleteTextDescription } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerUpdateDeleteTextDescription";
+import { StaticTexts } from "@/app/dictionaries/definitions";
 
 export type Props = {
   groupData: FullData[];
-  params: MainParams;
+  isEdit: boolean;
+  staticTexts: StaticTexts;
+  lang: string;
   groupItemMain: FullData;
   isModalShown: boolean;
   changeModalState?: (state: boolean) => void;
@@ -15,13 +18,13 @@ export type Props = {
 
 export const ImageActionGroupItem = ({
   groupData,
-  params,
+  staticTexts,
+  lang,
+  isEdit,
   groupItemMain,
   isModalShown,
   changeModalState,
 }: Props) => {
-  const { staticTexts } = params;
-
   return (
     <ItemContainerUpdateDeleteTextDescription
       useItems={{
@@ -29,7 +32,9 @@ export const ImageActionGroupItem = ({
         value: "image",
       }}
       s3Key={groupItemMain.value}
-      params={params}
+      isEdit={isEdit}
+      staticTexts={staticTexts}
+      lang={lang}
       currentData={groupItemMain}
       changeModalState={changeModalState}
     >

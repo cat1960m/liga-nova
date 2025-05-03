@@ -1,42 +1,69 @@
 import { UseItems } from "../_upadeModal/UpdateTextDescriptionDataModalContent";
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { ItemGroupContainerCommon } from "./ItemGroupContainerCommon";
-import { UpdateTextDescriptionDeleteFeatureButtons } from "./UpdateTextDescriptionDeleteFeatureButtons";
+import { StaticTexts } from "@/app/dictionaries/definitions";
+import { UpdateTextDescriptionData } from "../_upadeModal/UpdateTextDescriptionData";
+import { DeleteFeatureButton } from "../_buttons/DeleteFeatureButton";
 
 export type Props = {
   children: React.ReactNode;
-  params: MainParams;
+  isEdit: boolean;
+  staticTexts: StaticTexts;
+  lang: string;
   useItems: UseItems;
   currentData: FullData;
   isChangeOrderHorizontal?: boolean;
   featureData: FullData[];
-  noDelete?: boolean;
+  noDelete: boolean;
   marginTop: number;
 };
 
 export const ItemContainerUpdateTextDescriptionDeleteFeature = ({
   children,
   useItems,
-  params,
+  isEdit,
+  staticTexts,
+  lang,
   currentData,
   isChangeOrderHorizontal = true,
   featureData,
   noDelete,
   marginTop,
 }: Props) => {
-  const getEditButtons = () => (
-    <UpdateTextDescriptionDeleteFeatureButtons
-      isChangeOrderHorizontal={isChangeOrderHorizontal}
-      params={params}
-      useItems={useItems}
-      dataToUpdate={currentData}
-      featureData={featureData}
-      noDelete={noDelete}
-    />
-  );
+  const getEditButtons = () => {
+    return (
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: "5px",
+        }}
+      >
+        {currentData ? (
+          <UpdateTextDescriptionData
+            currentData={currentData}
+            useItems={useItems}
+            staticTexts={staticTexts}
+            lang={lang}
+          />
+        ) : null}
+
+        {!noDelete ? (
+          <DeleteFeatureButton
+            deleteText={staticTexts.delete ?? "N/A"}
+            featureData={featureData}
+            isChangeOrderHorizontal={isChangeOrderHorizontal}
+            noDelete={noDelete}
+          />
+        ) : null}
+      </div>
+    );
+  };
   return (
     <ItemGroupContainerCommon
-      isEdit={params.isEdit}
+      isEdit={isEdit}
       getEditButtons={getEditButtons}
       marginTop={marginTop}
     >

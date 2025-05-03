@@ -2,13 +2,17 @@ import { UpdateDeleteTextButtons } from "../_buttons/UpdateDeleteTextButtons";
 import { UseItems } from "../_upadeModal/UpdateTextDescriptionDataModalContent";
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { ItemGroupContainerCommon } from "./ItemGroupContainerCommon";
+import { StaticTexts } from "@/app/dictionaries/definitions";
 
 export type Props = {
   children: React.ReactNode;
   useItems: UseItems;
   s3Key?: string;
   onDeleteFinished?: () => void;
-  params: MainParams;
+  isEdit: boolean;
+  lang: string;
+  staticTexts: StaticTexts;
+
   currentData: FullData;
   changeModalState?: (state: boolean) => void;
   isChangeOrder?: boolean;
@@ -20,7 +24,9 @@ export const ItemContainerUpdateDeleteTextDescription = ({
   useItems,
   s3Key,
   onDeleteFinished,
-  params,
+  isEdit,
+  lang,
+  staticTexts,
   currentData,
   changeModalState,
   isChangeOrder = true,
@@ -32,7 +38,8 @@ export const ItemContainerUpdateDeleteTextDescription = ({
       s3Key={s3Key}
       isChangeOrder={isChangeOrder}
       isChangeOrderHorizontal={isChangeOrderHorizontal}
-      params={params}
+      staticTexts={staticTexts}
+      lang={lang}
       useItems={useItems}
       onDeleteFinished={onDeleteFinished}
       changeModalState={changeModalState}
@@ -40,7 +47,7 @@ export const ItemContainerUpdateDeleteTextDescription = ({
   );
   return (
     <ItemGroupContainerCommon
-      isEdit={params.isEdit}
+      isEdit={isEdit}
       getEditButtons={getEditButtons}
       marginTop={0}
     >

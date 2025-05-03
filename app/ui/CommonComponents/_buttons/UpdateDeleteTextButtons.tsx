@@ -11,13 +11,16 @@ import {
 } from "@/app/lib/actions_fitness";
 import { usePathname } from "next/navigation";
 import { UseItems } from "../_upadeModal/UpdateTextDescriptionDataModalContent";
+import { StaticTexts } from "@/app/dictionaries/definitions";
 export type Props = {
   currentData?: FullData;
   isChangeOrder?: boolean;
   isChangeOrderHorizontal?: boolean;
   s3Key?: string;
   useItems: UseItems;
-  params: MainParams;
+  lang: string;
+  staticTexts: StaticTexts;
+
   changeModalState?: (state: boolean) => void;
   onDeleteFinished?: () => void;
 };
@@ -28,7 +31,8 @@ export const UpdateDeleteTextButtons = ({
   isChangeOrderHorizontal,
   s3Key,
   useItems,
-  params,
+  lang,
+  staticTexts,
   changeModalState,
   onDeleteFinished,
 }: Props) => {
@@ -98,7 +102,8 @@ export const UpdateDeleteTextButtons = ({
       <UpdateTextDescriptionData
         currentData={currentData}
         useItems={useItems}
-        params={params}
+        lang={lang}
+        staticTexts={staticTexts}
         changeModalState={changeModalState}
       />
       <div
@@ -112,7 +117,7 @@ export const UpdateDeleteTextButtons = ({
         {canDelete ? (
           <DeleteTextDescriptionButton
             textDescriptionId={currentData.text_description_id}
-            deleteText={params.staticTexts.delete ?? "N/A"}
+            deleteText={staticTexts.delete ?? "N/A"}
             s3Key={
               s3Key ||
               (useItems.value === "image" ? currentData.value : undefined)

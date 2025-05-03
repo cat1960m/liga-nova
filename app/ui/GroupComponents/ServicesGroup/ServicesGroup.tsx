@@ -6,6 +6,7 @@ import { ItemContainerAddTextDescriptionDeleteFeature } from "@/app/ui/CommonCom
 
 import styles from "./servicesGroup.module.css";
 import cn from "clsx";
+import { getIsEditNoDelete } from "@/app/lib/utils";
 
 export type Props = {
   groupData: FullData[];
@@ -14,7 +15,8 @@ export type Props = {
 
 export const ServicesGroup = ({ groupData, params }: Props) => {
   const texts = groupData.filter((data) => data.content_type !== TOOLTIP);
-  const { isEdit, staticTexts } = params;
+  const { staticTexts, lang } = params;
+  const { isEdit, noDelete } = getIsEditNoDelete(params);
 
   return (
     <ItemContainerAddTextDescriptionDeleteFeature
@@ -26,6 +28,7 @@ export const ServicesGroup = ({ groupData, params }: Props) => {
       isEdit={isEdit}
       isChangeOrderHorizontal={false}
       marginTop={20}
+      noDelete={noDelete}
     >
       <div className={styles.container}>
         <div className={styles.body}>
@@ -58,7 +61,8 @@ export const ServicesGroup = ({ groupData, params }: Props) => {
                       tooltip: "simple",
                       value: "price",
                     }}
-                    params={params}
+                    lang={lang}
+                    staticTexts={staticTexts}
                   />
                 ) : (
                   <div className={styles.register}>{staticTexts.register}</div>

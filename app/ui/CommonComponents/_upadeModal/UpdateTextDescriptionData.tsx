@@ -10,16 +10,19 @@ import {
 } from "./UpdateTextDescriptionDataModalContent";
 import { PencilIcon } from "@heroicons/react/24/outline";
 import { ICON_BUTTON_WIDTH, ICON_IN_BUTTON_WIDTH } from "@/app/lib/constants";
+import { StaticTexts } from "@/app/dictionaries/definitions";
 
 export const UpdateTextDescriptionData = ({
   currentData,
   useItems,
-  params,
+  staticTexts,
+  lang,
   changeModalState,
 }: {
   currentData: FullData;
   useItems: UseItems;
-  params: MainParams;
+  lang: string;
+  staticTexts: StaticTexts;
   changeModalState?: (state: boolean) => void;
 }) => {
   const [isEditModalShown, setIsEditModalShown] = useState(false);
@@ -38,7 +41,7 @@ export const UpdateTextDescriptionData = ({
     <>
       <CommonButton onClick={handleEdit} width={ICON_BUTTON_WIDTH}>
         <PencilIcon
-          title={params.staticTexts.edit ?? ""}
+          title={staticTexts.edit ?? ""}
           color="black"
           width={ICON_IN_BUTTON_WIDTH}
         />
@@ -50,7 +53,8 @@ export const UpdateTextDescriptionData = ({
             onClose={handleClose}
             currentData={currentData}
             useItems={useItems}
-            params={params}
+            staticTexts={staticTexts}
+            lang={lang}
           />
         </CreateModal>
       ) : null}

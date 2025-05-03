@@ -3,10 +3,14 @@
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { ImageLink } from "./ImageLink";
 import { ItemContainerUpdateDeleteTextDescription } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerUpdateDeleteTextDescription";
+import { StaticTexts } from "@/app/dictionaries/definitions";
 
 export type Props = {
   groupData: FullData[];
-  params: MainParams;
+  isEdit: boolean;
+  staticTexts: StaticTexts;
+  lang: string;
+
   item: FullData;
   changeModalState?: (state: boolean) => void;
   isModalShown: boolean;
@@ -14,13 +18,13 @@ export type Props = {
 // main page
 export const ImageLinkGroupItem = ({
   groupData,
-  params,
+  staticTexts,
+  lang,
+  isEdit,
   item,
   changeModalState,
   isModalShown,
 }: Props) => {
-  const { staticTexts } = params;
-
   return (
     <ItemContainerUpdateDeleteTextDescription
       s3Key={item.value}
@@ -30,7 +34,9 @@ export const ImageLinkGroupItem = ({
         value: "image",
         link: true,
       }}
-      params={params}
+      isEdit={isEdit}
+      staticTexts={staticTexts}
+      lang={lang}
       currentData={item}
       changeModalState={changeModalState}
     >

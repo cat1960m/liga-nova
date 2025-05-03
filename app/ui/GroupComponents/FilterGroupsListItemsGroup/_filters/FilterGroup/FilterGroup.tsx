@@ -8,6 +8,7 @@ import { ShowTitle } from "./ShowTitle";
 import { ShowFilter } from "./ShowFilter";
 import styles from "./filterGroup.module.css";
 import cn from "clsx";
+import { StaticTexts } from "@/app/dictionaries/definitions";
 
 export type Props = {
   filterGroupData: FullData[];
@@ -17,7 +18,9 @@ export type Props = {
   }) => void;
   selectedFilterTextDescriptionIds: number[];
   parentFeatureId: number | null;
-  params: MainParams;
+  isEdit: boolean;
+  lang: string;
+  staticTexts: StaticTexts;
 };
 
 export const FilterGroup = ({
@@ -25,7 +28,9 @@ export const FilterGroup = ({
   onFilterSelectionChanged,
   selectedFilterTextDescriptionIds,
   parentFeatureId,
-  params,
+  isEdit,
+  lang,
+  staticTexts
 }: Props) => {
   const featureId = filterGroupData[0]?.id;
   const [isExpanded, setIsExpanded] = useState<boolean>(true);
@@ -40,8 +45,6 @@ export const FilterGroup = ({
 
   const filters = filterGroupData.filter((item) => item.text_type === FILTER);
 
-  const { staticTexts, isEdit } = params;
-
   return (
     <ItemContainerAddTextDescriptionDeleteFeature
       isEdit={isEdit}
@@ -51,12 +54,15 @@ export const FilterGroup = ({
       textDescriptionType={FILTER}
       isChangeOrderHorizontal={false}
       marginTop={0}
+      noDelete={false}
     >
       <div className={cn(styles.container, { [styles.edit]: isEdit })}>
         {titleData ? (
           <ShowTitle
             titleData={titleData}
-            params={params}
+            isEdit={isEdit}
+            staticTexts={staticTexts}
+            lang={lang}
             isExpanded={isExpanded}
             setIsExpanded={setIsExpanded}
           />
@@ -72,7 +78,9 @@ export const FilterGroup = ({
                 <ShowFilter
                   key={filter.text_description_id}
                   filter={filter}
-                  params={params}
+                  isEdit={isEdit}
+                  staticTexts={staticTexts}
+                  lang={lang}
                   inputValue={inputValue}
                   onFilterSelectionChanged={onFilterSelectionChanged}
                 />

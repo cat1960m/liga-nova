@@ -8,7 +8,7 @@ import {
   TEXT_LIST_GROUP_ITEM,
   TEXT_LIST_NAME,
 } from "@/app/lib/constants";
-import { getContainerData } from "@/app/lib/utils";
+import { getContainerData, getIsEditNoDelete } from "@/app/lib/utils";
 import { ShowBody } from "./ShowBody/ShowBody";
 import { ShowName } from "./ShowName/ShowName";
 import { ItemContainerAddChildFeatureDeleteFeature } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerAddChildFeatureDeleteFeature";
@@ -36,7 +36,8 @@ export const TextListGroup = ({
     return null;
   }
 
-  const { staticTexts, isEdit } = params;
+  const { staticTexts, lang } = params;
+  const { isEdit, noDelete } = getIsEditNoDelete(params);
 
   const [textListItemsData, textListItemIds] = useMemo(() => {
     return getContainerData({
@@ -103,11 +104,23 @@ export const TextListGroup = ({
         >
           <div className={styles.item}>
             {textName ? (
-              <ShowName isMain={isMain} textName={textName} params={params} />
+              <ShowName
+                isMain={isMain}
+                textName={textName}
+                isEdit={isEdit}
+                staticTexts={staticTexts}
+                lang={lang}
+              />
             ) : null}
 
             {textBody ? (
-              <ShowBody isMain={isMain} textBody={textBody} params={params} />
+              <ShowBody
+                isMain={isMain}
+                textBody={textBody}
+                isEdit={isEdit}
+                staticTexts={staticTexts}
+                lang={lang}
+              />
             ) : null}
           </div>
         </ItemContainerDeleteChildFeature>
@@ -126,7 +139,8 @@ export const TextListGroup = ({
   return (
     <ItemContainerAddChildFeatureDeleteFeature
       groupData={groupData}
-      params={params}
+      isEdit={isEdit}
+      pageName={params.pageName}
       onChildFeatureAdded={handleChildFeatureAdded}
       addButtonText={staticTexts.addGroupItem ?? "N/A"}
       deleteButtonText={staticTexts.delete ?? "N/A"}
@@ -134,6 +148,7 @@ export const TextListGroup = ({
       featureType={TEXT_LIST_GROUP_ITEM}
       featureSubtype={TEXT_LIST_GROUP_ITEM}
       marginTop={20}
+      noDelete={noDelete}
     >
       <div ref={ref}>
         <ScrollContainer

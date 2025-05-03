@@ -1,50 +1,39 @@
-"use client";
-
-import { IMAGE } from "@/app/lib/constants";
+import { ItemContainerUpdateDeleteTextDescription } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerUpdateDeleteTextDescription";
+import { ShowItemBody } from "../ShowItemBody/ShowItemBody";
 import { FullData } from "@/app/lib/definitions";
-import Image from "next/image";
-import { DragEventHandler } from "react";
-import styles from "./showItem.module.css"
+import { StaticTexts } from "@/app/dictionaries/definitions";
+import styles from "./showItem.module.css";
 
 export type Props = {
   widthItem?: number;
   imageData: FullData;
+  onDeleteFinished: () => void;
+  isEdit: boolean;
+  staticTexts: StaticTexts;
+  lang: string;
 };
 
-export const ShowItem = ({ widthItem, imageData }: Props) => {
-  const value = imageData?.value;
-
-  const preventDragHandler: DragEventHandler = (event) => {
-    event.preventDefault();
-  };
-
+export const ShowItem = ({
+  widthItem,
+  imageData,
+  onDeleteFinished,
+  staticTexts,
+  isEdit,
+  lang,
+}: Props) => {
   return (
-    <div
-      style={{
-        borderRadius: "10px",
-        overflow: "hidden",
-        width: "100%",
-        position: "relative",
-        border: value ? undefined : "1px solid lightgray",
-        height: widthItem ? `${widthItem}px` : widthItem,
-      }}
-    >
-      {value ? (
-        <Image
-          src={value}
-          layout="fill" // Fill the container
-          fill
-          //quality={100} // Optional, for higher quality
-          alt="image"
-          draggable="false" // This directly disables drag-and-drop
-          onDragStart={preventDragHandler} // Ensures additional prevention
-          className={styles.image}
-        />
-      ) : (
-        <div style={{ width: "100%", padding: "30px", textAlign: "center" }}>
-          {"No Image"}
-        </div>
-      )}
+    <div className={styles.container}>
+      <ItemContainerUpdateDeleteTextDescription
+        useItems={{ value: "image" }}
+        s3Key={imageData.value}
+        onDeleteFinished={onDeleteFinished}
+        isEdit={isEdit}
+        staticTexts={staticTexts}
+        lang={lang}
+        currentData={imageData}
+      >
+        <ShowItemBody widthItem={widthItem} imageData={imageData} />
+      </ItemContainerUpdateDeleteTextDescription>
     </div>
   );
 };

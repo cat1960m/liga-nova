@@ -1,9 +1,6 @@
 "use client";
 
-import {
-  GROUP,
-  FILTER_GROUP_SUBTYPE,
-} from "@/app/lib/constants";
+import { GROUP, FILTER_GROUP_SUBTYPE } from "@/app/lib/constants";
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { useMemo, useState } from "react";
 import { FilterGroup } from "../../FilterGroupsListItemsGroup/_filters/FilterGroup/FilterGroup";
@@ -11,19 +8,22 @@ import { getContainerData, getFilterIds } from "@/app/lib/utils";
 
 import styles from "./additionalPageDataGroupEdit.module.css";
 import { UpdateFeatureFilterIdsButton } from "@/app/ui/CommonComponents/_buttons/UpdateFeatureFilterIdsButton";
+import { StaticTexts } from "@/app/dictionaries/definitions";
 
 export type Props = {
   currentData: FullData;
   pageFullDataList: FullData[];
   additionalPageName: string;
-  params: MainParams;
+  staticTexts: StaticTexts;
+  lang: string;
 };
 //Персональні тренування ,Групові студії, Кріосауна, Солярій
 export const AdditionalPageDataGroupEdit = ({
   currentData,
   pageFullDataList,
   additionalPageName,
-  params,
+  staticTexts,
+  lang,
 }: Props) => {
   const filterTextDescriptionIds = getFilterIds(currentData.filter_ids);
 
@@ -36,15 +36,13 @@ export const AdditionalPageDataGroupEdit = ({
 
   const containerFullData = useMemo(
     () =>
-      pageFeatureId
-        ? getContainerData({
-            pageName: additionalPageName,
-            pageFullData: pageFullDataList,
-            parentFeatureId: null,
-            type: GROUP,
-            subtype: FILTER_GROUP_SUBTYPE,
-          })
-        : null,
+      getContainerData({
+        pageName: additionalPageName,
+        pageFullData: pageFullDataList,
+        parentFeatureId: null,
+        type: GROUP,
+        subtype: FILTER_GROUP_SUBTYPE,
+      }),
     [pageFullDataList, pageFeatureId]
   );
 
@@ -75,7 +73,6 @@ export const AdditionalPageDataGroupEdit = ({
       setSelectedFilterTextDescriptionIds(newSelectedFilterTextDescriptionIds);
     }
   };
-  const { staticTexts } = params;
 
   return (
     <>
@@ -91,7 +88,9 @@ export const AdditionalPageDataGroupEdit = ({
                   selectedFilterTextDescriptionIds
                 }
                 parentFeatureId={null}
-                params={{ ...params, isEdit: false }}
+                isEdit={false} // no edit for filter groups
+                lang={lang}
+                staticTexts={staticTexts}
               />
             </div>
           );

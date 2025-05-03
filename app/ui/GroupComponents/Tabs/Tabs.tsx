@@ -58,18 +58,21 @@ export const ShowTabs_Client = ({
 
     setSelectedTabData(tabContainerData);
   }, [pageFullDataList]);
-  const { staticTexts } = params;
+  const { staticTexts, editMode, pageName } = params;
+  const isDeepMode = editMode === "2";
 
   return (
     <ItemContainerAddChildFeatureDeleteFeature
       addButtonText={staticTexts.addTab ?? "N/A"}
-      params={params}
+      pageName={pageName}
+      isEdit={isDeepMode}
       textTypes={[TAB_TITLE]}
       featureType={TAB}
       featureSubtype="1"
       deleteButtonText={staticTexts.deleteTabs ?? "N/A"}
       groupData={[tabsData]}
       marginTop={20}
+      noDelete={!isDeepMode}
     >
       <div className={styles.container}>
         <div className={styles.tab_titles}>

@@ -3,18 +3,24 @@ import { ItemContainerUpdateDeleteTextDescription } from "@/app/ui/CommonCompone
 import { UseItems } from "@/app/ui/CommonComponents/_upadeModal/UpdateTextDescriptionDataModalContent";
 
 import styles from "./textItemField.module.css";
+import { StaticTexts } from "@/app/dictionaries/definitions";
 
 export type Props = {
   fieldData: FullData;
   title?: string;
-  params: MainParams;
+  staticTexts: StaticTexts;
+  lang: string;
+  isEdit: boolean;
+
   useItems: UseItems;
 };
 
 export const TextItemField = ({
   fieldData,
   title,
-  params,
+  staticTexts,
+  lang,
+  isEdit,
   useItems,
 }: Props) => {
   return (
@@ -25,7 +31,9 @@ export const TextItemField = ({
         currentData={fieldData}
         s3Key={fieldData.value}
         useItems={useItems}
-        params={params}
+        isEdit={isEdit}
+        staticTexts={staticTexts}
+        lang={lang}
         isChangeOrder={fieldData.can_delete}
         isChangeOrderHorizontal={false}
       >

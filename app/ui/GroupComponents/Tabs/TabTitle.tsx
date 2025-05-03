@@ -1,6 +1,7 @@
 "use client";
 
 import { FullData, MainParams } from "@/app/lib/definitions";
+import { getIsEditNoDelete } from "@/app/lib/utils";
 import { CommonButton } from "@/app/ui/CommonComponents/_buttons/CommonButton";
 import { ItemContainerUpdateTextDescriptionDeleteFeature } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerUpdateTextDescriptionDeleteFeature";
 
@@ -25,7 +26,8 @@ export const ShowTabTitle_Client = ({
 
   const backgroundColor = isTabSelected ? "#bfbfef" : "lightgray";
   const color = isTabSelected ? "blue" : "gray";
-  const { isEdit } = params;
+  const { staticTexts, lang } = params;
+  const { isEdit, noDelete } = getIsEditNoDelete(params);
 
   return (
     <ItemContainerUpdateTextDescriptionDeleteFeature
@@ -33,10 +35,12 @@ export const ShowTabTitle_Client = ({
       useItems={{
         text: "simple",
       }}
-      params={params}
+      isEdit={isEdit}
+      staticTexts={staticTexts}
+      lang={lang}
       featureData={[tabTitle]}
       isChangeOrderHorizontal
-      noDelete={isTabSelected}
+      noDelete={isTabSelected || noDelete}
       marginTop={0}
     >
       <CommonButton

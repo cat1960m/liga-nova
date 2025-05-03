@@ -4,31 +4,38 @@ import { FullData, MainParams } from "@/app/lib/definitions";
 import { useState } from "react";
 import { CommonButton } from "@/app/ui/CommonComponents/_buttons/CommonButton";
 import { AdjustmentsHorizontalIcon } from "@heroicons/react/24/solid";
-import { FilterGroupsItems } from "../FilterGroupItems/FilterGroupItems";
+import { FilterGroupsBody } from "../FilterGroupsBody/FilterGroupsBody";
 import {
   FILTER_GROUP_DEFAULT_WIDTH,
   GRAY_BACKGROUND_COLOR,
 } from "@/app/lib/constants";
 
 import styles from "./filterGroupsMobile.module.css";
+import { StaticTexts } from "@/app/dictionaries/definitions";
 
 export type Props = {
   pageFullDataList: FullData[];
-  params: MainParams;
   onFilterSelectionChanged: (data: {
     filter: FullData;
     value: boolean;
   }) => void;
   selectedFilterTextDescriptionIds: number[];
   parentFeatureId: number;
+  isEdit: boolean;
+  lang: string;
+  staticTexts: StaticTexts;
+  pageName: string;
 };
 
 export const FilterGroupsMobile = ({
   pageFullDataList,
-  params,
   onFilterSelectionChanged,
   selectedFilterTextDescriptionIds,
   parentFeatureId,
+  isEdit,
+  lang,
+  staticTexts,
+  pageName,
 }: Props) => {
   const [isFiltersShown, setIsFiltersShown] = useState(false);
 
@@ -39,8 +46,6 @@ export const FilterGroupsMobile = ({
   const handleFiltersHideClick = () => {
     setIsFiltersShown(false);
   };
-
-  const { staticTexts } = params;
 
   const filtersTitle = (
     <div className={styles.title}>
@@ -68,12 +73,15 @@ export const FilterGroupsMobile = ({
         <div className={styles.body}>
           <div className={styles.title_container}>{filtersTitle}</div>
 
-          <FilterGroupsItems
+          <FilterGroupsBody
             pageFullDataList={pageFullDataList}
-            params={params}
             onFilterSelectionChanged={onFilterSelectionChanged}
             selectedFilterTextDescriptionIds={selectedFilterTextDescriptionIds}
             parentFeatureId={parentFeatureId}
+            isEdit={isEdit}
+            lang={lang}
+            staticTexts={staticTexts}
+            pageName={pageName}
           />
 
           <div className={styles.button}>

@@ -3,13 +3,21 @@ import { SCHEDULE_ITEM, SCHEDULE_NAME } from "@/app/lib/constants";
 import { UpdateDeleteTextButtons } from "@/app/ui/CommonComponents/_buttons/UpdateDeleteTextButtons";
 
 import styles from "./showScheduleGroup.module.css";
+import { StaticTexts } from "@/app/dictionaries/definitions";
 
 export type Props = {
   data?: FullData;
-  params: MainParams;
+  lang: string;
+  staticTexts: StaticTexts;
+  isEdit: boolean;
 };
 
-export const ShowSCheduleName = ({ data, params }: Props) => {
+export const ShowSCheduleName = ({
+  data,
+  lang,
+  staticTexts,
+  isEdit,
+}: Props) => {
   if (!data) {
     return null;
   }
@@ -17,14 +25,15 @@ export const ShowSCheduleName = ({ data, params }: Props) => {
   return (
     <div className={styles.name}>
       {data?.text_content ?? "N/A"}
-      {params.isEdit ? (
+      {isEdit ? (
         <UpdateDeleteTextButtons
           currentData={data}
           isChangeOrder={data.text_type === SCHEDULE_ITEM}
           useItems={{
             text: "simple",
           }}
-          params={params}
+          staticTexts={staticTexts}
+          lang={lang}
         />
       ) : null}
     </div>

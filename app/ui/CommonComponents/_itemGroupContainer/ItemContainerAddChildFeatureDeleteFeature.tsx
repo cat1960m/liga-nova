@@ -1,11 +1,13 @@
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { ItemGroupContainerCommon } from "./ItemGroupContainerCommon";
-import { AddChildFeatureDeleteFeatureButtons } from "./AddChildFeatureDeleteFeatureButtons";
+import { DeleteFeatureButton } from "../_buttons/DeleteFeatureButton";
+import { AddChildFeatureButton } from "../_buttons/AddChildFeatureButton";
 
 export type Props = {
   children: React.ReactNode;
   groupData: FullData[];
-  params: MainParams;
+  pageName: string;
+  isEdit: boolean;
   onDeleteFinished?: () => void;
   onChildFeatureAdded?: (id: number) => void;
   addButtonText: string;
@@ -14,12 +16,14 @@ export type Props = {
   featureType: string;
   featureSubtype: string;
   marginTop: number;
+  noDelete: boolean;
 };
 
 export const ItemContainerAddChildFeatureDeleteFeature = ({
   children,
   groupData,
-  params,
+  pageName,
+  isEdit,
   onDeleteFinished,
   onChildFeatureAdded,
   addButtonText,
@@ -27,24 +31,49 @@ export const ItemContainerAddChildFeatureDeleteFeature = ({
   textTypes,
   featureType,
   featureSubtype,
-  marginTop
+  marginTop,
+  noDelete,
 }: Props) => {
-  const getEditButtons = () => (
-    <AddChildFeatureDeleteFeatureButtons
-      groupData={groupData}
-      params={params}
-      onDeleteFinished={onDeleteFinished}
-      onChildFeatureAdded={onChildFeatureAdded}
-      addButtonText={addButtonText}
-      deleteButtonText={deleteButtonText}
-      textTypes={textTypes}
-      featureType={featureType}
-      featureSubtype={featureSubtype}
-    />
-  );
+  const getEditButtons = () => {
+    const groupFeatureId = groupData[0]?.id;
+
+    if (!groupFeatureId) {
+      return null;
+    }
+
+    return (
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: "5px",
+        }}
+      >
+        <AddChildFeatureButton
+          parentFeatureId={groupFeatureId}
+          text={addButtonText}
+          pageName={pageName}
+          textTypes={textTypes}
+          type={featureType}
+          subtype={featureSubtype}
+          onChildFeatureAdded={onChildFeatureAdded}
+        />
+        {!noDelete ? (
+          <DeleteFeatureButton
+            deleteText={deleteButtonText}
+            featureData={groupData}
+            onDeleteFinished={onDeleteFinished}
+          />
+        ) : null}
+      </div>
+    );
+  };
   return (
     <ItemGroupContainerCommon
-      isEdit={params.isEdit}
+      isEdit={isEdit}
       getEditButtons={getEditButtons}
       marginTop={marginTop}
     >

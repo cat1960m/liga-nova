@@ -14,6 +14,7 @@ import { PhoneAddress } from "./PhoneAddress/PhoneAddress";
 import { CommonButton } from "@/app/ui/CommonComponents/_buttons/CommonButton";
 import { ItemContainerAddTextDescriptionDeleteFeature } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerAddTextDescriptionDeleteFeature";
 import styles from "./infoGroup.module.css";
+import { getIsEditNoDelete } from "@/app/lib/utils";
 
 export type Props = {
   groupData: FullData[];
@@ -26,7 +27,8 @@ export const InfoGroup = ({ groupData, params }: Props) => {
   const dataTitle = groupData.find((item) => item.text_type === INFO_TITLE);
 
   const isInfoGroup = subtype === INFO_SUBTYPE;
-  const { staticTexts, isEdit } = params;
+  const { staticTexts, lang } = params;
+  const { isEdit, noDelete } = getIsEditNoDelete(params);
 
   const dataBodyList = groupData.filter((item) => item.text_type === INFO_BODY);
   const map: Record<string, string> = {};
@@ -43,17 +45,34 @@ export const InfoGroup = ({ groupData, params }: Props) => {
       textDescriptionType={INFO_BODY}
       isChangeOrderHorizontal={false}
       marginTop={0}
+      noDelete={noDelete}
     >
       <div className={styles.container}>
-        <ShowInfoGroupItem data={dataTitle} params={params} />
+        <ShowInfoGroupItem
+          data={dataTitle}
+          staticTexts={staticTexts}
+          lang={lang}
+          isEdit={isEdit}
+        />
         {isInfoGroup ? (
-          <PhoneAddress groupData={groupData} params={params} />
+          <PhoneAddress
+            groupData={groupData}
+            staticTexts={staticTexts}
+            lang={lang}
+            isEdit={isEdit}
+          />
         ) : null}
         <div className={styles.bodyContainer}>
           {dataBodyList.map((item, index) => {
             return (
               <div key={item.text_content_id ?? "" + "_" + index}>
-                <ShowInfoGroupItem data={item} isQuill params={params} />
+                <ShowInfoGroupItem
+                  data={item}
+                  isQuill
+                  staticTexts={staticTexts}
+                  lang={lang}
+                  isEdit={isEdit}
+                />
               </div>
             );
           })}

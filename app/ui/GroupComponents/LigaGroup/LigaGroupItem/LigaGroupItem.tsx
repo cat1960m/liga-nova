@@ -10,13 +10,16 @@ import { PhoneIcon, MapPinIcon } from "@heroicons/react/24/solid";
 import { ItemContainerUpdateDeleteTextDescription } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerUpdateDeleteTextDescription";
 
 import styles from "./ligaGroupItem.module.css";
+import { StaticTexts } from "@/app/dictionaries/definitions";
 
 export type Props = {
   data?: FullData;
-  params: MainParams;
+  isEdit: boolean;
+  lang: string;
+  staticTexts: StaticTexts;
 };
 
-export const LigaGroupItem = ({ data, params }: Props) => {
+export const LigaGroupItem = ({ data, isEdit, staticTexts, lang }: Props) => {
   if (!data) {
     return null;
   }
@@ -48,7 +51,9 @@ export const LigaGroupItem = ({ data, params }: Props) => {
         value: isService ? "icons" : undefined,
         link: isService,
       }}
-      params={params}
+      isEdit={isEdit}
+      staticTexts={staticTexts}
+      lang={lang}
       isChangeOrderHorizontal={false}
     >
       <div className={styles.container}>

@@ -22,19 +22,22 @@ import { SelectEventType } from "./SelectEventType";
 import { useChangeEventData } from "../hooks/useChangeEventData";
 
 import styles from "./addEditCalendarEvents.module.css";
+import { StaticTexts } from "@/app/dictionaries/definitions";
 
 export type Props = {
   calendarFeatureId: number;
-  params: MainParams;
   hideAddEvent: () => void;
   eventFeatureData?: FullData[];
+  staticTexts: StaticTexts;
+  pageName: string;
 };
 
 export const AddEditCalendarEvents = ({
   calendarFeatureId,
-  params,
   hideAddEvent,
   eventFeatureData,
+  staticTexts,
+  pageName
 }: Props) => {
   const getFullData = (textType: string) => {
     return eventFeatureData?.find((item) => item.text_type === textType);
@@ -128,7 +131,7 @@ export const AddEditCalendarEvents = ({
       price,
       time,
       confirmedDates,
-      params,
+      pageName,
       calendarFeatureId,
     });
     hideAddEvent();
@@ -208,7 +211,6 @@ export const AddEditCalendarEvents = ({
   };
 
   const isButtonsDisabled = !confirmedDates.length || !isDataChanged;
-  const { staticTexts } = params;
 
   return (
     <div className={styles.container}>

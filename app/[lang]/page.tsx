@@ -1,6 +1,8 @@
 import { auth } from "../auth";
 import { SearchParams } from "../dictionaries/definitions";
 import { HOME } from "../lib/constants";
+import { MainParams } from "../lib/definitions";
+import { getDictionary } from "../lib/dictionaries";
 import { ShowPage } from "../ui/PageComponents/ShowPage/ShowPage";
 
 export default async function Page({
@@ -14,20 +16,26 @@ export default async function Page({
   const isAuthenticated = !!res?.user;
 
   const urlParams = await searchParams;
-  const isEdit = urlParams.isEdit === "1";
 
   const lang = (await params).lang;
   if (!lang) {
     return null;
   }
 
+  const dict = await getDictionary(lang as "en" | "ua");
+
+  const pars: MainParams = {
+    pageName: HOME,
+    lang,
+    editMode: urlParams.editMode ?? "",
+    staticTexts: dict.common,
+  };
+
   return (
     <ShowPage
-      pageName={HOME}
-      lang={lang}
-      isEdit={isEdit}
       isAuthenticated={isAuthenticated}
       isMain
+      params={pars}
     />
   );
 }

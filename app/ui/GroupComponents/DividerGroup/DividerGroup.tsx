@@ -2,6 +2,7 @@ import { StaticTexts } from "@/app/dictionaries/definitions";
 import { ItemContainerAddTextDescriptionDeleteFeature } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerAddTextDescriptionDeleteFeature";
 import { FullData, MainParams } from "@/app/lib/definitions";
 import styles from "./dividerGroup.module.css";
+import { getIsEditNoDelete } from "@/app/lib/utils";
 
 export type Props = {
   featureData: FullData[];
@@ -9,7 +10,8 @@ export type Props = {
 };
 
 export const DividerGroup = ({ params, featureData }: Props) => {
-  const { staticTexts, isEdit } = params;
+  const { staticTexts } = params;
+  const { isEdit, noDelete } = getIsEditNoDelete(params);
 
   return (
     <ItemContainerAddTextDescriptionDeleteFeature
@@ -21,6 +23,7 @@ export const DividerGroup = ({ params, featureData }: Props) => {
       textDescriptionType=""
       isChangeOrderHorizontal={false}
       marginTop={10}
+      noDelete={noDelete}
     >
       <div className={styles.divider} />
     </ItemContainerAddTextDescriptionDeleteFeature>

@@ -2,6 +2,7 @@ import { FullData, MainParams } from "@/app/lib/definitions";
 import { InfoCheckGroupItem } from "./InfoCheckGroupItem";
 import { ItemContainerAddTextDescriptionDeleteFeature } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerAddTextDescriptionDeleteFeature";
 import { INFO_CHECK_HEADER, INFO_CHECK_ITEM } from "@/app/lib/constants";
+import { getIsEditNoDelete } from "@/app/lib/utils";
 
 export type Props = {
   groupData: FullData[];
@@ -21,7 +22,8 @@ export const InfoCheckGroup = ({ groupData, params }: Props) => {
   if (!featureId) {
     return null;
   }
-  const { staticTexts, isEdit } = params;
+  const { staticTexts, lang } = params;
+  const { isEdit, noDelete } = getIsEditNoDelete(params);
 
   return (
     <ItemContainerAddTextDescriptionDeleteFeature
@@ -32,6 +34,7 @@ export const InfoCheckGroup = ({ groupData, params }: Props) => {
       textDescriptionType={columnItemType}
       isChangeOrderHorizontal={false}
       marginTop={20}
+      noDelete={noDelete}
     >
       <div
         style={{
@@ -41,7 +44,12 @@ export const InfoCheckGroup = ({ groupData, params }: Props) => {
         }}
       >
         {headerData ? (
-          <InfoCheckGroupItem currentData={headerData} params={params} />
+          <InfoCheckGroupItem
+            currentData={headerData}
+            isEdit={isEdit}
+            staticTexts={staticTexts}
+            lang={lang}
+          />
         ) : null}
 
         {bodyData
@@ -50,7 +58,9 @@ export const InfoCheckGroup = ({ groupData, params }: Props) => {
                 <InfoCheckGroupItem
                   key={data.id + "_" + index}
                   currentData={data}
-                  params={params}
+                  isEdit={isEdit}
+                  staticTexts={staticTexts}
+                  lang={lang}
                 />
               );
             })

@@ -3,19 +3,26 @@ import { ItemContainerUpdateDeleteTextDescription } from "@/app/ui/CommonCompone
 
 import styles from "./showName.module.css";
 import cn from "clsx";
+import { StaticTexts } from "@/app/dictionaries/definitions";
 
 export type Props = {
   isMain: boolean;
   textName: FullData;
-  params: MainParams;
+  isEdit: boolean;
+  lang: string;
+  staticTexts: StaticTexts;
 };
-export const ShowName = ({ isMain, textName, params }: Props) => {
+export const ShowName = ({ isMain, textName, isEdit, staticTexts, lang }: Props) => {
   return (
     <ItemContainerUpdateDeleteTextDescription
       currentData={textName}
       useItems={{ text: "simple" }}
-      params={params}
       isChangeOrder={false}
+      lang={lang}
+      staticTexts={staticTexts}
+      isEdit={isEdit}
+
+
     >
       <div className={cn(styles.container, { [styles.main]: isMain })}>
         {textName?.text_content ?? "N/A"}

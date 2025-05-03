@@ -8,13 +8,16 @@ import {
   TRAINER_ITEM_NAME,
 } from "@/app/lib/constants";
 import { CheckboxItemField } from "../CheckboxItemField/CheckboxItemField";
+import { StaticTexts } from "@/app/dictionaries/definitions";
 
 export type Props = {
   currentData: FullData[];
-  params: MainParams;
+  staticTexts: StaticTexts;
+  lang: string;
+  isEdit: boolean;
 };
 
-export const EditTrainerItem = ({ currentData, params }: Props) => {
+export const EditTrainerItem = ({ currentData, staticTexts, isEdit, lang }: Props) => {
   const name = currentData.find((item) => item.text_type === TRAINER_ITEM_NAME);
   const isPremium = currentData.find(
     (item) => item.text_type === TRAINER_ITEM_IS_PREMIUM
@@ -26,7 +29,6 @@ export const EditTrainerItem = ({ currentData, params }: Props) => {
   if (!name || !isPremium || !isPremium || !description) {
     return null;
   }
-  const { staticTexts } = params;
 
   return (
     <div
@@ -40,8 +42,11 @@ export const EditTrainerItem = ({ currentData, params }: Props) => {
       <TextItemField
         fieldData={name}
         title={staticTexts.fullName}
-        params={params}
         useItems={{ text: "simple", value: "image" }}
+        isEdit={isEdit}
+        staticTexts={staticTexts}
+        lang={lang}
+
       />
       <CheckboxItemField
         title={staticTexts.isPremium ?? "N/A"}
@@ -50,9 +55,12 @@ export const EditTrainerItem = ({ currentData, params }: Props) => {
 
       <TextItemField
         fieldData={description}
-        params={params}
         useItems={{ text: "quill" }}
         title={staticTexts.descriptions}
+        isEdit={isEdit}
+        staticTexts={staticTexts}
+        lang={lang}
+
       />
     </div>
   );

@@ -191,7 +191,7 @@ export type MainParams = {
   pageName: string;
   lang: string;
   staticTexts: StaticTexts;
-  isEdit: boolean;
+  editMode: string ;
 };
 
 export type FullData = {

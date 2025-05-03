@@ -2,8 +2,8 @@
 
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { AddEditCalendarEvents } from "./AddEditCalendarEvents/AddEditCalendarEvents";
-import { getContainerData } from "@/app/lib/utils";
-import { useState } from "react";
+import { getContainerData, getIsEditNoDelete } from "@/app/lib/utils";
+import { useMemo, useState } from "react";
 import { ShowEvents } from "./ShowEvents/ShowEvents";
 import { ICON_BUTTON_WIDTH, ICON_IN_BUTTON_WIDTH } from "@/app/lib/constants";
 import { CalendarHeader } from "./CalendarHeader/CalendarHeader";
@@ -50,11 +50,15 @@ export const CalendarEventsGroup = ({
     return null;
   }
 
-  const [eventsData, eventsIds] = getContainerData({
-    pageName: params.pageName,
-    pageFullData,
-    parentFeatureId: calendarFeatureId,
-  });
+  const [eventsData, eventsIds] = useMemo(
+    () =>
+      getContainerData({
+        pageName: params.pageName,
+        pageFullData,
+        parentFeatureId: calendarFeatureId,
+      }),
+    [params.pageName, pageFullData, calendarFeatureId]
+  );
 
   const handleClickAddEvent = () => setIsAddShown(true);
   const hideAddEvent = () => {
@@ -63,7 +67,8 @@ export const CalendarEventsGroup = ({
   };
 
   const isCalendarShown = !isAddShown && !editEventId;
-  const { staticTexts, isEdit } = params;
+  const { staticTexts, pageName } = params;
+  const { isEdit, noDelete } = getIsEditNoDelete(params);
 
   const getButtons = () => {
     return (
@@ -77,10 +82,12 @@ export const CalendarEventsGroup = ({
           </CommonButton>
         ) : null}
 
-        <DeleteFeatureButton
-          deleteText={staticTexts.deleteCalendar ?? "N/A"}
-          featureData={groupData}
-        />
+        {!noDelete ? (
+          <DeleteFeatureButton
+            deleteText={staticTexts.deleteCalendar ?? "N/A"}
+            featureData={groupData}
+          />
+        ) : null}
       </div>
     );
   };
@@ -121,9 +128,10 @@ export const CalendarEventsGroup = ({
         {!isCalendarShown ? (
           <AddEditCalendarEvents
             calendarFeatureId={calendarFeatureId}
-            params={params}
             hideAddEvent={hideAddEvent}
             eventFeatureData={editEventId ? eventsData[editEventId] : undefined}
+            staticTexts={staticTexts}
+            pageName={pageName}
           />
         ) : null}
       </>

@@ -49,11 +49,12 @@ export const LayoutParent = ({
     pageFullData: pageFullDataList,
     parentFeatureId: layoutItemRight.id,
   });
-  const { staticTexts, isEdit } = params;
+  const { staticTexts, editMode } = params;
+  const isDeepMode = editMode === "2";
 
   return (
     <ItemContainerAddTextDescriptionDeleteFeature
-      isEdit={isEdit}
+      isEdit={isDeepMode}
       deleteButtonText={staticTexts.delete ?? "N/A"}
       featureData={[tabsData]}
       isNoAddButton
@@ -61,10 +62,11 @@ export const LayoutParent = ({
       textDescriptionType=""
       isChangeOrderHorizontal={false}
       marginTop={20}
+      noDelete={!isDeepMode}
     >
       <div className={styles.container}>
         <div
-          className={cn(styles.item, styles.left, { [styles.edit]: isEdit })}
+          className={cn(styles.item, styles.left, { [styles.edit]: isDeepMode })}
         >
           <DrawFeatureContainer_Client
             params={params}
@@ -76,7 +78,7 @@ export const LayoutParent = ({
           />
         </div>
         <div
-          className={cn(styles.item, styles.right, { [styles.edit]: isEdit })}
+          className={cn(styles.item, styles.right, { [styles.edit]: isDeepMode })}
         >
           <DrawFeatureContainer_Client
             params={params}

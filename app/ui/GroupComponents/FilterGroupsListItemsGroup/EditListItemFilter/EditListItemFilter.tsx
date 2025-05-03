@@ -13,25 +13,32 @@ import { updateFeatureSubtypeFilterIds } from "@/app/lib/actions_fitness";
 import { usePathname } from "next/navigation";
 import styles from "./editListItemFilter.module.css";
 import { useEditContext } from "@/app/ui/PageComponents/EditContextProvider";
+import { StaticTexts } from "@/app/dictionaries/definitions";
 
 export type Props = {
   pageFullDataList: FullData[];
-  params: MainParams;
   groupData: FullData[];
   onCancel: () => void;
   editItemFeatureId: number;
   editListItemText: string;
+  lang: string;
+  staticTexts: StaticTexts;
+  pageName: string;
 };
 
 export const EditListItemFilter = ({
   pageFullDataList,
-  params,
   groupData,
   onCancel,
   editItemFeatureId,
   editListItemText,
+  lang,
+  staticTexts,
+  pageName
+
 }: Props) => {
   const { changeIsEditButtonDisabled } = useEditContext();
+  const isEdit = false; //no edit
 
   const addEditItemFeatureIdData = pageFullDataList.filter(
     (data) => data.id === editItemFeatureId
@@ -96,7 +103,6 @@ export const EditListItemFilter = ({
 
   const parentFeatureId = groupData[0]?.id;
   const commonWidth = "32%";
-  const { staticTexts } = params;
 
   return (
     <div className={styles.container}>
@@ -108,15 +114,17 @@ export const EditListItemFilter = ({
         <div className={styles.edit_list_item_container}>
           <EditListItem
             currentData={addEditItemFeatureIdData}
-            pageName={params.pageName}
-            params={params}
+            pageName={pageName}
+            isEdit={isEdit}
+            staticTexts={staticTexts}
+            lang={lang}
           />
         </div>
 
         <div className={styles.list_item_container}>
           <ListItem
             currentData={addEditItemFeatureIdData}
-            pageName={params.pageName}
+            pageName={pageName}
             pageFullDataList={pageFullDataList}
             staticTexts={staticTexts}
           />
@@ -125,11 +133,14 @@ export const EditListItemFilter = ({
         {parentFeatureId ? (
           <FilterGroups
             pageFullDataList={pageFullDataList}
-            params={{ ...params, isEdit: false }}
             onFilterSelectionChanged={handleFilterSelectionChanged}
             selectedFilterTextDescriptionIds={selectedFilterTextDescriptionIds}
             parentFeatureId={parentFeatureId}
             width={commonWidth}
+            isEdit={isEdit}
+            lang={lang}
+            staticTexts={staticTexts}
+            pageName={pageName}
           />
         ) : null}
       </div>

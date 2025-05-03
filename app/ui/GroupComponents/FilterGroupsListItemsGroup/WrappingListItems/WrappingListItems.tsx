@@ -15,14 +15,17 @@ import {
 import styles from "./wrappingListItems.module.css";
 import { PencilIcon } from "@heroicons/react/24/outline";
 import { ItemGroupContainerCommon } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemGroupContainerCommon";
+import { StaticTexts } from "@/app/dictionaries/definitions";
 
 export type Props = {
   pageFullDataList: FullData[];
   setEditingItemFeatureId: (id: number | null) => void;
   parentFeatureId: number;
   selectedFilterTextDescriptionIds: number[];
-  params: MainParams;
   editTextButton: string;
+  isEdit: boolean;
+  staticTexts: StaticTexts;
+  pageName: string;
 };
 
 export const WrappingListItems = ({
@@ -30,20 +33,22 @@ export const WrappingListItems = ({
   setEditingItemFeatureId,
   parentFeatureId,
   selectedFilterTextDescriptionIds,
-  params,
   editTextButton,
+  isEdit,
+  staticTexts, 
+  pageName
 }: Props) => {
   const containerFullData = useMemo(
     () =>
       getContainerData({
-        pageName: params.pageName,
+        pageName,
         pageFullData: pageFullDataList,
         parentFeatureId,
         type: LIST_ITEM,
         subtype: LIST_ITEM,
         selectedFilterTextDescriptionIds,
       }),
-    [pageFullDataList, parentFeatureId, selectedFilterTextDescriptionIds]
+    [pageFullDataList, parentFeatureId, selectedFilterTextDescriptionIds, pageName,]
   );
 
   if (!containerFullData) {
@@ -51,7 +56,6 @@ export const WrappingListItems = ({
   }
 
   const [data, itemIds] = containerFullData;
-  const { staticTexts, isEdit } = params;
 
   const getEditButtons = ({ currentData }: { currentData: FullData[] }) => {
     const id = currentData[0]?.id ?? null;
@@ -88,7 +92,7 @@ export const WrappingListItems = ({
               >
                 <ListItem
                   currentData={currentData}
-                  pageName={params.pageName}
+                  pageName={pageName}
                   pageFullDataList={pageFullDataList}
                   staticTexts={staticTexts}
                 />

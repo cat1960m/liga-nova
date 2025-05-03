@@ -1,13 +1,11 @@
 import { getPageTitles } from "../lib/actions_fitness";
-import Link from "next/link";
-import { LinkBody } from "../ui/LayoutComponents/LinkBody/LInkBody";
-import { auth, signOut } from "@/app/auth";
-import { EditRegime } from "../ui/LayoutComponents/EditRegime";
+import { auth } from "@/app/auth";
 import { ManageIconsModal } from "../ui/LayoutComponents/ManageIconsModal/ManageIconsModal";
 import { MainMenu } from "../ui/LayoutComponents/MainMenu/MainMenu";
 import styles from "./layout.module.css";
 import { MobileMenu } from "../ui/LayoutComponents/MobileMenu/MobileMenu";
 import { BaseMenu } from "../ui/LayoutComponents/BaseMenu/BaseMenu";
+import { EditMode } from "../ui/LayoutComponents/EditMode/EditMode";
 
 export const experimental_ppr = true;
 
@@ -44,15 +42,17 @@ export default async function Layout({
         <BaseMenu pages={basePages} lang={lang} />
       </div>
 
+
       <div className={styles.headerMobile}>
         <MobileMenu basePages={basePages} mainPages={mainPages} lang={lang} />
       </div>
 
-      <div className={styles.edit_panel}>
+      <div className={styles.panel}>
         {isAuthenticated ? <ManageIconsModal lang={lang} /> : null}
 
-        {isAuthenticated ? <EditRegime /> : null}
+        {isAuthenticated ? <EditMode /> : null}
       </div>
+
 
       <div id="parentModal" className={styles.body_container}>
         {children}

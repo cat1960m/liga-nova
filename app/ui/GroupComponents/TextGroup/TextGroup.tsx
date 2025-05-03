@@ -9,6 +9,7 @@ import { ItemContainerAddTextDescriptionDeleteFeature } from "@/app/ui/CommonCom
 import { ShowTextDescription } from "./ShowTextDescription";
 import { HiddenText } from "./HiddenText/HiddenText";
 import styles from "./textGroup.module.css";
+import { getIsEditNoDelete } from "@/app/lib/utils";
 
 export type Props = {
   data: FullData[];
@@ -21,7 +22,8 @@ export const TextGroup = ({ data, params }: Props) => {
   const isHidden = firstItem.subtype === TEXT_GROUP_HIDDEN_SUBTYPE;
 
   const textDescriptions = data.filter((item) => !!item.text_description_id);
-  const { staticTexts, isEdit } = params;
+  const { staticTexts, lang } = params;
+  const { isEdit, noDelete } = getIsEditNoDelete(params);
 
   const isTextExpandedShown = isExpanded && !isEdit;
   const isTextHiddenShown = isHidden && !isEdit;
@@ -53,13 +55,16 @@ export const TextGroup = ({ data, params }: Props) => {
           textDescriptionType={SIMPLE_GROUP_ITEM}
           isChangeOrderHorizontal={false}
           marginTop={0}
+          noDelete={noDelete}
         >
           {textDescriptions.map((item) => {
             return (
               <ShowTextDescription
                 key={item.text_description_id}
                 item={item}
-                params={params}
+                isEdit={isEdit}
+                staticTexts={staticTexts}
+                lang={lang}
               />
             );
           })}

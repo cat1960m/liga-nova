@@ -1,12 +1,10 @@
 import { getPageFullData } from "@/app/lib/actions_fitness";
 import { DrawFeatureContainerEdit } from "../DrawFeatureContainerEdit";
 import { FullData, MainParams } from "@/app/lib/definitions";
-import { getContainerData } from "@/app/lib/utils";
-import { getDictionary } from "../../../lib/dictionaries";
+import { getContainerData, getIsEditNoDelete } from "@/app/lib/utils";
 import {
   ACTION_BANNER_LIST_GROUP_SUBTYPE,
   PAGE,
-  TITLE,
 } from "@/app/lib/constants";
 
 import styles from "./showPage.module.css";
@@ -14,59 +12,45 @@ import { ActionBannerListGroup } from "../../GroupComponents/ActionBannerListGro
 import { DrawFeatureContainer_Client } from "../DrawFeatureContainer_Client";
 
 export type Props = {
-  lang: string;
-  pageName: string;
-  isEdit: boolean;
+  params: MainParams;
   isAuthenticated: boolean;
   isMain?: boolean;
 };
 
-export const ShowPage = async ({
-  lang,
-  pageName,
-  isEdit,
-  isAuthenticated,
-  isMain,
-}: Props) => {
-  const dict = await getDictionary(lang as "en" | "ua");
+export const ShowPage = async ({ params, isAuthenticated, isMain }: Props) => {
+  const { lang, pageName, staticTexts } = params;
+  const { isEdit } = getIsEditNoDelete(params);
 
   const pageFullData: FullData[] | null = await getPageFullData({
     lang,
     pageName,
   });
 
-  let currentPageData = pageFullData?.find(
-    (data) =>
-      data.name === pageName && data.text_type === TITLE && data.type === PAGE
+  if (!pageFullData) {
+    return null;
+  }
+
+  const currentPageData = pageFullData.find(
+    (data) => data.name === pageName && data.type === PAGE
   );
 
   if (!currentPageData) {
-    currentPageData = pageFullData?.find(
-      (data) => data.name === pageName && data.type === PAGE
-    );
+    return null;
   }
 
-  const containerFullData = currentPageData?.id
+  const pageId = currentPageData.id;
+
+  const containerFullData = pageId
     ? getContainerData({
         pageName,
-        pageFullData: pageFullData ?? [],
-        parentFeatureId: currentPageData?.id,
+        pageFullData: pageFullData,
+        parentFeatureId: pageId,
       })
     : null;
 
-  const pageId = pageFullData?.find(
-    (item) => item.type === PAGE && item.name === pageName
-  )?.id;
-
-  if (!containerFullData || !pageFullData || !currentPageData || !pageId) {
+  if (!containerFullData) {
     return null;
   }
-  const pars: MainParams = {
-    pageName,
-    lang,
-    isEdit,
-    staticTexts: dict.common,
-  };
 
   const headerData = isMain
     ? pageFullData.filter(
@@ -80,7 +64,7 @@ export const ShowPage = async ({
         <header>
           <ActionBannerListGroup
             groupData={headerData}
-            params={pars}
+            params={params}
             pageFullDataList={pageFullData}
           />
         </header>
@@ -88,20 +72,20 @@ export const ShowPage = async ({
       <div className={styles.body}>
         {!isAuthenticated || !isEdit ? (
           <DrawFeatureContainer_Client
-            params={pars}
-            featureId={currentPageData?.id}
+            params={params}
+            featureId={pageId}
             pageFullDataList={pageFullData}
             containerFullData={containerFullData}
-            buttonText={dict.common.addItemToPage ?? "N/A"}
+            buttonText={staticTexts.addItemToPage ?? "N/A"}
             pageId={pageId}
           />
         ) : (
           <DrawFeatureContainerEdit
-            params={pars}
-            featureId={currentPageData?.id}
+            params={params}
+            featureId={pageId}
             pageFullDataList={pageFullData}
             containerFullData={containerFullData}
-            buttonText={dict.common.addItemToPage ?? "N/A"}
+            buttonText={staticTexts.addItemToPage ?? "N/A"}
             pageId={pageId}
           />
         )}

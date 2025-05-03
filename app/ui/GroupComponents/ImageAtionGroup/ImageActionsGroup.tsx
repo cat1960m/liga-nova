@@ -8,6 +8,7 @@ import styles from "./imageActions.module.css";
 import { useState } from "react";
 import { ImageActionGroupItem } from "./ImageAtionGroupItem";
 import { ItemContainerAddTextDescriptionDeleteFeature } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerAddTextDescriptionDeleteFeature";
+import { getIsEditNoDelete } from "@/app/lib/utils";
 
 export type Props = {
   groupData: FullData[];
@@ -21,7 +22,8 @@ export const ImageActionsGroup = ({ groupData, params }: Props) => {
   );
 
   const changeModalState = (state: boolean) => setIsModalShown(state);
-  const { isEdit, staticTexts } = params;
+  const { staticTexts, lang } = params;
+  const { isEdit, noDelete } = getIsEditNoDelete(params);
 
   return (
     <ItemContainerAddTextDescriptionDeleteFeature
@@ -32,6 +34,7 @@ export const ImageActionsGroup = ({ groupData, params }: Props) => {
       textDescriptionType={IMAGE_ACTIONS_ITEM}
       isChangeOrderHorizontal={false}
       marginTop={20}
+      noDelete={noDelete}
     >
       <div className={cn(styles.container)}>
         {groupDataMain.map((item) => (
@@ -41,7 +44,9 @@ export const ImageActionsGroup = ({ groupData, params }: Props) => {
           >
             <ImageActionGroupItem
               groupData={groupData}
-              params={params}
+              isEdit={isEdit}
+              staticTexts={staticTexts}
+              lang={lang}
               groupItemMain={item}
               isModalShown={isModalShown}
               changeModalState={changeModalState}

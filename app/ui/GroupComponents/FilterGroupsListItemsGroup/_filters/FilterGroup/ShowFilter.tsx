@@ -2,10 +2,13 @@ import { ItemContainerUpdateDeleteTextDescription } from "@/app/ui/CommonCompone
 import { FullData, MainParams } from "@/app/lib/definitions";
 
 import styles from "./filterGroup.module.css";
+import { StaticTexts } from "@/app/dictionaries/definitions";
 
 export type Props = {
   filter: FullData;
-  params: MainParams;
+  isEdit: boolean;
+  staticTexts: StaticTexts;
+  lang: string;
   inputValue: boolean;
   onFilterSelectionChanged: (data: {
     filter: FullData;
@@ -15,18 +18,20 @@ export type Props = {
 
 export const ShowFilter = ({
   filter,
-  params,
+  staticTexts,
+  lang,
+  isEdit,
   inputValue,
   onFilterSelectionChanged,
 }: Props) => {
-  const { isEdit } = params;
-
   return (
     <ItemContainerUpdateDeleteTextDescription
       key={filter.text_description_id}
       currentData={filter}
       useItems={{ text: "simple", value: "icons" }}
-      params={params}
+      isEdit={isEdit}
+      staticTexts={staticTexts}
+      lang={lang}
       isChangeOrderHorizontal={false}
     >
       <div className={styles.filter}>

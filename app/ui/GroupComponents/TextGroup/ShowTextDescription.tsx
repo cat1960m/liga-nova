@@ -1,18 +1,24 @@
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { DEFAULT_TEXT } from "@/app/lib/constants";
 import { ItemContainerUpdateDeleteTextDescription } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerUpdateDeleteTextDescription";
+import { StaticTexts } from "@/app/dictionaries/definitions";
 
 export type Props = {
   item: FullData;
-  params: MainParams;
+    isEdit: boolean;
+    lang: string;
+    staticTexts: StaticTexts;
+  
 };
 
-export const ShowTextDescription = ({ item, params }: Props) => {
+export const ShowTextDescription = ({ item, isEdit, staticTexts, lang }: Props) => {
   return (
     <ItemContainerUpdateDeleteTextDescription
       key={item.text_description_id}
       useItems={{ text: "quill" }}
-      params={params}
+      isEdit={isEdit}
+      staticTexts={staticTexts}
+      lang={lang}
       currentData={item}
       isChangeOrderHorizontal={false}
     >

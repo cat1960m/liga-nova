@@ -1,6 +1,7 @@
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { ItemGroupContainerCommon } from "./ItemGroupContainerCommon";
-import { AddTextDescriptionDeleteFeatureButtons } from "./AddTextDescriptionDeleteFeatureButtons";
+import { AddTextDescriptionButton } from "../_buttons/AddTextDescriptionButton";
+import { DeleteFeatureButton } from "../_buttons/DeleteFeatureButton";
 
 export type Props = {
   children: React.ReactNode;
@@ -15,6 +16,7 @@ export type Props = {
   price?: number;
   onTextDescriptionAdded?: (newId: number) => void;
   marginTop: number;
+  noDelete: boolean;
 };
 
 export const ItemContainerAddTextDescriptionDeleteFeature = ({
@@ -30,20 +32,46 @@ export const ItemContainerAddTextDescriptionDeleteFeature = ({
   price,
   onTextDescriptionAdded,
   marginTop,
+  noDelete,
 }: Props) => {
-  const getEditButtons = () => (
-    <AddTextDescriptionDeleteFeatureButtons
-      isChangeOrderHorizontal={isChangeOrderHorizontal}
-      featureData={featureData}
-      onDeleteFinished={onDeleteFinished}
-      deleteButtonText={deleteButtonText}
-      addButtonText={addButtonText}
-      textDescriptionType={textDescriptionType}
-      isNoAddButton={isNoAddButton}
-      price={price}
-      onTextDescriptionAdded={onTextDescriptionAdded}
-    />
-  );
+  const getEditButtons = () => {
+    const featureFirst = featureData.length ? featureData[0] : undefined;
+    const featureId = featureFirst?.id;
+    const isAddShown = !!featureId && !isNoAddButton;
+
+    return (
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          alignItems: "center",
+          justifyContent: "center",
+          width: "100%",
+          gap: "5px",
+        }}
+      >
+        {isAddShown ? (
+          <AddTextDescriptionButton
+            featureId={featureId}
+            textType={textDescriptionType}
+            buttonText={addButtonText}
+            price={price ?? null}
+            onTextDescriptionAdded={onTextDescriptionAdded}
+          />
+        ) : null}
+
+        {!noDelete ? (
+          <DeleteFeatureButton
+            deleteText={deleteButtonText}
+            featureData={featureData}
+            isChangeOrderHorizontal={isChangeOrderHorizontal}
+            onDeleteFinished={onDeleteFinished}
+            noDelete={noDelete}
+          />
+        ) : null}
+      </div>
+    );
+  };
   return (
     <ItemGroupContainerCommon
       isEdit={isEdit}

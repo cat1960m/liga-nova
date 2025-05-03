@@ -6,39 +6,46 @@ import { FilterGroup } from "../FilterGroup/FilterGroup";
 import { FILTER_GROUP_SUBTYPE, GROUP } from "@/app/lib/constants";
 import { useMemo } from "react";
 
-import styles from "./filterGroupItems.module.css";
+import styles from "./filterGroupsBody.module.css";
 import cn from "clsx";
+import { StaticTexts } from "@/app/dictionaries/definitions";
 
 export type Props = {
   pageFullDataList: FullData[];
-  params: MainParams;
   onFilterSelectionChanged: (data: {
     filter: FullData;
     value: boolean;
   }) => void;
   selectedFilterTextDescriptionIds: number[];
   parentFeatureId: number;
+  isEdit: boolean;
+  lang: string;
+  staticTexts: StaticTexts;
+  pageName: string;
 };
 
-export const FilterGroupsItems = ({
+export const FilterGroupsBody = ({
   pageFullDataList,
-  params,
   onFilterSelectionChanged,
   selectedFilterTextDescriptionIds,
   parentFeatureId,
+  isEdit,
+  lang,
+  staticTexts,
+  pageName,
 }: Props) => {
   const containerFullData = useMemo(
     () =>
       parentFeatureId
         ? getContainerData({
-            pageName: params.pageName,
+            pageName: pageName,
             pageFullData: pageFullDataList,
             parentFeatureId: parentFeatureId,
             type: GROUP,
             subtype: FILTER_GROUP_SUBTYPE,
           })
         : null,
-    [pageFullDataList, parentFeatureId]
+    [pageName, pageFullDataList, parentFeatureId]
   );
 
   if (!containerFullData) {
@@ -46,7 +53,6 @@ export const FilterGroupsItems = ({
   }
 
   const [data, filterGroupIds] = containerFullData;
-  const { isEdit } = params;
 
   return (
     <>
@@ -64,7 +70,9 @@ export const FilterGroupsItems = ({
                 selectedFilterTextDescriptionIds
               }
               parentFeatureId={parentFeatureId}
-              params={params}
+              isEdit={isEdit}
+              lang={lang}
+              staticTexts={staticTexts}
             />
           </div>
         );
