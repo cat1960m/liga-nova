@@ -2,11 +2,12 @@ import { FullData, MainParams } from "@/app/lib/definitions";
 import { DrawChildFeature } from "./DrawChildFeatures";
 import { AddChildFeatureToContainer } from "../CommonComponents/_buttons/AddChildFeatureToContainer";
 import { MAX_PAGE_WIDTH } from "@/app/lib/constants";
+import { getContainerData, getIsEditNoDelete } from "@/app/lib/utils";
+import { useMemo } from "react";
 
 export type Props = {
   featureId: number;
   pageFullDataList: FullData[];
-  containerFullData: [Record<string, FullData[]>, string[]];
   buttonText: string;
   params: MainParams;
   pageId: number;
@@ -15,14 +16,23 @@ export type Props = {
 export const DrawFeatureContainer_Client = ({
   featureId,
   pageFullDataList,
-  containerFullData,
   buttonText,
   params,
   pageId,
 }: Props) => {
+  const containerFullData = useMemo(
+    () =>
+      getContainerData({
+        pageName: params.pageName,
+        pageFullData: pageFullDataList,
+        parentFeatureId: featureId,
+      }),
+    [params.pageName, pageFullDataList, featureId]
+  );
+
   const [data, keys] = containerFullData;
-  const { editMode, pageName, staticTexts } = params;
-  const isDeepMode = editMode === "2";
+  const { pageName, staticTexts } = params;
+  const { isDeepMode } = getIsEditNoDelete(params);
 
   return (
     <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
@@ -48,7 +58,7 @@ export const DrawFeatureContainer_Client = ({
           );
         })}
 
-        { isDeepMode ? (
+        {isDeepMode ? (
           <AddChildFeatureToContainer
             parentFeatureId={featureId}
             text={buttonText}

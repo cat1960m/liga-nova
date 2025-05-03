@@ -3,6 +3,7 @@
     flex-direction: column;
     padding: 10px;
     border: 1px dotted magenta;
+    position: relative;
 }
 
 .title { 

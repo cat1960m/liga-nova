@@ -24,7 +24,7 @@ export const TextItemField = ({
   useItems,
 }: Props) => {
   return (
-    <div className={styles.container}>
+    <div className={styles.container} >
       {title ? <div className={styles.title}>{title}: </div> : null}
 
       <ItemContainerUpdateDeleteTextDescription

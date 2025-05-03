@@ -5,5 +5,6 @@ export const getIsEditNoDelete = (params: MainParams) => {
   return {
     isEdit: editMode === "1" || editMode === "2",
     noDelete: editMode !== "2",
+    isDeepMode: editMode === "2",
   };
 };

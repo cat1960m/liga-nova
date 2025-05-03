@@ -12,7 +12,7 @@ import { getContainerData, getIsEditNoDelete } from "@/app/lib/utils";
 import { ShowBody } from "./ShowBody/ShowBody";
 import { ShowName } from "./ShowName/ShowName";
 import { ItemContainerAddChildFeatureDeleteFeature } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerAddChildFeatureDeleteFeature";
-import { ItemContainerDeleteChildFeature } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerDeleteChildFeature";
+import { ItemContainerDeleteFeature } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerDeleteFeature";
 
 import styles from "./textListGroup.module.css";
 
@@ -94,7 +94,7 @@ export const TextListGroup = ({
           padding: "10px",
         }}
       >
-        <ItemContainerDeleteChildFeature
+        <ItemContainerDeleteFeature
           isEdit={isEdit}
           deleteText={staticTexts.delete ?? "N/A"}
           featureData={childFeatureData}
@@ -123,7 +123,7 @@ export const TextListGroup = ({
               />
             ) : null}
           </div>
-        </ItemContainerDeleteChildFeature>
+        </ItemContainerDeleteFeature>
       </div>
     );
   };

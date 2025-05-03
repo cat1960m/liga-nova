@@ -50,3 +50,8 @@
     align-items: center;
     justify-content: space-between;
 }
+
+.icon {
+    color: blue;
+    width: var(--icon-in-button-width);
+}

@@ -5,7 +5,6 @@ import { DrawFeatureContainer_Client } from "./DrawFeatureContainer_Client";
 export type Props = {
   featureId: number;
   pageFullDataList: FullData[];
-  containerFullData: [Record<string, FullData[]>, string[]];
   buttonText: string;
   params: MainParams;
   pageId: number;

@@ -1,6 +1,6 @@
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { UploadComponent } from "../UploadComponent/UploadComponent";
-import { ItemContainerDeleteChildFeature } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerDeleteChildFeature";
+import { ItemContainerDeleteFeature } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerDeleteFeature";
 import styles from "./manageImages.module.css";
 
 export type Props = {
@@ -19,7 +19,7 @@ export const ManageImages = ({
       <div className={styles.body}>
         {imagesData.map((imageItem) => {
           return (
-            <ItemContainerDeleteChildFeature
+            <ItemContainerDeleteFeature
               deleteText="Delete"
               onDeleteFinished={onDeleteFinished}
               featureData={[imageItem]}
@@ -33,7 +33,7 @@ export const ManageImages = ({
                 alt="image"
                 style={{ maxWidth: "100px" }}
               />
-            </ItemContainerDeleteChildFeature>
+            </ItemContainerDeleteFeature>
           );
         })}
       </div>

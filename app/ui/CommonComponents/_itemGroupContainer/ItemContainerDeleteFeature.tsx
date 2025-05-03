@@ -14,7 +14,7 @@ export type Props = {
   marginTop: number;
 };
 
-export const ItemContainerDeleteChildFeature = ({
+export const ItemContainerDeleteFeature = ({
   isEdit,
   children,
   deleteText,

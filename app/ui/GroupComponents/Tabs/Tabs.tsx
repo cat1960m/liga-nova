@@ -1,14 +1,14 @@
 "use client";
 
 import { FullData, MainParams } from "@/app/lib/definitions";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ShowTabTitle_Client } from "./TabTitle";
 import { DrawFeatureContainer_Client } from "../../PageComponents/DrawFeatureContainer_Client";
-import { getContainerData } from "@/app/lib/utils";
 import { TAB, TAB_TITLE } from "@/app/lib/constants";
 import { ItemContainerAddChildFeatureDeleteFeature } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerAddChildFeatureDeleteFeature";
 
 import styles from "./tabs.module.css";
+import { getIsEditNoDelete } from "@/app/lib/utils";
 
 export type Props = {
   tabsData: FullData;
@@ -35,31 +35,12 @@ export const ShowTabs_Client = ({
     number | null
   >(tabTitles?.[0].id ?? null);
 
-  const [selectedTabData, setSelectedTabData] = useState<
-    [Record<string, FullData[]>, string[]] | null
-  >(null);
-
   const handleSelectedTabFeatureIdChanged = (featureId: number) => {
     setSelectedTabFeatureId(featureId);
-    const tabContainerData = getContainerData({
-      pageName: params.pageName,
-      pageFullData: pageFullDataList,
-      parentFeatureId: featureId,
-    });
-    setSelectedTabData(tabContainerData);
   };
 
-  useEffect(() => {
-    const tabContainerData = getContainerData({
-      pageName: params.pageName,
-      pageFullData: pageFullDataList,
-      parentFeatureId: selectedTabFeatureId ?? tabTitles?.[0].id,
-    });
-
-    setSelectedTabData(tabContainerData);
-  }, [pageFullDataList]);
-  const { staticTexts, editMode, pageName } = params;
-  const isDeepMode = editMode === "2";
+  const { staticTexts, pageName } = params;
+  const { isDeepMode } = getIsEditNoDelete(params);
 
   return (
     <ItemContainerAddChildFeatureDeleteFeature
@@ -92,12 +73,11 @@ export const ShowTabs_Client = ({
           })}
         </div>
 
-        {selectedTabData && selectedTabFeatureId ? (
+        {selectedTabFeatureId ? (
           <DrawFeatureContainer_Client
             params={params}
             featureId={selectedTabFeatureId}
             pageFullDataList={pageFullDataList}
-            containerFullData={selectedTabData}
             buttonText={staticTexts.addItemToTab ?? "N/A"}
             pageId={pageId}
           />

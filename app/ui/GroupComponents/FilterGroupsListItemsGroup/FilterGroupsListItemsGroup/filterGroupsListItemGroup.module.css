@@ -10,6 +10,16 @@
 }
 
 
+.filterPanel {
+    flex-grow: 1;
+    margin-top: 10px;
+}
+
+.filterPanel.edit {
+    margin-top: 0px;
+}
+
+
 .filterGroups {
     display: block;
 }

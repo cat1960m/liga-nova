@@ -17,7 +17,12 @@ export type Props = {
   isEdit: boolean;
 };
 
-export const EditTrainerItem = ({ currentData, staticTexts, isEdit, lang }: Props) => {
+export const EditTrainerItem = ({
+  currentData,
+  staticTexts,
+  isEdit,
+  lang,
+}: Props) => {
   const name = currentData.find((item) => item.text_type === TRAINER_ITEM_NAME);
   const isPremium = currentData.find(
     (item) => item.text_type === TRAINER_ITEM_IS_PREMIUM
@@ -46,7 +51,6 @@ export const EditTrainerItem = ({ currentData, staticTexts, isEdit, lang }: Prop
         isEdit={isEdit}
         staticTexts={staticTexts}
         lang={lang}
-
       />
       <CheckboxItemField
         title={staticTexts.isPremium ?? "N/A"}
@@ -60,7 +64,6 @@ export const EditTrainerItem = ({ currentData, staticTexts, isEdit, lang }: Prop
         isEdit={isEdit}
         staticTexts={staticTexts}
         lang={lang}
-
       />
     </div>
   );

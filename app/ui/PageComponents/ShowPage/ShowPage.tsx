@@ -1,7 +1,7 @@
 import { getPageFullData } from "@/app/lib/actions_fitness";
 import { DrawFeatureContainerEdit } from "../DrawFeatureContainerEdit";
 import { FullData, MainParams } from "@/app/lib/definitions";
-import { getContainerData, getIsEditNoDelete } from "@/app/lib/utils";
+import { getIsEditNoDelete } from "@/app/lib/utils";
 import {
   ACTION_BANNER_LIST_GROUP_SUBTYPE,
   PAGE,
@@ -40,18 +40,6 @@ export const ShowPage = async ({ params, isAuthenticated, isMain }: Props) => {
 
   const pageId = currentPageData.id;
 
-  const containerFullData = pageId
-    ? getContainerData({
-        pageName,
-        pageFullData: pageFullData,
-        parentFeatureId: pageId,
-      })
-    : null;
-
-  if (!containerFullData) {
-    return null;
-  }
-
   const headerData = isMain
     ? pageFullData.filter(
         (item) => item.subtype === ACTION_BANNER_LIST_GROUP_SUBTYPE
@@ -75,7 +63,6 @@ export const ShowPage = async ({ params, isAuthenticated, isMain }: Props) => {
             params={params}
             featureId={pageId}
             pageFullDataList={pageFullData}
-            containerFullData={containerFullData}
             buttonText={staticTexts.addItemToPage ?? "N/A"}
             pageId={pageId}
           />
@@ -84,7 +71,6 @@ export const ShowPage = async ({ params, isAuthenticated, isMain }: Props) => {
             params={params}
             featureId={pageId}
             pageFullDataList={pageFullData}
-            containerFullData={containerFullData}
             buttonText={staticTexts.addItemToPage ?? "N/A"}
             pageId={pageId}
           />

@@ -7,6 +7,7 @@
 
 .container.edit {
     padding: 0;
+    gap: 0;
 }
 
 .title {

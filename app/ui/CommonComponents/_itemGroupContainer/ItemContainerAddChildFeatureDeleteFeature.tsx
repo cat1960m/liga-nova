@@ -17,6 +17,7 @@ export type Props = {
   featureSubtype: string;
   marginTop: number;
   noDelete: boolean;
+  noAdd?: boolean;
 };
 
 export const ItemContainerAddChildFeatureDeleteFeature = ({
@@ -33,6 +34,7 @@ export const ItemContainerAddChildFeatureDeleteFeature = ({
   featureSubtype,
   marginTop,
   noDelete,
+  noAdd
 }: Props) => {
   const getEditButtons = () => {
     const groupFeatureId = groupData[0]?.id;
@@ -52,7 +54,7 @@ export const ItemContainerAddChildFeatureDeleteFeature = ({
           gap: "5px",
         }}
       >
-        <AddChildFeatureButton
+        {!noAdd ? <AddChildFeatureButton
           parentFeatureId={groupFeatureId}
           text={addButtonText}
           pageName={pageName}
@@ -60,7 +62,8 @@ export const ItemContainerAddChildFeatureDeleteFeature = ({
           type={featureType}
           subtype={featureSubtype}
           onChildFeatureAdded={onChildFeatureAdded}
-        />
+        /> : null }
+
         {!noDelete ? (
           <DeleteFeatureButton
             deleteText={deleteButtonText}

@@ -3,13 +3,13 @@
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { useState } from "react";
 import { EditListItemFilter } from "../EditListItemFilter/EditListItemFilter";
-import { LIST_ITEM, PAGE_NAMES_TO_LIST_ITEMS_DATA } from "@/app/lib/constants";
-import { WrappingListItems } from "../WrappingListItems/WrappingListItems";
 import { FilterGroups } from "../_filters/FilterGroups";
 import { FilterGroupsMobile } from "../_filters/FilterGroupsMobile/FilterGroupsMobile";
-import { ItemContainerAddChildFeatureDeleteFeature } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerAddChildFeatureDeleteFeature";
 import styles from "./filterGroupsListItemGroup.module.css";
 import { getIsEditNoDelete } from "@/app/lib/utils";
+import { WrappingListItemsContainer } from "../WrappingListItemsContainer/WrappingListItemsContainer";
+import { ItemContainerDeleteFeature } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerDeleteFeature";
+import cn from "clsx";
 
 export type Props = {
   groupData: FullData[];
@@ -35,7 +35,7 @@ export const FilterGroupsListItemsGroup = ({
   if (!parentFeatureId) {
     return null;
   }
-  const { staticTexts, pageName, lang } = params;
+  const { staticTexts, pageName, lang, editMode } = params;
   const { isEdit, noDelete } = getIsEditNoDelete(params);
 
   const handleFilterSelectionChanged = ({
@@ -66,30 +66,35 @@ export const FilterGroupsListItemsGroup = ({
     }
   };
 
-  const isListItemsShown = !editingListItemFeatureId;
-
-  const addText = PAGE_NAMES_TO_LIST_ITEMS_DATA[params.pageName].addText;
-  const addListItemText = staticTexts[addText]?.toString() ?? "N/A";
-
-  const editText = PAGE_NAMES_TO_LIST_ITEMS_DATA[params.pageName].editText;
-  const editListItemText = staticTexts[editText]?.toString() ?? "N/A";
-
   return (
-    <ItemContainerAddChildFeatureDeleteFeature
-      addButtonText={addListItemText}
+    <ItemContainerDeleteFeature
       isEdit={isEdit}
-      pageName={pageName}
-      featureType={LIST_ITEM}
-      featureSubtype={LIST_ITEM}
-      textTypes={PAGE_NAMES_TO_LIST_ITEMS_DATA[params.pageName]?.textTypes}
-      deleteButtonText={staticTexts.delete ?? "N/A"}
-      groupData={groupData}
+      deleteText={staticTexts.delete ?? "N/A"}
+      featureData={groupData}
       marginTop={0}
       noDelete={noDelete}
+      noChangeOrder={noDelete}
     >
       <div className={styles.container}>
-        {parentFeatureId ? (
-          <>
+        {editingListItemFeatureId ? (
+          <EditListItemFilter
+            pageFullDataList={pageFullDataList}
+            groupData={groupData}
+            onCancel={handleAddEditCancel}
+            editItemFeatureId={editingListItemFeatureId}
+            lang={lang}
+            staticTexts={staticTexts}
+            pageName={pageName}
+            isEdit={isEdit}
+          />
+        ) : null}
+
+        {!editingListItemFeatureId ? (
+          <div
+            className={cn(styles.filterPanel, {
+              [styles.edit]: isEdit,
+            })}
+          >
             <div className={isEdit ? undefined : styles.filterGroups}>
               <FilterGroups
                 parentFeatureId={parentFeatureId}
@@ -121,39 +126,25 @@ export const FilterGroupsListItemsGroup = ({
                 />
               </div>
             ) : null}
-          </>
+          </div>
         ) : null}
 
-        <div className={styles.main}>
-          {editingListItemFeatureId ? (
-            <EditListItemFilter
+        {!editingListItemFeatureId ? (
+          <div className={styles.main}>
+            <WrappingListItemsContainer
+              isEdit={isEdit}
               pageFullDataList={pageFullDataList}
-              groupData={groupData}
-              onCancel={handleAddEditCancel}
-              editItemFeatureId={editingListItemFeatureId}
-              editListItemText={editListItemText}
-              lang={lang}
               staticTexts={staticTexts}
               pageName={pageName}
-            />
-          ) : null}
-
-          {isListItemsShown ? (
-            <WrappingListItems
-              pageFullDataList={pageFullDataList}
-              setEditingItemFeatureId={setEditingListItemFeatureId}
-              parentFeatureId={parentFeatureId}
               selectedFilterTextDescriptionIds={
                 selectedFilterTextDescriptionIds
               }
-              editTextButton={editListItemText}
-              isEdit={isEdit}
-              staticTexts={staticTexts}
-              pageName={pageName}
+              setEditingListItemFeatureId={setEditingListItemFeatureId}
+              parentFeatureId={groupData[0]?.id}
             />
-          ) : null}
-        </div>
+          </div>
+        ) : null}
       </div>
-    </ItemContainerAddChildFeatureDeleteFeature>
+    </ItemContainerDeleteFeature>
   );
 };

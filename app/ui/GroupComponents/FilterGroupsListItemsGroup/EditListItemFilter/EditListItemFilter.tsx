@@ -3,7 +3,7 @@
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { useEffect, useState } from "react";
 import { CommonButton } from "@/app/ui/CommonComponents/_buttons/CommonButton";
-import { LIST_ITEM } from "@/app/lib/constants";
+import { LIST_ITEM, PAGE_NAMES_TO_LIST_ITEMS_DATA } from "@/app/lib/constants";
 import { getFilterIds } from "@/app/lib/utils/getFilterIds";
 import { FilterGroups } from "../_filters/FilterGroups";
 import { ListItem } from "../ListItem";
@@ -20,10 +20,10 @@ export type Props = {
   groupData: FullData[];
   onCancel: () => void;
   editItemFeatureId: number;
-  editListItemText: string;
   lang: string;
   staticTexts: StaticTexts;
   pageName: string;
+  isEdit: boolean;
 };
 
 export const EditListItemFilter = ({
@@ -31,14 +31,13 @@ export const EditListItemFilter = ({
   groupData,
   onCancel,
   editItemFeatureId,
-  editListItemText,
   lang,
   staticTexts,
-  pageName
+  pageName,
+  isEdit,
 
 }: Props) => {
   const { changeIsEditButtonDisabled } = useEditContext();
-  const isEdit = false; //no edit
 
   const addEditItemFeatureIdData = pageFullDataList.filter(
     (data) => data.id === editItemFeatureId
@@ -103,6 +102,10 @@ export const EditListItemFilter = ({
 
   const parentFeatureId = groupData[0]?.id;
   const commonWidth = "32%";
+  
+  const editText = PAGE_NAMES_TO_LIST_ITEMS_DATA[pageName].editText;
+  const editListItemText = staticTexts[editText]?.toString() ?? "N/A";
+
 
   return (
     <div className={styles.container}>
@@ -137,7 +140,7 @@ export const EditListItemFilter = ({
             selectedFilterTextDescriptionIds={selectedFilterTextDescriptionIds}
             parentFeatureId={parentFeatureId}
             width={commonWidth}
-            isEdit={isEdit}
+            isEdit={false} // no edit
             lang={lang}
             staticTexts={staticTexts}
             pageName={pageName}

@@ -1,10 +1,10 @@
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { DrawFeatureContainer_Client } from "../../PageComponents/DrawFeatureContainer_Client";
-import { getContainerData } from "@/app/lib/utils";
 import { LAYOUT_ITEM_LEFT, LAYOUT_ITEM_RIGHT } from "@/app/lib/constants";
 import styles from "./layoutParent.module.css";
 import cn from "clsx";
 import { ItemContainerAddTextDescriptionDeleteFeature } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerAddTextDescriptionDeleteFeature";
+import { getIsEditNoDelete } from "@/app/lib/utils";
 
 export type Props = {
   tabsData: FullData;
@@ -38,19 +38,8 @@ export const LayoutParent = ({
     return null;
   }
 
-  const layoutItemLeftData = getContainerData({
-    pageName: params.pageName,
-    pageFullData: pageFullDataList,
-    parentFeatureId: layoutItemLeft.id,
-  });
-
-  const layoutItemRightData = getContainerData({
-    pageName: params.pageName,
-    pageFullData: pageFullDataList,
-    parentFeatureId: layoutItemRight.id,
-  });
-  const { staticTexts, editMode } = params;
-  const isDeepMode = editMode === "2";
+  const { staticTexts } = params;
+  const { isDeepMode } = getIsEditNoDelete(params);
 
   return (
     <ItemContainerAddTextDescriptionDeleteFeature
@@ -66,25 +55,27 @@ export const LayoutParent = ({
     >
       <div className={styles.container}>
         <div
-          className={cn(styles.item, styles.left, { [styles.edit]: isDeepMode })}
+          className={cn(styles.item, styles.left, {
+            [styles.edit]: isDeepMode,
+          })}
         >
           <DrawFeatureContainer_Client
             params={params}
             featureId={layoutItemLeft.id}
             pageFullDataList={pageFullDataList}
-            containerFullData={layoutItemLeftData}
             buttonText={staticTexts.addItems ?? "N/A"}
             pageId={pageId}
           />
         </div>
         <div
-          className={cn(styles.item, styles.right, { [styles.edit]: isDeepMode })}
+          className={cn(styles.item, styles.right, {
+            [styles.edit]: isDeepMode,
+          })}
         >
           <DrawFeatureContainer_Client
             params={params}
             featureId={layoutItemRight.id}
             pageFullDataList={pageFullDataList}
-            containerFullData={layoutItemRightData}
             buttonText={staticTexts.addItems ?? "N/A"}
             pageId={pageId}
           />

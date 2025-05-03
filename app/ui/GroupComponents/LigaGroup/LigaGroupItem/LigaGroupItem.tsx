@@ -61,17 +61,9 @@ export const LigaGroupItem = ({ data, isEdit, staticTexts, lang }: Props) => {
 
         <div className={styles.body}>
           <div className={styles.inner}>
-            {isAddress ? (
-              <MapPinIcon
-                style={{ color: "blue", width: ICON_IN_BUTTON_WIDTH }}
-              />
-            ) : null}
+            {isAddress ? <MapPinIcon className={styles.icon} /> : null}
 
-            {isPhone ? (
-              <PhoneIcon
-                style={{ color: "blue", width: ICON_IN_BUTTON_WIDTH }}
-              />
-            ) : null}
+            {isPhone ? <PhoneIcon className={styles.icon} /> : null}
 
             {!isService ? (
               <p

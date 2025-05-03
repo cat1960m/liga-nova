@@ -11,7 +11,7 @@ export const ItemGroupContainerCommon = ({
   children,
   getEditButtons,
   marginTop,
-  heightValue
+  heightValue,
 }: Props) => {
   return (
     <div
