@@ -11,7 +11,7 @@ export type Props = {
 };
 export const DrawFeatureContainerEdit = (props: Props) => {
   return (
-    <EditContextProvider>
+    <EditContextProvider pageFullDataList={props.pageFullDataList}>
       <DrawFeatureContainer {...props} />
     </EditContextProvider>
   );

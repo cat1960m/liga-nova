@@ -4,7 +4,7 @@ import { FullData, MainParams } from "@/app/lib/definitions";
 import { CommonButton } from "@/app/ui/CommonComponents/_buttons/CommonButton";
 import { getContainerData } from "@/app/lib/utils";
 import { useMemo } from "react";
-import { DeleteFeatureButton } from "@/app/ui/CommonComponents/_buttons/DeleteFeatureButton/DeleteFeatureButton";
+import { DeleteFeatureChangeOrderButtons } from "@/app/ui/CommonComponents/_buttons/DeleteFeatureChangeOrderButtons/DeleteFeatureChangeOrderButtons";
 import { ListItem } from "../ListItem/ListItem";
 import {
   ICON_BUTTON_WIDTH,
@@ -73,7 +73,7 @@ export const WrappingListItems = ({
           <PencilIcon width={ICON_IN_BUTTON_WIDTH} title={editTextButton} />
         </CommonButton>
 
-        <DeleteFeatureButton
+        <DeleteFeatureChangeOrderButtons
           deleteText={staticTexts.delete ?? "N/A"}
           featureData={currentData}
           isChangeOrderHorizontal

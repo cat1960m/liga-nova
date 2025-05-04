@@ -15,16 +15,17 @@ export default function Icon() {
       <div
         style={{
           fontSize: 24,
-          background: "black",
+          background: "pink",
           width: "100%",
           height: "100%",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          color: "white",
+          color: "black",
+          borderRadius: 12,
         }}
       >
-        W2
+        F
       </div>
     ),
     // ImageResponse options

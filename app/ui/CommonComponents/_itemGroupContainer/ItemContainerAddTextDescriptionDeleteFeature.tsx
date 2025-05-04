@@ -1,7 +1,7 @@
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { ItemGroupContainerCommon } from "./ItemGroupContainerCommon/ItemGroupContainerCommon";
 import { AddTextDescriptionButton } from "../_buttons/AddTextDescriptionButton";
-import { DeleteFeatureButton } from "../_buttons/DeleteFeatureButton/DeleteFeatureButton";
+import { DeleteFeatureChangeOrderButtons } from "../_buttons/DeleteFeatureChangeOrderButtons/DeleteFeatureChangeOrderButtons";
 import { Buttons } from "./Buttons/Buttons";
 
 export type Props = {
@@ -54,7 +54,7 @@ export const ItemContainerAddTextDescriptionDeleteFeature = ({
           ) : null}
 
           {!noDelete ? (
-            <DeleteFeatureButton
+            <DeleteFeatureChangeOrderButtons
               deleteText={deleteButtonText}
               featureData={featureData}
               isChangeOrderHorizontal={isChangeOrderHorizontal}

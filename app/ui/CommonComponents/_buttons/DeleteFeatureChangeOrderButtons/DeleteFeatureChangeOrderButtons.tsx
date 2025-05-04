@@ -19,9 +19,10 @@ import { useEditContext } from "../../../PageComponents/EditContextProvider";
 import { ChangeOrderButtons } from "../ChangeOrderButtons/ChangeOrderButtons";
 import { TrashIcon } from "@heroicons/react/24/outline";
 
-import styles from "./deleteFeatureButton.module.css";
+import styles from "./deleteFeatureChangeOrderButtons.module.css";
+import { useEffect, useState } from "react";
 
-export const DeleteFeatureButton = ({
+export const DeleteFeatureChangeOrderButtons = ({
   deleteText,
   onDeleteFinished,
   featureData,
@@ -40,16 +41,39 @@ export const DeleteFeatureButton = ({
   const { isEditButtonsDisabled, changeIsEditButtonDisabled } =
     useEditContext();
 
-  const featureFirst = featureData.length ? featureData[0] : undefined;
+  const [siblingFeatures, setSiblingFeatures] = useState<Feature[] | null>(
+    null
+  );
 
-  if (!featureFirst) {
+  const featureFirst = featureData.length ? featureData[0] : undefined;
+  const featureId = featureFirst?.id;
+  const subtype = featureFirst?.subtype;
+  const type = featureFirst?.type;
+
+  const parentFeatureId = featureFirst?.parent_feature_id;
+
+  useEffect(() => {
+    const getFeatures = async () => {
+      if (!parentFeatureId || !type || !subtype) {
+        return;
+      }
+      const features: Feature[] | null = await getFeatureChildren({
+        parentFeatureId,
+        type,
+        subtype,
+      });
+
+      setSiblingFeatures(features);
+
+      return;
+    };
+
+    getFeatures();
+  }, [parentFeatureId, type,subtype]);
+
+  if (!parentFeatureId || !featureFirst || !featureId || !type || !subtype) {
     return null;
   }
-
-  const featureId = featureFirst.id;
-  const parentFeatureId = featureFirst.parent_feature_id;
-  const subtype = featureFirst.subtype;
-  const type = featureFirst.type;
 
   const handleDelete = async () => {
     changeIsEditButtonDisabled(true);
@@ -86,11 +110,7 @@ export const DeleteFeatureButton = ({
 
     changeIsEditButtonDisabled(true);
 
-    const features: Feature[] | null = await getFeatureChildren({
-      parentFeatureId,
-      type,
-      subtype,
-    });
+    const features: Feature[] | null = siblingFeatures;
 
     if (features && features.length > 1) {
       const index = features.findIndex((feature) => feature.id === featureId);
@@ -121,6 +141,8 @@ export const DeleteFeatureButton = ({
     changeIsEditButtonDisabled(false);
   };
 
+  const countSibling = siblingFeatures?.length || null;
+
   return (
     <div className={styles.container}>
       {!noDelete ? (
@@ -133,10 +155,18 @@ export const DeleteFeatureButton = ({
         </CommonButton>
       ) : null}
 
-      {!noChangeOrder && parentFeatureId ? (
+      {!noChangeOrder && !!countSibling && countSibling > 1 ? (
         <ChangeOrderButtons
           isChangeOrderHorizontal={isChangeOrderHorizontal}
           changeOrder={changeOrder}
+        />
+      ) : null}
+
+      {!noChangeOrder && countSibling === null ? (
+        <CommonButton
+          width={ICON_BUTTON_WIDTH}
+          isDisabled={true}
+          text="?"
         />
       ) : null}
     </div>

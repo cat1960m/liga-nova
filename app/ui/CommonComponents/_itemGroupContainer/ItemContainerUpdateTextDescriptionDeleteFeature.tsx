@@ -3,7 +3,7 @@ import { FullData, MainParams } from "@/app/lib/definitions";
 import { ItemGroupContainerCommon } from "./ItemGroupContainerCommon/ItemGroupContainerCommon";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { UpdateTextDescriptionData } from "../_upadeModal/UpdateTextDescriptionData";
-import { DeleteFeatureButton } from "../_buttons/DeleteFeatureButton/DeleteFeatureButton";
+import { DeleteFeatureChangeOrderButtons } from "../_buttons/DeleteFeatureChangeOrderButtons/DeleteFeatureChangeOrderButtons";
 import { Buttons } from "./Buttons/Buttons";
 
 export type Props = {
@@ -44,7 +44,7 @@ export const ItemContainerUpdateTextDescriptionDeleteFeature = ({
         ) : null}
 
         {!noDelete ? (
-          <DeleteFeatureButton
+          <DeleteFeatureChangeOrderButtons
             deleteText={staticTexts.delete ?? "N/A"}
             featureData={featureData}
             isChangeOrderHorizontal={isChangeOrderHorizontal}

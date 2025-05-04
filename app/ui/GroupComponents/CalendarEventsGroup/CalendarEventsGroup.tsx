@@ -11,7 +11,7 @@ import { PlusIcon } from "@heroicons/react/24/outline";
 
 import styles from "./calendarEventsGroup.module.css";
 import { CommonButton } from "../../CommonComponents/_buttons/CommonButton";
-import { DeleteFeatureButton } from "../../CommonComponents/_buttons/DeleteFeatureButton/DeleteFeatureButton";
+import { DeleteFeatureChangeOrderButtons } from "../../CommonComponents/_buttons/DeleteFeatureChangeOrderButtons/DeleteFeatureChangeOrderButtons";
 import { ItemGroupContainerCommon } from "../../CommonComponents/_itemGroupContainer/ItemGroupContainerCommon/ItemGroupContainerCommon";
 
 export type Props = {
@@ -83,7 +83,7 @@ export const CalendarEventsGroup = ({
         ) : null}
 
         {!noDelete ? (
-          <DeleteFeatureButton
+          <DeleteFeatureChangeOrderButtons
             deleteText={staticTexts.deleteCalendar ?? "N/A"}
             featureData={groupData}
           />

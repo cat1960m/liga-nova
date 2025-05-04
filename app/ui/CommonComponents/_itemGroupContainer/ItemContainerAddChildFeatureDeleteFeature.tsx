@@ -1,6 +1,6 @@
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { ItemGroupContainerCommon } from "./ItemGroupContainerCommon/ItemGroupContainerCommon";
-import { DeleteFeatureButton } from "../_buttons/DeleteFeatureButton/DeleteFeatureButton";
+import { DeleteFeatureChangeOrderButtons } from "../_buttons/DeleteFeatureChangeOrderButtons/DeleteFeatureChangeOrderButtons";
 import { AddChildFeatureButton } from "../_buttons/AddChildFeatureButton";
 import { Buttons } from "./Buttons/Buttons";
 
@@ -60,7 +60,7 @@ export const ItemContainerAddChildFeatureDeleteFeature = ({
           ) : null}
 
           {!noDelete ? (
-            <DeleteFeatureButton
+            <DeleteFeatureChangeOrderButtons
               deleteText={deleteButtonText}
               featureData={groupData}
               onDeleteFinished={onDeleteFinished}

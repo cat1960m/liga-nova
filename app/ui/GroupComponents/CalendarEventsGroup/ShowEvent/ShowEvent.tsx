@@ -12,7 +12,7 @@ import {
   ICON_IN_BUTTON_WIDTH,
 } from "@/app/lib/constants";
 import { CommonButton } from "@/app/ui/CommonComponents/_buttons/CommonButton";
-import { DeleteFeatureButton } from "@/app/ui/CommonComponents/_buttons/DeleteFeatureButton/DeleteFeatureButton";
+import { DeleteFeatureChangeOrderButtons } from "@/app/ui/CommonComponents/_buttons/DeleteFeatureChangeOrderButtons/DeleteFeatureChangeOrderButtons";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { FullData } from "@/app/lib/definitions";
 import styles from "./showEvent.module.css";
@@ -127,7 +127,7 @@ export const ShowEvent = ({
                 title={staticTexts.updateEvent ?? "N/A"}
               />
             </CommonButton>
-            <DeleteFeatureButton
+            <DeleteFeatureChangeOrderButtons
               deleteText={staticTexts.delete ?? "N/A"}
               featureData={eventData}
               noChangeOrder

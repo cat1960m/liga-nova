@@ -468,7 +468,7 @@ export const getPageFullData = async ({
 
     return await sql<FullData[]>`SELECT features.id, 
         parent_feature_id, type, subtype, name, feature_order, filter_ids, additional_page_name,
-        text_descriptions.id as text_description_id, text_type, price, can_delete, value, link,
+        text_descriptions.id as text_description_id, text_type, price, can_delete, value, link,text_description_order,
         language, text_content, content_type
         FROM features 
         LEFT JOIN text_descriptions 

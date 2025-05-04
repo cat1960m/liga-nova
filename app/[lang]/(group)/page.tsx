@@ -1,9 +1,9 @@
-import { auth } from "../auth";
-import { SearchParams } from "../dictionaries/definitions";
-import { HOME } from "../lib/constants";
-import { MainParams } from "../lib/definitions";
-import { getDictionary } from "../lib/dictionaries";
-import { ShowPage } from "../ui/PageComponents/ShowPage/ShowPage";
+import { auth } from "../../auth";
+import { SearchParams } from "../../dictionaries/definitions";
+import { HOME } from "../../lib/constants";
+import { MainParams } from "../../lib/definitions";
+import { getDictionary } from "../../lib/dictionaries";
+import { ShowPage } from "../../ui/PageComponents/ShowPage/ShowPage";
 
 export default async function Page({
   params,

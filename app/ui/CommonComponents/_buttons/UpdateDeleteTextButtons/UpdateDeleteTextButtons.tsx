@@ -14,6 +14,9 @@ import { UseItems } from "../../_upadeModal/UpdateTextDescriptionDataModalConten
 import { StaticTexts } from "@/app/dictionaries/definitions";
 
 import styles from "./updateDeleteTextButtons.module.css";
+import { useEffect, useMemo, useState } from "react";
+import { CommonButton } from "../CommonButton";
+import { ICON_BUTTON_WIDTH } from "@/app/lib/constants";
 
 export type Props = {
   currentData?: FullData;
@@ -39,8 +42,15 @@ export const UpdateDeleteTextButtons = ({
   changeModalState,
   onDeleteFinished,
 }: Props) => {
-  const { changeIsEditButtonDisabled } = useEditContext();
+  const { changeIsEditButtonDisabled, pageFullDataList } = useEditContext();
   const pathName = usePathname();
+
+  const textDescriptionSibling: FullData[] = useMemo(() => {
+    return pageFullDataList.filter(
+      (data) =>
+        data.id === currentData?.id && data.text_type === currentData.text_type
+    );
+  }, [pageFullDataList]);
 
   if (!currentData) {
     return null;
@@ -54,16 +64,13 @@ export const UpdateDeleteTextButtons = ({
 
     changeIsEditButtonDisabled(true);
 
-    const textDescriptions: TextDescription[] | null =
-      await getTextDescriptions({
-        featureId: currentData.id,
-        textType: currentData.text_type,
-      });
+    const textDescriptions = textDescriptionSibling;
 
     if (textDescriptions && textDescriptions.length > 1) {
       const index = textDescriptions.findIndex(
         (textDescription) =>
-          textDescription.id === currentData.text_description_id
+          textDescription.text_description_id ===
+          currentData.text_description_id
       );
       let newIndex = isToStart ? index - 1 : index + 1;
 
@@ -79,11 +86,11 @@ export const UpdateDeleteTextButtons = ({
       const textDescription = textDescriptions[index];
 
       await UpdateTextDescriptionsOrder({
-        id: textDescription.id,
+        id: textDescription.text_description_id,
         order: textDescriptionToChangeOrderWith.text_description_order,
       });
       await UpdateTextDescriptionsOrder({
-        id: textDescriptionToChangeOrderWith.id,
+        id: textDescriptionToChangeOrderWith.text_description_id,
         order: textDescription.text_description_order,
       });
       await revalidate(pathName);
@@ -113,7 +120,7 @@ export const UpdateDeleteTextButtons = ({
         />
       ) : null}
 
-      {isChangeOrder ? (
+      {isChangeOrder && textDescriptionSibling.length > 1 ? (
         <ChangeOrderButtons
           isChangeOrderHorizontal={isChangeOrderHorizontal}
           changeOrder={changeOrder}

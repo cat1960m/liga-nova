@@ -3,6 +3,7 @@ import { auth } from "@/app/auth";
 import { SearchParams } from "@/app/dictionaries/definitions";
 import { ShowPage } from "../../ui/PageComponents/ShowPage/ShowPage";
 import { getDictionary } from "@/app/lib/dictionaries";
+import { Suspense } from "react";
 
 export default async function Page({
   params,
@@ -15,7 +16,7 @@ export default async function Page({
   const isAuthenticated = !!res?.user;
 
   const pars = await params;
-  const {lang, pageName} = pars;
+  const { lang, pageName } = pars;
 
   const urlParams = await searchParams;
 
@@ -28,5 +29,36 @@ export default async function Page({
     staticTexts: dict.common,
   };
 
-  return <ShowPage params={mainParams} isAuthenticated={isAuthenticated} />;
+  return (
+    <Suspense
+      fallback={
+        <div
+          style={{
+            color: "lightblue",
+            fontWeight: 700,
+            width: "100%",
+            height: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <div
+            style={{
+              maxWidth: 1075,
+              width: "100%",
+              height: "100%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            Page loading ...
+          </div>
+        </div>
+      }
+    >
+      <ShowPage params={mainParams} isAuthenticated={isAuthenticated} />
+    </Suspense>
+  );
 }
