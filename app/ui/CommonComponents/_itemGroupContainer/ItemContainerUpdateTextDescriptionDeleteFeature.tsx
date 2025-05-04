@@ -1,9 +1,10 @@
-import { UseItems } from "../_upadeModal/UpdateTextDescriptionDataModalContent";
+import { UseItems } from "../_upadeModal/UpdateTextDescriptionDataModalContent/UpdateTextDescriptionDataModalContent";
 import { FullData, MainParams } from "@/app/lib/definitions";
-import { ItemGroupContainerCommon } from "./ItemGroupContainerCommon";
+import { ItemGroupContainerCommon } from "./ItemGroupContainerCommon/ItemGroupContainerCommon";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { UpdateTextDescriptionData } from "../_upadeModal/UpdateTextDescriptionData";
-import { DeleteFeatureButton } from "../_buttons/DeleteFeatureButton";
+import { DeleteFeatureButton } from "../_buttons/DeleteFeatureButton/DeleteFeatureButton";
+import { Buttons } from "./Buttons/Buttons";
 
 export type Props = {
   children: React.ReactNode;
@@ -32,15 +33,7 @@ export const ItemContainerUpdateTextDescriptionDeleteFeature = ({
 }: Props) => {
   const getEditButtons = () => {
     return (
-      <div
-        style={{
-          width: "100%",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          gap: "5px",
-        }}
-      >
+      <Buttons>
         {currentData ? (
           <UpdateTextDescriptionData
             currentData={currentData}
@@ -58,7 +51,7 @@ export const ItemContainerUpdateTextDescriptionDeleteFeature = ({
             noDelete={noDelete}
           />
         ) : null}
-      </div>
+      </Buttons>
     );
   };
   return (

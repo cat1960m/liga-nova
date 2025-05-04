@@ -1,6 +1,7 @@
 "use client";
 
 import { createPortal } from "react-dom";
+import styles from "./createModal.module.css";
 
 export const CreateModal = ({
   onClose,
@@ -16,31 +17,21 @@ export const CreateModal = ({
   }
 
   const rect = parent.getBoundingClientRect();
-
   const scrollPositionY = window.scrollY;
 
   return (
     <div>
       {createPortal(
         <div
+          className={styles.container}
           style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
             minHeight: rect.height + 1000,
-            backgroundColor: "rgba(255, 180, 200, 0.5)",
           }}
         >
           <div
+            className={styles.body}
             style={{
-              backgroundColor: "white",
-              border: "2px solid darkmagenta",
-              borderRadius: "5px",
-              width: "80%",
-              position: "absolute",
               top: `${scrollPositionY + 20}px`,
-              left: "10%",
             }}
           >
             {children}

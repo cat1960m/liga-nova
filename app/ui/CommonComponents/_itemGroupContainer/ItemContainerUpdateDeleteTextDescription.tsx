@@ -1,7 +1,7 @@
-import { UpdateDeleteTextButtons } from "../_buttons/UpdateDeleteTextButtons";
-import { UseItems } from "../_upadeModal/UpdateTextDescriptionDataModalContent";
+import { UpdateDeleteTextButtons } from "../_buttons/UpdateDeleteTextButtons/UpdateDeleteTextButtons";
+import { UseItems } from "../_upadeModal/UpdateTextDescriptionDataModalContent/UpdateTextDescriptionDataModalContent";
 import { FullData, MainParams } from "@/app/lib/definitions";
-import { ItemGroupContainerCommon } from "./ItemGroupContainerCommon";
+import { ItemGroupContainerCommon } from "./ItemGroupContainerCommon/ItemGroupContainerCommon";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 
 export type Props = {

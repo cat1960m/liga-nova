@@ -1,17 +1,20 @@
 "use client";
 import { FullData, MainParams, TextDescription } from "@/app/lib/definitions";
-import { DeleteTextDescriptionButton } from "./DeleteTextDescriptionButton";
-import { UpdateTextDescriptionData } from "../_upadeModal/UpdateTextDescriptionData";
-import { ChangeOrderButtons } from "./ChangeOrderButtons/ChangeOrderButtons";
-import { useEditContext } from "../../PageComponents/EditContextProvider";
+import { DeleteTextDescriptionButton } from "../DeleteTextDescriptionButton";
+import { UpdateTextDescriptionData } from "../../_upadeModal/UpdateTextDescriptionData";
+import { ChangeOrderButtons } from "../ChangeOrderButtons/ChangeOrderButtons";
+import { useEditContext } from "../../../PageComponents/EditContextProvider";
 import {
   getTextDescriptions,
   revalidate,
   UpdateTextDescriptionsOrder,
 } from "@/app/lib/actions_fitness";
 import { usePathname } from "next/navigation";
-import { UseItems } from "../_upadeModal/UpdateTextDescriptionDataModalContent";
+import { UseItems } from "../../_upadeModal/UpdateTextDescriptionDataModalContent/UpdateTextDescriptionDataModalContent";
 import { StaticTexts } from "@/app/dictionaries/definitions";
+
+import styles from "./updateDeleteTextButtons.module.css";
+
 export type Props = {
   currentData?: FullData;
   isChangeOrder?: boolean;
@@ -90,15 +93,7 @@ export const UpdateDeleteTextButtons = ({
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        gap: "5px",
-        alignItems: "center",
-        flexWrap: "wrap",
-        justifyContent: "center",
-      }}
-    >
+    <div className={styles.container}>
       <UpdateTextDescriptionData
         currentData={currentData}
         useItems={useItems}
@@ -106,33 +101,24 @@ export const UpdateDeleteTextButtons = ({
         staticTexts={staticTexts}
         changeModalState={changeModalState}
       />
-      <div
-        style={{
-          display: "flex",
-          gap: "5px",
-          alignItems: "center",
-          flexWrap: "wrap",
-        }}
-      >
-        {canDelete ? (
-          <DeleteTextDescriptionButton
-            textDescriptionId={currentData.text_description_id}
-            deleteText={staticTexts.delete ?? "N/A"}
-            s3Key={
-              s3Key ||
-              (useItems.value === "image" ? currentData.value : undefined)
-            }
-            onDeleteFinished={onDeleteFinished}
-          />
-        ) : null}
+      {canDelete ? (
+        <DeleteTextDescriptionButton
+          textDescriptionId={currentData.text_description_id}
+          deleteText={staticTexts.delete ?? "N/A"}
+          s3Key={
+            s3Key ||
+            (useItems.value === "image" ? currentData.value : undefined)
+          }
+          onDeleteFinished={onDeleteFinished}
+        />
+      ) : null}
 
-        {isChangeOrder ? (
-          <ChangeOrderButtons
-            isChangeOrderHorizontal={isChangeOrderHorizontal}
-            changeOrder={changeOrder}
-          />
-        ) : null}
-      </div>
+      {isChangeOrder ? (
+        <ChangeOrderButtons
+          isChangeOrderHorizontal={isChangeOrderHorizontal}
+          changeOrder={changeOrder}
+        />
+      ) : null}
     </div>
   );
 };

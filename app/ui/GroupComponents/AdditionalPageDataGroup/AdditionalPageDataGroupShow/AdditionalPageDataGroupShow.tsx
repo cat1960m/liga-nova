@@ -2,7 +2,7 @@ import { LIST_ITEM } from "@/app/lib/constants";
 import { FullData } from "@/app/lib/definitions";
 import { getContainerData, getFilterIds } from "@/app/lib/utils";
 import { useMemo, useRef } from "react";
-import { ListItem } from "../../FilterGroupsListItemsGroup/ListItem";
+import { ListItem } from "../../FilterGroupsListItemsGroup/ListItem/ListItem";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 
 import styles from "./additionalPageDataGroupShow.module.css";

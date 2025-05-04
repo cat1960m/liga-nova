@@ -96,6 +96,7 @@ export const AdditionalPageDataGroupEdit = ({
           );
         })}
       </div>
+      
       <div className={styles.button}>
         <UpdateFeatureFilterIdsButton
           featureId={pageFeatureId}

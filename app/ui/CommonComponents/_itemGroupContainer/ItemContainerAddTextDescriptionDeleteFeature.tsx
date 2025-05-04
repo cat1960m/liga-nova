@@ -1,7 +1,8 @@
 import { FullData, MainParams } from "@/app/lib/definitions";
-import { ItemGroupContainerCommon } from "./ItemGroupContainerCommon";
+import { ItemGroupContainerCommon } from "./ItemGroupContainerCommon/ItemGroupContainerCommon";
 import { AddTextDescriptionButton } from "../_buttons/AddTextDescriptionButton";
-import { DeleteFeatureButton } from "../_buttons/DeleteFeatureButton";
+import { DeleteFeatureButton } from "../_buttons/DeleteFeatureButton/DeleteFeatureButton";
+import { Buttons } from "./Buttons/Buttons";
 
 export type Props = {
   children: React.ReactNode;
@@ -40,36 +41,29 @@ export const ItemContainerAddTextDescriptionDeleteFeature = ({
     const isAddShown = !!featureId && !isNoAddButton;
 
     return (
-      <div
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          alignItems: "center",
-          justifyContent: "center",
-          width: "100%",
-          gap: "5px",
-        }}
-      >
-        {isAddShown ? (
-          <AddTextDescriptionButton
-            featureId={featureId}
-            textType={textDescriptionType}
-            buttonText={addButtonText}
-            price={price ?? null}
-            onTextDescriptionAdded={onTextDescriptionAdded}
-          />
-        ) : null}
+      <Buttons>
+        <>
+          {isAddShown ? (
+            <AddTextDescriptionButton
+              featureId={featureId}
+              textType={textDescriptionType}
+              buttonText={addButtonText}
+              price={price ?? null}
+              onTextDescriptionAdded={onTextDescriptionAdded}
+            />
+          ) : null}
 
-        {!noDelete ? (
-          <DeleteFeatureButton
-            deleteText={deleteButtonText}
-            featureData={featureData}
-            isChangeOrderHorizontal={isChangeOrderHorizontal}
-            onDeleteFinished={onDeleteFinished}
-            noDelete={noDelete}
-          />
-        ) : null}
-      </div>
+          {!noDelete ? (
+            <DeleteFeatureButton
+              deleteText={deleteButtonText}
+              featureData={featureData}
+              isChangeOrderHorizontal={isChangeOrderHorizontal}
+              onDeleteFinished={onDeleteFinished}
+              noDelete={noDelete}
+            />
+          ) : null}
+        </>
+      </Buttons>
     );
   };
   return (

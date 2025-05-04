@@ -1,6 +1,6 @@
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { EditContextProvider } from "./EditContextProvider";
-import { DrawFeatureContainer_Client } from "./DrawFeatureContainer_Client";
+import { DrawFeatureContainer } from "./DrawFeatureContainer/DrawFeatureContainer";
 
 export type Props = {
   featureId: number;
@@ -12,7 +12,7 @@ export type Props = {
 export const DrawFeatureContainerEdit = (props: Props) => {
   return (
     <EditContextProvider>
-      <DrawFeatureContainer_Client {...props} />
+      <DrawFeatureContainer {...props} />
     </EditContextProvider>
   );
 };

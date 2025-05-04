@@ -63,9 +63,10 @@ import {
   TEXT_HEADER_GROUP_SUBTYPE,
   DIVIDER,
 } from "@/app/lib/constants";
-import { FullData, GroupDefinition, MainParams } from "@/app/lib/definitions";
+import { FullData } from "@/app/lib/definitions";
 import { usePathname } from "next/navigation";
 import { ChangeEventHandler, useMemo, useState } from "react";
+import styles from "./addChildFeatureToContainer.module.css";
 
 export const AddChildFeatureToContainer = ({
   parentFeatureId,
@@ -73,7 +74,7 @@ export const AddChildFeatureToContainer = ({
   pageFullDataList,
   pageId,
   staticTexts,
-  pageName
+  pageName,
 }: {
   parentFeatureId: number | undefined;
   text: string;
@@ -88,7 +89,6 @@ export const AddChildFeatureToContainer = ({
   const [optionsAdditionalPagename, setOptionsAdditionalPagename] = useState<
     string[]
   >([]);
-
 
   const options = useMemo(() => {
     const data = [...GroupFeatureSubtypes, TABS, LAYOUT_PARENT];
@@ -471,17 +471,7 @@ export const AddChildFeatureToContainer = ({
   };
 
   return (
-    <div
-      style={{
-        width: "100%",
-        display: "flex",
-        flexWrap: "wrap",
-        justifyContent: "center",
-        alignItems: "center",
-        padding: "20px",
-        gap: "20px",
-      }}
-    >
+    <div className={styles.container}>
       <select value={selectedValue} onChange={handleChange}>
         <option value="" disabled>
           {text}

@@ -1,0 +1,17 @@
+.container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(255,180,200,0.5);
+}
+
+.body {
+    background-color: white;
+    border: 2px solid darkmagenta;
+    border-radius: 5px;
+    width: 80%;
+    position: absolute;
+    left: 10%;
+
+}

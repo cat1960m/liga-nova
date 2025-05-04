@@ -31,3 +31,8 @@
     padding: 10px; 
     border-bottom: 1px solid lightgray; 
 }
+
+.icon {
+    width: 32px;
+    color: gray;
+}

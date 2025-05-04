@@ -1,19 +1,14 @@
 "use client";
 
-import {
-  useState,
-  ChangeEventHandler,
-  useEffect,
-  useMemo,
-} from "react";
+import { useState, ChangeEventHandler, useEffect, useMemo } from "react";
 import {
   FullData,
   PageData,
   TabType,
   TextContent,
 } from "@/app/lib/definitions";
-import { TranslationTabs } from "../TranslationTabs/TranslationTabs";
-import { CommonButton } from "../_buttons/CommonButton";
+import { TranslationTabs } from "../../TranslationTabs/TranslationTabs";
+import { CommonButton } from "../../_buttons/CommonButton";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import {
   addText,
@@ -27,7 +22,7 @@ import {
 import { usePathname } from "next/navigation";
 import { TOOLTIP, TRANSLATE_LANGUAGES } from "@/app/lib/constants";
 
-import styles from "./updateText.module.css";
+import styles from "./updateTextDescriptionDataModalContent.module.css";
 import axios from "axios";
 
 export type UseItems = {
@@ -125,9 +120,9 @@ export const UpdateTextDescriptionDataModalContent = ({
     };
 
     const getPages = async () => {
-        const pages1 = await getPageTitles(lang);
+      const pages1 = await getPageTitles(lang);
 
-        setPages(pages1?.map((page) => page) ?? []);
+      setPages(pages1?.map((page) => page) ?? []);
     };
 
     getData();

@@ -11,8 +11,8 @@ import { PlusIcon } from "@heroicons/react/24/outline";
 
 import styles from "./calendarEventsGroup.module.css";
 import { CommonButton } from "../../CommonComponents/_buttons/CommonButton";
-import { DeleteFeatureButton } from "../../CommonComponents/_buttons/DeleteFeatureButton";
-import { ItemGroupContainerCommon } from "../../CommonComponents/_itemGroupContainer/ItemGroupContainerCommon";
+import { DeleteFeatureButton } from "../../CommonComponents/_buttons/DeleteFeatureButton/DeleteFeatureButton";
+import { ItemGroupContainerCommon } from "../../CommonComponents/_itemGroupContainer/ItemGroupContainerCommon/ItemGroupContainerCommon";
 
 export type Props = {
   groupData: FullData[];

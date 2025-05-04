@@ -6,7 +6,7 @@ import { FullData, MainParams } from "@/app/lib/definitions";
 import { addIcon, getPageFullData } from "@/app/lib/actions_fitness";
 import { usePathname, useSearchParams } from "next/navigation";
 import { ManageImages } from "./ManageImages/ManageImages";
-import { CreateModal } from "../../CommonComponents/_upadeModal/CreateModal";
+import { CreateModal } from "../../CommonComponents/_upadeModal/CreateModal/CreateModal";
 
 import styles from "./manageIconsModal.module.css";
 import { EDIT_MODE } from "@/app/lib/constants";

@@ -1,4 +1,4 @@
-import { ItemGroupContainerCommon } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemGroupContainerCommon";
+import { ItemGroupContainerCommon } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemGroupContainerCommon/ItemGroupContainerCommon";
 import { WrappingListItems } from "../WrappingListItems/WrappingListItems";
 import { AddChildFeatureButton } from "@/app/ui/CommonComponents/_buttons/AddChildFeatureButton";
 import { FullData } from "@/app/lib/definitions";

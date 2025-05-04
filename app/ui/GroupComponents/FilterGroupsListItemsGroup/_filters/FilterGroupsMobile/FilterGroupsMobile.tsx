@@ -49,7 +49,7 @@ export const FilterGroupsMobile = ({
 
   const filtersTitle = (
     <div className={styles.title}>
-      <AdjustmentsHorizontalIcon style={{ width: "32px", color: "gray" }} />
+      <AdjustmentsHorizontalIcon className={styles.icon} />
       {staticTexts.filters}
     </div>
   );

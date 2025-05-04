@@ -1,6 +1,6 @@
 import { FullData } from "@/app/lib/definitions";
-import { ItemGroupContainerCommon } from "./ItemGroupContainerCommon";
-import { DeleteFeatureButton } from "../_buttons/DeleteFeatureButton";
+import { ItemGroupContainerCommon } from "./ItemGroupContainerCommon/ItemGroupContainerCommon";
+import { DeleteFeatureButton } from "../_buttons/DeleteFeatureButton/DeleteFeatureButton";
 
 export type Props = {
   children: React.ReactNode;

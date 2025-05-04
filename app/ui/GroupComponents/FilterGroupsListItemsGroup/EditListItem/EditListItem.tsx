@@ -1,8 +1,10 @@
 import { FullData, MainParams } from "@/app/lib/definitions";
-import { EditTrainerItem } from "./_trainers/EditTrainerItem";
-import { EditSubscriptionItem } from "./_tickets/EditSubscriptionItem/EditSubscriptionItem";
+import { EditTrainerItem } from "../_trainers/EditTrainerItem/EditTrainerItem";
+import { EditSubscriptionItem } from "../_tickets/EditSubscriptionItem/EditSubscriptionItem";
 import { TICKETS_PAGE_NAME, TRAINERS_PAGE_NAME } from "@/app/lib/constants";
 import { StaticTexts } from "@/app/dictionaries/definitions";
+
+import styles from "./editListItem.module.css";
 
 export type Props = {
   currentData: FullData[];
@@ -20,7 +22,7 @@ export const EditListItem = ({
   isEdit,
 }: Props) => {
   return (
-    <div style={{ width: "100%" }}>
+    <div className={styles.container}>
       {pageName === TICKETS_PAGE_NAME ? (
         <EditSubscriptionItem
           currentData={currentData}

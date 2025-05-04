@@ -2,12 +2,12 @@
 
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { useState } from "react";
-import { CreateModal } from "./CreateModal";
+import { CreateModal } from "./CreateModal/CreateModal";
 import { CommonButton } from "../_buttons/CommonButton";
 import {
   UpdateTextDescriptionDataModalContent,
   UseItems,
-} from "./UpdateTextDescriptionDataModalContent";
+} from "./UpdateTextDescriptionDataModalContent/UpdateTextDescriptionDataModalContent";
 import { PencilIcon } from "@heroicons/react/24/outline";
 import { ICON_BUTTON_WIDTH, ICON_IN_BUTTON_WIDTH } from "@/app/lib/constants";
 import { StaticTexts } from "@/app/dictionaries/definitions";

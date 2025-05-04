@@ -1,7 +1,8 @@
 import { FullData, MainParams } from "@/app/lib/definitions";
-import { ItemGroupContainerCommon } from "./ItemGroupContainerCommon";
-import { DeleteFeatureButton } from "../_buttons/DeleteFeatureButton";
+import { ItemGroupContainerCommon } from "./ItemGroupContainerCommon/ItemGroupContainerCommon";
+import { DeleteFeatureButton } from "../_buttons/DeleteFeatureButton/DeleteFeatureButton";
 import { AddChildFeatureButton } from "../_buttons/AddChildFeatureButton";
+import { Buttons } from "./Buttons/Buttons";
 
 export type Props = {
   children: React.ReactNode;
@@ -34,7 +35,7 @@ export const ItemContainerAddChildFeatureDeleteFeature = ({
   featureSubtype,
   marginTop,
   noDelete,
-  noAdd
+  noAdd,
 }: Props) => {
   const getEditButtons = () => {
     const groupFeatureId = groupData[0]?.id;
@@ -44,34 +45,29 @@ export const ItemContainerAddChildFeatureDeleteFeature = ({
     }
 
     return (
-      <div
-        style={{
-          width: "100%",
-          display: "flex",
-          flexWrap: "wrap",
-          justifyContent: "center",
-          alignItems: "center",
-          gap: "5px",
-        }}
-      >
-        {!noAdd ? <AddChildFeatureButton
-          parentFeatureId={groupFeatureId}
-          text={addButtonText}
-          pageName={pageName}
-          textTypes={textTypes}
-          type={featureType}
-          subtype={featureSubtype}
-          onChildFeatureAdded={onChildFeatureAdded}
-        /> : null }
+      <Buttons>
+        <>
+          {!noAdd ? (
+            <AddChildFeatureButton
+              parentFeatureId={groupFeatureId}
+              text={addButtonText}
+              pageName={pageName}
+              textTypes={textTypes}
+              type={featureType}
+              subtype={featureSubtype}
+              onChildFeatureAdded={onChildFeatureAdded}
+            />
+          ) : null}
 
-        {!noDelete ? (
-          <DeleteFeatureButton
-            deleteText={deleteButtonText}
-            featureData={groupData}
-            onDeleteFinished={onDeleteFinished}
-          />
-        ) : null}
-      </div>
+          {!noDelete ? (
+            <DeleteFeatureButton
+              deleteText={deleteButtonText}
+              featureData={groupData}
+              onDeleteFinished={onDeleteFinished}
+            />
+          ) : null}
+        </>
+      </Buttons>
     );
   };
   return (

@@ -1,6 +1,6 @@
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { ItemContainerUpdateDeleteTextDescription } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerUpdateDeleteTextDescription";
-import { UseItems } from "@/app/ui/CommonComponents/_upadeModal/UpdateTextDescriptionDataModalContent";
+import { UseItems } from "@/app/ui/CommonComponents/_upadeModal/UpdateTextDescriptionDataModalContent/UpdateTextDescriptionDataModalContent";
 
 import styles from "./textItemField.module.css";
 import { StaticTexts } from "@/app/dictionaries/definitions";
@@ -24,7 +24,7 @@ export const TextItemField = ({
   useItems,
 }: Props) => {
   return (
-    <div className={styles.container} >
+    <div className={styles.container}>
       {title ? <div className={styles.title}>{title}: </div> : null}
 
       <ItemContainerUpdateDeleteTextDescription

@@ -12,7 +12,7 @@ export type Props = {
   params: MainParams;
 };
 
-export const ShowTabTitle_Client = ({
+export const TabTitle = ({
   tabTitle,
   selectedTabFeatureId,
   onSelectedTabFeatureIdChanged,

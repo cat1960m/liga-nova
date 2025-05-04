@@ -1,8 +1,9 @@
 import { FullData, MainParams } from "@/app/lib/definitions";
-import { InfoCheckGroupItem } from "./InfoCheckGroupItem";
+import { InfoCheckGroupItem } from "./InfoCheckGroupItem/InfoCheckGroupItem";
 import { ItemContainerAddTextDescriptionDeleteFeature } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerAddTextDescriptionDeleteFeature";
 import { INFO_CHECK_HEADER, INFO_CHECK_ITEM } from "@/app/lib/constants";
 import { getIsEditNoDelete } from "@/app/lib/utils";
+import styles from "./infoCheckGroup.module.css";
 
 export type Props = {
   groupData: FullData[];
@@ -36,13 +37,7 @@ export const InfoCheckGroup = ({ groupData, params }: Props) => {
       marginTop={20}
       noDelete={noDelete}
     >
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "10px",
-        }}
-      >
+      <div className={styles.container}>
         {headerData ? (
           <InfoCheckGroupItem
             currentData={headerData}

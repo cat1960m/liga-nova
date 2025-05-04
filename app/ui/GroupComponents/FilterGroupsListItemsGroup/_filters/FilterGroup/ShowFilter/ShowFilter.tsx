@@ -1,7 +1,7 @@
 import { ItemContainerUpdateDeleteTextDescription } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerUpdateDeleteTextDescription";
 import { FullData, MainParams } from "@/app/lib/definitions";
 
-import styles from "./filterGroup.module.css";
+import styles from "./showFilter.module.css";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 
 export type Props = {
@@ -46,7 +46,7 @@ export const ShowFilter = ({
             });
           }}
         />
-        <div style={{ fontSize: 14 }}>{filter.text_content ?? "N/A"}</div>
+        <div className={styles.text}>{filter.text_content ?? "N/A"}</div>
         {isEdit && filter.value ? <img src={filter.value} alt="icon" /> : null}
       </div>
     </ItemContainerUpdateDeleteTextDescription>

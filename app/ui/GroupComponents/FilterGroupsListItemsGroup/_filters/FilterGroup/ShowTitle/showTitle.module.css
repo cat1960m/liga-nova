@@ -1,0 +1,12 @@
+
+
+.title {
+    font-weight: 700;
+    font-size: 16;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+

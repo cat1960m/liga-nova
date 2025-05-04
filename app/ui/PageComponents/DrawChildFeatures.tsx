@@ -1,7 +1,7 @@
 import { GROUP, LAYOUT_PARENT, TABS } from "@/app/lib/constants";
 import { FullData, MainParams } from "@/app/lib/definitions";
-import { ShowFeatureGroup } from "./ShowFeatureGroup";
-import { ShowTabs_Client } from "../GroupComponents/Tabs/Tabs";
+import { ShowFeatureGroup } from "./ShowFeatureGroup/ShowFeatureGroup";
+import { Tabs } from "../GroupComponents/Tabs/Tabs";
 import { LayoutParent } from "../GroupComponents/LayoutParent/LayoutParent";
 
 export type Props = {
@@ -39,7 +39,7 @@ export const DrawChildFeature = ({
 
   if (childFeatureFirstItem.type === TABS) {
     return (
-      <ShowTabs_Client
+      <Tabs
         tabsData={childFeatureFirstItem}
         pageFullDataList={pageFullDataList}
         params={params}

@@ -1,3 +1,16 @@
 .image {
     object-fit: cover;
-  }
+}
+
+.container {
+  border-radius: 10px;
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+}
+
+.noImage {
+  width: 100%; 
+  padding: 30px; 
+  text-align: center;
+}

@@ -1,0 +1,20 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    position: relative;
+}
+
+.container.edit {
+    border:  1px dotted magenta;
+    padding: 25px 10px 10px 10px;
+}
+
+.buttons {
+    position: absolute;
+    top: -20px;
+    left: 0;
+    right: 0;
+    height: 48px;
+}
+

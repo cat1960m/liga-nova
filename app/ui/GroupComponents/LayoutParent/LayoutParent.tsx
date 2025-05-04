@@ -1,5 +1,5 @@
 import { FullData, MainParams } from "@/app/lib/definitions";
-import { DrawFeatureContainer_Client } from "../../PageComponents/DrawFeatureContainer_Client";
+import { DrawFeatureContainer } from "../../PageComponents/DrawFeatureContainer/DrawFeatureContainer";
 import { LAYOUT_ITEM_LEFT, LAYOUT_ITEM_RIGHT } from "@/app/lib/constants";
 import styles from "./layoutParent.module.css";
 import cn from "clsx";
@@ -59,7 +59,7 @@ export const LayoutParent = ({
             [styles.edit]: isDeepMode,
           })}
         >
-          <DrawFeatureContainer_Client
+          <DrawFeatureContainer
             params={params}
             featureId={layoutItemLeft.id}
             pageFullDataList={pageFullDataList}
@@ -72,7 +72,7 @@ export const LayoutParent = ({
             [styles.edit]: isDeepMode,
           })}
         >
-          <DrawFeatureContainer_Client
+          <DrawFeatureContainer
             params={params}
             featureId={layoutItemRight.id}
             pageFullDataList={pageFullDataList}

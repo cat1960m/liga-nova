@@ -1,0 +1,14 @@
+.container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .innerContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 40px;
+    max-width: var(--max-page-width); /* Use CSS variable or replace with actual value */
+  }
+  

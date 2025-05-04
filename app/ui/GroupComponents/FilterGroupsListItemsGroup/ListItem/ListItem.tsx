@@ -1,8 +1,9 @@
 import { FullData } from "@/app/lib/definitions";
-import { SubscriptionItem } from "./_tickets/SubscriptionItem/SubscriptionItem";
-import { TrainerItem } from "./_trainers/TrainerItem";
+import { SubscriptionItem } from "../_tickets/SubscriptionItem/SubscriptionItem";
+import { TrainerItem } from "../_trainers/TrainerItem/TrainerItem";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { TICKETS_PAGE_NAME, TRAINERS_PAGE_NAME } from "@/app/lib/constants";
+import styles from "./listItem.module.css";
 
 export type Props = {
   currentData: FullData[];
@@ -18,7 +19,7 @@ export const ListItem = ({
   staticTexts,
 }: Props) => {
   return (
-    <div style={{ height: "100%" }}>
+    <div className={styles.container}>
       {pageName === TICKETS_PAGE_NAME ? (
         <SubscriptionItem currentData={currentData} staticTexts={staticTexts} />
       ) : null}

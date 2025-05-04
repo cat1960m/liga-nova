@@ -6,8 +6,8 @@ import { CommonButton } from "@/app/ui/CommonComponents/_buttons/CommonButton";
 import { LIST_ITEM, PAGE_NAMES_TO_LIST_ITEMS_DATA } from "@/app/lib/constants";
 import { getFilterIds } from "@/app/lib/utils/getFilterIds";
 import { FilterGroups } from "../_filters/FilterGroups";
-import { ListItem } from "../ListItem";
-import { EditListItem } from "../EditListItem";
+import { ListItem } from "../ListItem/ListItem";
+import { EditListItem } from "../EditListItem/EditListItem";
 
 import { updateFeatureSubtypeFilterIds } from "@/app/lib/actions_fitness";
 import { usePathname } from "next/navigation";
@@ -35,7 +35,6 @@ export const EditListItemFilter = ({
   staticTexts,
   pageName,
   isEdit,
-
 }: Props) => {
   const { changeIsEditButtonDisabled } = useEditContext();
 
@@ -102,10 +101,9 @@ export const EditListItemFilter = ({
 
   const parentFeatureId = groupData[0]?.id;
   const commonWidth = "32%";
-  
+
   const editText = PAGE_NAMES_TO_LIST_ITEMS_DATA[pageName].editText;
   const editListItemText = staticTexts[editText]?.toString() ?? "N/A";
-
 
   return (
     <div className={styles.container}>

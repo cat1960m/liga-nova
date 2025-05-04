@@ -1,6 +1,6 @@
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { SCHEDULE_ITEM, SCHEDULE_NAME } from "@/app/lib/constants";
-import { UpdateDeleteTextButtons } from "@/app/ui/CommonComponents/_buttons/UpdateDeleteTextButtons";
+import { UpdateDeleteTextButtons } from "@/app/ui/CommonComponents/_buttons/UpdateDeleteTextButtons/UpdateDeleteTextButtons";
 
 import styles from "./showScheduleGroup.module.css";
 import { StaticTexts } from "@/app/dictionaries/definitions";

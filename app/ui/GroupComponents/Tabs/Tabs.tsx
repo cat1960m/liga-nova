@@ -2,8 +2,8 @@
 
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { useState } from "react";
-import { ShowTabTitle_Client } from "./TabTitle";
-import { DrawFeatureContainer_Client } from "../../PageComponents/DrawFeatureContainer_Client";
+import { TabTitle } from "./TabTitle";
+import { DrawFeatureContainer } from "../../PageComponents/DrawFeatureContainer/DrawFeatureContainer";
 import { TAB, TAB_TITLE } from "@/app/lib/constants";
 import { ItemContainerAddChildFeatureDeleteFeature } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerAddChildFeatureDeleteFeature";
 
@@ -17,12 +17,7 @@ export type Props = {
   pageId: number;
 };
 
-export const ShowTabs_Client = ({
-  pageFullDataList,
-  tabsData,
-  params,
-  pageId,
-}: Props) => {
+export const Tabs = ({ pageFullDataList, tabsData, params, pageId }: Props) => {
   const tabTitles = pageFullDataList.filter(
     (item) => item.parent_feature_id === tabsData.id
   );
@@ -60,7 +55,7 @@ export const ShowTabs_Client = ({
           {tabTitles.map((tabTitle, index) => {
             return (
               <div key={tabTitle.id + "_" + index}>
-                <ShowTabTitle_Client
+                <TabTitle
                   tabTitle={tabTitle}
                   selectedTabFeatureId={selectedTabFeatureId}
                   onSelectedTabFeatureIdChanged={
@@ -74,7 +69,7 @@ export const ShowTabs_Client = ({
         </div>
 
         {selectedTabFeatureId ? (
-          <DrawFeatureContainer_Client
+          <DrawFeatureContainer
             params={params}
             featureId={selectedTabFeatureId}
             pageFullDataList={pageFullDataList}

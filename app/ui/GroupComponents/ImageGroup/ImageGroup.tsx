@@ -5,6 +5,8 @@ import { IMAGE } from "@/app/lib/constants";
 import { ItemContainerUpdateTextDescriptionDeleteFeature } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerUpdateTextDescriptionDeleteFeature";
 import { getIsEditNoDelete } from "@/app/lib/utils";
 
+import styles from "./imageGroup.module.css";
+
 export type Props = {
   groupData: FullData[];
   params: MainParams;
@@ -34,20 +36,8 @@ export const ShowImageGroup = ({ groupData, params }: Props) => {
       noDelete={noDelete}
     >
       {imageData?.value ? (
-        <div
-          style={{
-            width: "100%",
-            borderRadius: "10px",
-            overflow: "hidden",
-          }}
-        >
-          <div
-            style={{
-              width: "100%",
-              height: "100%",
-              //  position: "relative",
-            }}
-          >
+        <div className={styles.container}>
+          <div className={styles.body}>
             <img src={imageData?.value} alt="" width="100%" />
           </div>
         </div>

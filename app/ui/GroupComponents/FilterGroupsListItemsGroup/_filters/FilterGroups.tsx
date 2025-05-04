@@ -15,7 +15,7 @@ import { FilterGroupsBody } from "./FilterGroupsBody/FilterGroupsBody";
 import styles from "./filterGroups.module.css";
 import cn from "clsx";
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import { ItemGroupContainerCommon } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemGroupContainerCommon";
+import { ItemGroupContainerCommon } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemGroupContainerCommon/ItemGroupContainerCommon";
 
 export type Props = {
   pageFullDataList: FullData[];

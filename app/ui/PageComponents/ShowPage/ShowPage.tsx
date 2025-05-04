@@ -2,14 +2,11 @@ import { getPageFullData } from "@/app/lib/actions_fitness";
 import { DrawFeatureContainerEdit } from "../DrawFeatureContainerEdit";
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { getIsEditNoDelete } from "@/app/lib/utils";
-import {
-  ACTION_BANNER_LIST_GROUP_SUBTYPE,
-  PAGE,
-} from "@/app/lib/constants";
+import { ACTION_BANNER_LIST_GROUP_SUBTYPE, PAGE } from "@/app/lib/constants";
 
 import styles from "./showPage.module.css";
 import { ActionBannerListGroup } from "../../GroupComponents/ActionBannerListGroup/ActionBannerListGroup";
-import { DrawFeatureContainer_Client } from "../DrawFeatureContainer_Client";
+import { DrawFeatureContainer } from "../DrawFeatureContainer/DrawFeatureContainer";
 
 export type Props = {
   params: MainParams;
@@ -59,7 +56,7 @@ export const ShowPage = async ({ params, isAuthenticated, isMain }: Props) => {
       ) : null}
       <div className={styles.body}>
         {!isAuthenticated || !isEdit ? (
-          <DrawFeatureContainer_Client
+          <DrawFeatureContainer
             params={params}
             featureId={pageId}
             pageFullDataList={pageFullData}

@@ -7,7 +7,7 @@ import {
   UpdateFeatureOrder,
 } from "@/app/lib/actions_fitness";
 import { usePathname } from "next/navigation";
-import { CommonButton } from "./CommonButton";
+import { CommonButton } from "../CommonButton";
 import axios from "axios";
 import { Feature, FullData } from "@/app/lib/definitions";
 import {
@@ -15,9 +15,11 @@ import {
   ICON_IN_BUTTON_WIDTH,
   S3_TYPES,
 } from "@/app/lib/constants";
-import { useEditContext } from "../../PageComponents/EditContextProvider";
-import { ChangeOrderButtons } from "./ChangeOrderButtons/ChangeOrderButtons";
+import { useEditContext } from "../../../PageComponents/EditContextProvider";
+import { ChangeOrderButtons } from "../ChangeOrderButtons/ChangeOrderButtons";
 import { TrashIcon } from "@heroicons/react/24/outline";
+
+import styles from "./deleteFeatureButton.module.css";
 
 export const DeleteFeatureButton = ({
   deleteText,
@@ -120,15 +122,7 @@ export const DeleteFeatureButton = ({
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        gap: "5px",
-        alignItems: "center",
-        justifyContent: "center",
-        flexWrap: "wrap",
-      }}
-    >
+    <div className={styles.container}>
       {!noDelete ? (
         <CommonButton
           onClick={handleDelete}

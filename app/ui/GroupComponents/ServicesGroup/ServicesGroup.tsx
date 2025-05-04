@@ -1,7 +1,7 @@
 import { SERVICE_ITEM, TOOLTIP } from "@/app/lib/constants";
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { ServicesText } from "./ServicesText/ServicesText";
-import { UpdateDeleteTextButtons } from "@/app/ui/CommonComponents/_buttons/UpdateDeleteTextButtons";
+import { UpdateDeleteTextButtons } from "@/app/ui/CommonComponents/_buttons/UpdateDeleteTextButtons/UpdateDeleteTextButtons";
 import { ItemContainerAddTextDescriptionDeleteFeature } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerAddTextDescriptionDeleteFeature";
 
 import styles from "./servicesGroup.module.css";

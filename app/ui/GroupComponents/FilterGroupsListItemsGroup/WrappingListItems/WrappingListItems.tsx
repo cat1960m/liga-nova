@@ -4,8 +4,8 @@ import { FullData, MainParams } from "@/app/lib/definitions";
 import { CommonButton } from "@/app/ui/CommonComponents/_buttons/CommonButton";
 import { getContainerData } from "@/app/lib/utils";
 import { useMemo } from "react";
-import { DeleteFeatureButton } from "@/app/ui/CommonComponents/_buttons/DeleteFeatureButton";
-import { ListItem } from "../ListItem";
+import { DeleteFeatureButton } from "@/app/ui/CommonComponents/_buttons/DeleteFeatureButton/DeleteFeatureButton";
+import { ListItem } from "../ListItem/ListItem";
 import {
   ICON_BUTTON_WIDTH,
   ICON_IN_BUTTON_WIDTH,
@@ -14,7 +14,7 @@ import {
 
 import styles from "./wrappingListItems.module.css";
 import { PencilIcon } from "@heroicons/react/24/outline";
-import { ItemGroupContainerCommon } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemGroupContainerCommon";
+import { ItemGroupContainerCommon } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemGroupContainerCommon/ItemGroupContainerCommon";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 
 export type Props = {
@@ -35,8 +35,8 @@ export const WrappingListItems = ({
   selectedFilterTextDescriptionIds,
   editTextButton,
   isEdit,
-  staticTexts, 
-  pageName
+  staticTexts,
+  pageName,
 }: Props) => {
   const containerFullData = useMemo(
     () =>
@@ -48,7 +48,12 @@ export const WrappingListItems = ({
         subtype: LIST_ITEM,
         selectedFilterTextDescriptionIds,
       }),
-    [pageFullDataList, parentFeatureId, selectedFilterTextDescriptionIds, pageName,]
+    [
+      pageFullDataList,
+      parentFeatureId,
+      selectedFilterTextDescriptionIds,
+      pageName,
+    ]
   );
 
   if (!containerFullData) {

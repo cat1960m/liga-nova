@@ -1,6 +1,7 @@
+import styles from "./infoCheckGroupItem.module.css";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { INFO_CHECK_HEADER } from "@/app/lib/constants";
-import { FullData, MainParams } from "@/app/lib/definitions";
+import { FullData } from "@/app/lib/definitions";
 import { ItemContainerUpdateDeleteTextDescription } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerUpdateDeleteTextDescription";
 
 export type Props = {
@@ -20,14 +21,7 @@ export const InfoCheckGroupItem = ({
   const text = currentData.text_content ?? "N/A";
 
   return (
-    <div
-      style={{
-        flexGrow: 2,
-        fontWeight: isHeader ? 700 : 300,
-        fontSize: isHeader ? 20 : 18,
-        marginBottom: "15px",
-      }}
-    >
+    <div className={`${styles.container} ${isHeader ? styles.header : ""}`}>
       <ItemContainerUpdateDeleteTextDescription
         useItems={{ text: "simple" }}
         isEdit={isEdit}
@@ -37,26 +31,8 @@ export const InfoCheckGroupItem = ({
         isChangeOrder={!isHeader}
         isChangeOrderHorizontal={false}
       >
-        <div style={{ display: "flex", gap: "5px", alignItems: "flex-start" }}>
-          {!isHeader ? (
-            <div
-              style={{
-                width: "16px",
-                minWidth: "16px",
-                height: "16px",
-                borderRadius: "8px",
-                border: "2px solid blue",
-                color: "#2575fc",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontSize: "small",
-                marginTop: "5px",
-              }}
-            >
-              v
-            </div>
-          ) : null}
+        <div className={styles.itemWrapper}>
+          {!isHeader ? <div className={styles.icon}>v</div> : null}
           <div>{text}</div>
         </div>
       </ItemContainerUpdateDeleteTextDescription>

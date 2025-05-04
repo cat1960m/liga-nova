@@ -25,25 +25,27 @@ import {
   TEXT_HEADER_GROUP_SUBTYPE,
   DIVIDER,
 } from "@/app/lib/constants";
-import { InfoCheckGroup } from "../GroupComponents/InfoCheckGroup/InfoCheckGroup";
-import { ServicesGroup } from "../GroupComponents/ServicesGroup/ServicesGroup";
+import { InfoCheckGroup } from "../../GroupComponents/InfoCheckGroup/InfoCheckGroup";
+import { ServicesGroup } from "../../GroupComponents/ServicesGroup/ServicesGroup";
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import { ShowScheduleGroup } from "../GroupComponents/ScheduleGroup/ScheduleGroup";
-import { AdditionalPageDataGroup } from "../GroupComponents/AdditionalPageDataGroup/AdditionalPageDataGroup";
-import { FilterGroupsListItemsGroup } from "../GroupComponents/FilterGroupsListItemsGroup/FilterGroupsListItemsGroup/FilterGroupsListItemsGroup";
-import { ShowImageListGroup } from "../GroupComponents/ImageListGroup/ImageListGroup";
-import { ActionBannerGroup } from "../GroupComponents/ActionBannerGroup/ActionBannerGroup";
-import { LigaGroup } from "../GroupComponents/LigaGroup/LigaGroup";
-import { CalendarEventsGroup } from "../GroupComponents/CalendarEventsGroup/CalendarEventsGroup";
-import { ShowImageGroup } from "../GroupComponents/ImageGroup/ImageGroup";
-import { ImageLinksGroup } from "../GroupComponents/ImageLinksGroup/Image:LinksGroup";
-import { InfoGroup } from "../GroupComponents/InfoGroup/InfoGroup";
-import { ImageActionsGroup } from "../GroupComponents/ImageAtionGroup/ImageActionsGroup";
-import { ActionBannerListGroup } from "../GroupComponents/ActionBannerListGroup/ActionBannerListGroup";
-import { TextListGroup } from "../GroupComponents/TextListGroup/TextListGroup";
-import { TextGroup } from "../GroupComponents/TextGroup/TextGroup";
-import { DividerGroup } from "../GroupComponents/DividerGroup/DividerGroup";
-import { TextHeaderGroup } from "../GroupComponents/TextHeaderGroup/TextHeaderGroup";
+import { ShowScheduleGroup } from "../../GroupComponents/ScheduleGroup/ScheduleGroup";
+import { AdditionalPageDataGroup } from "../../GroupComponents/AdditionalPageDataGroup/AdditionalPageDataGroup";
+import { FilterGroupsListItemsGroup } from "../../GroupComponents/FilterGroupsListItemsGroup/FilterGroupsListItemsGroup/FilterGroupsListItemsGroup";
+import { ShowImageListGroup } from "../../GroupComponents/ImageListGroup/ImageListGroup";
+import { ActionBannerGroup } from "../../GroupComponents/ActionBannerGroup/ActionBannerGroup";
+import { LigaGroup } from "../../GroupComponents/LigaGroup/LigaGroup";
+import { CalendarEventsGroup } from "../../GroupComponents/CalendarEventsGroup/CalendarEventsGroup";
+import { ShowImageGroup } from "../../GroupComponents/ImageGroup/ImageGroup";
+import { ImageLinksGroup } from "../../GroupComponents/ImageLinksGroup/Image:LinksGroup";
+import { InfoGroup } from "../../GroupComponents/InfoGroup/InfoGroup";
+import { ImageActionsGroup } from "../../GroupComponents/ImageAtionGroup/ImageActionsGroup";
+import { ActionBannerListGroup } from "../../GroupComponents/ActionBannerListGroup/ActionBannerListGroup";
+import { TextListGroup } from "../../GroupComponents/TextListGroup/TextListGroup";
+import { TextGroup } from "../../GroupComponents/TextGroup/TextGroup";
+import { DividerGroup } from "../../GroupComponents/DividerGroup/DividerGroup";
+import { TextHeaderGroup } from "../../GroupComponents/TextHeaderGroup/TextHeaderGroup";
+
+import styles from "./showFeatureGroup.module.css";
 
 export type Props = {
   groupData: FullData[];
@@ -105,11 +107,7 @@ export const ShowFeatureGroup = ({
   const isTextGroup = TEXT_GROUP_SUBTYPES.includes(firstData?.subtype);
 
   return (
-    <div
-      style={{
-        width: "100%",
-      }}
-    >
+    <div className={styles.container}>
       {isDivider ? (
         <DividerGroup featureData={groupData} params={params} />
       ) : null}
