@@ -6,7 +6,7 @@ import postgres from "postgres";
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: "require" });
 
 export async function POST(req: Request) {
-  const { originalText, translatedText, targetLang } = await req.json();
+  const { translatedText } = await req.json();
 
   const email = "example@e.com";
   const image_url = "";

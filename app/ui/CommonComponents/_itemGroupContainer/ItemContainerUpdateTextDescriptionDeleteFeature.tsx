@@ -5,6 +5,8 @@ import { StaticTexts } from "@/app/dictionaries/definitions";
 import { UpdateTextDescriptionData } from "../_upadeModal/UpdateTextDescriptionData";
 import { DeleteFeatureChangeOrderButtons } from "../_buttons/DeleteFeatureChangeOrderButtons/DeleteFeatureChangeOrderButtons";
 import { Buttons } from "./Buttons/Buttons";
+import { Suspense } from "react";
+import { CommonButton } from "../_buttons/CommonButton";
 
 export type Props = {
   children: React.ReactNode;
@@ -44,12 +46,12 @@ export const ItemContainerUpdateTextDescriptionDeleteFeature = ({
         ) : null}
 
         {!noDelete ? (
-          <DeleteFeatureChangeOrderButtons
-            deleteText={staticTexts.delete ?? "N/A"}
-            featureData={featureData}
-            isChangeOrderHorizontal={isChangeOrderHorizontal}
-            noDelete={noDelete}
-          />
+            <DeleteFeatureChangeOrderButtons
+              deleteText={staticTexts.delete ?? "N/A"}
+              featureData={featureData}
+              isChangeOrderHorizontal={isChangeOrderHorizontal}
+              noDelete={noDelete}
+            />
         ) : null}
       </Buttons>
     );

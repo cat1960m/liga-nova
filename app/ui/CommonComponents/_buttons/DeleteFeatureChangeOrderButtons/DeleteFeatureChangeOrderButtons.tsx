@@ -20,7 +20,7 @@ import { ChangeOrderButtons } from "../ChangeOrderButtons/ChangeOrderButtons";
 import { TrashIcon } from "@heroicons/react/24/outline";
 
 import styles from "./deleteFeatureChangeOrderButtons.module.css";
-import { useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 
 export const DeleteFeatureChangeOrderButtons = ({
   deleteText,
@@ -69,7 +69,7 @@ export const DeleteFeatureChangeOrderButtons = ({
     };
 
     getFeatures();
-  }, [parentFeatureId, type,subtype]);
+  }, [parentFeatureId, type, subtype]);
 
   if (!parentFeatureId || !featureFirst || !featureId || !type || !subtype) {
     return null;
@@ -163,11 +163,7 @@ export const DeleteFeatureChangeOrderButtons = ({
       ) : null}
 
       {!noChangeOrder && countSibling === null ? (
-        <CommonButton
-          width={ICON_BUTTON_WIDTH}
-          isDisabled={true}
-          text="?"
-        />
+        <CommonButton width={ICON_BUTTON_WIDTH} isDisabled={true} text="?" />
       ) : null}
     </div>
   );

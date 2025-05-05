@@ -3,6 +3,8 @@ import { ItemGroupContainerCommon } from "./ItemGroupContainerCommon/ItemGroupCo
 import { AddTextDescriptionButton } from "../_buttons/AddTextDescriptionButton";
 import { DeleteFeatureChangeOrderButtons } from "../_buttons/DeleteFeatureChangeOrderButtons/DeleteFeatureChangeOrderButtons";
 import { Buttons } from "./Buttons/Buttons";
+import { CommonButton } from "../_buttons/CommonButton";
+import { Suspense } from "react";
 
 export type Props = {
   children: React.ReactNode;
@@ -54,13 +56,13 @@ export const ItemContainerAddTextDescriptionDeleteFeature = ({
           ) : null}
 
           {!noDelete ? (
-            <DeleteFeatureChangeOrderButtons
-              deleteText={deleteButtonText}
-              featureData={featureData}
-              isChangeOrderHorizontal={isChangeOrderHorizontal}
-              onDeleteFinished={onDeleteFinished}
-              noDelete={noDelete}
-            />
+              <DeleteFeatureChangeOrderButtons
+                deleteText={deleteButtonText}
+                featureData={featureData}
+                isChangeOrderHorizontal={isChangeOrderHorizontal}
+                onDeleteFinished={onDeleteFinished}
+                noDelete={noDelete}
+              />
           ) : null}
         </>
       </Buttons>

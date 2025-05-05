@@ -21,7 +21,7 @@ export async function POST(req: Request) {
 
     try {
       const command = new DeleteObjectCommand(params);
-      const response = await s3Client.send(command);
+      await s3Client.send(command);
       console.log("-------------deleted " + s3Key);
       return NextResponse.json({ result: "OK" });
     } catch (error) {

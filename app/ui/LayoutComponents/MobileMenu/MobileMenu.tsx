@@ -2,8 +2,6 @@
 
 import { Bars3Icon, PhoneIcon } from "@heroicons/react/24/outline";
 import styles from "./mobileMenu.module.css";
-import Link from "next/link";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import { PageData } from "@/app/lib/definitions";
 import { MobileMenuOpen } from "./MobileMenuOpen/MobileMenuOpen";

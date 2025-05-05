@@ -3,6 +3,7 @@
 import {
   ACTION_BANNER_LIST_DESCRIPTION,
   ACTION_BANNER_LIST_GROUP_ITEM,
+  ACTION_BANNER_LIST_GROUP_SUBTYPE,
   ACTION_BANNER_LIST_IMAGE,
   ACTION_BANNER_LIST_SHARE,
   ACTION_BANNER_LIST_TICKET,
@@ -15,19 +16,20 @@ import { ItemContainerAddChildFeatureDeleteFeature } from "../../CommonComponent
 import { ScrollContainer } from "../../CommonComponents/ScrollContainer/ScrollContainer";
 
 export type Props = {
-  groupData: FullData[];
   params: MainParams;
   pageFullDataList: FullData[];
 };
 //main page
 export const ActionBannerListGroup = ({
-  groupData,
   params,
   pageFullDataList,
 }: Props) => {
   const [lastAddedId, setLastAddedId] = useState<number | null>(null);
   const ref = useRef<HTMLDivElement>(null);
 
+  const groupData = pageFullDataList.filter(
+      (item) => item.subtype === ACTION_BANNER_LIST_GROUP_SUBTYPE
+  );
   const groupFeatureId = groupData[0]?.id;
 
   if (!groupFeatureId) {

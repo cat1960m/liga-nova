@@ -11,8 +11,6 @@ import {
   LIGA_GROUP_SUBTYPE,
   CALENDAR_EVENTS_GROUP_SUBTYPE,
   INFO_CHECK_GROUP_SUBTYPE,
-  INFO_CHECK_HEADER,
-  INFO_CHECK_ITEM,
   IMAGE_GROUP_SUBTYPE,
   INFO_SUBTYPE,
   INFO_ACTION_SUBTYPES,
@@ -27,7 +25,6 @@ import {
 } from "@/app/lib/constants";
 import { InfoCheckGroup } from "../../GroupComponents/InfoCheckGroup/InfoCheckGroup";
 import { ServicesGroup } from "../../GroupComponents/ServicesGroup/ServicesGroup";
-import { StaticTexts } from "@/app/dictionaries/definitions";
 import { ShowScheduleGroup } from "../../GroupComponents/ScheduleGroup/ScheduleGroup";
 import { AdditionalPageDataGroup } from "../../GroupComponents/AdditionalPageDataGroup/AdditionalPageDataGroup";
 import { FilterGroupsListItemsGroup } from "../../GroupComponents/FilterGroupsListItemsGroup/FilterGroupsListItemsGroup/FilterGroupsListItemsGroup";
@@ -39,7 +36,6 @@ import { ShowImageGroup } from "../../GroupComponents/ImageGroup/ImageGroup";
 import { ImageLinksGroup } from "../../GroupComponents/ImageLinksGroup/Image:LinksGroup";
 import { InfoGroup } from "../../GroupComponents/InfoGroup/InfoGroup";
 import { ImageActionsGroup } from "../../GroupComponents/ImageAtionGroup/ImageActionsGroup";
-import { ActionBannerListGroup } from "../../GroupComponents/ActionBannerListGroup/ActionBannerListGroup";
 import { TextListGroup } from "../../GroupComponents/TextListGroup/TextListGroup";
 import { TextGroup } from "../../GroupComponents/TextGroup/TextGroup";
 import { DividerGroup } from "../../GroupComponents/DividerGroup/DividerGroup";
@@ -51,7 +47,6 @@ export type Props = {
   groupData: FullData[];
   pageFullDataList: FullData[];
   params: MainParams;
-  parentFeatureId: number;
   pageId: number;
 };
 
@@ -59,7 +54,6 @@ export const ShowFeatureGroup = ({
   groupData,
   pageFullDataList,
   params,
-  parentFeatureId,
   pageId,
 }: Props) => {
   const firstData = groupData[0];
@@ -93,9 +87,6 @@ export const ShowFeatureGroup = ({
     ACTION_BANNER_GROUP_SUBTYPE,
     ACTION_BANNER_TRY_GROUP_SUBTYPE,
   ].includes(firstData?.subtype);
-  const isActionBannerListGroup =
-    firstData?.subtype === ACTION_BANNER_LIST_GROUP_SUBTYPE &&
-    params.pageName !== HOME;
 
   const isTextListGroup = firstData?.subtype === TEXT_LIST_GROUP_SUBTYPE;
 
@@ -160,14 +151,6 @@ export const ShowFeatureGroup = ({
 
       {isTextListGroup ? (
         <TextListGroup
-          groupData={groupData}
-          params={params}
-          pageFullDataList={pageFullDataList}
-        />
-      ) : null}
-
-      {isActionBannerListGroup ? (
-        <ActionBannerListGroup
           groupData={groupData}
           params={params}
           pageFullDataList={pageFullDataList}

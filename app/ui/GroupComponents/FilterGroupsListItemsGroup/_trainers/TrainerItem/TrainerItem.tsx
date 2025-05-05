@@ -15,6 +15,7 @@ import { ExpandedText } from "@/app/ui/CommonComponents/ExpandedText/ExpandedTex
 import { CommonButton } from "@/app/ui/CommonComponents/_buttons/CommonButton";
 import styles from "./trainerItem.module.css";
 import cn from "clsx";
+import { Register } from "../Register/Register";
 
 const PREMIUM = "premium%28--0%29";
 
@@ -31,6 +32,7 @@ export const TrainerItem = ({
 }: Props) => {
   const [icons, setIcons] = useState<FullData[]>([]);
   const [isMouseIn, setIsMouseIn] = useState(false);
+  const [isFormShown, setIsFormShown] = useState(false);
 
   const filters = useMemo(() => {
     if (!currentData.length) {
@@ -72,6 +74,10 @@ export const TrainerItem = ({
   const premiumIcon = icons.find((icon) => icon.value?.includes(PREMIUM));
 
   const photoValue = name.value;
+
+  const handleClick = () => {
+    setIsFormShown(true);
+  };
 
   return (
     <div className={styles.container}>
@@ -124,7 +130,13 @@ export const TrainerItem = ({
         isHTML
       />
 
-      <CommonButton isAction text={staticTexts.signUpForTraining} />
+      <CommonButton
+        isAction
+        text={staticTexts.signUpForTraining}
+        onClick={handleClick}
+      />
+
+      {isFormShown ? <Register onClose={() => setIsFormShown(false)} id={currentData[0]?.id}/> : null}
     </div>
   );
 };

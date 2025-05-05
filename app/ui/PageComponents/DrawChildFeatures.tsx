@@ -31,7 +31,6 @@ export const DrawChildFeature = ({
         groupData={childFeatureDataList}
         pageFullDataList={pageFullDataList}
         params={params}
-        parentFeatureId={parentFeatureId}
         pageId={pageId}
       />
     );

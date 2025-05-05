@@ -1,6 +1,8 @@
 import { FullData } from "@/app/lib/definitions";
 import { ItemGroupContainerCommon } from "./ItemGroupContainerCommon/ItemGroupContainerCommon";
 import { DeleteFeatureChangeOrderButtons } from "../_buttons/DeleteFeatureChangeOrderButtons/DeleteFeatureChangeOrderButtons";
+import { Suspense } from "react";
+import { CommonButton } from "../_buttons/CommonButton";
 
 export type Props = {
   children: React.ReactNode;
@@ -26,14 +28,14 @@ export const ItemContainerDeleteFeature = ({
   marginTop,
 }: Props) => {
   const getEditButtons = () => (
-    <DeleteFeatureChangeOrderButtons
-      deleteText={deleteText}
-      onDeleteFinished={onDeleteFinished}
-      featureData={featureData}
-      isChangeOrderHorizontal={isChangeOrderHorizontal}
-      noChangeOrder={noChangeOrder}
-      noDelete={noDelete}
-    />
+      <DeleteFeatureChangeOrderButtons
+        deleteText={deleteText}
+        onDeleteFinished={onDeleteFinished}
+        featureData={featureData}
+        isChangeOrderHorizontal={isChangeOrderHorizontal}
+        noChangeOrder={noChangeOrder}
+        noDelete={noDelete}
+      />
   );
   return (
     <ItemGroupContainerCommon

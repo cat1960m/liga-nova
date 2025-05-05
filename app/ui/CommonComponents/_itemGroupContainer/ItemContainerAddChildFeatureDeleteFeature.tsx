@@ -60,11 +60,11 @@ export const ItemContainerAddChildFeatureDeleteFeature = ({
           ) : null}
 
           {!noDelete ? (
-            <DeleteFeatureChangeOrderButtons
-              deleteText={deleteButtonText}
-              featureData={groupData}
-              onDeleteFinished={onDeleteFinished}
-            />
+              <DeleteFeatureChangeOrderButtons
+                deleteText={deleteButtonText}
+                featureData={groupData}
+                onDeleteFinished={onDeleteFinished}
+              />
           ) : null}
         </>
       </Buttons>

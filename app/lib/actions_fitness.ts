@@ -34,6 +34,8 @@ export const getPageTitles = async (lang: string) => {
   }
 };
 
+
+
 export const getFeatureChildren = async ({
   parentFeatureId,
   type,
@@ -55,14 +57,14 @@ export const getFeatureChildren = async ({
     const isContainer = CONTAINER_TYPES.includes(parentFeature?.type);
 
     if (isPage || isContainer) {
-      return await sql<Feature[]>`SELECT
+      return /* await */ sql<Feature[]>`SELECT
                *
                FROM features
                WHERE features.parent_feature_id=${parentFeatureId} 
                ORDER BY feature_order`;
     }
 
-    return await sql<Feature[]>`SELECT
+    return /* await */ sql<Feature[]>`SELECT
                *
                FROM features
                WHERE features.parent_feature_id=${parentFeatureId} 

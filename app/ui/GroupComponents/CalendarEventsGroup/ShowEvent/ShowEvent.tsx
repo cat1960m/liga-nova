@@ -16,7 +16,7 @@ import { DeleteFeatureChangeOrderButtons } from "@/app/ui/CommonComponents/_butt
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { FullData } from "@/app/lib/definitions";
 import styles from "./showEvent.module.css";
-import { MouseEventHandler, useState } from "react";
+import { MouseEventHandler, Suspense, useState } from "react";
 import { PencilIcon } from "@heroicons/react/24/outline";
 
 import cn from "clsx";

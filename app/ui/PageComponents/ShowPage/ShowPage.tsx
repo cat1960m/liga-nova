@@ -2,7 +2,8 @@ import { getPageFullData } from "@/app/lib/actions_fitness";
 import { DrawFeatureContainerEdit } from "../DrawFeatureContainerEdit";
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { getIsEditNoDelete } from "@/app/lib/utils";
-import { ACTION_BANNER_LIST_GROUP_SUBTYPE, PAGE } from "@/app/lib/constants";
+import { PAGE } from "@/app/lib/constants";
+import { notFound } from "next/navigation";
 
 import styles from "./showPage.module.css";
 import { ActionBannerListGroup } from "../../GroupComponents/ActionBannerListGroup/ActionBannerListGroup";
@@ -32,23 +33,18 @@ export const ShowPage = async ({ params, isAuthenticated, isMain }: Props) => {
   );
 
   if (!currentPageData) {
-    return null;
+    //return null;
+    notFound();
   }
 
   const pageId = currentPageData.id;
 
-  const headerData = isMain
-    ? pageFullData.filter(
-        (item) => item.subtype === ACTION_BANNER_LIST_GROUP_SUBTYPE
-      )
-    : null;
 
   return (
     <div className={styles.container}>
-      {headerData ? (
+      {isMain ? (
         <header>
           <ActionBannerListGroup
-            groupData={headerData}
             params={params}
             pageFullDataList={pageFullData}
           />
