@@ -28,13 +28,11 @@ export const getPageTitles = async (lang: string) => {
                AND a.type = 'page' 
                AND b.text_type ='title'
                AND c.language = ${lang}`;
-  } catch (error) {
+  } catch {
     // If a database error occurs, return a more specific error.
     return null;
   }
 };
-
-
 
 export const getFeatureChildren = async ({
   parentFeatureId,
@@ -70,7 +68,7 @@ export const getFeatureChildren = async ({
                WHERE features.parent_feature_id=${parentFeatureId} 
                AND features.type=${type} AND features.subtype=${subtype}
                ORDER BY feature_order`;
-  } catch (error) {
+  } catch {
     // If a database error occurs, return a more specific error.
     return null;
   }
@@ -93,7 +91,7 @@ export const updateFeatureSubtypeFilterIds = async ({
                WHERE id = ${id}`;
     revalidatePath(pathName);
     return;
-  } catch (error) {
+  } catch {
     // If a database error occurs, return a more specific error.
     return null;
   }
@@ -119,7 +117,7 @@ export const updatePriceValueLink = async ({
 
     revalidatePath(pathName);
     return;
-  } catch (error) {
+  } catch {
     // If a database error occurs, return a more specific error.
     return null;
   }
@@ -141,7 +139,7 @@ export const updateTextDescriptionValue = async ({
 
     revalidatePath(pathName);
     return;
-  } catch (error) {
+  } catch {
     // If a database error occurs, return a more specific error.
     return null;
   }
@@ -185,7 +183,7 @@ export const RemoveFeature = async ({
     }
 
     return true;
-  } catch (error) {
+  } catch {
     // If a database error occurs, return a more specific error.
     return null;
   }
@@ -205,7 +203,7 @@ export const RemoveFeatureBySubtype = async ({
       revalidatePath(pathName);
     }
     return true;
-  } catch (error) {
+  } catch {
     // If a database error occurs, return a more specific error.
     return null;
   }
@@ -223,7 +221,7 @@ export const RemoveTextDescription = async ({
                WHERE text_descriptions.id = ${id}`;
     revalidatePath(pathName);
     return true;
-  } catch (error) {
+  } catch {
     // If a database error occurs, return a more specific error.
     return null;
   }
@@ -250,7 +248,7 @@ export const addText = async ({
 
     revalidatePath(pathName);
     return newTextContent;
-  } catch (error) {
+  } catch {
     // If a database error occurs, return a more specific error.
     return null;
   }
@@ -260,7 +258,6 @@ export const updateText = async ({
   id,
   text,
   pathName,
-  contentType,
 }: {
   id: number;
   text: string | null;
@@ -273,7 +270,7 @@ export const updateText = async ({
                WHERE id = ${id}`;
     revalidatePath(pathName);
     return;
-  } catch (error) {
+  } catch {
     // If a database error occurs, return a more specific error.
     return null;
   }
@@ -310,7 +307,8 @@ export const addChildFeature = async ({
     const newFeatureId: number = newFeatures[0]?.id;
 
     if (newFeatureId) {
-      const promises: any[] = [];
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const promises: Promise<any>[] = [];
 
       text_types.forEach((textType) => {
         const price = textType === SERVICE_ITEM ? 0 : null;
@@ -329,7 +327,7 @@ export const addChildFeature = async ({
 
       return newFeatureId;
     }
-  } catch (error) {
+  } catch {
     // If a database error occurs, return a more specific error.
     return null;
   }
@@ -363,7 +361,7 @@ export const addTextDescription = async ({
     revalidatePath(pathName);
 
     return newTextDEscriptionId;
-  } catch (error) {
+  } catch {
     return null;
   }
   return null;
@@ -379,7 +377,7 @@ export const getTextContents = async ({
                *
                FROM text_contents c
                WHERE c.text_description_id = ${text_description_id}`;
-  } catch (error) {
+  } catch {
     // If a database error occurs, return a more specific error.
     return null;
   }
@@ -398,7 +396,7 @@ export const getTextDescriptions = async ({
                FROM text_descriptions b
                WHERE b.feature_id = ${featureId} AND b.text_type =${textType}
                ORDER BY b.text_description_order`;
-  } catch (error) {
+  } catch {
     // If a database error occurs, return a more specific error.
     return null;
   }
@@ -417,7 +415,7 @@ export const getTabsTitles = async ({
                WHERE b.feature_id = a.id
                AND a.parent_feature_id = ${tabsFeatureId}
                AND b.text_type = ${text_type};`;
-  } catch (error) {
+  } catch {
     // If a database error occurs, return a more specific error.
     return null;
   }
@@ -445,7 +443,7 @@ export const getPageFullDataOld = async ({
         name = (SELECT additional_page_name FROM features WHERE name=${pageName} AND type='page')) 
         AND (language = ${lang} or language is null)
         ORDER BY feature_order, text_description_order`;
-  } catch (error) {
+  } catch {
     // If a database error occurs, return a more specific error.
     return null;
   }
@@ -480,7 +478,7 @@ export const getPageFullData = async ({
         WHERE  (name = ${pageName} OR name = ANY (${sql.array(names)})) 
         AND (language = ${lang} or language is null)
         ORDER BY feature_order, text_description_order`;
-  } catch (error) {
+  } catch {
     // If a database error occurs, return a more specific error.
     return null;
   }
@@ -495,6 +493,7 @@ export const addFilterTextDescriptionIdsToFeatureId = async ({
   textDescriptionIds: number[];
   pathName: string;
 }) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const promises: Promise<any>[] = [];
 
   textDescriptionIds.forEach((textDescriptionId) => {
@@ -515,7 +514,7 @@ export const getAllFeatures = async () => {
     return await sql<Feature[]>`SELECT
                *
                FROM features  order by id`;
-  } catch (error) {
+  } catch {
     // If a database error occurs, return a more specific error.
     return null;
   }
@@ -532,7 +531,7 @@ export const UpdateFeatureOrder = async ({
     return await sql`Update  features
                SET  feature_order = ${order}
                WHERE id = ${id}`;
-  } catch (error) {
+  } catch {
     // If a database error occurs, return a more specific error.
     return null;
   }
@@ -543,7 +542,7 @@ export const getAllTextDescription = async () => {
     return await sql<Feature[]>`SELECT
                *
                FROM text_descriptions  order by id`;
-  } catch (error) {
+  } catch {
     // If a database error occurs, return a more specific error.
     return null;
   }
@@ -560,7 +559,7 @@ export const UpdateTextDescriptionsOrder = async ({
     return await sql`Update  text_descriptions
                SET  text_description_order = ${order}
                WHERE id = ${id}`;
-  } catch (error) {
+  } catch {
     // If a database error occurs, return a more specific error.
     return null;
   }
@@ -578,7 +577,7 @@ export const addIcon = async ({
   pathName: string;
 }): Promise<number | null> => {
   const date = new Date();
-  let time = date.getTime();
+  const time = date.getTime();
   const name = ICON;
 
   try {
@@ -600,7 +599,7 @@ export const addIcon = async ({
 
       return newFeatureId;
     }
-  } catch (error) {
+  } catch {
     // If a database error occurs, return a more specific error.
     return null;
   }

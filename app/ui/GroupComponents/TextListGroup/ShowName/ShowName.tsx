@@ -1,4 +1,4 @@
-import { FullData, MainParams } from "@/app/lib/definitions";
+import { FullData } from "@/app/lib/definitions";
 import { ItemContainerUpdateDeleteTextDescription } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerUpdateDeleteTextDescription";
 
 import styles from "./showName.module.css";

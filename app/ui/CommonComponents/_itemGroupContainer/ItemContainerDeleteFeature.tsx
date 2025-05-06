@@ -1,8 +1,6 @@
 import { FullData } from "@/app/lib/definitions";
 import { ItemGroupContainerCommon } from "./ItemGroupContainerCommon/ItemGroupContainerCommon";
 import { DeleteFeatureChangeOrderButtons } from "../_buttons/DeleteFeatureChangeOrderButtons/DeleteFeatureChangeOrderButtons";
-import { Suspense } from "react";
-import { CommonButton } from "../_buttons/CommonButton";
 
 export type Props = {
   children: React.ReactNode;

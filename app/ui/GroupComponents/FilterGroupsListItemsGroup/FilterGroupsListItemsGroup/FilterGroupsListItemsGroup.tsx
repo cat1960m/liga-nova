@@ -35,7 +35,7 @@ export const FilterGroupsListItemsGroup = ({
   if (!parentFeatureId) {
     return null;
   }
-  const { staticTexts, pageName, lang, editMode } = params;
+  const { staticTexts, pageName, lang } = params;
   const { isEdit, noDelete } = getIsEditNoDelete(params);
 
   const handleFilterSelectionChanged = ({

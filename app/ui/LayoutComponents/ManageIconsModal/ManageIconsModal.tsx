@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { CommonButton } from "../../CommonComponents/_buttons/CommonButton";
-import { FullData, MainParams } from "@/app/lib/definitions";
+import { FullData } from "@/app/lib/definitions";
 import { addIcon, getPageFullData } from "@/app/lib/actions_fitness";
 import { usePathname, useSearchParams } from "next/navigation";
 import { ManageImages } from "./ManageImages/ManageImages";
@@ -23,18 +23,18 @@ export const ManageIconsModal = ({ lang }: { lang: string }) => {
     setIsModalShown(true);
   };
 
-  const getIcons = async () => {
+  const getIcons = useCallback(async () => {
     const pageFullData: FullData[] | null = await getPageFullData({
       lang,
       pageName: "icon",
     });
 
     setIconsData(pageFullData ?? []);
-  };
+  }, [lang]);
 
   useEffect(() => {
     getIcons();
-  }, []);
+  }, [getIcons]);
 
   const handleIconUploaded = async (value: string) => {
     await addIcon({ value, pathName });

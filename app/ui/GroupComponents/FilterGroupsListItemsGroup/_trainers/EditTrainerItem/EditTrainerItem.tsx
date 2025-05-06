@@ -1,7 +1,7 @@
 "use client";
 
 import { TextItemField } from "../../TextItemField/TextItemField";
-import { FullData, MainParams } from "@/app/lib/definitions";
+import { FullData  } from "@/app/lib/definitions";
 import {
   TRAINER_ITEM_DESCRIPTION,
   TRAINER_ITEM_IS_PREMIUM,

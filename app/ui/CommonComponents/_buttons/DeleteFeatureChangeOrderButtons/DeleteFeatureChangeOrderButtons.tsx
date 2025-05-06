@@ -83,7 +83,8 @@ export const DeleteFeatureChangeOrderButtons = ({
     const imageData = featureData.filter(
       (data) => S3_TYPES.includes(data.text_type) && !!data.value
     );
-
+    
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const promises: Promise<any>[] = [];
 
     if (imageData.length) {

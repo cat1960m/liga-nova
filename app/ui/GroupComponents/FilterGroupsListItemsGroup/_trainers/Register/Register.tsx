@@ -7,11 +7,11 @@ import cn from "clsx";
 import { registerFormAction, State } from "@/app/lib/utils/form_actions";
 
 export type Props = {
-  onClose: () => void;
+  setIsFormShown: (value: boolean) => void;
   id: number;
 };
 
-export const Register = ({ onClose, id }: Props) => {
+export const Register = ({ setIsFormShown, id }: Props) => {
   const registerFormActionId0 = registerFormAction.bind(null, id);
   const registerFormActionId = registerFormActionId0.bind(null, "register");
 
@@ -23,16 +23,16 @@ export const Register = ({ onClose, id }: Props) => {
 
   useEffect(() => {
     if (!state.errors && !state.message) {
-      onClose();
+      setIsFormShown(false);
     }
-  }, [state.errors, state.message]);
+  }, [state.errors, state.message, setIsFormShown]);
 
   return (
     <div className={styles.container}>
       <div className={styles.body}>
         <div className={styles.form}>
           <div className={styles.header}>
-            <XMarkIcon width="24px" onClick={onClose} />
+            <XMarkIcon width="24px" onClick={() => setIsFormShown(false)} />
           </div>
           <form
             className={styles.formBody}
@@ -167,7 +167,9 @@ export const Register = ({ onClose, id }: Props) => {
               </div>
             </div>
 
-            {state?.message ? <div className={styles.error}>{state.message}</div> : null}
+            {state?.message ? (
+              <div className={styles.error}>{state.message}</div>
+            ) : null}
 
             <button style={{ width: "100%" }} type="submit">
               Відправити

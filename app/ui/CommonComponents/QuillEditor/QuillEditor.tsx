@@ -150,7 +150,7 @@ const QuillEditor = ({ text, onChange }: Props) => {
 
       setData(quill.root.innerHTML);
     });
-    quill.clipboard.dangerouslyPasteHTML(text);
+    // quill.clipboard.dangerouslyPasteHTML(text);
 
     return () => {
       if (quillInstanceRef.current) {
@@ -169,6 +169,7 @@ const QuillEditor = ({ text, onChange }: Props) => {
 
   useEffect(() => {
     onChange(data);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   return <div ref={editorRef} className={styles.container} />;

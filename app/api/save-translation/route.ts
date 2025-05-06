@@ -17,7 +17,7 @@ export async function POST(req: Request) {
         VALUES (${translatedText}, ${email}, ${image_url})
     `;
     return NextResponse.json({ message: "Translation saved successfully" });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: "Failed to save translation" },
       { status: 500 }

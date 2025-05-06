@@ -37,14 +37,14 @@ export const AdditionalPageDataGroupShow = ({
             selectedFilterTextDescriptionIds: filterTextDescriptionIds,
           })
         : null,
-    [pageFullDataList, pageFeatureId]
+    [pageFullDataList, pageFeatureId, filterTextDescriptionIds, pageName]
   );
 
   if (!containerFullData) {
     return null;
   }
 
-  const [data, itemIds] = containerFullData;
+  const [data] = containerFullData;
 
   const getItem = ({ id }: { id: string }) => {
     return (

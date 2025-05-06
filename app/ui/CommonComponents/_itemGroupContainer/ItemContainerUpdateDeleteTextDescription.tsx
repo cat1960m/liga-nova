@@ -1,6 +1,6 @@
 import { UpdateDeleteTextButtons } from "../_buttons/UpdateDeleteTextButtons/UpdateDeleteTextButtons";
 import { UseItems } from "../_upadeModal/UpdateTextDescriptionDataModalContent/UpdateTextDescriptionDataModalContent";
-import { FullData, MainParams } from "@/app/lib/definitions";
+import { FullData } from "@/app/lib/definitions";
 import { ItemGroupContainerCommon } from "./ItemGroupContainerCommon/ItemGroupContainerCommon";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 

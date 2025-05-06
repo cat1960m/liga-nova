@@ -1,6 +1,6 @@
 "use client";
 
-import { FullData, MainParams } from "@/app/lib/definitions";
+import { FullData } from "@/app/lib/definitions";
 import { useState } from "react";
 import { CreateModal } from "./CreateModal/CreateModal";
 import { CommonButton } from "../_buttons/CommonButton";

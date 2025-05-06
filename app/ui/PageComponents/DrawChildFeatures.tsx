@@ -16,7 +16,6 @@ export const DrawChildFeature = ({
   childFeatureDataList,
   params,
   pageFullDataList,
-  parentFeatureId,
   pageId,
 }: Props) => {
   const childFeatureFirstItem = childFeatureDataList[0];

@@ -1,6 +1,6 @@
 "use client";
 
-import { FullData, MainParams } from "@/app/lib/definitions";
+import { FullData } from "@/app/lib/definitions";
 import { ImageAction } from "./ImageAction";
 import { ActionButton } from "@/app/ui/CommonComponents/_buttons/ActionButton/ActionButton";
 import { ItemContainerUpdateDeleteTextDescription } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerUpdateDeleteTextDescription";

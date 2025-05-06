@@ -127,6 +127,7 @@ export const ScrollContainer = ({
     window.addEventListener("resize", handleResize);
 
     return () => window.removeEventListener("resize", handleResize);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ids]);
 
   const checkPosition = (
@@ -157,23 +158,23 @@ export const ScrollContainer = ({
   const onScrollItemClick = (direction: "left" | "right") => {
     const value =
       direction === "left" ? -dataType.itemWidth : dataType.itemWidth;
-    let newScrollPosition = scrollPosition + value;
+    const newScrollPosition = scrollPosition + value;
     setScrollPosition(checkPosition(newScrollPosition));
   };
 
   const handleMouseMove: MouseEventHandler<HTMLDivElement> = (e) => {
     if (start.current) {
-      let newScrollPosition = e.screenX - start.current + scrollPosition;
+      const newScrollPosition = e.screenX - start.current + scrollPosition;
 
       setScrollPosition(checkPosition(newScrollPosition));
       start.current = e.screenX;
     }
   };
 
-  const handleMouseUp: MouseEventHandler<HTMLDivElement> = (e) => {
+  const handleMouseUp: MouseEventHandler<HTMLDivElement> = () => {
     start.current = null;
     const n = Math.round(scrollPosition / dataType.itemWidth);
-    let newScrollPosition = n * dataType.itemWidth;
+    const newScrollPosition = n * dataType.itemWidth;
     setScrollPosition(checkPosition(newScrollPosition));
   };
 

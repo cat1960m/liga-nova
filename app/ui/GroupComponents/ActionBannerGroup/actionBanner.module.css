@@ -46,6 +46,10 @@
 
   .image {
     display: none;
-    object-fit: fill;
+   
   }
+}
+
+.image {
+  object-fit: fill;
 }

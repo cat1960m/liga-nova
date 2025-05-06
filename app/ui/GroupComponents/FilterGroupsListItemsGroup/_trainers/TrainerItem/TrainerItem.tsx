@@ -2,6 +2,7 @@
 
 import { FullData } from "@/app/lib/definitions";
 import {
+  ICON_SIZE,
   TRAINER_ITEM_DESCRIPTION,
   TRAINER_ITEM_IS_PREMIUM,
   TRAINER_ITEM_NAME,
@@ -16,6 +17,7 @@ import { CommonButton } from "@/app/ui/CommonComponents/_buttons/CommonButton";
 import styles from "./trainerItem.module.css";
 import cn from "clsx";
 import { Register } from "../Register/Register";
+import Image from "next/image";
 
 const PREMIUM = "premium%28--0%29";
 
@@ -93,7 +95,12 @@ export const TrainerItem = ({
             <div className={styles.photo_info}>
               {isPremiumValue && premiumIcon ? (
                 <div className={styles.premium_icon}>
-                  <img src={premiumIcon?.value ?? ""} alt="" width="44px" />
+                  <Image
+                    src={premiumIcon?.value ?? ""}
+                    alt=""
+                    width={ICON_SIZE}
+                    height={ICON_SIZE}
+                  />
 
                   {isMouseIn ? <div>{staticTexts.isPremium}</div> : null}
                 </div>
@@ -106,7 +113,12 @@ export const TrainerItem = ({
                         key={filter.text_description_id}
                         className={styles.filter}
                       >
-                        <img src={filter.value ?? ""} alt="" width="44px" />
+                        <Image
+                          src={filter.value ?? ""}
+                          alt=""
+                          width={ICON_SIZE}
+                          height={ICON_SIZE}
+                        />
 
                         <div>{filter.text_content}</div>
                       </div>
@@ -136,7 +148,9 @@ export const TrainerItem = ({
         onClick={handleClick}
       />
 
-      {isFormShown ? <Register onClose={() => setIsFormShown(false)} id={currentData[0]?.id}/> : null}
+      {isFormShown ? (
+        <Register setIsFormShown={setIsFormShown} id={currentData[0]?.id} />
+      ) : null}
     </div>
   );
 };

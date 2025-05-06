@@ -106,7 +106,7 @@ export const AddChildFeatureToContainer = ({
     }
 
     return data;
-  }, []);
+  }, [pageFullDataList, pageId, pageName]);
 
   const handleChangeAdditionalPagename: ChangeEventHandler<
     HTMLSelectElement
@@ -476,7 +476,7 @@ export const AddChildFeatureToContainer = ({
         <option value="" disabled>
           {text}
         </option>
-        {options.map((option, index) => (
+        {options.map((option) => (
           <option value={option} key={option}>
             {option}
           </option>
@@ -488,7 +488,7 @@ export const AddChildFeatureToContainer = ({
           <option value="" disabled>
             {staticTexts.selectPageName}
           </option>
-          {optionsAdditionalPagename.map((option, index) => (
+          {optionsAdditionalPagename.map((option) => (
             <option value={option} key={option}>
               {option}
             </option>

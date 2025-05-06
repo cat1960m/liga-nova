@@ -1,4 +1,4 @@
-import { FullData, MainParams } from "@/app/lib/definitions";
+import { FullData } from "@/app/lib/definitions";
 import { ItemContainerUpdateDeleteTextDescription } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerUpdateDeleteTextDescription";
 import cn from "clsx";
 import styles from "./showBody.module.css";
@@ -11,7 +11,13 @@ export type Props = {
   staticTexts: StaticTexts;
 };
 
-export const ShowBody = ({ isMain, textBody, isEdit, staticTexts, lang }: Props) => {
+export const ShowBody = ({
+  isMain,
+  textBody,
+  isEdit,
+  staticTexts,
+  lang,
+}: Props) => {
   const text = textBody?.text_content ?? "N/A";
   return (
     <ItemContainerUpdateDeleteTextDescription
@@ -20,13 +26,12 @@ export const ShowBody = ({ isMain, textBody, isEdit, staticTexts, lang }: Props)
       isEdit={isEdit}
       staticTexts={staticTexts}
       lang={lang}
-
       isChangeOrder={false}
     >
       <div className={styles.mainName}>
-        {isMain ? <div className={styles.start}>"</div> : null}
+        {isMain ? <div className={styles.start}>{`"`}</div> : null}
         <div className={cn(styles.text, { [styles.main]: isMain })}>{text}</div>
-        {isMain ? <div className={styles.end}>"</div> : null}
+        {isMain ? <div className={styles.end}>{`"`}</div> : null}
       </div>
     </ItemContainerUpdateDeleteTextDescription>
   );

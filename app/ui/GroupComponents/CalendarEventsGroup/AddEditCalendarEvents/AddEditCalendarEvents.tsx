@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { CommonButton } from "@/app/ui/CommonComponents/_buttons/CommonButton";
-import { FullData, MainParams, TabType } from "@/app/lib/definitions";
+import { FullData, TabType } from "@/app/lib/definitions";
 import {
   CALENDAR_EVENTS_COMMON_SUBTYPE,
   TRANSLATE_LANGUAGES,
@@ -37,7 +37,7 @@ export const AddEditCalendarEvents = ({
   hideAddEvent,
   eventFeatureData,
   staticTexts,
-  pageName
+  pageName,
 }: Props) => {
   const getFullData = (textType: string) => {
     return eventFeatureData?.find((item) => item.text_type === textType);
@@ -119,7 +119,12 @@ export const AddEditCalendarEvents = ({
         setTabs: setDescription,
       });
     }
-  }, [eventFeatureData]);
+  }, [
+    eventFeatureData,
+    titleInit?.text_description_id,
+    trainerInit?.text_description_id,
+    descriptionInit?.text_description_id,
+  ]);
 
   const handleSave = async () => {
     await saveEvent({

@@ -1,6 +1,6 @@
 "use client";
 
-import { FullData, MainParams } from "@/app/lib/definitions";
+import { FullData } from "@/app/lib/definitions";
 import { useEffect, useState } from "react";
 import { CommonButton } from "@/app/ui/CommonComponents/_buttons/CommonButton";
 import { LIST_ITEM, PAGE_NAMES_TO_LIST_ITEMS_DATA } from "@/app/lib/constants";
@@ -64,7 +64,7 @@ export const EditListItemFilter = ({
     ) {
       setSelectedFilterTextDescriptionIds(newSelectedFilterTextDescriptionIds);
     }
-  }, [pageFullDataList]);
+  }, [pageFullDataList, setSelectedFilterTextDescriptionIds]);
 
   const handleFilterSelectionChanged = async ({
     filter,

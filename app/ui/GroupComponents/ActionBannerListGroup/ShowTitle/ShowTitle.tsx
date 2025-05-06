@@ -1,4 +1,4 @@
-import { FullData, MainParams } from "@/app/lib/definitions";
+import { FullData } from "@/app/lib/definitions";
 
 import styles from "./showTitle.module.css";
 import cn from "clsx";

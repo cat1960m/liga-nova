@@ -9,7 +9,7 @@ import {
   SUBSCRIPTION_ITEM_PRICE,
   SUBSCRIPTION_ITEM_SHARE,
 } from "@/app/lib/constants";
-import { FullData, MainParams } from "@/app/lib/definitions";
+import { FullData } from "@/app/lib/definitions";
 import { CheckboxItemField } from "../../CheckboxItemField/CheckboxItemField";
 
 import styles from "./editSubscriptionItem.module.css";

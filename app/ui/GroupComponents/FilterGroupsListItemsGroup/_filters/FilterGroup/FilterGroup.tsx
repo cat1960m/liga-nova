@@ -1,6 +1,6 @@
 "use client";
 
-import { FullData, MainParams } from "@/app/lib/definitions";
+import { FullData } from "@/app/lib/definitions";
 import { useState } from "react";
 import { FILTER, FILTER_GROUP_TITLE } from "@/app/lib/constants";
 import { ItemContainerAddTextDescriptionDeleteFeature } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerAddTextDescriptionDeleteFeature";
@@ -27,7 +27,6 @@ export const FilterGroup = ({
   filterGroupData,
   onFilterSelectionChanged,
   selectedFilterTextDescriptionIds,
-  parentFeatureId,
   isEdit,
   lang,
   staticTexts

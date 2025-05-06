@@ -1,6 +1,5 @@
 "use client";
 
-import { IMAGE } from "@/app/lib/constants";
 import { FullData } from "@/app/lib/definitions";
 import Image from "next/image";
 import { DragEventHandler } from "react";

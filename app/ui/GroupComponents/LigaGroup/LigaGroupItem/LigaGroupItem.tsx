@@ -1,6 +1,6 @@
-import { FullData, MainParams, PageData } from "@/app/lib/definitions";
+import { FullData } from "@/app/lib/definitions";
 import {
-  ICON_IN_BUTTON_WIDTH,
+  ICON_SIZE,
   LIGA_ADDRESS,
   LIGA_SERVICE,
   LIGA_TELEPHONE,
@@ -11,6 +11,7 @@ import { ItemContainerUpdateDeleteTextDescription } from "@/app/ui/CommonCompone
 
 import styles from "./ligaGroupItem.module.css";
 import { StaticTexts } from "@/app/dictionaries/definitions";
+import Image from "next/image";
 
 export type Props = {
   data?: FullData;
@@ -26,21 +27,11 @@ export const LigaGroupItem = ({ data, isEdit, staticTexts, lang }: Props) => {
 
   const isTitle = data.text_type === LIGA_TITLE;
 
-  const textStyle = {
-    fontWeight: isTitle ? 700 : undefined,
-    fontSize: isTitle ? 24 : 16,
-  };
-
   const isPhone = data.text_type === LIGA_TELEPHONE;
 
   const isAddress = data.text_type === LIGA_ADDRESS;
 
   const isService = data.text_type === LIGA_SERVICE;
-
-  const textStyleService = {
-    fontWeight: undefined,
-    fontSize: 16,
-  };
 
   return (
     <ItemContainerUpdateDeleteTextDescription
@@ -78,7 +69,9 @@ export const LigaGroupItem = ({ data, isEdit, staticTexts, lang }: Props) => {
             {isService ? (
               <div className={styles.service}>
                 <div className={styles.icon_text}>
-                  <img src={data.value} alt="icon" />
+                  {data.value ? (
+                    <Image src={data.value} alt="icon" width={ICON_SIZE} height={ICON_SIZE} />
+                  ) : null}
                   <div className={styles.text_service}>
                     {data?.text_content ?? "N/A"}
                   </div>

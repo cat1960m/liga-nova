@@ -32,14 +32,16 @@ export const TextListGroup = ({
 
   const groupFeatureId = groupData[0]?.id;
 
-  if (!groupFeatureId) {
-    return null;
-  }
-
   const { staticTexts, lang } = params;
   const { isEdit, noDelete } = getIsEditNoDelete(params);
 
-  const [textListItemsData, textListItemIds] = useMemo(() => {
+  const [textListItemsData, textListItemIds]: [
+    Record<string, FullData[]>,
+    string[]
+  ] = useMemo(() => {
+    if (!groupFeatureId) {
+      return [{}, []];
+    }
     return getContainerData({
       pageName: params.pageName,
       pageFullData: pageFullDataList,
@@ -47,6 +49,9 @@ export const TextListGroup = ({
     });
   }, [pageFullDataList, groupFeatureId, params.pageName]);
 
+  if (!groupFeatureId) {
+    return null;
+  }
   const ids = textListItemIds;
 
   const getItem = ({

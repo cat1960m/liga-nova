@@ -1,4 +1,4 @@
-import { FullData, MainParams } from "@/app/lib/definitions";
+import { FullData } from "@/app/lib/definitions";
 import { DEFAULT_TEXT } from "@/app/lib/constants";
 import { ItemContainerUpdateDeleteTextDescription } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerUpdateDeleteTextDescription";
 import { StaticTexts } from "@/app/dictionaries/definitions";

@@ -12,7 +12,7 @@ export type ContextValue = {
 // Create the context
 const EditContext = createContext<ContextValue>({
   isEditButtonsDisabled: false,
-  changeIsEditButtonDisabled: (value: boolean) => {},
+  changeIsEditButtonDisabled: () => {},
   pageFullDataList: [],
 });
 

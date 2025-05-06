@@ -1,7 +1,8 @@
-import { FullData, MainParams } from "@/app/lib/definitions";
+import { FullData } from "@/app/lib/definitions";
 import { UploadComponent } from "../UploadComponent/UploadComponent";
 import { ItemContainerDeleteFeature } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerDeleteFeature";
 import styles from "./manageImages.module.css";
+import Image from "next/image";
 
 export type Props = {
   imagesData: FullData[];
@@ -28,11 +29,14 @@ export const ManageImages = ({
               key={imageItem.text_description_id}
               marginTop={0}
             >
-              <img
-                src={imageItem.value}
-                alt="image"
-                style={{ maxWidth: "100px" }}
-              />
+              {imageItem.value ? (
+                <Image
+                  src={imageItem.value}
+                  alt="icon"
+                  width={44}
+                  height={44}
+                />
+              ) : null}
             </ItemContainerDeleteFeature>
           );
         })}

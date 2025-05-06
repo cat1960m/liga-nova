@@ -69,7 +69,7 @@ export const ShowEvents = ({
     };
 
     return getDates();
-  }, [startDate]);
+  }, [startDate, staticTexts, countDates]);
 
   return (
     <div className={styles.container}>

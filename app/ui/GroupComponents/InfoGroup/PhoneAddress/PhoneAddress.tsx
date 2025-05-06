@@ -1,4 +1,4 @@
-import { FullData, MainParams } from "@/app/lib/definitions";
+import { FullData } from "@/app/lib/definitions";
 import { ShowInfoGroupItem } from "../ShowInfoGroupItem/ShowInfoGroupItem";
 import { INFO_ADDRESS, INFO_TELEPHONE } from "@/app/lib/constants";
 import styles from "./phoneAddress.module.css";

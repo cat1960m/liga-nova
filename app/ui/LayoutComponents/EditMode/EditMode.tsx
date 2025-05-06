@@ -1,6 +1,5 @@
 "use client";
 
-import { SearchParams } from "@/app/dictionaries/definitions";
 import { EDIT_MODE } from "@/app/lib/constants";
 import {
   useRouter,

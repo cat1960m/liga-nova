@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { ChangeEventHandler, useState } from "react";
 import axios from "axios";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { CommonButton } from "@/app/ui/CommonComponents/_buttons/CommonButton";
@@ -21,10 +21,12 @@ export function UploadComponent({
   const [file, setFile] = useState<File | null>(null);
   const [uploadState, setUploadState] = useState("");
 
-  const handleFileChange = (event: any) => {
-    const file = event.target.files[0];
-    setFile(file);
-    setUploadState("");
+  const handleFileChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+    const file = event?.target?.files?.[0];
+    if (file) {
+      setFile(file);
+      setUploadState("");
+    }
   };
 
   const handleUpload = async () => {
@@ -40,7 +42,7 @@ export function UploadComponent({
 
     const signedUrl = response.data.signedUrl;
 
-    const result = await fetch(signedUrl, {
+    await fetch(signedUrl, {
       method: "PUT",
       body: file,
       headers: { "Content-Type": file.type },

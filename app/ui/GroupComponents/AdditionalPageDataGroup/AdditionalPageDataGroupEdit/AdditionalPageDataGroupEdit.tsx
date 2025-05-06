@@ -1,7 +1,7 @@
 "use client";
 
 import { GROUP, FILTER_GROUP_SUBTYPE } from "@/app/lib/constants";
-import { FullData, MainParams } from "@/app/lib/definitions";
+import { FullData } from "@/app/lib/definitions";
 import { useMemo, useState } from "react";
 import { FilterGroup } from "../../FilterGroupsListItemsGroup/_filters/FilterGroup/FilterGroup";
 import { getContainerData, getFilterIds } from "@/app/lib/utils";
@@ -43,7 +43,7 @@ export const AdditionalPageDataGroupEdit = ({
         type: GROUP,
         subtype: FILTER_GROUP_SUBTYPE,
       }),
-    [pageFullDataList, pageFeatureId]
+    [pageFullDataList, additionalPageName]
   );
 
   if (!containerFullData) {
@@ -77,7 +77,7 @@ export const AdditionalPageDataGroupEdit = ({
   return (
     <>
       <div className={styles.filters}>
-        {filterGroupIds.map((filterGroupId, index) => {
+        {filterGroupIds.map((filterGroupId) => {
           const filterGroupData = data[filterGroupId];
           return (
             <div key={filterGroupId}>
@@ -96,7 +96,7 @@ export const AdditionalPageDataGroupEdit = ({
           );
         })}
       </div>
-      
+
       <div className={styles.button}>
         <UpdateFeatureFilterIdsButton
           featureId={pageFeatureId}

@@ -1,11 +1,10 @@
 "use client";
-import { FullData, MainParams, TextDescription } from "@/app/lib/definitions";
+import { FullData } from "@/app/lib/definitions";
 import { DeleteTextDescriptionButton } from "../DeleteTextDescriptionButton";
 import { UpdateTextDescriptionData } from "../../_upadeModal/UpdateTextDescriptionData";
 import { ChangeOrderButtons } from "../ChangeOrderButtons/ChangeOrderButtons";
 import { useEditContext } from "../../../PageComponents/EditContextProvider";
 import {
-  getTextDescriptions,
   revalidate,
   UpdateTextDescriptionsOrder,
 } from "@/app/lib/actions_fitness";
@@ -14,10 +13,7 @@ import { UseItems } from "../../_upadeModal/UpdateTextDescriptionDataModalConten
 import { StaticTexts } from "@/app/dictionaries/definitions";
 
 import styles from "./updateDeleteTextButtons.module.css";
-import { useEffect, useMemo, useState } from "react";
-import { CommonButton } from "../CommonButton";
-import { ICON_BUTTON_WIDTH } from "@/app/lib/constants";
-
+import { useMemo } from "react";
 export type Props = {
   currentData?: FullData;
   isChangeOrder?: boolean;
@@ -50,7 +46,7 @@ export const UpdateDeleteTextButtons = ({
       (data) =>
         data.id === currentData?.id && data.text_type === currentData.text_type
     );
-  }, [pageFullDataList]);
+  }, [pageFullDataList, currentData?.id, currentData?.text_type]);
 
   if (!currentData) {
     return null;

@@ -32,17 +32,23 @@ export const ActionBannerListGroup = ({
   );
   const groupFeatureId = groupData[0]?.id;
 
-  if (!groupFeatureId) {
-    return null;
-  }
 
   const [actionBannerListItemsData, actionBannerListItemIds] = useMemo(() => {
+
+    if (!groupFeatureId) {
+      return [{}, []];
+    }
     return getContainerData({
       pageName: params.pageName,
       pageFullData: pageFullDataList,
       parentFeatureId: groupFeatureId,
     });
   }, [params.pageName,pageFullDataList, groupFeatureId]);
+
+  if (!groupFeatureId) {
+    return null;
+  }
+
 
   const ids = actionBannerListItemIds;
 

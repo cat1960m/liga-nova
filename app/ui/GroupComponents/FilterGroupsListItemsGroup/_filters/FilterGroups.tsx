@@ -1,15 +1,13 @@
 "use client";
 
-import { FullData, MainParams } from "@/app/lib/definitions";
+import { FullData } from "@/app/lib/definitions";
 import {
   FILTER,
   FILTER_GROUP_SUBTYPE,
   FILTER_GROUP_DEFAULT_WIDTH,
   FILTER_GROUP_TITLE,
-  GRAY_BACKGROUND_COLOR,
   GROUP,
 } from "@/app/lib/constants";
-import { useMemo } from "react";
 import { AddChildFeatureButton } from "@/app/ui/CommonComponents/_buttons/AddChildFeatureButton";
 import { FilterGroupsBody } from "./FilterGroupsBody/FilterGroupsBody";
 import styles from "./filterGroups.module.css";

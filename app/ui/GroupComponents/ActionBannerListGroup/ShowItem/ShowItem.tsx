@@ -3,7 +3,7 @@ import {
   ACTION_BANNER_LIST_SHARE,
   ACTION_BANNER_LIST_TICKET,
 } from "@/app/lib/constants";
-import { FullData, MainParams } from "@/app/lib/definitions";
+import { FullData } from "@/app/lib/definitions";
 import Image from "next/image";
 
 import cn from "clsx";

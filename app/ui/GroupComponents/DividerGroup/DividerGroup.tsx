@@ -1,4 +1,3 @@
-import { StaticTexts } from "@/app/dictionaries/definitions";
 import { ItemContainerAddTextDescriptionDeleteFeature } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerAddTextDescriptionDeleteFeature";
 import { FullData, MainParams } from "@/app/lib/definitions";
 import styles from "./dividerGroup.module.css";

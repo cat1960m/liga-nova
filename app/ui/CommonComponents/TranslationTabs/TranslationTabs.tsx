@@ -82,6 +82,8 @@ export const TranslationTabs = ({
 
   const handleTranslate = async () => {
     setIsButtonDisabled(true);
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const promises: Promise<any>[] = [];
     const originText = tabs.find(
       (tab) => tab.langUpperCase === selectedTab
@@ -117,9 +119,10 @@ export const TranslationTabs = ({
       setTabs(tabsNew);
       onChange?.();
       setError("");
-    } catch (error: any) {
-      console.error("Translation error:", error);
-      setError(error.toString());
+    } catch (error) {
+      if (error) {
+        setError(error.toString());
+      }
     }
     setIsButtonDisabled(false);
   };

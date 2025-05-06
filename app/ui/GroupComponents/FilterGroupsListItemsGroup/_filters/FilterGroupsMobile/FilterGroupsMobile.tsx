@@ -1,12 +1,11 @@
 "use client";
 
-import { FullData, MainParams } from "@/app/lib/definitions";
+import { FullData } from "@/app/lib/definitions";
 import { useState } from "react";
 import { CommonButton } from "@/app/ui/CommonComponents/_buttons/CommonButton";
 import { AdjustmentsHorizontalIcon } from "@heroicons/react/24/solid";
 import { FilterGroupsBody } from "../FilterGroupsBody/FilterGroupsBody";
 import {
-  FILTER_GROUP_DEFAULT_WIDTH,
   GRAY_BACKGROUND_COLOR,
 } from "@/app/lib/constants";
 

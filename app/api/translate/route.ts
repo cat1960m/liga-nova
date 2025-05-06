@@ -20,7 +20,7 @@ export async function POST(req: Request) {
 
     const translatedText = response.data.translations[0].text;
     return NextResponse.json({ translatedText });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: "Translation failed" }, { status: 500 });
   }
 }

@@ -16,7 +16,7 @@ import { DeleteFeatureChangeOrderButtons } from "@/app/ui/CommonComponents/_butt
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { FullData } from "@/app/lib/definitions";
 import styles from "./showEvent.module.css";
-import { MouseEventHandler, Suspense, useState } from "react";
+import { MouseEventHandler, useState } from "react";
 import { PencilIcon } from "@heroicons/react/24/outline";
 
 import cn from "clsx";
@@ -34,7 +34,6 @@ export const ShowEvent = ({
   isEdit,
   eventData,
   setEditEventId,
-  parentFeatureId,
 }: Props) => {
   const [position, setPosition] = useState<number[] | null>(null);
   const subtype = eventData[0]?.subtype;

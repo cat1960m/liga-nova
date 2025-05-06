@@ -1,6 +1,6 @@
 "use client";
 
-import { FullData, MainParams } from "@/app/lib/definitions";
+import { FullData } from "@/app/lib/definitions";
 import { getContainerData } from "@/app/lib/utils";
 import { FilterGroup } from "../FilterGroup/FilterGroup";
 import { FILTER_GROUP_SUBTYPE, GROUP } from "@/app/lib/constants";

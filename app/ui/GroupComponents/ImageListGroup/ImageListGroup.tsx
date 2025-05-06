@@ -3,8 +3,6 @@
 import { IMAGE } from "@/app/lib/constants";
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { ScrollContainer } from "@/app/ui/CommonComponents/ScrollContainer/ScrollContainer";
-import { ShowItemBody } from "./ShowItemBody/ShowItemBody";
-import { ItemContainerUpdateDeleteTextDescription } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerUpdateDeleteTextDescription";
 import { useRef, useState } from "react";
 import { ItemContainerAddTextDescriptionDeleteFeature } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerAddTextDescriptionDeleteFeature";
 import { getIsEditNoDelete } from "@/app/lib/utils";

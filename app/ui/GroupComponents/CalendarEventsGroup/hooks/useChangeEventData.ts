@@ -17,8 +17,9 @@ import {
   CALENDAR_EVENTS_TRAINER,
   CALENDAR_EVENTS_TYPE,
 } from "@/app/lib/constants";
-import { FullData, MainParams, TabType } from "@/app/lib/definitions";
+import { FullData, TabType } from "@/app/lib/definitions";
 import { usePathname } from "next/navigation";
+import postgres from "postgres";
 
 export type SaveArgs = {
   type: string;
@@ -64,7 +65,7 @@ export const useChangeEventData = () => {
     textType: string;
     tabs: TabType[];
     price?: number | null;
-    promises: Promise<any>[];
+    promises: Promise<postgres.RowList<postgres.Row[]> | number | null>[];
   }) => {
     const newTextDescriptionId = await addTextDescription({
       featureId,
@@ -117,7 +118,9 @@ export const useChangeEventData = () => {
       return;
     }
 
-    const promises: Promise<any>[] = [];
+    const promises: Promise<
+      postgres.RowList<postgres.Row[]> | number | null
+    >[] = [];
 
     saveTabs({
       featureId: calendarEventsGroupFeatureId,
@@ -181,7 +184,9 @@ export const useChangeEventData = () => {
     descriptionInit,
     eventFeatureId,
   }: UpdateArgs) => {
-    const promises: Promise<any>[] = [];
+    const promises: Promise<
+      postgres.RowList<postgres.Row[]> | number | null | undefined
+    >[] = [];
 
     promises.push(
       updateFeatureSubtypeFilterIds({
@@ -244,7 +249,9 @@ export const useChangeEventData = () => {
   }: {
     tabs: TabType[];
     textDescriptionId: number;
-    promises: Promise<any>[];
+    promises: Promise<
+      postgres.RowList<postgres.Row[]> | number | null | undefined
+    >[];
   }) => {
     const textContents = await getTextContents({
       text_description_id: textDescriptionId,

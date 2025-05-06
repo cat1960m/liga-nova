@@ -20,10 +20,11 @@ import {
   updateText,
 } from "@/app/lib/actions_fitness";
 import { usePathname } from "next/navigation";
-import { TOOLTIP, TRANSLATE_LANGUAGES } from "@/app/lib/constants";
+import { ICON_SIZE, TOOLTIP, TRANSLATE_LANGUAGES } from "@/app/lib/constants";
 
 import styles from "./updateTextDescriptionDataModalContent.module.css";
 import axios from "axios";
+import Image from "next/image";
 
 export type UseItems = {
   text?: "simple" | "area" | "quill";
@@ -54,6 +55,7 @@ export const UpdateTextDescriptionDataModalContent = ({
   >(null);
   const [tabs, setTabs] = useState<TabType[] | null>([]);
   const [tabsTooltip, setTabsTooltip] = useState<TabType[] | null>(null);
+  const [isSaveDisabled, setIsSaveDisabled] = useState(true);
 
   const pathName = usePathname();
 
@@ -134,7 +136,7 @@ export const UpdateTextDescriptionDataModalContent = ({
     if (useItems.link) {
       getPages();
     }
-  }, []);
+  }, [lang, textDescriptionId, useItems.value, useItems.link]);
 
   const pagesOptions = useMemo(() => {
     const mainOptions =
@@ -151,6 +153,10 @@ export const UpdateTextDescriptionDataModalContent = ({
     ];
   }, [pages]);
 
+  const handleChange = () => {
+    setIsSaveDisabled(false);
+  };
+
   const getLanguageValue = ({
     lang,
     textContents,
@@ -159,8 +165,6 @@ export const UpdateTextDescriptionDataModalContent = ({
     textContents: TextContent[];
   }) =>
     textContents?.find((item) => item.language === lang)?.text_content ?? "";
-
-  const [isSaveDisabled, setIsSaveDisabled] = useState(true);
 
   if (!textContents || !textContentsTooltips || !tabs || !tabsTooltip) {
     return null;
@@ -198,6 +202,8 @@ export const UpdateTextDescriptionDataModalContent = ({
 
   const handleSave = async () => {
     setIsSaveDisabled(true);
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const promises: Promise<any>[] = [];
 
     const path = await UploadFile();
@@ -283,10 +289,13 @@ export const UpdateTextDescriptionDataModalContent = ({
     setIsSaveDisabled(false);
   };
 
-  const handleFileChange = (event: any) => {
-    const file = event.target.files[0];
-    setFile(file);
-    setIsSaveDisabled(false);
+  const handleFileChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+    const file = event.target.files?.[0];
+
+    if (file) {
+      setFile(file);
+      setIsSaveDisabled(false);
+    }
   };
 
   const UploadFile = async () => {
@@ -303,7 +312,7 @@ export const UpdateTextDescriptionDataModalContent = ({
 
     const signedUrl = response.data.signedUrl;
 
-    const result = await fetch(signedUrl, {
+    await fetch(signedUrl, {
       method: "PUT",
       body: file,
       headers: { "Content-Type": file.type },
@@ -328,7 +337,7 @@ export const UpdateTextDescriptionDataModalContent = ({
       {!!useItems.text ? (
         <TranslationTabs
           staticTexts={staticTexts}
-          onChange={() => setIsSaveDisabled(false)}
+          onChange={handleChange}
           tabs={tabs}
           setTabs={setTabs}
           title="Text"
@@ -340,7 +349,7 @@ export const UpdateTextDescriptionDataModalContent = ({
       {!!useItems.tooltip ? (
         <TranslationTabs
           staticTexts={staticTexts}
-          onChange={() => setIsSaveDisabled(false)}
+          onChange={handleChange}
           tabs={tabsTooltip}
           setTabs={setTabsTooltip}
           title="Tooltip"
@@ -429,7 +438,12 @@ export const UpdateTextDescriptionDataModalContent = ({
           {icons.map((icon) => {
             return (
               <div className={styles.icon} key={icon.text_description_id}>
-                <img src={icon.value ?? ""} alt="icon" width="44px" />
+                <Image
+                  src={icon.value ?? ""}
+                  alt="icon"
+                  width={ICON_SIZE}
+                  height={ICON_SIZE}
+                />
                 <input
                   type="checkbox"
                   checked={icon.value === currentValue}

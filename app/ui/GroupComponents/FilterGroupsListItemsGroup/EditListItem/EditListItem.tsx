@@ -1,4 +1,4 @@
-import { FullData, MainParams } from "@/app/lib/definitions";
+import { FullData } from "@/app/lib/definitions";
 import { EditTrainerItem } from "../_trainers/EditTrainerItem/EditTrainerItem";
 import { EditSubscriptionItem } from "../_tickets/EditSubscriptionItem/EditSubscriptionItem";
 import { TICKETS_PAGE_NAME, TRAINERS_PAGE_NAME } from "@/app/lib/constants";
