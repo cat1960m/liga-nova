@@ -89,7 +89,13 @@ export const TrainerItem = ({
           onMouseEnter={() => setIsMouseIn(true)}
           onMouseLeave={() => setIsMouseIn(false)}
         >
-          <img src={photoValue} alt="photo" width="100%" />
+          <Image
+            src={photoValue}
+            alt="photo"
+            width={800}
+            height={600}
+            style={{ width: "100%", height: "auto" }}
+          />
 
           <div className={styles.photo_info_container}>
             <div className={styles.photo_info}>

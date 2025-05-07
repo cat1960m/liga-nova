@@ -4,11 +4,13 @@
     width: 100%;
     align-items: stretch; /* flex-start; */
     justify-content: space-between;
+    margin-bottom: 20px;
 }
 
 .item {
-        flex-grow: 2;
-        max-width: 50%;
+    flex-grow: 2;
+    max-width: 50%;
+    position: relative;
 }
 
 .left {

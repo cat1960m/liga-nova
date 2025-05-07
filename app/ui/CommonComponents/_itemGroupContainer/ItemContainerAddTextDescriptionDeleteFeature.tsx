@@ -18,6 +18,7 @@ export type Props = {
   onTextDescriptionAdded?: (newId: number) => void;
   marginTop: number;
   noDelete: boolean;
+  heightValue?: string;
 };
 
 export const ItemContainerAddTextDescriptionDeleteFeature = ({
@@ -34,6 +35,7 @@ export const ItemContainerAddTextDescriptionDeleteFeature = ({
   onTextDescriptionAdded,
   marginTop,
   noDelete,
+  heightValue,
 }: Props) => {
   const getEditButtons = () => {
     const featureFirst = featureData.length ? featureData[0] : undefined;
@@ -71,6 +73,7 @@ export const ItemContainerAddTextDescriptionDeleteFeature = ({
       isEdit={isEdit}
       getEditButtons={getEditButtons}
       marginTop={marginTop}
+      heightValue={heightValue}
     >
       {children}
     </ItemGroupContainerCommon>

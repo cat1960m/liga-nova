@@ -3,7 +3,7 @@
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { AddEditCalendarEvents } from "./AddEditCalendarEvents/AddEditCalendarEvents";
 import { getContainerData, getIsEditNoDelete } from "@/app/lib/utils";
-import { Suspense, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { ShowEvents } from "./ShowEvents/ShowEvents";
 import { ICON_BUTTON_WIDTH, ICON_IN_BUTTON_WIDTH } from "@/app/lib/constants";
 import { CalendarHeader } from "./CalendarHeader/CalendarHeader";
@@ -46,19 +46,21 @@ export const CalendarEventsGroup = ({
   const firstData = groupData[0];
   const calendarFeatureId = firstData.id;
 
+  const [eventsData, eventsIds] = useMemo(() => {
+    if (!calendarFeatureId) {
+      return [{}, []];
+    }
+
+    return getContainerData({
+      pageName: params.pageName,
+      pageFullData,
+      parentFeatureId: calendarFeatureId,
+    });
+  }, [params.pageName, pageFullData, calendarFeatureId]);
+
   if (!calendarFeatureId) {
     return null;
   }
-
-  const [eventsData, eventsIds] = useMemo(
-    () =>
-      getContainerData({
-        pageName: params.pageName,
-        pageFullData,
-        parentFeatureId: calendarFeatureId,
-      }),
-    [params.pageName, pageFullData, calendarFeatureId]
-  );
 
   const handleClickAddEvent = () => setIsAddShown(true);
   const hideAddEvent = () => {
@@ -83,10 +85,10 @@ export const CalendarEventsGroup = ({
         ) : null}
 
         {!noDelete ? (
-            <DeleteFeatureChangeOrderButtons
-              deleteText={staticTexts.deleteCalendar ?? "N/A"}
-              featureData={groupData}
-            />
+          <DeleteFeatureChangeOrderButtons
+            deleteText={staticTexts.deleteCalendar ?? "N/A"}
+            featureData={groupData}
+          />
         ) : null}
       </div>
     );

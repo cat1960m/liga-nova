@@ -42,7 +42,7 @@ export const SelectWeekDay = ({
         {staticTexts.saturday}
       </option>,
     ],
-    []
+    [staticTexts]
   );
 
   const handleWeekDayChanged: ChangeEventHandler<HTMLSelectElement> = (

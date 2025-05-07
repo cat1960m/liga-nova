@@ -17,6 +17,7 @@ export type Props = {
   featureData: FullData[];
   noDelete: boolean;
   marginTop: number;
+  heightValue?: string;
 };
 
 export const ItemContainerUpdateTextDescriptionDeleteFeature = ({
@@ -30,6 +31,7 @@ export const ItemContainerUpdateTextDescriptionDeleteFeature = ({
   featureData,
   noDelete,
   marginTop,
+  heightValue
 }: Props) => {
   const getEditButtons = () => {
     return (
@@ -59,6 +61,7 @@ export const ItemContainerUpdateTextDescriptionDeleteFeature = ({
       isEdit={isEdit}
       getEditButtons={getEditButtons}
       marginTop={marginTop}
+      heightValue={heightValue}
     >
       {children}
     </ItemGroupContainerCommon>

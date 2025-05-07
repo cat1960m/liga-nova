@@ -2,6 +2,7 @@ import { FullData } from "@/app/lib/definitions";
 
 import styles from "./imageActions.module.css";
 import { TOOLTIP } from "@/app/lib/constants";
+import Image from "next/image";
 
 export type Props = {
   data: FullData;
@@ -18,7 +19,13 @@ export const ImageAction = ({ data, groupData, isModalShown }: Props) => {
   return (
     <div className={styles.item}>
       {data.value ? (
-        <img src={data.value} alt="" width={"100%"} />
+        <Image
+          src={data.value}
+          alt=""
+          width={800}
+          height={600}
+          style={{ width: "100%", height: "auto" }}
+        />
       ) : (
         <div className={styles.noImage}>No image </div>
       )}

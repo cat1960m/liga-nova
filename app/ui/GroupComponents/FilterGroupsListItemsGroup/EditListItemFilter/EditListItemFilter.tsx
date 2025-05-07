@@ -1,7 +1,7 @@
 "use client";
 
 import { FullData } from "@/app/lib/definitions";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { CommonButton } from "@/app/ui/CommonComponents/_buttons/CommonButton";
 import { LIST_ITEM, PAGE_NAMES_TO_LIST_ITEMS_DATA } from "@/app/lib/constants";
 import { getFilterIds } from "@/app/lib/utils/getFilterIds";
@@ -47,24 +47,6 @@ export const EditListItemFilter = ({
     selectedFilterTextDescriptionIds,
     setSelectedFilterTextDescriptionIds,
   ] = useState<number[]>(getFilterIds(addEditItemFeatureIdData[0]?.filter_ids));
-
-  useEffect(() => {
-    const newSelectedFilterTextDescriptionIds =
-      selectedFilterTextDescriptionIds.reduce<number[]>((result, id) => {
-        if (pageFullDataList.find((item) => item.text_description_id === id)) {
-          result.push(id);
-        }
-
-        return result;
-      }, []);
-
-    if (
-      newSelectedFilterTextDescriptionIds.length <
-      selectedFilterTextDescriptionIds.length
-    ) {
-      setSelectedFilterTextDescriptionIds(newSelectedFilterTextDescriptionIds);
-    }
-  }, [pageFullDataList, setSelectedFilterTextDescriptionIds]);
 
   const handleFilterSelectionChanged = async ({
     filter,

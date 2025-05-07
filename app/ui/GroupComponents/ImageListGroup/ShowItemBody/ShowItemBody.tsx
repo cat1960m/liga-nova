@@ -28,8 +28,7 @@ export const ShowItemBody = ({ widthItem, imageData }: Props) => {
       {value ? (
         <Image
           src={value}
-          layout="fill" // Fill the container
-          fill
+          fill// Fill the container
           alt="image"
           draggable="false" // This directly disables drag-and-drop
           onDragStart={preventDragHandler} // Ensures additional prevention

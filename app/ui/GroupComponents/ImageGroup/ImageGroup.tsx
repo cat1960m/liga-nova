@@ -1,39 +1,34 @@
 "use client";
 
 import { FullData, MainParams } from "@/app/lib/definitions";
-import { IMAGE } from "@/app/lib/constants";
+import { IMAGE, LAYOUT_ITEM } from "@/app/lib/constants";
 import { ItemContainerUpdateTextDescriptionDeleteFeature } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerUpdateTextDescriptionDeleteFeature";
 import { getIsEditNoDelete } from "@/app/lib/utils";
 
 import styles from "./imageGroup.module.css";
+import cn from "clsx";
 import Image from "next/image";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 export type Props = {
   groupData: FullData[];
   params: MainParams;
+  pageFullDataList: FullData[];
 };
 
-export const ShowImageGroup = ({ groupData, params }: Props) => {
-  const refImageContainer = useRef<HTMLDivElement>(null);
-  const [height, setHeight] = useState<number>(0);
-
-  useEffect(() => {
-    if (height) {
-      return;
-    }
-    const rect = refImageContainer.current?.getBoundingClientRect();
-
-    if (rect && rect.height) {
-      setHeight(rect.width);
-    }
-  }, []);
-
+export const ShowImageGroup = ({
+  groupData,
+  params,
+  pageFullDataList,
+}: Props) => {
   const imageData = groupData.find((item) => item.text_type === IMAGE);
   if (!imageData) {
     return;
   }
-
+  const parentFeature = pageFullDataList.find(
+    (item) => item.id === imageData.parent_feature_id
+  );
+  const isInLayout = parentFeature?.type === LAYOUT_ITEM;
+  console.log("parentFeature?.subtype", parentFeature?.subtype);
   const { staticTexts, lang } = params;
   const { isEdit, noDelete } = getIsEditNoDelete(params);
 
@@ -50,19 +45,29 @@ export const ShowImageGroup = ({ groupData, params }: Props) => {
       isChangeOrderHorizontal={false}
       marginTop={0}
       noDelete={noDelete}
+      heightValue={isInLayout ? "100%" : undefined}
     >
       {imageData?.value ? (
-        <div className={styles.container} ref={refImageContainer}>
-          <div className={styles.body} style={{ height }}>
-            {height}
-            {height ? (
+        <div
+          className={cn(styles.container, { [styles.inLayout]: isInLayout })}
+        >
+          <div className={styles.body}>
+            {isInLayout ? (
               <Image
                 src={imageData?.value}
                 alt=""
-                className={styles.image}
+                className={styles.imageInLayout}
                 fill
               />
-            ) : null}
+            ) : (
+              <Image
+                src={imageData?.value}
+                alt=""
+                width={800}
+                height={600}
+                style={{ width: "100%", height: "auto" }}
+              />
+            )}
           </div>
         </div>
       ) : (

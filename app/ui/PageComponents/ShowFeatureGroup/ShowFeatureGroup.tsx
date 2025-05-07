@@ -118,7 +118,11 @@ export const ShowFeatureGroup = ({
       ) : null}
 
       {isImageGroup ? (
-        <ShowImageGroup groupData={groupData} params={params} />
+        <ShowImageGroup
+          groupData={groupData}
+          params={params}
+          pageFullDataList={pageFullDataList}
+        />
       ) : null}
 
       {isLigaGroup ? <LigaGroup groupData={groupData} params={params} /> : null}

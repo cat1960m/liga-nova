@@ -65,6 +65,7 @@ export const LayoutParent = ({
             pageFullDataList={pageFullDataList}
             buttonText={staticTexts.addItems ?? "N/A"}
             pageId={pageId}
+            isOneChildren
           />
         </div>
         <div
@@ -78,6 +79,7 @@ export const LayoutParent = ({
             pageFullDataList={pageFullDataList}
             buttonText={staticTexts.addItems ?? "N/A"}
             pageId={pageId}
+            isOneChildren
           />
         </div>
       </div>
