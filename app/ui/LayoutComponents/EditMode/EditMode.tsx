@@ -17,7 +17,7 @@ export const EditMode = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
       params.delete("editMode");
       router.push(`${pathName}?${params.toString()}`); // Update the URL
     }
-  }, [isAuthenticated, editMode]);
+  }, [isAuthenticated, editMode, pathName, router, searchParams]);
 
   if (!isAuthenticated) {
     return null;

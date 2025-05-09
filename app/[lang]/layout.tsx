@@ -6,7 +6,6 @@ import styles from "./layout.module.css";
 import { MobileMenu } from "../ui/LayoutComponents/MobileMenu/MobileMenu";
 import { BaseMenu } from "../ui/LayoutComponents/BaseMenu/BaseMenu";
 import { EditMode } from "../ui/LayoutComponents/EditMode/EditMode";
-import { SearchParams } from "../dictionaries/definitions";
 
 //export const experimental_ppr = true;
 
