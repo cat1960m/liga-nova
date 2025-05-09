@@ -7,7 +7,7 @@ import { MobileMenu } from "../ui/LayoutComponents/MobileMenu/MobileMenu";
 import { BaseMenu } from "../ui/LayoutComponents/BaseMenu/BaseMenu";
 import { EditMode } from "../ui/LayoutComponents/EditMode/EditMode";
 
-export const experimental_ppr = true;
+//export const experimental_ppr = true;
 
 export default async function Layout({
   children,
