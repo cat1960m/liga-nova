@@ -58,6 +58,7 @@ export const ShowImageGroup = ({
                 alt=""
                 className={styles.imageInLayout}
                 fill
+                style={{ width: "100%", height: "100%" }}
               />
             ) : (
               <Image

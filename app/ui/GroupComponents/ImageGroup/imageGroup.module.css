@@ -20,7 +20,7 @@
 }
 
 
-@media(max-width: 768) {
+@media(max-width: 768px) {
     .container.inLayout {
         min-height: 400px;
     }

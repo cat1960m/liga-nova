@@ -55,7 +55,7 @@ export const LayoutParent = ({
     >
       <div className={styles.container}>
         <div
-          className={cn(styles.item, styles.left, {
+          className={cn(styles.itemLeft, {
             [styles.edit]: isDeepMode,
           })}
         >
@@ -68,8 +68,9 @@ export const LayoutParent = ({
             isOneChildren
           />
         </div>
+        
         <div
-          className={cn(styles.item, styles.right, {
+          className={cn(styles.itemRight, {
             [styles.edit]: isDeepMode,
           })}
         >
