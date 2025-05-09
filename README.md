@@ -44,3 +44,19 @@ make backup of DB
 6) file in  /Users/yourname/backups/  
 
 to restore : psql -U postgres -d your-db-name -f backup.sql ( not try yet)
+
+
+===============
+GitHub  For liga_nova
+------------
+https://github.com/cat1960m/liga-nova
+Email: cat1960m@gmail.com
+name: cat1960m
+
+password: Lika1987_!!  (8may 2025)
+
+
+GitHub
+=======
+cat1960M@yahoo.com
+Password: Lika1987_!! (8may 2025)
