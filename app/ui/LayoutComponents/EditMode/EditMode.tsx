@@ -1,19 +1,27 @@
 "use client";
 
 import { EDIT_MODE } from "@/app/lib/constants";
-import {
-  useRouter,
-  usePathname,
-  useSearchParams,
-} from "next/navigation";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 
-export const EditMode = () => {
+export const EditMode = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
   const modes = ["none", "simple", "deep"];
   const router = useRouter();
   const pathName = usePathname();
-
   const searchParams = useSearchParams();
   const editMode = searchParams.get(EDIT_MODE) ?? "0";
+
+  useEffect(() => {
+    if (!isAuthenticated && !!editMode) {
+      const params = new URLSearchParams(searchParams);
+      params.delete("editMode");
+      router.push(`${pathName}?${params.toString()}`); // Update the URL
+    }
+  }, [isAuthenticated, editMode]);
+
+  if (!isAuthenticated) {
+    return null;
+  }
 
   const handleSelect: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
     const value = event.target.value;

@@ -14,7 +14,7 @@
     "autoprefixer": "10.4.20",
     "aws-sdk": "^2.1692.0",
     "axios": "^1.7.9",
-    "bcrypt": "^5.1.1",
+    "bcryptjs": "^3.0.2",
     "clsx": "^2.1.1",
     "dompurify": "^3.2.5",
     "next": "15.3.2",
@@ -32,7 +32,6 @@
     "zod": "^3.24.1"
   },
   "devDependencies": {
-    "@types/bcrypt": "^5.0.2",
     "@types/node": "22.10.7",
     "@types/react": "19.0.7",
     "@types/react-dom": "19.0.3",

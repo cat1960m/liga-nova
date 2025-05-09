@@ -6,6 +6,7 @@ import styles from "./layout.module.css";
 import { MobileMenu } from "../ui/LayoutComponents/MobileMenu/MobileMenu";
 import { BaseMenu } from "../ui/LayoutComponents/BaseMenu/BaseMenu";
 import { EditMode } from "../ui/LayoutComponents/EditMode/EditMode";
+import { SearchParams } from "../dictionaries/definitions";
 
 //export const experimental_ppr = true;
 
@@ -42,7 +43,6 @@ export default async function Layout({
         <BaseMenu pages={basePages} lang={lang} />
       </div>
 
-
       <div className={styles.headerMobile}>
         <MobileMenu basePages={basePages} mainPages={mainPages} lang={lang} />
       </div>
@@ -50,9 +50,8 @@ export default async function Layout({
       <div className={styles.panel}>
         {isAuthenticated ? <ManageIconsModal lang={lang} /> : null}
 
-        {isAuthenticated ? <EditMode /> : null}
+        <EditMode isAuthenticated={isAuthenticated} />
       </div>
-
 
       <div id="parentModal" className={styles.body_container}>
         {children}
