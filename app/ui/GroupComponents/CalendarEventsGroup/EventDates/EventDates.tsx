@@ -129,7 +129,14 @@ export const EventDates = ({
       (option) => option.value
     );
     setMonths(values);
-    clear();
+    const dates = getDatesByWeekDayMonths({
+      weekDay: parseInt(weekDay),
+      year,
+      months: values,
+    });
+
+    setSelectedDates(dates);
+    setConfirmedDates(dates);
   };
 
   const handleMonthChange = (value: number) => {

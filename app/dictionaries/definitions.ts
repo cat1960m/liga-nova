@@ -120,6 +120,7 @@ export type StaticTexts = {
   byAgreement?: string;
   byWeekDay?: string;
   byMonthDay?: string;
+  saveNewEvent?: string;
 };
 
 export type SearchParams = {

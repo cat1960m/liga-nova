@@ -111,6 +111,7 @@
     "freeTraining": "Free training",
     "byAgreement": "By agreement",
     "byWeekDay": "By week day",
-    "byMonthDay": "By month day"
+    "byMonthDay": "By month day",
+    "saveNewEvent": "save as new event"
   }
 }

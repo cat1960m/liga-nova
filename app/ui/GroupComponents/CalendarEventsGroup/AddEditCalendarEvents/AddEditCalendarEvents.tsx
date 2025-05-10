@@ -271,7 +271,7 @@ export const AddEditCalendarEvents = ({
       <div className={styles.buttons}>
         <CommonButton text={staticTexts.cancel} onClick={hideAddEvent} />
         <CommonButton
-          text={staticTexts.save}
+          text={staticTexts.saveNewEvent}
           onClick={handleSave}
           isDisabled={isButtonsDisabled}
         />
