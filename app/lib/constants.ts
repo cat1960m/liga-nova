@@ -123,7 +123,7 @@ export const CALENDAR_EVENTS_TYPE = "calendar_events_type";
 export const CALENDAR_EVENTS_COMMON_SUBTYPE = "common";
 export const CALENDAR_EVENTS_AUTHOR_SUBTYPE = "author";
 export const CALENDAR_EVENTS_SPECIAL_SUBTYPE = "special";
-export const DIVIDER="divider";
+export const DIVIDER = "divider";
 
 export const CAN_NOT_DELETE = [
   INFO_CHECK_HEADER,
@@ -155,30 +155,69 @@ export const CAN_NOT_DELETE = [
 ];
 export const GROUP_TYPES_WITH_TOOLTIP = [SERVICES_GROUP_SUBTYPE];
 
-export const GroupFeatureSubtypes = [
-  TEXT_HEADER_GROUP_SUBTYPE,
-  TEXT_COMMON_GROUP_SUBTYPE,
-  TEXT_GROUP_EXPANDED_SUBTYPE,
-  TEXT_GROUP_HIDDEN_SUBTYPE,
-  TEXT_LIST_GROUP_SUBTYPE,
-  INFO_CHECK_GROUP_SUBTYPE,
-  INFO_SUBTYPE,
-  INFO_ACTION_COMMON_SUBTYPE,
-  INFO_ACTION_CHILD_SUBTYPE,
-  INFO_ACTION_FREE_SUBTYPE,
-  IMAGE_GROUP_SUBTYPE,
-  IMAGE_LIST_GROUP_SUBTYPE,
-  IMAGE_LINKS_GROUP_SUBTYPE,
-  IMAGE_ACTIONS_GROUP_SUBTYPE,
-  PHOTO_GALLERY_GROUP_SUBTYPE,
-  ACTION_BANNER_GROUP_SUBTYPE,
-  ACTION_BANNER_TRY_GROUP_SUBTYPE,
-  ACTION_BANNER_LIST_GROUP_SUBTYPE,
-  SERVICES_GROUP_SUBTYPE,
-  LIGA_GROUP_SUBTYPE,
-  SCHEDULE_GROUP_SUBTYPE,
-  CALENDAR_EVENTS_GROUP_SUBTYPE,
-  DIVIDER,
+export const GroupFeatureSubtypes: { name: string; value: string }[] = [
+  { value: TEXT_HEADER_GROUP_SUBTYPE, name: "Header text" },
+  { value: TEXT_COMMON_GROUP_SUBTYPE, name: "HTML text" },
+  { value: TEXT_GROUP_EXPANDED_SUBTYPE, name: "Expanded text(trainer)" },
+  { value: TEXT_GROUP_HIDDEN_SUBTYPE, name: "Hidden text(about us)" },
+  {
+    value: TEXT_LIST_GROUP_SUBTYPE,
+    name: "Text collection of author/content (main page bottom)",
+  },
+  {
+    value: INFO_CHECK_GROUP_SUBTYPE,
+    name: "Text collection with blue checkboxes (trainers school)",
+  },
+  { value: INFO_SUBTYPE, name: "Text in gray rect (massage)" },
+  {
+    value: INFO_ACTION_COMMON_SUBTYPE,
+    name: "Text in gray rect with registration (solarium)",
+  },
+  {
+    value: INFO_ACTION_CHILD_SUBTYPE,
+    name: "Text in gray rect with child registration (children studious)",
+  },
+  {
+    value: INFO_ACTION_FREE_SUBTYPE,
+    name: "Text in gray rect with try button (children studious)",
+  },
+  { value: IMAGE_GROUP_SUBTYPE, name: "Image (massage, solarium)" },
+  {
+    value: IMAGE_LIST_GROUP_SUBTYPE,
+    name: "Image list with scroll (personal trainers)",
+  },
+  {
+    value: IMAGE_LINKS_GROUP_SUBTYPE,
+    name: "Image list with links (main page)",
+  },
+  {
+    value: IMAGE_ACTIONS_GROUP_SUBTYPE,
+    name: "Image list with action buttons ( shares)",
+  },
+  {
+    value: PHOTO_GALLERY_GROUP_SUBTYPE,
+    name: "Image photo gallery( about us)",
+  },
+  {
+    value: ACTION_BANNER_GROUP_SUBTYPE,
+    name: "Image with registration (trainers school bottom)",
+  },
+  {
+    value: ACTION_BANNER_TRY_GROUP_SUBTYPE,
+    name: "Image with try (children studious bottom)",
+  },
+  {
+    value: ACTION_BANNER_LIST_GROUP_SUBTYPE,
+    name: "Scrolling Image list with action buttons( main page top)",
+  },
+  { value: SERVICES_GROUP_SUBTYPE, name: "Service list (massage, manicure)" },
+  { value: LIGA_GROUP_SUBTYPE, name: "Icon lists on gray rect (about us)" },
+  { value: SCHEDULE_GROUP_SUBTYPE, name: "Schedule (sauna)" },
+  {
+    value: CALENDAR_EVENTS_GROUP_SUBTYPE,
+    name: "Events calendar (group studious)",
+  },
+  { value: DIVIDER, name: "Divider (gray line)" },
 ];
 
 export const TEXT_GROUP_SUBTYPES = [
@@ -238,8 +277,8 @@ export const ICON_IN_BUTTON_WIDTH = "20px";
 export const YES = "yes";
 export const HOME = "home";
 
-export const WORK_SCHEDULE1= "пн-сб 07:00-23:00";
-export const WORK_SCHEDULE2="нд 09:00-21:00";
-export const PHONE="(073) 33 77 565";
-export const EDIT_MODE ="editMode";
+export const WORK_SCHEDULE1 = "пн-сб 07:00-23:00";
+export const WORK_SCHEDULE2 = "нд 09:00-21:00";
+export const PHONE = "(073) 33 77 565";
+export const EDIT_MODE = "editMode";
 export const ICON_SIZE = 44;

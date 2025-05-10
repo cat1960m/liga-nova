@@ -90,11 +90,18 @@ export const AddChildFeatureToContainer = ({
     string[]
   >([]);
 
-  const options = useMemo(() => {
-    const data = [...GroupFeatureSubtypes, TABS, LAYOUT_PARENT];
+  const groupOptions = useMemo(() => {
+    const data: { name: string; value: string }[] = [
+      ...GroupFeatureSubtypes,
+      { value: TABS, name: "Tabs" },
+      { value: LAYOUT_PARENT, name: "Layout" },
+    ];
 
     if (!!PAGE_NAMES_TO_LIST_ITEMS_DATA[pageName]) {
-      data.push(FILTER_GROUPS_LIST_ITEMS_SUBTYPE);
+      data.push({
+        value: FILTER_GROUPS_LIST_ITEMS_SUBTYPE,
+        name: "Trainers/ Tickets",
+      });
     }
 
     const pageData = pageFullDataList.find((data) => data.id === pageId);
@@ -102,7 +109,10 @@ export const AddChildFeatureToContainer = ({
       ","
     );
     if (!!additionalPageNames[0]?.length) {
-      data.push(ADDITIONAL_PAGE_DATA_GROUP_SUBTYPE);
+      data.push({
+        value: ADDITIONAL_PAGE_DATA_GROUP_SUBTYPE,
+        name: "Additional data",
+      });
     }
 
     return data;
@@ -476,9 +486,9 @@ export const AddChildFeatureToContainer = ({
         <option value="" disabled>
           {text}
         </option>
-        {options.map((option) => (
-          <option value={option} key={option}>
-            {option}
+        {groupOptions.map((groupOption) => (
+          <option value={groupOption.value} key={groupOption.value}>
+            {groupOption.name}
           </option>
         ))}
       </select>
