@@ -74,7 +74,7 @@ export const ShowEvent = ({
       <div
         className={styles.inner_container}
         style={{
-          minHeight: isEdit ? "200px" : "120px",
+          minHeight: isEdit ? "200px" : "126px",
           backgroundColor: getBackgroundColor(subtype),
         }}
       >
