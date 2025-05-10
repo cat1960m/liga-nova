@@ -94,7 +94,7 @@ export const DeleteFeatureChangeOrderButtons = ({
     }, []);
   }, [pageFullDataList, parentFeatureId, type, subtype]);
 
-  if (!parentFeatureId || !featureFirst || !featureId || !type || !subtype) {
+  if (!featureFirst || !featureId) {
     return null;
   }
 
