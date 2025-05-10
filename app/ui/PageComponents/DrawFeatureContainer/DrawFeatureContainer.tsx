@@ -1,3 +1,4 @@
+
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { DrawChildFeature } from "../DrawChildFeatures";
 import { AddChildFeatureToContainer } from "../../CommonComponents/AddChildFeatureToContainer/AddChildFeatureToContainer";
@@ -40,30 +41,38 @@ export const DrawFeatureContainer = ({
   const isAdd = isOneChildren ? isDeepMode && !keys.length : isDeepMode;
 
   return (
-  <div className={cn(styles.container, {[styles.oneItemContainer]: isOneChildren})}>
-    <div className={cn(styles.innerContainer, {[styles.oneItem]: isOneChildren})}>
-      {keys.map((id) => (
-        <DrawChildFeature
-          childFeatureDataList={data[id]}
-          pageFullDataList={pageFullDataList}
-          params={params}
-          key={id}
-          parentFeatureId={featureId}
-          pageId={pageId}
-        />
-      ))}
+    <div
+      className={cn(styles.container, {
+        [styles.oneItemContainer]: isOneChildren,
+      })}
+    >
+      <div
+        className={cn(styles.innerContainer, {
+          [styles.oneItem]: isOneChildren,
+        })}
+      >
+        {keys.map((id) => (
+          <DrawChildFeature
+            childFeatureDataList={data[id]}
+            pageFullDataList={pageFullDataList}
+            params={params}
+            key={id}
+            parentFeatureId={featureId}
+            pageId={pageId}
+          />
+        ))}
 
-      {isAdd ? (
-        <AddChildFeatureToContainer
-          parentFeatureId={featureId}
-          text={buttonText}
-          pageFullDataList={pageFullDataList}
-          pageId={pageId}
-          staticTexts={staticTexts}
-          pageName={pageName}
-        />
-      ) : null}
+        {isAdd ? (
+          <AddChildFeatureToContainer
+            parentFeatureId={featureId}
+            text={buttonText}
+            pageFullDataList={pageFullDataList}
+            pageId={pageId}
+            staticTexts={staticTexts}
+            pageName={pageName}
+          />
+        ) : null}
+      </div>
     </div>
-  </div>
   );
 };

@@ -1,3 +1,5 @@
+"use client";
+
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { DrawFeatureContainer } from "../../PageComponents/DrawFeatureContainer/DrawFeatureContainer";
 import { LAYOUT_ITEM_LEFT, LAYOUT_ITEM_RIGHT } from "@/app/lib/constants";
@@ -68,7 +70,7 @@ export const LayoutParent = ({
             isOneChildren
           />
         </div>
-        
+
         <div
           className={cn(styles.itemRight, {
             [styles.edit]: isDeepMode,

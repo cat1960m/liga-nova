@@ -18,3 +18,9 @@
     width: 24px;
     color: blue
 }
+
+.right {
+    display: flex; 
+    align-items: center;
+    gap: 10px;
+}

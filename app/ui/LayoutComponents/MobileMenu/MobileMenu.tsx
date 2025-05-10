@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import { PageData } from "@/app/lib/definitions";
 import { MobileMenuOpen } from "./MobileMenuOpen/MobileMenuOpen";
 import { Logo } from "../Logo/Logo";
+import { usePathname } from "next/navigation";
+import { LangSelector } from "../LangSelector";
 
 export type Props = {
   basePages: PageData[];
@@ -15,11 +17,17 @@ export type Props = {
 
 export const MobileMenu = (props: Props) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathName = usePathname();
+
   useEffect(() => {
+    setIsMenuOpen(false);
+    console.log("close");
+
     return () => {
       setIsMenuOpen(false);
     };
-  }, []);
+  }, [pathName]);
+
   return (
     <div className={styles.main}>
       {isMenuOpen ? (
@@ -31,7 +39,10 @@ export const MobileMenu = (props: Props) => {
 
           <Logo />
 
-          <PhoneIcon className={styles.phone} />
+          <div className={styles.right}>
+            <LangSelector />
+            <PhoneIcon className={styles.phone} />
+          </div>
         </div>
       ) : null}
     </div>

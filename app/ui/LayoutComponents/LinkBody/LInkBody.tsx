@@ -10,23 +10,30 @@ export const LinkBody = ({
   pageTitle,
   isMain,
   lang,
+  onClick,
 }: {
   pageName: string;
   pageTitle: string;
   isMain?: boolean;
   lang: string;
+  onClick?: () => void;
 }) => {
   const params = useParams();
 
   return (
-    <Link href={`/${lang}/${pageName}`}>
+    <Link
+      href={`/${lang}/${pageName}`}
+      onClick={() => {
+        onClick?.();
+      }}
+    >
       <div
         className={clsx(styles.linkBody, {
           [styles.main]: isMain,
           [styles.active]: pageName === params.pageName,
         })}
       >
-        {isMain ? pageTitle: pageTitle.toUpperCase()}
+        {isMain ? pageTitle : pageTitle.toUpperCase()}
       </div>
     </Link>
   );

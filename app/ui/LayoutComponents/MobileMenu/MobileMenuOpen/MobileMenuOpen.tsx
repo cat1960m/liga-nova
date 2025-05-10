@@ -39,6 +39,7 @@ export const MobileMenuOpen = ({
               isMain
               pageTitle={page.text_content}
               key={page.id}
+              onClick={onClose}
             />
           );
         })}
@@ -49,6 +50,7 @@ export const MobileMenuOpen = ({
               lang={lang}
               pageTitle={page.text_content}
               key={page.id}
+              onClick={onClose}
             />
           );
         })}
