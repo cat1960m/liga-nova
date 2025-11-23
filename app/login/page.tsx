@@ -1,5 +1,5 @@
 import AcmeLogo from "@/app/ui/acme-logo";
-import LoginForm from "@/app/ui/login-form";
+import LoginForm from "@/app/ui/LoginForm";
 import { Suspense } from "react";
 
 export default function LoginPage() {
@@ -11,9 +11,9 @@ export default function LoginPage() {
             <AcmeLogo />
           </div>
         </div>
-        <Suspense>
-          <LoginForm />
-        </Suspense>
+          <Suspense>
+            <LoginForm />
+          </Suspense>
       </div>
     </main>
   );

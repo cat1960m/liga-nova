@@ -1,9 +1,7 @@
 "use client";
 
 import {
-  RemoveFeature,
   revalidate,
-  UpdateFeatureOrder,
 } from "@/app/lib/actions_fitness";
 import { usePathname } from "next/navigation";
 import { CommonButton } from "../CommonButton";
@@ -21,6 +19,7 @@ import { TrashIcon } from "@heroicons/react/24/outline";
 
 import styles from "./deleteFeatureChangeOrderButtons.module.css";
 import { useMemo } from "react";
+import { removeFeatureData, updateFeatureOrderData } from "@/app/lib/actionsContainer";
 
 type IdOrder = {
   id: number;
@@ -101,7 +100,7 @@ export const DeleteFeatureChangeOrderButtons = ({
   const handleDelete = async () => {
     changeIsEditButtonDisabled(true);
 
-    await RemoveFeature({ id: featureId, pathName: pathName });
+    await removeFeatureData({ id: featureId, pathName: pathName });
 
     const imageData = featureData.filter(
       (data) => S3_TYPES.includes(data.text_type) && !!data.value
@@ -153,11 +152,11 @@ export const DeleteFeatureChangeOrderButtons = ({
       const currentOrder = current.order;
       const currentId = current.id;
 
-      await UpdateFeatureOrder({
+      await updateFeatureOrderData({
         id: currentId,
         order: newOrder,
       });
-      await UpdateFeatureOrder({
+      await updateFeatureOrderData({
         id: newId,
         order: currentOrder,
       });

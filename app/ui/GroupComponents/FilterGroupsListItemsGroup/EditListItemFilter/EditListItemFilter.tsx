@@ -9,11 +9,11 @@ import { FilterGroups } from "../_filters/FilterGroups";
 import { ListItem } from "../ListItem/ListItem";
 import { EditListItem } from "../EditListItem/EditListItem";
 
-import { updateFeatureSubtypeFilterIds } from "@/app/lib/actions_fitness";
 import { usePathname } from "next/navigation";
 import styles from "./editListItemFilter.module.css";
 import { useEditContext } from "@/app/ui/PageComponents/EditContextProvider";
 import { StaticTexts } from "@/app/dictionaries/definitions";
+import { updateFeatureSubtypeFilterIdsData } from "@/app/lib/actionsContainer";
 
 export type Props = {
   pageFullDataList: FullData[];
@@ -72,7 +72,7 @@ export const EditListItemFilter = ({
     }
 
     changeIsEditButtonDisabled(true);
-    await updateFeatureSubtypeFilterIds({
+    await updateFeatureSubtypeFilterIdsData({
       id: editItemFeatureId,
       pathName,
       subtype: LIST_ITEM,

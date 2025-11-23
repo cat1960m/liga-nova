@@ -1,7 +1,7 @@
 "use client";
 
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import { addChildFeature } from "@/app/lib/actions_fitness";
+import { addFeatureData } from "@/app/lib/actionsContainer";
 import {
   FILTER,
   FILTER_GROUP_SUBTYPE,
@@ -127,7 +127,7 @@ export const AddChildFeatureToContainer = ({
       return;
     }
 
-    await addChildFeature({
+    await addFeatureData({
       parentId: parentFeatureId,
       type: GROUP,
       subtype: ADDITIONAL_PAGE_DATA_GROUP_SUBTYPE,
@@ -163,7 +163,7 @@ export const AddChildFeatureToContainer = ({
       }
 
       if (additionalPageNames.length === 1) {
-        await addChildFeature({
+        await addFeatureData({
           parentId: parentFeatureId,
           type: GROUP,
           subtype: newValue,
@@ -180,7 +180,7 @@ export const AddChildFeatureToContainer = ({
         newValue
       )
     ) {
-      await addChildFeature({
+      await addFeatureData({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: newValue,
@@ -191,7 +191,7 @@ export const AddChildFeatureToContainer = ({
     }
 
     if (newValue === ACTION_BANNER_LIST_GROUP_SUBTYPE) {
-      const actionBannerListGroupId = await addChildFeature({
+      const actionBannerListGroupId = await addFeatureData({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: newValue,
@@ -201,7 +201,7 @@ export const AddChildFeatureToContainer = ({
       });
 
       if (actionBannerListGroupId) {
-        await addChildFeature({
+        await addFeatureData({
           parentId: actionBannerListGroupId,
           type: ACTION_BANNER_LIST_GROUP_ITEM,
           subtype: ACTION_BANNER_LIST_GROUP_ITEM,
@@ -218,7 +218,7 @@ export const AddChildFeatureToContainer = ({
     }
 
     if (newValue === TEXT_LIST_GROUP_SUBTYPE) {
-      const textListGroupFeatureId = await addChildFeature({
+      const textListGroupFeatureId = await addFeatureData({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: newValue,
@@ -228,7 +228,7 @@ export const AddChildFeatureToContainer = ({
       });
 
       if (textListGroupFeatureId) {
-        await addChildFeature({
+        await addFeatureData({
           parentId: textListGroupFeatureId,
           type: TEXT_LIST_GROUP_ITEM,
           subtype: TEXT_LIST_GROUP_ITEM,
@@ -240,7 +240,7 @@ export const AddChildFeatureToContainer = ({
     }
 
     if (newValue === TEXT_HEADER_GROUP_SUBTYPE) {
-      await addChildFeature({
+      await addFeatureData({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: newValue,
@@ -251,7 +251,7 @@ export const AddChildFeatureToContainer = ({
     }
 
     if (TEXT_GROUP_SUBTYPES.includes(newValue)) {
-      await addChildFeature({
+      await addFeatureData({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: newValue,
@@ -262,7 +262,7 @@ export const AddChildFeatureToContainer = ({
     }
 
     if (newValue === IMAGE_GROUP_SUBTYPE) {
-      await addChildFeature({
+      await addFeatureData({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: newValue,
@@ -273,7 +273,7 @@ export const AddChildFeatureToContainer = ({
     }
 
     if (newValue === LIGA_GROUP_SUBTYPE) {
-      await addChildFeature({
+      await addFeatureData({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: newValue,
@@ -284,7 +284,7 @@ export const AddChildFeatureToContainer = ({
     }
 
     if (newValue === IMAGE_LIST_GROUP_SUBTYPE) {
-      await addChildFeature({
+      await addFeatureData({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: newValue,
@@ -295,7 +295,7 @@ export const AddChildFeatureToContainer = ({
     }
 
     if (IMAGE_LINKS_GROUP_SUBTYPE === newValue) {
-      await addChildFeature({
+      await addFeatureData({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: newValue,
@@ -306,7 +306,7 @@ export const AddChildFeatureToContainer = ({
     }
 
     if (IMAGE_ACTIONS_GROUP_SUBTYPE === newValue) {
-      await addChildFeature({
+      await addFeatureData({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: newValue,
@@ -317,7 +317,7 @@ export const AddChildFeatureToContainer = ({
     }
 
     if (newValue === PHOTO_GALLERY_GROUP_SUBTYPE) {
-      await addChildFeature({
+      await addFeatureData({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: newValue,
@@ -328,7 +328,7 @@ export const AddChildFeatureToContainer = ({
     }
 
     if (newValue === INFO_CHECK_GROUP_SUBTYPE) {
-      await addChildFeature({
+      await addFeatureData({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: newValue,
@@ -338,7 +338,7 @@ export const AddChildFeatureToContainer = ({
       });
     }
     if (newValue === INFO_SUBTYPE) {
-      await addChildFeature({
+      await addFeatureData({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: newValue,
@@ -348,7 +348,7 @@ export const AddChildFeatureToContainer = ({
       });
     }
     if (INFO_ACTION_SUBTYPES.includes(newValue)) {
-      await addChildFeature({
+      await addFeatureData({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: newValue,
@@ -359,7 +359,7 @@ export const AddChildFeatureToContainer = ({
     }
 
     if (newValue === SERVICES_GROUP_SUBTYPE) {
-      await addChildFeature({
+      await addFeatureData({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: newValue,
@@ -370,7 +370,7 @@ export const AddChildFeatureToContainer = ({
     }
 
     if (newValue === SCHEDULE_GROUP_SUBTYPE) {
-      await addChildFeature({
+      await addFeatureData({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: newValue,
@@ -381,7 +381,7 @@ export const AddChildFeatureToContainer = ({
     }
 
     if (newValue === FILTER_GROUPS_LIST_ITEMS_SUBTYPE) {
-      const filterGroupsListItemsId = await addChildFeature({
+      const filterGroupsListItemsId = await addFeatureData({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: newValue,
@@ -391,7 +391,7 @@ export const AddChildFeatureToContainer = ({
       });
 
       if (filterGroupsListItemsId) {
-        await addChildFeature({
+        await addFeatureData({
           parentId: filterGroupsListItemsId,
           type: GROUP,
           subtype: FILTER_GROUP_SUBTYPE,
@@ -403,7 +403,7 @@ export const AddChildFeatureToContainer = ({
     }
 
     if (newValue === CALENDAR_EVENTS_GROUP_SUBTYPE) {
-      await addChildFeature({
+      await addFeatureData({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: CALENDAR_EVENTS_GROUP_SUBTYPE,
@@ -414,7 +414,7 @@ export const AddChildFeatureToContainer = ({
     }
 
     if (newValue === DIVIDER) {
-      await addChildFeature({
+      await addFeatureData({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: DIVIDER,
@@ -425,7 +425,7 @@ export const AddChildFeatureToContainer = ({
     }
 
     if (newValue === TABS) {
-      const tabsFeatureId = await addChildFeature({
+      const tabsFeatureId = await addFeatureData({
         parentId: parentFeatureId,
         type: TABS,
         subtype: TABS,
@@ -435,7 +435,7 @@ export const AddChildFeatureToContainer = ({
       });
 
       if (tabsFeatureId) {
-        await addChildFeature({
+        await addFeatureData({
           parentId: tabsFeatureId,
           type: TAB,
           subtype: "1",
@@ -447,7 +447,7 @@ export const AddChildFeatureToContainer = ({
     }
 
     if (newValue === LAYOUT_PARENT) {
-      const layoutFeatureId = await addChildFeature({
+      const layoutFeatureId = await addFeatureData({
         parentId: parentFeatureId,
         type: LAYOUT_PARENT,
         subtype: LAYOUT_PARENT,
@@ -457,7 +457,7 @@ export const AddChildFeatureToContainer = ({
       });
 
       if (layoutFeatureId) {
-        await addChildFeature({
+        await addFeatureData({
           parentId: layoutFeatureId,
           type: LAYOUT_ITEM,
           subtype: LAYOUT_ITEM_LEFT,
@@ -466,7 +466,7 @@ export const AddChildFeatureToContainer = ({
           pathName,
         });
 
-        await addChildFeature({
+        await addFeatureData({
           parentId: layoutFeatureId,
           type: LAYOUT_ITEM,
           subtype: LAYOUT_ITEM_RIGHT,
@@ -482,7 +482,11 @@ export const AddChildFeatureToContainer = ({
 
   return (
     <div className={styles.container}>
-      <select value={selectedValue} onChange={handleChange}>
+      <select
+        value={selectedValue}
+        onChange={handleChange}
+        className={styles.select}
+      >
         <option value="" disabled>
           {text}
         </option>
@@ -494,7 +498,11 @@ export const AddChildFeatureToContainer = ({
       </select>
 
       {optionsAdditionalPagename.length ? (
-        <select value={selectedValue} onChange={handleChangeAdditionalPagename}>
+        <select
+          value={selectedValue}
+          onChange={handleChangeAdditionalPagename}
+          className={styles.select}
+        >
           <option value="" disabled>
             {staticTexts.selectPageName}
           </option>

@@ -9,7 +9,6 @@ import {
   YES,
 } from "@/app/lib/constants";
 import { useEffect, useMemo, useState } from "react";
-import { getPageFullData } from "@/app/lib/actions_fitness";
 import { getFilterIds } from "@/app/lib/utils";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { ExpandedText } from "@/app/ui/CommonComponents/ExpandedText/ExpandedText";
@@ -18,6 +17,7 @@ import styles from "./trainerItem.module.css";
 import cn from "clsx";
 import { Register } from "../Register/Register";
 import Image from "next/image";
+import { getPageData } from "@/app/lib/actionsContainer";
 
 const PREMIUM = "premium%28--0%29";
 
@@ -49,8 +49,8 @@ export const TrainerItem = ({
 
   useEffect(() => {
     const getIcons = async () => {
-      const pageFullData: FullData[] | null = await getPageFullData({
-        lang: "",
+      const pageFullData: FullData[] | null = await getPageData({
+        lang: "en",
         pageName: "icon",
       });
 

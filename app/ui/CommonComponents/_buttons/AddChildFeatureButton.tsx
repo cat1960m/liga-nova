@@ -1,6 +1,6 @@
 "use client";
 
-import { addChildFeature } from "@/app/lib/actions_fitness";
+import { addFeatureData } from "@/app/lib/actionsContainer";
 import { CommonButton } from "./CommonButton";
 import { useEditContext } from "../../PageComponents/EditContextProvider";
 import { PlusIcon } from "@heroicons/react/24/outline";
@@ -30,7 +30,7 @@ export const AddChildFeatureButton = ({
 
   const handleAddFeature = async (pathName: string) => {
     changeIsEditButtonDisabled(true);
-    const newFeatureId = await addChildFeature({
+    const newFeatureId = await addFeatureData({
       parentId: parentFeatureId,
       type,
       subtype,

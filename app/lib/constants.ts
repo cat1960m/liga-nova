@@ -33,7 +33,8 @@ export const INFO_BODY = "info_body";
 
 export const SERVICES_GROUP_SUBTYPE = "services";
 export const SERVICE_ITEM = "service_item";
-export const TOOLTIP = "tooltip";
+export const CONTENT_TYPE_TOOLTIP = "tooltip";
+export const CONTENT_TYPE_MAIN = "main";
 
 export const IMAGE_GROUP_SUBTYPE = "image_group_subtitle";
 
@@ -247,6 +248,7 @@ export const PAGE_NAMES_TO_LIST_ITEMS_DATA: Record<
       SUBSCRIPTION_ITEM_OLD_PRICE,
       SUBSCRIPTION_ITEM_SHARE,
       SUBSCRIPTION_ITEM_DESCRIPTION,
+      SUBSCRIPTION_ITEM_CAN_POSTPONE, //!!!
     ],
   },
   trainers: {

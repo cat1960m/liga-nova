@@ -1,0 +1,68 @@
+
+CREATE TABLE features (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+    parent_feature_id INT, 
+    type VARCHAR(256), 
+    subtype VARCHAR(256), 
+    name VARCHAR(256) NOT NULL, 
+    updated_by INT, 
+	last_edit TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    feature_order BIGINT, 
+    filter_ids TEXT, 
+    additional_page_name TEXT, 
+    weekDays TEXT 
+);
+
+
+>SET GLOBAL local_infile = 1;
+>exit;
+>mysql -u root -p --local-infile=1
+
+
+
+CREATE TABLE features0 (
+    id TEXT, 
+    parent_feature_id TEXT, 
+    type VARCHAR(256), 
+    subtype VARCHAR(256), 
+    name VARCHAR(256) NOT NULL, 
+    updated_by TEXT, 
+	last_edit TEXT,
+    feature_order TEXT, 
+    filter_ids TEXT, 
+    additional_page_name TEXT, 
+    weekDays TEXT
+    
+);
+
+LOAD DATA LOCAL INFILE '/Users/kateryna.dobrovolska/db_svg/features.csv'
+INTO TABLE features0
+FIELDS TERMINATED BY ',' ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
+
+////////////////////
+
+CREATE TABLE text_contents (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+    text_description_id INT, 
+    language TEXT, 
+    text_content TEXT, 
+    updated_by INT, 
+    last_edit_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, 
+    content_type TEXT,
+    CONSTRAINT fk_text_description FOREIGN KEY (text_description_id) REFERENCES text_descriptions(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+//////////
+
+CREATE TABLE text_descriptions (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+    feature_id INT, 
+    text_type VARCHAR(256) NOT NULL, 
+    price INT, 
+    can_delete BOOL, 
+    text_description_order BIGINT, 
+    value TEXT, 
+    link TEXT,
+    CONSTRAINT fk_feature FOREIGN KEY (feature_id) REFERENCES features(id) ON DELETE CASCADE ON UPDATE CASCADE
+);

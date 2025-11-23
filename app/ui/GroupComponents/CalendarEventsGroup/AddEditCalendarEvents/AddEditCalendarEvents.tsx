@@ -10,7 +10,6 @@ import {
 import { NumberValue } from "./NumberValue";
 import { EventDates } from "../EventDates/EventDates";
 import { TranslationTabs } from "@/app/ui/CommonComponents/TranslationTabs/TranslationTabs";
-import { getTextContents } from "@/app/lib/actions_fitness";
 import {
   CALENDAR_EVENTS_TITLE,
   CALENDAR_EVENTS_TRAINER,
@@ -23,6 +22,7 @@ import { useChangeEventData } from "../hooks/useChangeEventData";
 
 import styles from "./addEditCalendarEvents.module.css";
 import { StaticTexts } from "@/app/dictionaries/definitions";
+import { getTextContentsData } from "@/app/lib/actionsContainer";
 
 export type Props = {
   calendarFeatureId: number;
@@ -89,7 +89,7 @@ export const AddEditCalendarEvents = ({
       text_description_id: number;
       setTabs: (value: TabType[]) => void;
     }) => {
-      const allContents = await getTextContents({
+      const allContents = await getTextContentsData({
         text_description_id: text_description_id,
       });
 

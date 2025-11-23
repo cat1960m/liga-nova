@@ -28,7 +28,6 @@ export const ShowImageGroup = ({
     (item) => item.id === imageData.parent_feature_id
   );
   const isInLayout = parentFeature?.type === LAYOUT_ITEM;
-  console.log("parentFeature?.subtype", parentFeature?.subtype);
   const { staticTexts, lang } = params;
   const { isEdit, noDelete } = getIsEditNoDelete(params);
 

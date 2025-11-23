@@ -1,11 +1,11 @@
 "use client";
 
-import { addTextDescription } from "@/app/lib/actions_fitness";
 import { usePathname } from "next/navigation";
 import { CommonButton } from "./CommonButton";
 import { useEditContext } from "../../PageComponents/EditContextProvider";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import { ICON_BUTTON_WIDTH, ICON_IN_BUTTON_WIDTH } from "@/app/lib/constants";
+import { addTextDescriptionData } from "@/app/lib/actionsContainer";
 
 export type Props = {
   featureId: number;
@@ -22,7 +22,7 @@ export const AddTextDescriptionButton = (props: Props) => {
   const pathName = usePathname();
   const handleAddColumnItem = async () => {
     changeIsEditButtonDisabled(true);
-    const newTextDescriptionId = await addTextDescription({
+    const newTextDescriptionId = await addTextDescriptionData({
       ...props,
       pathName,
       canDelete: true,

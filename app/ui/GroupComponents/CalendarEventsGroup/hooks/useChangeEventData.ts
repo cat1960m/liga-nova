@@ -1,14 +1,15 @@
 "use client";
 
+import { revalidate } from "@/app/lib/actions_fitness";
 import {
-  addChildFeature,
-  addText,
-  addTextDescription,
-  getTextContents,
-  updateFeatureSubtypeFilterIds,
-  updatePriceValueLink,
-  updateText,
-} from "@/app/lib/actions_fitness";
+  addFeatureData,
+  addTextData,
+  addTextDescriptionData,
+  getTextContentsData,
+  updateFeatureSubtypeFilterIdsData,
+  updatePriceValueLinkData,
+  updateTextData,
+} from "@/app/lib/actionsContainer";
 import {
   CALENDAR_EVENTS_COUNT,
   CALENDAR_EVENTS_DESCRIPTION,
@@ -16,10 +17,10 @@ import {
   CALENDAR_EVENTS_TITLE,
   CALENDAR_EVENTS_TRAINER,
   CALENDAR_EVENTS_TYPE,
+  CONTENT_TYPE_MAIN,
 } from "@/app/lib/constants";
 import { FullData, TabType } from "@/app/lib/definitions";
 import { usePathname } from "next/navigation";
-import postgres from "postgres";
 
 export type SaveArgs = {
   type: string;
@@ -65,9 +66,9 @@ export const useChangeEventData = () => {
     textType: string;
     tabs: TabType[];
     price?: number | null;
-    promises: Promise<postgres.RowList<postgres.Row[]> | number | null>[];
+    promises: Promise<any>[];
   }) => {
-    const newTextDescriptionId = await addTextDescription({
+    const newTextDescriptionId = await addTextDescriptionData({
       featureId,
       textType,
       pathName,
@@ -80,12 +81,11 @@ export const useChangeEventData = () => {
         const tabLang = tab.langUpperCase.toLocaleLowerCase();
 
         promises.push(
-          addText({
+          addTextData({
             textDescriptionId: newTextDescriptionId,
             lang: tabLang,
             text: tab.value,
-            pathName,
-            contentType: "main",
+            contentType: CONTENT_TYPE_MAIN,
           })
         );
       });
@@ -104,69 +104,70 @@ export const useChangeEventData = () => {
     pageName,
     calendarFeatureId,
   }: SaveArgs) => {
-    const calendarEventsGroupFeatureId = await addChildFeature({
-      parentId: calendarFeatureId,
-      type: CALENDAR_EVENTS_TYPE,
-      subtype: type,
-      name: pageName,
-      text_types: [],
-      pathName,
-      filter_ids: confirmedDates.join(","),
-    });
+    try {
+      const calendarEventsGroupFeatureId = await addFeatureData({
+        parentId: calendarFeatureId,
+        type: CALENDAR_EVENTS_TYPE,
+        subtype: type,
+        name: pageName,
+        text_types: [],
+        filter_ids: confirmedDates.join(","),
+      });
 
-    if (!calendarEventsGroupFeatureId) {
-      return;
+      if (!calendarEventsGroupFeatureId) {
+        return;
+      }
+
+      const promises: Promise<any>[] = [];
+
+      saveTabs({
+        featureId: calendarEventsGroupFeatureId,
+        textType: CALENDAR_EVENTS_TITLE,
+        tabs: title ?? [],
+        price,
+        promises,
+      });
+
+      saveTabs({
+        featureId: calendarEventsGroupFeatureId,
+        textType: CALENDAR_EVENTS_TRAINER,
+        tabs: trainer ?? [],
+        promises,
+      });
+
+      saveTabs({
+        featureId: calendarEventsGroupFeatureId,
+        textType: CALENDAR_EVENTS_DESCRIPTION,
+        tabs: description ?? [],
+        promises,
+      });
+
+      promises.push(
+        addTextDescriptionData({
+          featureId: calendarEventsGroupFeatureId,
+          textType: CALENDAR_EVENTS_COUNT,
+          canDelete: false,
+          price: null,
+          value: count.toString(),
+        })
+      );
+
+      promises.push(
+        addTextDescriptionData({
+          featureId: calendarEventsGroupFeatureId,
+          textType: CALENDAR_EVENTS_TIME,
+          canDelete: false,
+          price: null,
+          value: time,
+        })
+      );
+
+      await Promise.all(promises);
+
+      revalidate(pageName);
+    } catch (err) {
+      console.log("Error", err);
     }
-
-    const promises: Promise<
-      postgres.RowList<postgres.Row[]> | number | null
-    >[] = [];
-
-    saveTabs({
-      featureId: calendarEventsGroupFeatureId,
-      textType: CALENDAR_EVENTS_TITLE,
-      tabs: title ?? [],
-      price,
-      promises,
-    });
-
-    saveTabs({
-      featureId: calendarEventsGroupFeatureId,
-      textType: CALENDAR_EVENTS_TRAINER,
-      tabs: trainer ?? [],
-      promises,
-    });
-
-    saveTabs({
-      featureId: calendarEventsGroupFeatureId,
-      textType: CALENDAR_EVENTS_DESCRIPTION,
-      tabs: description ?? [],
-      promises,
-    });
-
-    promises.push(
-      addTextDescription({
-        featureId: calendarEventsGroupFeatureId,
-        textType: CALENDAR_EVENTS_COUNT,
-        pathName,
-        canDelete: false,
-        price: null,
-        value: count.toString(),
-      })
-    );
-
-    promises.push(
-      addTextDescription({
-        featureId: calendarEventsGroupFeatureId,
-        textType: CALENDAR_EVENTS_TIME,
-        pathName,
-        canDelete: false,
-        price: null,
-        value: time,
-      })
-    );
-
-    await Promise.all(promises);
   };
   const updateEvent = async ({
     type,
@@ -184,62 +185,62 @@ export const useChangeEventData = () => {
     descriptionInit,
     eventFeatureId,
   }: UpdateArgs) => {
-    const promises: Promise<
-      postgres.RowList<postgres.Row[]> | number | null | undefined
-    >[] = [];
+    try {
+      const promises: Promise<any>[] = [];
 
-    promises.push(
-      updateFeatureSubtypeFilterIds({
-        id: eventFeatureId,
-        pathName,
-        subtype: type,
-        filterIds: confirmedDates.join(","),
-      })
-    );
+      promises.push(
+        updateFeatureSubtypeFilterIdsData({
+          id: eventFeatureId,
+          subtype: type,
+          filterIds: confirmedDates.join(","),
+        })
+      );
 
-    promises.push(
-      updatePriceValueLink({
-        price,
+      promises.push(
+        updatePriceValueLinkData({
+          price,
+          textDescriptionId: titleInit.text_description_id,
+        })
+      );
+
+      promises.push(
+        updatePriceValueLinkData({
+          value: count.toString(),
+          textDescriptionId: countInit.text_description_id,
+        })
+      );
+
+      promises.push(
+        updatePriceValueLinkData({
+          value: time,
+          textDescriptionId: timeInit.text_description_id,
+        })
+      );
+
+      updateTabs({
+        tabs: title ?? [],
         textDescriptionId: titleInit.text_description_id,
-        pathName,
-      })
-    );
+        promises,
+      });
 
-    promises.push(
-      updatePriceValueLink({
-        value: count.toString(),
-        textDescriptionId: countInit.text_description_id,
-        pathName,
-      })
-    );
+      updateTabs({
+        tabs: trainer ?? [],
+        textDescriptionId: trainerInit.text_description_id,
+        promises,
+      });
 
-    promises.push(
-      updatePriceValueLink({
-        value: time,
-        textDescriptionId: timeInit.text_description_id,
-        pathName,
-      })
-    );
+      updateTabs({
+        tabs: description ?? [],
+        textDescriptionId: descriptionInit.text_description_id,
+        promises,
+      });
 
-    updateTabs({
-      tabs: title ?? [],
-      textDescriptionId: titleInit.text_description_id,
-      promises,
-    });
+      await Promise.all(promises);
 
-    updateTabs({
-      tabs: trainer ?? [],
-      textDescriptionId: trainerInit.text_description_id,
-      promises,
-    });
-
-    updateTabs({
-      tabs: description ?? [],
-      textDescriptionId: descriptionInit.text_description_id,
-      promises,
-    });
-
-    await Promise.all(promises);
+      revalidate(pathName);
+    } catch (err) {
+      console.log("error", err);
+    }
   };
 
   const updateTabs = async ({
@@ -249,11 +250,9 @@ export const useChangeEventData = () => {
   }: {
     tabs: TabType[];
     textDescriptionId: number;
-    promises: Promise<
-      postgres.RowList<postgres.Row[]> | number | null | undefined
-    >[];
+    promises: Promise<any>[];
   }) => {
-    const textContents = await getTextContents({
+    const textContents = await getTextContentsData({
       text_description_id: textDescriptionId,
     });
 
@@ -265,19 +264,17 @@ export const useChangeEventData = () => {
 
       if (!textContent) {
         promises.push(
-          addText({
+          addTextData({
             text: tab.value,
             textDescriptionId,
             lang: tabLang,
-            contentType: "main",
-            pathName,
+            contentType: CONTENT_TYPE_MAIN,
           })
         );
       } else {
         promises.push(
-          updateText({
+          updateTextData({
             text: tab.value,
-            pathName,
             id: textContent.id,
           })
         );

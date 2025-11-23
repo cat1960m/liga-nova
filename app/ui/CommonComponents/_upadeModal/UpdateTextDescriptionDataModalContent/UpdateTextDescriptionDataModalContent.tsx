@@ -10,21 +10,26 @@ import {
 import { TranslationTabs } from "../../TranslationTabs/TranslationTabs";
 import { CommonButton } from "../../_buttons/CommonButton";
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import {
-  addText,
-  getPageFullData,
-  getPageTitles,
-  getTextContents,
-  revalidate,
-  updatePriceValueLink,
-  updateText,
-} from "@/app/lib/actions_fitness";
 import { usePathname } from "next/navigation";
-import { ICON_SIZE, TOOLTIP, TRANSLATE_LANGUAGES } from "@/app/lib/constants";
+import {
+  ICON_SIZE,
+  CONTENT_TYPE_TOOLTIP,
+  TRANSLATE_LANGUAGES,
+  CONTENT_TYPE_MAIN,
+} from "@/app/lib/constants";
 
 import styles from "./updateTextDescriptionDataModalContent.module.css";
 import axios from "axios";
 import Image from "next/image";
+import {
+  addTextData,
+  getPageData,
+  getPageTitlesData,
+  getTextContentsData,
+  updatePriceValueLinkData,
+  updateTextData,
+} from "@/app/lib/actionsContainer";
+import { revalidate } from "@/app/lib/actions_fitness";
 
 export type UseItems = {
   text?: "simple" | "area" | "quill";
@@ -49,11 +54,13 @@ export const UpdateTextDescriptionDataModalContent = ({
   lang,
   useItems,
 }: Props) => {
-  const [textContents, setTextContents] = useState<TextContent[] | null>(null);
+  const [textContentsMain, setTextContentsMain] = useState<
+    TextContent[] | null
+  >(null);
   const [textContentsTooltips, setTextContentsTooltips] = useState<
     TextContent[] | null
   >(null);
-  const [tabs, setTabs] = useState<TabType[] | null>([]);
+  const [tabsMain, setTabsMain] = useState<TabType[] | null>([]);
   const [tabsTooltip, setTabsTooltip] = useState<TabType[] | null>(null);
   const [isSaveDisabled, setIsSaveDisabled] = useState(true);
 
@@ -74,32 +81,29 @@ export const UpdateTextDescriptionDataModalContent = ({
 
   useEffect(() => {
     const getData = async () => {
-      const allContents = await getTextContents({
+      const allContents = await getTextContentsData({
         text_description_id: textDescriptionId,
       });
 
-      const contents =
-        allContents?.filter((content) => content.content_type !== TOOLTIP) ??
-        [];
-      setTextContents(contents);
-      setTabs([
-        {
-          langUpperCase: "EN",
-          value: getLanguageValue({ lang: "en", textContents: contents }),
-        },
-        {
-          langUpperCase: "UA",
-          value: getLanguageValue({ lang: "ua", textContents: contents }),
-        },
-        {
-          langUpperCase: "DE",
-          value: getLanguageValue({ lang: "de", textContents: contents }),
-        },
-      ]);
+      const contentsMain =
+        allContents?.filter(
+          (content) => content.content_type === CONTENT_TYPE_MAIN
+        ) ?? [];
+      setTextContentsMain(contentsMain);
+      setTabsMain(
+        TRANSLATE_LANGUAGES.map((language) => ({
+          langUpperCase: language,
+          value: getLanguageValue({
+            lang: language.toLocaleLowerCase(),
+            textContents: contentsMain,
+          }),
+        }))
+      );
 
       const contentsTooltips =
-        allContents?.filter((content) => content.content_type === TOOLTIP) ??
-        [];
+        allContents?.filter(
+          (content) => content.content_type === CONTENT_TYPE_TOOLTIP
+        ) ?? [];
       setTextContentsTooltips(contentsTooltips);
       setTabsTooltip(
         TRANSLATE_LANGUAGES.map((language) => ({
@@ -113,7 +117,7 @@ export const UpdateTextDescriptionDataModalContent = ({
     };
 
     const getIcons = async () => {
-      const pageFullData: FullData[] | null = await getPageFullData({
+      const pageFullData: FullData[] | null = await getPageData({
         lang: "en",
         pageName: "icon",
       });
@@ -122,7 +126,7 @@ export const UpdateTextDescriptionDataModalContent = ({
     };
 
     const getPages = async () => {
-      const pages1 = await getPageTitles(lang);
+      const pages1 = await getPageTitlesData(lang);
 
       setPages(pages1?.map((page) => page) ?? []);
     };
@@ -166,37 +170,45 @@ export const UpdateTextDescriptionDataModalContent = ({
   }) =>
     textContents?.find((item) => item.language === lang)?.text_content ?? "";
 
-  if (!textContents || !textContentsTooltips || !tabs || !tabsTooltip) {
+  if (!textContentsMain || !textContentsTooltips || !tabsMain || !tabsTooltip) {
     return null;
   }
 
-  const saveTab = ({
-    text,
-    id,
-    tabLang,
+  const saveTabs = ({
+    tabs,
+    promises,
     contentType,
+    textContents,
   }: {
-    text: string;
-    id?: number;
-    tabLang: string;
+    tabs: TabType[];
+    promises: Promise<any>[];
     contentType: string;
+    textContents: TextContent[];
   }) => {
-    const textUpdated = text; //!!text ? text : null;
-    if (id) {
-      return updateText({
-        id,
-        text: textUpdated,
-        pathName,
-        contentType,
-      });
-    }
+    tabs.forEach((tab) => {
+      const tabLang = tab.langUpperCase.toLocaleLowerCase();
+      const textContent = textContents.find(
+        ({ language }) => language === tabLang
+      );
 
-    return addText({
-      textDescriptionId,
-      lang: tabLang,
-      text: textUpdated,
-      pathName,
-      contentType,
+      if (textContent?.id) {
+        promises.push(
+          updateTextData({
+            id: textContent?.id,
+            text: tab.value,
+            contentType,
+          })
+        );
+      } else {
+        promises.push(
+          addTextData({
+            textDescriptionId,
+            lang: tabLang,
+            text: tab.value,
+            contentType,
+          })
+        );
+      }
     });
   };
 
@@ -206,65 +218,51 @@ export const UpdateTextDescriptionDataModalContent = ({
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const promises: Promise<any>[] = [];
 
-    const path = await UploadFile();
+    try {
+      const path = await UploadFile();
 
-    if (useItems.price || useItems.value || useItems.link) {
-      const newValue = path ?? (useItems.value ? currentValue : undefined);
-      const price = useItems.price !== undefined ? priceValue : undefined;
-      const link = useItems.link ? linkValue : undefined;
-
-      promises.push(
-        updatePriceValueLink({
-          price,
-          textDescriptionId,
-          pathName,
-          value: newValue,
-          link,
-        })
-      );
-    }
-    if (useItems.text || useItems.tooltip) {
-      tabs.forEach((tab) => {
-        const tabLang = tab.langUpperCase.toLocaleLowerCase();
-        const textContent = textContents.find(
-          ({ language }) => language === tabLang
-        );
+      if (useItems.price || useItems.value || useItems.link) {
+        const newValue = path ?? (useItems.value ? currentValue : undefined);
+        const price = useItems.price !== undefined ? priceValue : undefined;
+        const link = useItems.link ? linkValue : undefined;
 
         promises.push(
-          saveTab({
-            text: tab.value,
-            id: textContent?.id,
-            tabLang,
-            contentType: "main",
+          updatePriceValueLinkData({
+            price,
+            textDescriptionId,
+            pathName,
+            value: newValue,
+            link,
           })
         );
-      });
+      }
+
+      if (useItems.text || useItems.tooltip) {
+        saveTabs({
+          tabs: tabsMain,
+          contentType: CONTENT_TYPE_MAIN,
+          promises,
+          textContents: textContentsMain,
+        });
+      }
+
+      if (useItems.tooltip) {
+        saveTabs({
+          tabs: tabsTooltip,
+          contentType: CONTENT_TYPE_TOOLTIP,
+          promises,
+          textContents: textContentsTooltips,
+        });
+      }
+
+      await Promise.all(promises);
+
+      await revalidate(pathName);
+
+      onClose();
+    } catch (err) {
+      console.log("-----error", err);
     }
-
-    if (useItems.tooltip) {
-      tabsTooltip.forEach((tab) => {
-        const tabLang = tab.langUpperCase.toLocaleLowerCase();
-
-        const textContent = textContentsTooltips?.find(
-          ({ language }) => language === tabLang
-        );
-
-        promises.push(
-          saveTab({
-            text: tab.value,
-            id: textContent?.id,
-            tabLang,
-            contentType: TOOLTIP,
-          })
-        );
-      });
-    }
-
-    await Promise.all(promises);
-
-    await revalidate(pathName);
-
-    onClose();
   };
 
   const handlePriceChange: ChangeEventHandler<HTMLInputElement> = (event) => {
@@ -338,8 +336,8 @@ export const UpdateTextDescriptionDataModalContent = ({
         <TranslationTabs
           staticTexts={staticTexts}
           onChange={handleChange}
-          tabs={tabs}
-          setTabs={setTabs}
+          tabs={tabsMain}
+          setTabs={setTabsMain}
           title="Text"
           isArea={useItems.text === "area"}
           isQuill={useItems.text === "quill"}

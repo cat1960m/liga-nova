@@ -4,16 +4,15 @@ import { DeleteTextDescriptionButton } from "../DeleteTextDescriptionButton";
 import { UpdateTextDescriptionData } from "../../_upadeModal/UpdateTextDescriptionData";
 import { ChangeOrderButtons } from "../ChangeOrderButtons/ChangeOrderButtons";
 import { useEditContext } from "../../../PageComponents/EditContextProvider";
-import {
-  revalidate,
-  UpdateTextDescriptionsOrder,
-} from "@/app/lib/actions_fitness";
+import { revalidate } from "@/app/lib/actions_fitness";
 import { usePathname } from "next/navigation";
 import { UseItems } from "../../_upadeModal/UpdateTextDescriptionDataModalContent/UpdateTextDescriptionDataModalContent";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 
 import styles from "./updateDeleteTextButtons.module.css";
 import { useMemo } from "react";
+import { updateTextDescriptionsOrderData } from "@/app/lib/actionsContainer";
+import { CONTENT_TYPE_MAIN, CONTENT_TYPE_TOOLTIP } from "@/app/lib/constants";
 export type Props = {
   currentData?: FullData;
   isChangeOrder?: boolean;
@@ -42,10 +41,14 @@ export const UpdateDeleteTextButtons = ({
   const pathName = usePathname();
 
   const textDescriptionSibling: FullData[] = useMemo(() => {
-    return pageFullDataList.filter(
+    const data = pageFullDataList.filter(
       (data) =>
-        data.id === currentData?.id && data.text_type === currentData.text_type
+        data.id === currentData?.id &&
+        data.text_type === currentData.text_type &&
+        data.content_type !== CONTENT_TYPE_TOOLTIP
     );
+
+    return data;
   }, [pageFullDataList, currentData?.id, currentData?.text_type]);
 
   if (!currentData) {
@@ -81,11 +84,11 @@ export const UpdateDeleteTextButtons = ({
       const textDescriptionToChangeOrderWith = textDescriptions[newIndex];
       const textDescription = textDescriptions[index];
 
-      await UpdateTextDescriptionsOrder({
+      await updateTextDescriptionsOrderData({
         id: textDescription.text_description_id,
         order: textDescriptionToChangeOrderWith.text_description_order,
       });
-      await UpdateTextDescriptionsOrder({
+      await updateTextDescriptionsOrderData({
         id: textDescriptionToChangeOrderWith.text_description_id,
         order: textDescription.text_description_order,
       });

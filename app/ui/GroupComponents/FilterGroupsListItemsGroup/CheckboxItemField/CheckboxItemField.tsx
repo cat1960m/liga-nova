@@ -1,6 +1,5 @@
 "use client";
 
-import { updateTextDescriptionValue } from "@/app/lib/actions_fitness";
 import { YES } from "@/app/lib/constants";
 import { FullData } from "@/app/lib/definitions";
 import { usePathname } from "next/navigation";
@@ -8,6 +7,7 @@ import { ChangeEventHandler } from "react";
 
 import styles from "./checkboxItemField.module.css";
 import { useEditContext } from "@/app/ui/PageComponents/EditContextProvider";
+import { updateTextDescriptionValueData } from "@/app/lib/actionsContainer";
 
 export type Props = {
   title: string;
@@ -23,7 +23,7 @@ export const CheckboxItemField = ({ title, currentData }: Props) => {
   ) => {
     const value = event.target.checked ? YES : "no";
     changeIsEditButtonDisabled(true);
-    await updateTextDescriptionValue({
+    await updateTextDescriptionValueData({
       value,
       textDescriptionId: currentData.text_description_id,
       pathName,

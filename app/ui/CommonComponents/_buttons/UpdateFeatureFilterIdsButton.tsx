@@ -1,9 +1,9 @@
 "use client";
 
-import { updateFeatureSubtypeFilterIds } from "@/app/lib/actions_fitness";
 import { CommonButton } from "./CommonButton";
 import { usePathname } from "next/navigation";
 import { useEditContext } from "../../PageComponents/EditContextProvider";
+import { updateFeatureSubtypeFilterIdsData } from "@/app/lib/actionsContainer";
 
 export type Props = {
   featureId: number;
@@ -28,7 +28,7 @@ export const UpdateFeatureFilterIdsButton = ({
 
   const handleSave = async () => {
     changeIsEditButtonDisabled(true);
-    await updateFeatureSubtypeFilterIds({
+    await updateFeatureSubtypeFilterIdsData({
       id: featureId,
       pathName,
       subtype,

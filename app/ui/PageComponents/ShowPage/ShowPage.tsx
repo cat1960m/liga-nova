@@ -1,6 +1,3 @@
-
-
-import { getPageFullData } from "@/app/lib/actions_fitness";
 import { DrawFeatureContainerEdit } from "../DrawFeatureContainerEdit";
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { getIsEditNoDelete } from "@/app/lib/utils";
@@ -10,6 +7,7 @@ import { notFound } from "next/navigation";
 import styles from "./showPage.module.css";
 import { ActionBannerListGroup } from "../../GroupComponents/ActionBannerListGroup/ActionBannerListGroup";
 import { DrawFeatureContainer } from "../DrawFeatureContainer/DrawFeatureContainer";
+import { getPageData } from "@/app/lib/actionsContainer";
 
 export type Props = {
   params: MainParams;
@@ -21,7 +19,7 @@ export const ShowPage = async ({ params, isAuthenticated, isMain }: Props) => {
   const { lang, pageName, staticTexts } = params;
   const { isEdit } = getIsEditNoDelete(params);
 
-  const pageFullData: FullData[] | null = await getPageFullData({
+  const pageFullData: FullData[] | null = await getPageData({
     lang,
     pageName,
   });
@@ -35,7 +33,6 @@ export const ShowPage = async ({ params, isAuthenticated, isMain }: Props) => {
   );
 
   if (!currentPageData) {
-    //return null;
     notFound();
   }
 

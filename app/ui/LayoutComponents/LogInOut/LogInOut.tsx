@@ -1,7 +1,5 @@
 import { signOut } from "@/app/auth";
-import {
-  UserIcon,
-} from "@heroicons/react/24/outline";
+import { UserIcon } from "@heroicons/react/24/outline";
 import { UserIcon as UserIconSolid } from "@heroicons/react/24/solid";
 
 import Link from "next/link";
@@ -22,10 +20,7 @@ export const LogInOut = ({ isAuthenticated }: Props) => {
             await signOut();
           }}
         >
-          <button
-            className={styles.container}
-            title="Sign Out"
-          >
+          <button className={styles.container} title="Sign Out">
             <UserIconSolid className={styles.icon} />
           </button>
         </form>

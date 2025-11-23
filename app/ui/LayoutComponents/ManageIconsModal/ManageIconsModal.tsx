@@ -3,13 +3,13 @@
 import { useCallback, useEffect, useState } from "react";
 import { CommonButton } from "../../CommonComponents/_buttons/CommonButton";
 import { FullData } from "@/app/lib/definitions";
-import { addIcon, getPageFullData } from "@/app/lib/actions_fitness";
 import { usePathname, useSearchParams } from "next/navigation";
 import { ManageImages } from "./ManageImages/ManageImages";
 import { CreateModal } from "../../CommonComponents/_upadeModal/CreateModal/CreateModal";
 
 import styles from "./manageIconsModal.module.css";
 import { EDIT_MODE } from "@/app/lib/constants";
+import { addIconData, getPageData } from "@/app/lib/actionsContainer";
 
 export const ManageIconsModal = ({ lang }: { lang: string }) => {
   const [isModalShown, setIsModalShown] = useState(false);
@@ -24,7 +24,7 @@ export const ManageIconsModal = ({ lang }: { lang: string }) => {
   };
 
   const getIcons = useCallback(async () => {
-    const pageFullData: FullData[] | null = await getPageFullData({
+    const pageFullData: FullData[] | null = await getPageData({
       lang,
       pageName: "icon",
     });
@@ -37,7 +37,7 @@ export const ManageIconsModal = ({ lang }: { lang: string }) => {
   }, [getIcons]);
 
   const handleIconUploaded = async (value: string) => {
-    await addIcon({ value, pathName });
+    await addIconData({ value, pathName });
     getIcons();
   };
 

@@ -1,7 +1,7 @@
 import { FullData } from "@/app/lib/definitions";
 
 import styles from "./imageActions.module.css";
-import { TOOLTIP } from "@/app/lib/constants";
+import { CONTENT_TYPE_TOOLTIP } from "@/app/lib/constants";
 import Image from "next/image";
 
 export type Props = {
@@ -14,7 +14,7 @@ export const ImageAction = ({ data, groupData, isModalShown }: Props) => {
   const tooltip = groupData.find(
     (item) =>
       item.text_description_id === data.text_description_id &&
-      item.content_type === TOOLTIP
+      item.content_type === CONTENT_TYPE_TOOLTIP
   );
   return (
     <div className={styles.item}>

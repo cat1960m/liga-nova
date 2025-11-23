@@ -1,12 +1,12 @@
 "use client";
 
-import { RemoveTextDescription } from "@/app/lib/actions_fitness";
 import { usePathname } from "next/navigation";
 import { CommonButton } from "./CommonButton";
 import axios from "axios";
 import { useEditContext } from "../../PageComponents/EditContextProvider";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import { ICON_BUTTON_WIDTH, ICON_IN_BUTTON_WIDTH } from "@/app/lib/constants";
+import { removeTextDescriptionData } from "@/app/lib/actionsContainer";
 
 export const DeleteTextDescriptionButton = ({
   textDescriptionId,
@@ -25,7 +25,7 @@ export const DeleteTextDescriptionButton = ({
 
   const handleDelete = async () => {
     changeIsEditButtonDisabled(true);
-    await RemoveTextDescription({ id: textDescriptionId, pathName: pathName });
+    await removeTextDescriptionData({ id: textDescriptionId, pathName: pathName });
     changeIsEditButtonDisabled(false);
 
     if (s3Key) {

@@ -4,7 +4,7 @@ import { FullData } from "@/app/lib/definitions";
 import Image from "next/image";
 
 import styles from "./imageLinks.module.css";
-import { TOOLTIP } from "@/app/lib/constants";
+import { CONTENT_TYPE_TOOLTIP } from "@/app/lib/constants";
 import Link from "next/link";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { usePathname } from "next/navigation";
@@ -26,7 +26,7 @@ export const ImageLink = ({
   const tooltip = groupData.find(
     (item) =>
       item.text_description_id === data.text_description_id &&
-      item.content_type === TOOLTIP
+      item.content_type === CONTENT_TYPE_TOOLTIP
   );
 
   const link = `${pathName}/${data.link}`;

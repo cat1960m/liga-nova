@@ -1,7 +1,7 @@
 "use client";
 
 import { FullData, MainParams } from "@/app/lib/definitions";
-import { IMAGE_LINKS_ITEM, TOOLTIP } from "@/app/lib/constants";
+import { IMAGE_LINKS_ITEM, CONTENT_TYPE_TOOLTIP } from "@/app/lib/constants";
 import cn from "clsx";
 
 import styles from "./imageLinks.module.css";
@@ -18,7 +18,7 @@ export type Props = {
 export const ImageLinksGroup = ({ groupData, params }: Props) => {
   const [isModalShown, setIsModalShown] = useState<boolean>(false);
   const groupDataMain = groupData.filter(
-    (item) => item.content_type !== TOOLTIP
+    (item) => item.content_type !== CONTENT_TYPE_TOOLTIP
   );
   const changeModalState = (state: boolean) => setIsModalShown(state);
   const { staticTexts, lang } = params;

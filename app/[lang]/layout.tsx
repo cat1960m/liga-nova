@@ -1,4 +1,3 @@
-import { getPageTitles } from "../lib/actions_fitness";
 import { auth } from "@/app/auth";
 import { ManageIconsModal } from "../ui/LayoutComponents/ManageIconsModal/ManageIconsModal";
 import { MainMenu } from "../ui/LayoutComponents/MainMenu/MainMenu";
@@ -6,8 +5,8 @@ import styles from "./layout.module.css";
 import { MobileMenu } from "../ui/LayoutComponents/MobileMenu/MobileMenu";
 import { BaseMenu } from "../ui/LayoutComponents/BaseMenu/BaseMenu";
 import { EditMode } from "../ui/LayoutComponents/EditMode/EditMode";
+import { getPageTitlesData } from "../lib/actionsContainer";
 
-//export const experimental_ppr = true;
 
 export default async function Layout({
   children,
@@ -19,7 +18,7 @@ export default async function Layout({
   const paramsData = await params;
 
   const lang = paramsData.lang ?? "ua";
-  const pages = await getPageTitles(lang);
+  const pages = await getPageTitlesData(lang);
   const res = await auth();
   const isAuthenticated = !!res?.user;
 

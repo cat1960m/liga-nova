@@ -1,4 +1,4 @@
-import { SERVICE_ITEM, TOOLTIP } from "@/app/lib/constants";
+import { SERVICE_ITEM, CONTENT_TYPE_TOOLTIP } from "@/app/lib/constants";
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { ServicesText } from "./ServicesText/ServicesText";
 import { UpdateDeleteTextButtons } from "@/app/ui/CommonComponents/_buttons/UpdateDeleteTextButtons/UpdateDeleteTextButtons";
@@ -14,7 +14,7 @@ export type Props = {
 };
 
 export const ServicesGroup = ({ groupData, params }: Props) => {
-  const texts = groupData.filter((data) => data.content_type !== TOOLTIP);
+  const texts = groupData.filter((data) => data.content_type !== CONTENT_TYPE_TOOLTIP);
   const { staticTexts, lang } = params;
   const { isEdit, noDelete } = getIsEditNoDelete(params);
 
@@ -36,7 +36,7 @@ export const ServicesGroup = ({ groupData, params }: Props) => {
             const title = groupData.find(
               (item) =>
                 item.text_description_id === data.text_description_id &&
-                item.content_type === TOOLTIP
+                item.content_type === CONTENT_TYPE_TOOLTIP
             );
             return (
               <div
