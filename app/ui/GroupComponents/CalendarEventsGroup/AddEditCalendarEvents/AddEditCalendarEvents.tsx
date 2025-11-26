@@ -23,6 +23,7 @@ import { useChangeEventData } from "../hooks/useChangeEventData";
 import styles from "./addEditCalendarEvents.module.css";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { getTextContentsData } from "@/app/lib/actionsContainer";
+import { EditTitleCancel } from "@/app/ui/CommonComponents/EditTitleCancel/EditTitleCancel";
 
 export type Props = {
   calendarFeatureId: number;
@@ -219,6 +220,13 @@ export const AddEditCalendarEvents = ({
 
   return (
     <div className={styles.container}>
+      <EditTitleCancel
+        title={
+          (eventFeatureData
+            ? staticTexts.editCalendarEvent
+            : staticTexts.addCalendarEvent) || ""
+        }
+      />
       <EventDates
         confirmedDates={confirmedDates}
         setConfirmedDates={handleChangeConfirmedDates}

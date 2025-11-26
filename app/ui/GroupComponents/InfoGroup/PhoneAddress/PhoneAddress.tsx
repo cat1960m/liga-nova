@@ -24,12 +24,14 @@ export const PhoneAddress = ({ groupData, staticTexts, lang, isEdit }: Props) =>
         staticTexts={staticTexts}
         lang={lang}
         isEdit={isEdit}
+        countIndex={null}
       />
       <ShowInfoGroupItem
         data={dataAddress}
         staticTexts={staticTexts}
         lang={lang}
         isEdit={isEdit}
+        countIndex={null}
       />
     </div>
   );

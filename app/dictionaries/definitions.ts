@@ -121,8 +121,25 @@ export type StaticTexts = {
   byWeekDay?: string;
   byMonthDay?: string;
   saveNewEvent?: string;
+  editFilterGroup?: string;
+  selectSaveFilters?: string;
+  close?: string;
+  addCalendarEvent?: string;
+  editCalendarEvent?: string;
+  wantDelete?: string;
+  addNewFilter?: string;
 };
 
 export type SearchParams = {
   editMode: string | undefined;
 };
+
+export type CountIndex= {
+  count: number;
+  index: number;
+}
+export type NameValueUrl = {
+  name: string;
+  value: string;
+  url: string;
+}

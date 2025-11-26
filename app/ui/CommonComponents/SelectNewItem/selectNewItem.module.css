@@ -1,0 +1,27 @@
+.main {
+   overflow: auto;
+   max-height: 700px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding: 30px;
+}
+
+.item {
+  border: 1px solid magenta;
+  padding: 20px;
+}
+
+.action {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 10px;
+    font-weight: bold;
+}
+
+.image {
+    border: 1px solid lightgray;
+}

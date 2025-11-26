@@ -3,6 +3,7 @@ import { ItemGroupContainerCommon } from "./ItemGroupContainerCommon/ItemGroupCo
 import { DeleteFeatureChangeOrderButtons } from "../_buttons/DeleteFeatureChangeOrderButtons/DeleteFeatureChangeOrderButtons";
 import { AddChildFeatureButton } from "../_buttons/AddChildFeatureButton";
 import { Buttons } from "./Buttons/Buttons";
+import { StaticTexts } from "@/app/dictionaries/definitions";
 
 export type Props = {
   children: React.ReactNode;
@@ -64,15 +65,17 @@ export const ItemContainerAddChildFeatureDeleteFeature = ({
                 deleteText={deleteButtonText}
                 featureData={groupData}
                 onDeleteFinished={onDeleteFinished}
+                countIndex={null}
               />
           ) : null}
         </>
       </Buttons>
     );
   };
+  
   return (
     <ItemGroupContainerCommon
-      isEdit={isEdit}
+      showGroupButtons={isEdit}
       getEditButtons={getEditButtons}
       marginTop={marginTop}
     >

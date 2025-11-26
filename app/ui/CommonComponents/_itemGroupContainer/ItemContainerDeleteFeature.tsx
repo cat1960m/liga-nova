@@ -1,6 +1,7 @@
 import { FullData } from "@/app/lib/definitions";
 import { ItemGroupContainerCommon } from "./ItemGroupContainerCommon/ItemGroupContainerCommon";
 import { DeleteFeatureChangeOrderButtons } from "../_buttons/DeleteFeatureChangeOrderButtons/DeleteFeatureChangeOrderButtons";
+import { CountIndex } from "@/app/dictionaries/definitions";
 
 export type Props = {
   children: React.ReactNode;
@@ -12,6 +13,7 @@ export type Props = {
   noChangeOrder?: boolean;
   noDelete?: boolean;
   marginTop: number;
+  countIndex: CountIndex | null;
 };
 
 export const ItemContainerDeleteFeature = ({
@@ -24,6 +26,7 @@ export const ItemContainerDeleteFeature = ({
   noChangeOrder,
   noDelete,
   marginTop,
+  countIndex
 }: Props) => {
   const getEditButtons = () => (
       <DeleteFeatureChangeOrderButtons
@@ -33,11 +36,12 @@ export const ItemContainerDeleteFeature = ({
         isChangeOrderHorizontal={isChangeOrderHorizontal}
         noChangeOrder={noChangeOrder}
         noDelete={noDelete}
+        countIndex={countIndex}
       />
   );
   return (
     <ItemGroupContainerCommon
-      isEdit={isEdit}
+      showGroupButtons={isEdit}
       getEditButtons={getEditButtons}
       marginTop={marginTop}
     >

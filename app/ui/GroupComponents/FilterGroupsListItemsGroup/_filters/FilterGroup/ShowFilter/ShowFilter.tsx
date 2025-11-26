@@ -2,7 +2,7 @@ import { ItemContainerUpdateDeleteTextDescription } from "@/app/ui/CommonCompone
 import { FullData } from "@/app/lib/definitions";
 
 import styles from "./showFilter.module.css";
-import { StaticTexts } from "@/app/dictionaries/definitions";
+import { CountIndex, StaticTexts } from "@/app/dictionaries/definitions";
 import Image from "next/image";
 import { ICON_SIZE } from "@/app/lib/constants";
 
@@ -16,6 +16,7 @@ export type Props = {
     filter: FullData;
     value: boolean;
   }) => void;
+  countIndex: CountIndex | null;
 };
 
 export const ShowFilter = ({
@@ -25,6 +26,7 @@ export const ShowFilter = ({
   isEdit,
   inputValue,
   onFilterSelectionChanged,
+  countIndex
 }: Props) => {
   return (
     <ItemContainerUpdateDeleteTextDescription
@@ -35,6 +37,7 @@ export const ShowFilter = ({
       staticTexts={staticTexts}
       lang={lang}
       isChangeOrderHorizontal={false}
+      countIndex={countIndex}
     >
       <div className={styles.filter}>
         <input

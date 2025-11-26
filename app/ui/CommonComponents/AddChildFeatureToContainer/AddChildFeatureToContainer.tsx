@@ -1,6 +1,6 @@
 "use client";
 
-import { StaticTexts } from "@/app/dictionaries/definitions";
+import { NameValueUrl, StaticTexts } from "@/app/dictionaries/definitions";
 import { addFeatureData } from "@/app/lib/actionsContainer";
 import {
   FILTER,
@@ -67,6 +67,7 @@ import { FullData } from "@/app/lib/definitions";
 import { usePathname } from "next/navigation";
 import { ChangeEventHandler, useMemo, useState } from "react";
 import styles from "./addChildFeatureToContainer.module.css";
+import { SelectNewItem } from "../SelectNewItem/SelectNewItem";
 
 export const AddChildFeatureToContainer = ({
   parentFeatureId,
@@ -91,16 +92,17 @@ export const AddChildFeatureToContainer = ({
   >([]);
 
   const groupOptions = useMemo(() => {
-    const data: { name: string; value: string }[] = [
+    const data: NameValueUrl[] = [
       ...GroupFeatureSubtypes,
-      { value: TABS, name: "Tabs" },
-      { value: LAYOUT_PARENT, name: "Layout" },
+      { value: TABS, name: "Tabs", url: "/images/tabs.png" },
+      { value: LAYOUT_PARENT, name: "Layout", url: "/images/layout.png" },
     ];
 
     if (!!PAGE_NAMES_TO_LIST_ITEMS_DATA[pageName]) {
       data.push({
         value: FILTER_GROUPS_LIST_ITEMS_SUBTYPE,
         name: "Trainers/ Tickets",
+        url: "/images/tickets.png"
       });
     }
 
@@ -112,6 +114,7 @@ export const AddChildFeatureToContainer = ({
       data.push({
         value: ADDITIONAL_PAGE_DATA_GROUP_SUBTYPE,
         name: "Additional data",
+        url: "/images/trainers.png"
       });
     }
 
@@ -142,6 +145,9 @@ export const AddChildFeatureToContainer = ({
 
   const handleChange: ChangeEventHandler<HTMLSelectElement> = async (event) => {
     const newValue = event.target.value;
+    selectData(newValue);
+  }
+  const selectData= async (newValue: string) => {
     setSelectedValue(newValue);
 
     if (!parentFeatureId) {
@@ -482,7 +488,7 @@ export const AddChildFeatureToContainer = ({
 
   return (
     <div className={styles.container}>
-      <select
+     {/*  <select
         value={selectedValue}
         onChange={handleChange}
         className={styles.select}
@@ -495,9 +501,11 @@ export const AddChildFeatureToContainer = ({
             {groupOption.name}
           </option>
         ))}
-      </select>
+      </select> */}
+       <SelectNewItem groupOptions={groupOptions} onSelect={selectData}/>
 
       {optionsAdditionalPagename.length ? (
+        <>
         <select
           value={selectedValue}
           onChange={handleChangeAdditionalPagename}
@@ -512,6 +520,7 @@ export const AddChildFeatureToContainer = ({
             </option>
           ))}
         </select>
+        </>
       ) : null}
     </div>
   );

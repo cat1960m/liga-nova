@@ -42,9 +42,15 @@ export const getContainerData = ({
     }
 
     const filterIdsList = filterIds.split(",").map((id) => parseInt(id));
-    return filterIdsList.some((filterId) =>
-      selectedFilterTextDescriptionIds.includes(filterId)
+    /* const isBadFilterFound = filterIdsList.some((filterId) =>
+      !selectedFilterTextDescriptionIds.includes(filterId)
+    ); */
+
+    const isBadFilterFound = selectedFilterTextDescriptionIds.some((filterId) =>
+      !filterIdsList.includes(filterId)
     );
+
+    return !isBadFilterFound;
   };
 
   pageFullData?.forEach((item) => {

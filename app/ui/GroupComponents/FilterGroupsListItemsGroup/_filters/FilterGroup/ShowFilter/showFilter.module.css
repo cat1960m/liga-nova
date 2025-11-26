@@ -3,11 +3,13 @@
 .filter {
     display: flex;
     gap: 5px;
-    align-items: center;
+    align-items: flex-start;
 }
 
 .text {
     font-size: 14 ;
+    position: relative;
+    top: -3px;
 }
 
 

@@ -106,6 +106,7 @@ export const TextListGroup = ({
           isChangeOrderHorizontal={true}
           onDeleteFinished={handleDeleteFinished}
           marginTop={0}
+          countIndex={{count: ids.length, index}}
         >
           <div className={styles.item}>
             {textName ? (

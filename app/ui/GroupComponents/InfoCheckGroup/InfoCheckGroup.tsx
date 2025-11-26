@@ -27,40 +27,46 @@ export const InfoCheckGroup = ({ groupData, params }: Props) => {
   const { isEdit, noDelete } = getIsEditNoDelete(params);
 
   return (
-    <ItemContainerAddTextDescriptionDeleteFeature
-      isEdit={isEdit}
-      deleteButtonText={staticTexts.delete ?? "N/A"}
-      featureData={groupData}
-      addButtonText={staticTexts.addGroupItem ?? "N/A"}
-      textDescriptionType={columnItemType}
-      isChangeOrderHorizontal={false}
-      marginTop={20}
-      noDelete={noDelete}
-    >
-      <div className={styles.container}>
-        {headerData ? (
-          <InfoCheckGroupItem
-            currentData={headerData}
-            isEdit={isEdit}
-            staticTexts={staticTexts}
-            lang={lang}
-          />
-        ) : null}
+    <div className={styles.container}>
+      {headerData ? (
+        <InfoCheckGroupItem
+          currentData={headerData}
+          isEdit={isEdit}
+          staticTexts={staticTexts}
+          lang={lang}
+          countIndex={null}
+        />
+      ) : null}
 
+      <ItemContainerAddTextDescriptionDeleteFeature
+        isEdit={isEdit}
+        deleteButtonText={staticTexts.delete ?? "N/A"}
+        featureData={groupData}
+        addButtonText={staticTexts.addGroupItem ?? "N/A"}
+        textDescriptionType={columnItemType}
+        isChangeOrderHorizontal={false}
+        marginTop={20}
+        noDelete={noDelete}
+      >
         {bodyData
           ? bodyData.map((data, index) => {
               return (
-                <InfoCheckGroupItem
+                <div
+                  style={{ paddingBottom: "10px" }}
                   key={data.id + "_" + index}
-                  currentData={data}
-                  isEdit={isEdit}
-                  staticTexts={staticTexts}
-                  lang={lang}
-                />
+                >
+                  <InfoCheckGroupItem
+                    currentData={data}
+                    isEdit={isEdit}
+                    staticTexts={staticTexts}
+                    lang={lang}
+                    countIndex={{ count: bodyData.length, index }}
+                  />
+                </div>
               );
             })
           : null}
-      </div>
-    </ItemContainerAddTextDescriptionDeleteFeature>
+      </ItemContainerAddTextDescriptionDeleteFeature>
+    </div>
   );
 };

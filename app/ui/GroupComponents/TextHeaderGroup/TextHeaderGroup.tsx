@@ -31,6 +31,7 @@ export const TextHeaderGroup = ({ data, params }: Props) => {
       lang={lang}
       isEdit={isEdit}
       noDelete={noDelete}
+      countIndex={null}
     >
       <div className={styles.container}>
         <div className={styles.divider} />

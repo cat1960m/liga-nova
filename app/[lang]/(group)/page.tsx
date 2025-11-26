@@ -24,6 +24,8 @@ export default async function Page({
 
   const dict = await getDictionary(lang as "en" | "ua");
 
+  console.log("----group");
+
   const pars: MainParams = {
     pageName: HOME,
     lang,
@@ -31,11 +33,5 @@ export default async function Page({
     staticTexts: dict.common,
   };
 
-  return (
-    <ShowPage
-      isAuthenticated={isAuthenticated}
-      isMain
-      params={pars}
-    />
-  );
+  return <ShowPage isAuthenticated={isAuthenticated} isMain params={pars} />;
 }

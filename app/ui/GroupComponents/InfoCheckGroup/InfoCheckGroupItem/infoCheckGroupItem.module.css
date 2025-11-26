@@ -2,7 +2,7 @@
     flex-grow: 2;
     font-weight: 300; /* Default value, adjusted dynamically */
     font-size: 18px; /* Default value, adjusted dynamically */
-    margin-bottom: 15px;
+    /* margin-bottom: 15px; */
   }
   
   .header {

@@ -1,4 +1,4 @@
-import { StaticTexts } from "../dictionaries/definitions";
+import { NameValueUrl, StaticTexts } from "../dictionaries/definitions";
 
 export const TITLE = "title";
 export const PAGE = "page";
@@ -156,69 +156,119 @@ export const CAN_NOT_DELETE = [
 ];
 export const GROUP_TYPES_WITH_TOOLTIP = [SERVICES_GROUP_SUBTYPE];
 
-export const GroupFeatureSubtypes: { name: string; value: string }[] = [
-  { value: TEXT_HEADER_GROUP_SUBTYPE, name: "Header text" },
-  { value: TEXT_COMMON_GROUP_SUBTYPE, name: "HTML text" },
-  { value: TEXT_GROUP_EXPANDED_SUBTYPE, name: "Expanded text(trainer)" },
-  { value: TEXT_GROUP_HIDDEN_SUBTYPE, name: "Hidden text(about us)" },
+
+export const GroupFeatureSubtypes: NameValueUrl[] = [
+  {
+    value: TEXT_HEADER_GROUP_SUBTYPE,
+    name: "Header text",
+    url: "/images/header.png",
+  },
+  {
+    value: TEXT_COMMON_GROUP_SUBTYPE,
+    name: "HTML text",
+    url: "/images/htmlText.png",
+  },
+  {
+    value: TEXT_GROUP_EXPANDED_SUBTYPE,
+    name: "Expanded text(trainer)",
+    url: "/images/expandingText.png",
+  },
+  {
+    value: TEXT_GROUP_HIDDEN_SUBTYPE,
+    name: "Hidden text(about us)",
+    url: "/images/hiddenText.png",
+  },
   {
     value: TEXT_LIST_GROUP_SUBTYPE,
     name: "Text collection of author/content (main page bottom)",
+    url: "/images/authoContentCollection.png",
   },
   {
     value: INFO_CHECK_GROUP_SUBTYPE,
     name: "Text collection with blue checkboxes (trainers school)",
+    url: "/images/listWithBlueCheckboxes.png",
   },
-  { value: INFO_SUBTYPE, name: "Text in gray rect (massage)" },
+  {
+    value: INFO_SUBTYPE,
+    name: "Text in gray rect (massage)",
+    url: "/images/textOnGrayRect.png",
+  },
   {
     value: INFO_ACTION_COMMON_SUBTYPE,
     name: "Text in gray rect with registration (solarium)",
+    url: "/images/textsWithRegistration.png",
   },
   {
     value: INFO_ACTION_CHILD_SUBTYPE,
     name: "Text in gray rect with child registration (children studious)",
+    url: "/images/textsWithChildrenRegistration.png",
   },
   {
     value: INFO_ACTION_FREE_SUBTYPE,
     name: "Text in gray rect with try button (children studious)",
+    url: "/images/textsWithTry.png",
   },
-  { value: IMAGE_GROUP_SUBTYPE, name: "Image (massage, solarium)" },
+  {
+    value: IMAGE_GROUP_SUBTYPE,
+    name: "Image (massage, solarium)",
+    url: "/images/image.png",
+  },
   {
     value: IMAGE_LIST_GROUP_SUBTYPE,
     name: "Image list with scroll (personal trainers)",
+    url: "/images/scrollingImageCollection.png",
   },
   {
     value: IMAGE_LINKS_GROUP_SUBTYPE,
     name: "Image list with links (main page)",
+    url: "/images/imageListWithLink.png",
   },
   {
     value: IMAGE_ACTIONS_GROUP_SUBTYPE,
     name: "Image list with action buttons ( shares)",
+    url: "/images/imageListWithActionButton.png",
   },
   {
     value: PHOTO_GALLERY_GROUP_SUBTYPE,
     name: "Image photo gallery( about us)",
+    url: "/images/photoGallery.png",
   },
   {
     value: ACTION_BANNER_GROUP_SUBTYPE,
     name: "Image with registration (trainers school bottom)",
+    url: "/images/imageWithRegistration.png",
   },
   {
     value: ACTION_BANNER_TRY_GROUP_SUBTYPE,
     name: "Image with try (children studious bottom)",
+    url: "/images/imageWithTry.png",
   },
   {
     value: ACTION_BANNER_LIST_GROUP_SUBTYPE,
     name: "Scrolling Image list with action buttons( main page top)",
+    url: "/images/scrollingImagesWithActionButtons.png",
   },
-  { value: SERVICES_GROUP_SUBTYPE, name: "Service list (massage, manicure)" },
-  { value: LIGA_GROUP_SUBTYPE, name: "Icon lists on gray rect (about us)" },
-  { value: SCHEDULE_GROUP_SUBTYPE, name: "Schedule (sauna)" },
+  {
+    value: SERVICES_GROUP_SUBTYPE,
+    name: "Service list (massage, manicure)",
+    url: "/images/serviceList.png",
+  },
+  {
+    value: LIGA_GROUP_SUBTYPE,
+    name: "Icon lists on gray rect (about us)",
+    url: "/images/iconList.png",
+  },
+  {
+    value: SCHEDULE_GROUP_SUBTYPE,
+    name: "Schedule (sauna)",
+    url: "/images/schedule.png",
+  },
   {
     value: CALENDAR_EVENTS_GROUP_SUBTYPE,
     name: "Events calendar (group studious)",
+    url: "/images/eventsCalendar.png",
   },
-  { value: DIVIDER, name: "Divider (gray line)" },
+  { value: DIVIDER, name: "Divider (gray line)", url: "/images/divider.png" },
 ];
 
 export const TEXT_GROUP_SUBTYPES = [

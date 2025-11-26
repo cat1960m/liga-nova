@@ -3,13 +3,14 @@ import { SCHEDULE_ITEM } from "@/app/lib/constants";
 import { UpdateDeleteTextButtons } from "@/app/ui/CommonComponents/_buttons/UpdateDeleteTextButtons/UpdateDeleteTextButtons";
 
 import styles from "./showScheduleGroup.module.css";
-import { StaticTexts } from "@/app/dictionaries/definitions";
+import { CountIndex, StaticTexts } from "@/app/dictionaries/definitions";
 
 export type Props = {
   data?: FullData;
   lang: string;
   staticTexts: StaticTexts;
   isEdit: boolean;
+  countIndex: CountIndex;
 };
 
 export const ShowSCheduleGroupItem = ({
@@ -17,6 +18,7 @@ export const ShowSCheduleGroupItem = ({
   staticTexts,
   lang,
   isEdit,
+  countIndex
 }: Props) => {
   if (!data) {
     return null;
@@ -39,6 +41,7 @@ export const ShowSCheduleGroupItem = ({
             }}
             staticTexts={staticTexts}
             lang={lang}
+            countIndex={countIndex}
           />
         </div>
       ) : null}

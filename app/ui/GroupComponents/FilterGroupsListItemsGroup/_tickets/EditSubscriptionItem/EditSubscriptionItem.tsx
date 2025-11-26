@@ -55,6 +55,15 @@ export const EditSubscriptionItem = ({
   return (
     <div className={styles.container}>
       <TextItemField
+        fieldData={share}
+        title={staticTexts.share}
+        useItems={{ text: "simple" }}
+        isEdit={isEdit}
+        staticTexts={staticTexts}
+        lang={lang}
+      />
+      
+      <TextItemField
         fieldData={name}
         title={staticTexts.name}
         useItems={{ text: "simple" }}
@@ -70,14 +79,7 @@ export const EditSubscriptionItem = ({
         staticTexts={staticTexts}
         lang={lang}
       />
-      <TextItemField
-        fieldData={share}
-        title={staticTexts.share}
-        useItems={{ text: "simple" }}
-        isEdit={isEdit}
-        staticTexts={staticTexts}
-        lang={lang}
-      />
+      
       <TextItemField
         fieldData={oldPrice}
         title={staticTexts.oldPrice}

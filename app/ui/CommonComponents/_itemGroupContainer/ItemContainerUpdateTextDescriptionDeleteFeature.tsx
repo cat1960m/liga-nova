@@ -1,7 +1,7 @@
 import { UseItems } from "../_upadeModal/UpdateTextDescriptionDataModalContent/UpdateTextDescriptionDataModalContent";
 import { FullData } from "@/app/lib/definitions";
 import { ItemGroupContainerCommon } from "./ItemGroupContainerCommon/ItemGroupContainerCommon";
-import { StaticTexts } from "@/app/dictionaries/definitions";
+import { CountIndex, StaticTexts } from "@/app/dictionaries/definitions";
 import { UpdateTextDescriptionData } from "../_upadeModal/UpdateTextDescriptionData";
 import { DeleteFeatureChangeOrderButtons } from "../_buttons/DeleteFeatureChangeOrderButtons/DeleteFeatureChangeOrderButtons";
 import { Buttons } from "./Buttons/Buttons";
@@ -18,6 +18,7 @@ export type Props = {
   noDelete: boolean;
   marginTop: number;
   heightValue?: string;
+  countIndex: CountIndex | null;
 };
 
 export const ItemContainerUpdateTextDescriptionDeleteFeature = ({
@@ -31,7 +32,8 @@ export const ItemContainerUpdateTextDescriptionDeleteFeature = ({
   featureData,
   noDelete,
   marginTop,
-  heightValue
+  heightValue,
+  countIndex
 }: Props) => {
   const getEditButtons = () => {
     return (
@@ -51,6 +53,7 @@ export const ItemContainerUpdateTextDescriptionDeleteFeature = ({
               featureData={featureData}
               isChangeOrderHorizontal={isChangeOrderHorizontal}
               noDelete={noDelete}
+              countIndex={countIndex}
             />
         ) : null}
       </Buttons>
@@ -58,7 +61,7 @@ export const ItemContainerUpdateTextDescriptionDeleteFeature = ({
   };
   return (
     <ItemGroupContainerCommon
-      isEdit={isEdit}
+      showGroupButtons={isEdit}
       getEditButtons={getEditButtons}
       marginTop={marginTop}
       heightValue={heightValue}

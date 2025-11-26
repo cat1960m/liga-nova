@@ -120,27 +120,27 @@ export const useChangeEventData = () => {
 
       const promises: Promise<any>[] = [];
 
-      saveTabs({
+      promises.push(saveTabs({
         featureId: calendarEventsGroupFeatureId,
         textType: CALENDAR_EVENTS_TITLE,
         tabs: title ?? [],
         price,
         promises,
-      });
+      }));
 
-      saveTabs({
+      promises.push(saveTabs({
         featureId: calendarEventsGroupFeatureId,
         textType: CALENDAR_EVENTS_TRAINER,
         tabs: trainer ?? [],
         promises,
-      });
+      }));
 
-      saveTabs({
+      promises.push(saveTabs({
         featureId: calendarEventsGroupFeatureId,
         textType: CALENDAR_EVENTS_DESCRIPTION,
         tabs: description ?? [],
         promises,
-      });
+      }));
 
       promises.push(
         addTextDescriptionData({
@@ -217,23 +217,29 @@ export const useChangeEventData = () => {
         })
       );
 
-      updateTabs({
-        tabs: title ?? [],
-        textDescriptionId: titleInit.text_description_id,
-        promises,
-      });
+      promises.push(
+        updateTabs({
+          tabs: title ?? [],
+          textDescriptionId: titleInit.text_description_id,
+          promises,
+        })
+      );
 
-      updateTabs({
-        tabs: trainer ?? [],
-        textDescriptionId: trainerInit.text_description_id,
-        promises,
-      });
+      promises.push(
+        updateTabs({
+          tabs: trainer ?? [],
+          textDescriptionId: trainerInit.text_description_id,
+          promises,
+        })
+      );
 
-      updateTabs({
-        tabs: description ?? [],
-        textDescriptionId: descriptionInit.text_description_id,
-        promises,
-      });
+      promises.push(
+        updateTabs({
+          tabs: description ?? [],
+          textDescriptionId: descriptionInit.text_description_id,
+          promises,
+        })
+      );
 
       await Promise.all(promises);
 

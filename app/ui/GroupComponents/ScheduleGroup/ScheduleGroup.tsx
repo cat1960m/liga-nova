@@ -37,7 +37,7 @@ export const ShowScheduleGroup = ({ groupData, params }: Props) => {
           isEdit={isEdit}
         />
         <div className={styles.items}>
-          {items.map((item) => {
+          {items.map((item, index) => {
             return (
               <ShowSCheduleGroupItem
                 data={item}
@@ -45,6 +45,7 @@ export const ShowScheduleGroup = ({ groupData, params }: Props) => {
                 staticTexts={staticTexts}
                 lang={lang}
                 isEdit={isEdit}
+                countIndex={{count: items.length, index}}
               />
             );
           })}

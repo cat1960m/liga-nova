@@ -37,31 +37,32 @@ export const InfoGroup = ({ groupData, params }: Props) => {
   map[INFO_ACTION_FREE_SUBTYPE] = staticTexts.tryFree ?? "N/A";
 
   return (
-    <ItemContainerAddTextDescriptionDeleteFeature
-      isEdit={isEdit}
-      deleteButtonText={staticTexts.delete ?? "N/A"}
-      featureData={groupData}
-      addButtonText={staticTexts.addGroupItem ?? "N/A"}
-      textDescriptionType={INFO_BODY}
-      isChangeOrderHorizontal={false}
-      marginTop={0}
-      noDelete={noDelete}
-    >
-      <div className={styles.container}>
-        <ShowInfoGroupItem
-          data={dataTitle}
+    <div className={styles.container}>
+      <ShowInfoGroupItem
+        data={dataTitle}
+        staticTexts={staticTexts}
+        lang={lang}
+        isEdit={isEdit}
+        countIndex={null}
+      />
+      {isInfoGroup ? (
+        <PhoneAddress
+          groupData={groupData}
           staticTexts={staticTexts}
           lang={lang}
           isEdit={isEdit}
         />
-        {isInfoGroup ? (
-          <PhoneAddress
-            groupData={groupData}
-            staticTexts={staticTexts}
-            lang={lang}
-            isEdit={isEdit}
-          />
-        ) : null}
+      ) : null}
+      <ItemContainerAddTextDescriptionDeleteFeature
+        isEdit={isEdit}
+        deleteButtonText={staticTexts.delete ?? "N/A"}
+        featureData={groupData}
+        addButtonText={staticTexts.addGroupItem ?? "N/A"}
+        textDescriptionType={INFO_BODY}
+        isChangeOrderHorizontal={false}
+        marginTop={0}
+        noDelete={noDelete}
+      >
         <div className={styles.bodyContainer}>
           {dataBodyList.map((item, index) => {
             return (
@@ -72,17 +73,19 @@ export const InfoGroup = ({ groupData, params }: Props) => {
                   staticTexts={staticTexts}
                   lang={lang}
                   isEdit={isEdit}
+                  countIndex={{ count: dataBodyList.length, index }}
                 />
               </div>
             );
           })}
         </div>
-        {!isInfoGroup ? (
-          <div className={styles.actionButton}>
-            <CommonButton isAction text={map[subtype] ?? ""} />
-          </div>
-        ) : null}
-      </div>
-    </ItemContainerAddTextDescriptionDeleteFeature>
+      </ItemContainerAddTextDescriptionDeleteFeature>
+
+      {!isInfoGroup ? (
+        <div className={styles.actionButton}>
+          <CommonButton isAction text={map[subtype] ?? ""} />
+        </div>
+      ) : null}
+    </div>
   );
 };

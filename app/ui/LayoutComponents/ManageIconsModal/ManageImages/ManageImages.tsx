@@ -16,9 +16,9 @@ export const ManageImages = ({
   onDeleteFinished,
 }: Props) => {
   return (
-    <div className={styles.styles}>
+    <div className={styles.styles} style={{border: "2px solid magenta"}}>
       <div className={styles.body}>
-        {imagesData.map((imageItem) => {
+        {imagesData.map((imageItem, index) => {
           return (
             <ItemContainerDeleteFeature
               deleteText="Delete"
@@ -28,6 +28,7 @@ export const ManageImages = ({
               isEdit={true}
               key={imageItem.text_description_id}
               marginTop={0}
+              countIndex={{count: imagesData.length, index}}
             >
               {imageItem.value ? (
                 <Image

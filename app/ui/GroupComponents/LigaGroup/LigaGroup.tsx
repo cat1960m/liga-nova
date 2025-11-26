@@ -12,6 +12,7 @@ import Link from "next/link";
 import styles from "./ligaGroup.module.css";
 import { ItemContainerAddTextDescriptionDeleteFeature } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerAddTextDescriptionDeleteFeature";
 import { getIsEditNoDelete } from "@/app/lib/utils";
+import { CountIndex } from "@/app/dictionaries/definitions";
 
 export type Props = {
   groupData: FullData[];
@@ -51,6 +52,7 @@ export const LigaGroup = ({ groupData, params }: Props) => {
           staticTexts={staticTexts}
           lang={lang}
           data={dataTitle}
+          countIndex={null}
         />
         <div className={styles.group}>
           <LigaGroupItem
@@ -58,6 +60,7 @@ export const LigaGroup = ({ groupData, params }: Props) => {
             staticTexts={staticTexts}
             lang={lang}
             data={dataAddress}
+            countIndex={null}
           />
 
           <LigaGroupItem
@@ -65,6 +68,7 @@ export const LigaGroup = ({ groupData, params }: Props) => {
             staticTexts={staticTexts}
             lang={lang}
             data={dataTelephone}
+            countIndex={null}
           />
         </div>
 
@@ -77,6 +81,7 @@ export const LigaGroup = ({ groupData, params }: Props) => {
                     staticTexts={staticTexts}
                     lang={lang}
                     data={item}
+                    countIndex={{count: dataServiceList.length, index}}
                   />
                 </div>
               );
@@ -86,6 +91,7 @@ export const LigaGroup = ({ groupData, params }: Props) => {
         {!isEdit ? (
           <div className={styles.list}>
             {dataServiceList.map((item, index) => {
+              const countIndex: CountIndex={count: dataServiceList.length, index}
               return (
                 <div
                   key={item.text_content_id ?? "" + "_" + index}
@@ -98,6 +104,7 @@ export const LigaGroup = ({ groupData, params }: Props) => {
                         staticTexts={staticTexts}
                         lang={lang}
                         data={item}
+                        countIndex={countIndex}
                       />
                     </Link>
                   ) : (
@@ -106,6 +113,7 @@ export const LigaGroup = ({ groupData, params }: Props) => {
                       staticTexts={staticTexts}
                       lang={lang}
                       data={item}
+                      countIndex={countIndex}
                     />
                   )}
                 </div>

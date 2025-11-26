@@ -31,6 +31,7 @@ export const ShowTitle = ({
       isEdit={isEdit}
       staticTexts={staticTexts}
       lang={lang}
+      countIndex={null}
     >
       <div className={styles.title}>
         {titleData.text_content ?? "N/A"}

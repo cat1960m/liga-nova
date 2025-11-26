@@ -24,6 +24,7 @@ export type Props = {
   lang: string;
   staticTexts: StaticTexts;
   pageName: string;
+  setEditingFilterGroupId: (id: number | null) => void;
 };
 
 export const FilterGroupsMobile = ({
@@ -35,6 +36,7 @@ export const FilterGroupsMobile = ({
   lang,
   staticTexts,
   pageName,
+  setEditingFilterGroupId
 }: Props) => {
   const [isFiltersShown, setIsFiltersShown] = useState(false);
 
@@ -81,6 +83,7 @@ export const FilterGroupsMobile = ({
             lang={lang}
             staticTexts={staticTexts}
             pageName={pageName}
+            setEditingFilterGroupId={setEditingFilterGroupId}
           />
 
           <div className={styles.button}>

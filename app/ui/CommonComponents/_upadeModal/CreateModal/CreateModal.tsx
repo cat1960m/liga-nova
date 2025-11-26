@@ -6,9 +6,13 @@ import styles from "./createModal.module.css";
 export const CreateModal = ({
   onClose,
   children,
+  left,
+  width
 }: {
   onClose: () => void;
   children: React.ReactNode;
+  left?: string;
+  width?: string;
 }) => {
   const parent = document.getElementById("parentModal");
   if (!parent) {
@@ -32,6 +36,8 @@ export const CreateModal = ({
             className={styles.body}
             style={{
               top: `${scrollPositionY + 20}px`,
+              left,
+              width,
             }}
           >
             {children}

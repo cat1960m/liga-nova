@@ -105,15 +105,17 @@ export const ShowFeatureGroup = ({
         <TextHeaderGroup data={groupData} params={params} />
       ) : null}
 
-      {isInfoCheckGroup ? (
+      {isInfoCheckGroup ? ( // школа тренера
         <InfoCheckGroup groupData={groupData} params={params} />
       ) : null}
 
       {isTextGroup ? <TextGroup data={groupData} params={params} /> : null}
 
-      {isInfoGroup ? <InfoGroup groupData={groupData} params={params} /> : null}
 
-      {isServices ? (
+      {/* косметолог */}
+      {isInfoGroup ? <InfoGroup groupData={groupData} params={params} /> : null} 
+
+      {isServices ? ( // manicure, massage
         <ServicesGroup groupData={groupData} params={params} />
       ) : null}
 
@@ -169,7 +171,7 @@ export const ShowFeatureGroup = ({
       ) : null}
 
       {isFilterGroupsListItemsGroup ? (
-        <FilterGroupsListItemsGroup
+        <FilterGroupsListItemsGroup //trainers, tickets
           groupData={groupData}
           pageFullDataList={pageFullDataList}
           params={params}

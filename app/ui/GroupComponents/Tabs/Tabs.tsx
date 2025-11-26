@@ -35,7 +35,8 @@ export const Tabs = ({ pageFullDataList, tabsData, params, pageId }: Props) => {
   };
 
   const { staticTexts, pageName } = params;
-  const { isDeepMode } = getIsEditNoDelete(params);
+  const { isDeepMode, isEdit } = getIsEditNoDelete(params);
+  const selectedTab = tabTitles.find(item => item.id === selectedTabFeatureId);
 
   return (
     <ItemContainerAddChildFeatureDeleteFeature
@@ -62,6 +63,7 @@ export const Tabs = ({ pageFullDataList, tabsData, params, pageId }: Props) => {
                     handleSelectedTabFeatureIdChanged
                   }
                   params={params}
+                  q={{ count: tabTitles.length, index }}
                 />
               </div>
             );
@@ -69,13 +71,42 @@ export const Tabs = ({ pageFullDataList, tabsData, params, pageId }: Props) => {
         </div>
 
         {selectedTabFeatureId ? (
-          <DrawFeatureContainer
-            params={params}
-            featureId={selectedTabFeatureId}
-            pageFullDataList={pageFullDataList}
-            buttonText={staticTexts.addItemToTab ?? "N/A"}
-            pageId={pageId}
-          />
+          <div
+            style={
+              isEdit
+                ? {
+                    border: "4px solid #bfbfef",
+                    padding: "10px",
+                    position: "relative",
+                  }
+                : undefined
+            }
+          >
+            {isEdit ? (
+              <div
+                style={{
+                  position: "absolute",
+                  top: "-15px",
+                  left: "10px",
+                  backgroundColor: "#bfbfef",
+                  padding: "5px",
+                  borderRadius: "5px",
+                  color: "blue",
+                  fontSize: "14px"
+                }}
+              >
+                tab: {selectedTab?.text_content}
+              </div>
+            ) : null}
+
+            <DrawFeatureContainer
+              params={params}
+              featureId={selectedTabFeatureId}
+              pageFullDataList={pageFullDataList}
+              buttonText={staticTexts.addItemToTab ?? "N/A"}
+              pageId={pageId}
+            />
+          </div>
         ) : null}
       </div>
     </ItemContainerAddChildFeatureDeleteFeature>

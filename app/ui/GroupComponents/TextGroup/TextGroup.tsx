@@ -23,7 +23,7 @@ export const TextGroup = ({ data, params }: Props) => {
 
   const textDescriptions = data.filter((item) => !!item.text_description_id);
   const { staticTexts, lang } = params;
-  const { isEdit, noDelete } = getIsEditNoDelete(params);
+  const { isEdit, noDelete, isDeepMode } = getIsEditNoDelete(params);
 
   const isTextExpandedShown = isExpanded && !isEdit;
   const isTextHiddenShown = isHidden && !isEdit;
@@ -31,7 +31,7 @@ export const TextGroup = ({ data, params }: Props) => {
   const isCommon = !isTextExpandedShown && !isTextHiddenShown;
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} >
       {isTextExpandedShown ? (
         <ExpandedText
           staticTexts={staticTexts}
@@ -48,7 +48,7 @@ export const TextGroup = ({ data, params }: Props) => {
       ) : null}
       {isCommon ? (
         <ItemContainerAddTextDescriptionDeleteFeature
-          isEdit={isEdit}
+          isEdit={isDeepMode}
           deleteButtonText={staticTexts.delete ?? "N/A"}
           featureData={data}
           addButtonText={staticTexts.addGroupItem ?? "N/A"}
@@ -57,7 +57,7 @@ export const TextGroup = ({ data, params }: Props) => {
           marginTop={0}
           noDelete={noDelete}
         >
-          {textDescriptions.map((item) => {
+          {textDescriptions.map((item, index) => {
             return (
               <ShowTextDescription
                 key={item.text_description_id}
@@ -65,6 +65,7 @@ export const TextGroup = ({ data, params }: Props) => {
                 isEdit={isEdit}
                 staticTexts={staticTexts}
                 lang={lang}
+                countIndex={{count: textDescriptions.length, index}}
               />
             );
           })}

@@ -2,7 +2,7 @@ import { UpdateDeleteTextButtons } from "../_buttons/UpdateDeleteTextButtons/Upd
 import { UseItems } from "../_upadeModal/UpdateTextDescriptionDataModalContent/UpdateTextDescriptionDataModalContent";
 import { FullData } from "@/app/lib/definitions";
 import { ItemGroupContainerCommon } from "./ItemGroupContainerCommon/ItemGroupContainerCommon";
-import { StaticTexts } from "@/app/dictionaries/definitions";
+import { CountIndex, StaticTexts } from "@/app/dictionaries/definitions";
 
 export type Props = {
   children: React.ReactNode;
@@ -17,6 +17,7 @@ export type Props = {
   changeModalState?: (state: boolean) => void;
   isChangeOrder?: boolean;
   isChangeOrderHorizontal?: boolean;
+  countIndex: CountIndex | null;
 };
 
 export const ItemContainerUpdateDeleteTextDescription = ({
@@ -31,6 +32,7 @@ export const ItemContainerUpdateDeleteTextDescription = ({
   changeModalState,
   isChangeOrder = true,
   isChangeOrderHorizontal = true,
+  countIndex
 }: Props) => {
   const getEditButtons = () => (
     <UpdateDeleteTextButtons
@@ -43,11 +45,12 @@ export const ItemContainerUpdateDeleteTextDescription = ({
       useItems={useItems}
       onDeleteFinished={onDeleteFinished}
       changeModalState={changeModalState}
+      countIndex={countIndex}
     />
   );
   return (
     <ItemGroupContainerCommon
-      isEdit={isEdit}
+      showGroupButtons={isEdit}
       getEditButtons={getEditButtons}
       marginTop={0}
     >

@@ -11,7 +11,6 @@ export type Props = {
   staticTexts: StaticTexts;
   lang: string;
   isEdit: boolean;
-
   useItems: UseItems;
 };
 
@@ -36,6 +35,7 @@ export const TextItemField = ({
         lang={lang}
         isChangeOrder={fieldData.can_delete}
         isChangeOrderHorizontal={false}
+        countIndex={null}
       >
         <div className={styles.body}>
           {useItems.price ? <div>{fieldData.price ?? "0"}</div> : null}

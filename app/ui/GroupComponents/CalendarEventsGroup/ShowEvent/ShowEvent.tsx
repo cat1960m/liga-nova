@@ -130,6 +130,7 @@ export const ShowEvent = ({
               deleteText={staticTexts.delete ?? "N/A"}
               featureData={eventData}
               noChangeOrder
+              countIndex={null}
             />
           </div>
         ) : null}

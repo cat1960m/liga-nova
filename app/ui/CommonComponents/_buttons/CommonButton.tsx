@@ -3,6 +3,7 @@
 import { ACTION_BUTTON_BACKGROUND } from "@/app/lib/constants";
 import { usePathname } from "next/navigation";
 import { CSSProperties, ReactNode } from "react";
+import clsx from "clsx";
 
 export const CommonButton = ({
   text,
@@ -33,16 +34,19 @@ export const CommonButton = ({
       onClick={() => onClick?.(pathName)}
       style={{
         ...styleValue,
-        color: isDisabled ? "lightgray" : colorValue,
+        color: isDisabled ? "black" : colorValue,
         backgroundColor: bgColor,
         display: "flex",
         justifyContent: "center",
         width: width ?? styleValue?.width,
-        opacity: isDisabled ? 0.5 : 1,
+        opacity: isDisabled ? 0.3 : 1,
         padding: styleValue?.padding ?? (children ? "10px" : undefined),
         borderRadius: styleValue?.borderRadius ?? 20,
       }}
-      className="flex h-10 items-center rounded-lg bg-blue-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
+      className={clsx(
+        "flex h-10 items-center rounded-lg bg-blue-100 px-4 text-sm font-medium text-gray-600 transition-colors ",
+        { "hover:bg-gray-200": !isDisabled }
+      )}
     >
       {children ?? text ?? ""}
     </button>

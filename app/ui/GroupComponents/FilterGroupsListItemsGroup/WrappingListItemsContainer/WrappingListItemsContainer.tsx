@@ -48,7 +48,7 @@ export const WrappingListItemsContainer = ({
 
   return (
     <ItemGroupContainerCommon
-      isEdit={isEdit}
+      showGroupButtons={isEdit}
       getEditButtons={getEditButtons}
       marginTop={isEdit ? 20 : 0}
     >

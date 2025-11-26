@@ -9,6 +9,7 @@ import Link from "next/link";
 import styles from "./additionalPageDataGroup.module.css";
 import { ItemContainerAddTextDescriptionDeleteFeature } from "../../CommonComponents/_itemGroupContainer/ItemContainerAddTextDescriptionDeleteFeature";
 import { getIsEditNoDelete } from "@/app/lib/utils";
+import { EditTitleCancel } from "../../CommonComponents/EditTitleCancel/EditTitleCancel";
 
 export type Props = {
   pageFullDataList: FullData[];
@@ -25,7 +26,7 @@ export const AdditionalPageDataGroup = ({
 }: Props) => {
   const currentData = groupData[0];
 
-  if(!currentData) {
+  if (!currentData) {
     return null;
   }
 
@@ -57,13 +58,23 @@ export const AdditionalPageDataGroup = ({
       noDelete={noDelete}
     >
       {isEdit ? (
-        <AdditionalPageDataGroupEdit
-          currentData={currentData}
-          pageFullDataList={pageFullDataList}
-          additionalPageName={additionalPageName}
-          staticTexts={staticTexts}
-          lang={lang}
-        />
+        <div className={styles.edit_container}>
+          <EditTitleCancel title={staticTexts.selectSaveFilters ?? ""} />
+
+          <AdditionalPageDataGroupEdit
+            currentData={currentData}
+            pageFullDataList={pageFullDataList}
+            additionalPageName={additionalPageName}
+            staticTexts={staticTexts}
+            lang={lang}
+          />
+          <AdditionalPageDataGroupShow
+            currentData={currentData}
+            pageFullDataList={pageFullDataList}
+            pageName={additionalPageName}
+            staticTexts={staticTexts}
+          />
+        </div>
       ) : (
         <AdditionalPageDataGroupShow
           currentData={currentData}

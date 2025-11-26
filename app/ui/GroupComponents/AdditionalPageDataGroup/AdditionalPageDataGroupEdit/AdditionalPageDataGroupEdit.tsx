@@ -87,10 +87,10 @@ export const AdditionalPageDataGroupEdit = ({
                 selectedFilterTextDescriptionIds={
                   selectedFilterTextDescriptionIds
                 }
-                parentFeatureId={null}
-                isEdit={false} // no edit for filter groups
+                editMode="no"
                 lang={lang}
                 staticTexts={staticTexts}
+                startNotExpanded={true}
               />
             </div>
           );

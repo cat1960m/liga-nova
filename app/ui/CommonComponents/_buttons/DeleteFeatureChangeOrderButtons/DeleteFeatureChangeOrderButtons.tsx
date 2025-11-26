@@ -1,25 +1,25 @@
 "use client";
 
-import {
-  revalidate,
-} from "@/app/lib/actions_fitness";
+import { revalidate } from "@/app/lib/actions_fitness";
 import { usePathname } from "next/navigation";
 import { CommonButton } from "../CommonButton";
 import axios from "axios";
 import { FullData } from "@/app/lib/definitions";
 import {
   CONTAINER_TYPES,
-  ICON_BUTTON_WIDTH,
-  ICON_IN_BUTTON_WIDTH,
   S3_TYPES,
 } from "@/app/lib/constants";
 import { useEditContext } from "../../../PageComponents/EditContextProvider";
 import { ChangeOrderButtons } from "../ChangeOrderButtons/ChangeOrderButtons";
-import { TrashIcon } from "@heroicons/react/24/outline";
 
 import styles from "./deleteFeatureChangeOrderButtons.module.css";
 import { useMemo } from "react";
-import { removeFeatureData, updateFeatureOrderData } from "@/app/lib/actionsContainer";
+import {
+  removeFeatureData,
+  updateFeatureOrderData,
+} from "@/app/lib/actionsContainer";
+import { CountIndex, StaticTexts } from "@/app/dictionaries/definitions";
+import { DeleteButton } from "../DeleteButton/DeleteButton";
 
 type IdOrder = {
   id: number;
@@ -33,6 +33,7 @@ export const DeleteFeatureChangeOrderButtons = ({
   isChangeOrderHorizontal,
   noChangeOrder,
   noDelete,
+  countIndex,
 }: {
   deleteText: string;
   onDeleteFinished?: () => void;
@@ -40,6 +41,7 @@ export const DeleteFeatureChangeOrderButtons = ({
   isChangeOrderHorizontal?: boolean;
   noChangeOrder?: boolean;
   noDelete?: boolean;
+  countIndex: CountIndex | null;
 }) => {
   const pathName = usePathname();
   const {
@@ -171,19 +173,18 @@ export const DeleteFeatureChangeOrderButtons = ({
   return (
     <div className={styles.container}>
       {!noDelete ? (
-        <CommonButton
+        <DeleteButton
+          title={deleteText}
           onClick={handleDelete}
           isDisabled={isEditButtonsDisabled}
-          width={ICON_BUTTON_WIDTH}
-        >
-          <TrashIcon width={ICON_IN_BUTTON_WIDTH} title={deleteText} />
-        </CommonButton>
+        />
       ) : null}
 
       {!noChangeOrder && countSibling > 1 ? (
         <ChangeOrderButtons
           isChangeOrderHorizontal={isChangeOrderHorizontal}
           changeOrder={changeOrder}
+          countIndex={countIndex}
         />
       ) : null}
     </div>

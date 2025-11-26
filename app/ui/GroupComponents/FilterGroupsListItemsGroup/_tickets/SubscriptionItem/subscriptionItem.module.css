@@ -27,7 +27,7 @@
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    padding: 20px 5px;
+    padding: 20px 5px 5px 5px;
     font-size: 16;
     text-align: center;
 }

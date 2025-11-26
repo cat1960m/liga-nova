@@ -15,7 +15,7 @@ import {
 import styles from "./wrappingListItems.module.css";
 import { PencilIcon } from "@heroicons/react/24/outline";
 import { ItemGroupContainerCommon } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemGroupContainerCommon/ItemGroupContainerCommon";
-import { StaticTexts } from "@/app/dictionaries/definitions";
+import { CountIndex, StaticTexts } from "@/app/dictionaries/definitions";
 
 export type Props = {
   pageFullDataList: FullData[];
@@ -62,7 +62,13 @@ export const WrappingListItems = ({
 
   const [data, itemIds] = containerFullData;
 
-  const getEditButtons = ({ currentData }: { currentData: FullData[] }) => {
+  const getEditButtons = ({
+    currentData,
+    countIndex,
+  }: {
+    currentData: FullData[];
+    countIndex: CountIndex;
+  }) => {
     const id = currentData[0]?.id ?? null;
     return (
       <div className={styles.buttons}>
@@ -77,6 +83,7 @@ export const WrappingListItems = ({
           deleteText={staticTexts.delete ?? "N/A"}
           featureData={currentData}
           isChangeOrderHorizontal
+          countIndex={countIndex}
         />
       </div>
     );
@@ -85,13 +92,18 @@ export const WrappingListItems = ({
   return (
     <div>
       <div className={styles.body}>
-        {itemIds.map((itemId) => {
+        {itemIds.map((itemId, index) => {
           const currentData = data[itemId];
           return (
             <div key={itemId} className={styles.listItem}>
               <ItemGroupContainerCommon
-                isEdit={isEdit}
-                getEditButtons={() => getEditButtons({ currentData })}
+                showGroupButtons={isEdit}
+                getEditButtons={() =>
+                  getEditButtons({
+                    currentData,
+                    countIndex: { count: itemIds.length, index },
+                  })
+                }
                 marginTop={0}
                 heightValue="100%"
               >

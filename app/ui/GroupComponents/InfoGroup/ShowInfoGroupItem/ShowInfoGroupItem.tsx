@@ -4,7 +4,7 @@ import { PhoneIcon } from "@heroicons/react/24/solid";
 import { ItemContainerUpdateDeleteTextDescription } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerUpdateDeleteTextDescription";
 import clsx from "clsx";
 import styles from "./showInfoGroupItem.module.css";
-import { StaticTexts } from "@/app/dictionaries/definitions";
+import { CountIndex, StaticTexts } from "@/app/dictionaries/definitions";
 
 export type Props = {
   data?: FullData;
@@ -12,6 +12,7 @@ export type Props = {
   isEdit: boolean;
   lang: string;
   staticTexts: StaticTexts;
+  countIndex: CountIndex | null;
 };
 
 export const ShowInfoGroupItem = ({
@@ -20,6 +21,7 @@ export const ShowInfoGroupItem = ({
   isEdit,
   staticTexts,
   lang,
+  countIndex
 }: Props) => {
   if (!data) {
     return null;
@@ -37,6 +39,7 @@ export const ShowInfoGroupItem = ({
       currentData={data}
       isChangeOrder={isBody}
       isChangeOrderHorizontal={false}
+      countIndex={countIndex}
     >
       <div className={styles.container}>
         {isPhone ? <PhoneIcon className={styles.phoneIcon} /> : null}

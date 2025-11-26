@@ -14,6 +14,7 @@ import { getContainerData, getIsEditNoDelete } from "@/app/lib/utils";
 import { ShowItem } from "./ShowItem/ShowItem";
 import { ItemContainerAddChildFeatureDeleteFeature } from "../../CommonComponents/_itemGroupContainer/ItemContainerAddChildFeatureDeleteFeature";
 import { ScrollContainer } from "../../CommonComponents/ScrollContainer/ScrollContainer";
+import { StaticTexts } from "@/app/dictionaries/definitions";
 
 export type Props = {
   params: MainParams;

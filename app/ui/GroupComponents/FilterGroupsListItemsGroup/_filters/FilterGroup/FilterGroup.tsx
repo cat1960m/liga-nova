@@ -1,14 +1,16 @@
 "use client";
 
-import { FullData } from "@/app/lib/definitions";
+import { FilterGroupEditMode, FullData } from "@/app/lib/definitions";
 import { useState } from "react";
 import { FILTER, FILTER_GROUP_TITLE } from "@/app/lib/constants";
-import { ItemContainerAddTextDescriptionDeleteFeature } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerAddTextDescriptionDeleteFeature";
 import { ShowTitle } from "./ShowTitle/ShowTitle";
 import { ShowFilter } from "./ShowFilter/ShowFilter";
 import styles from "./filterGroup.module.css";
 import cn from "clsx";
 import { StaticTexts } from "@/app/dictionaries/definitions";
+import { ItemGroupContainerCommon } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemGroupContainerCommon/ItemGroupContainerCommon";
+import { AddChildFeatureButton } from "@/app/ui/CommonComponents/_buttons/AddChildFeatureButton";
+import { AddTextDescriptionButton } from "@/app/ui/CommonComponents/_buttons/AddTextDescriptionButton";
 
 export type Props = {
   filterGroupData: FullData[];
@@ -17,24 +19,27 @@ export type Props = {
     value: boolean;
   }) => void;
   selectedFilterTextDescriptionIds: number[];
-  parentFeatureId: number | null;
-  isEdit: boolean;
+  editMode: FilterGroupEditMode;
   lang: string;
   staticTexts: StaticTexts;
+  startNotExpanded?: boolean;
 };
 
 export const FilterGroup = ({
   filterGroupData,
   onFilterSelectionChanged,
   selectedFilterTextDescriptionIds,
-  isEdit,
+  editMode,
   lang,
-  staticTexts
+  staticTexts,
+  startNotExpanded,
 }: Props) => {
-  const featureId = filterGroupData[0]?.id;
-  const [isExpanded, setIsExpanded] = useState<boolean>(true);
+  const featureFilerGroupId = filterGroupData[0]?.id;
+  const [isExpanded, setIsExpanded] = useState<boolean>(
+    startNotExpanded ? false : true
+  );
 
-  if (!featureId) {
+  if (!featureFilerGroupId) {
     return null;
   }
 
@@ -44,31 +49,54 @@ export const FilterGroup = ({
 
   const filters = filterGroupData.filter((item) => item.text_type === FILTER);
 
-  return (
-    <ItemContainerAddTextDescriptionDeleteFeature
-      isEdit={isEdit}
-      deleteButtonText={staticTexts.delete ?? "N/A"}
-      featureData={filterGroupData}
-      addButtonText={staticTexts.addGroupItem ?? "N/A"}
-      textDescriptionType={FILTER}
-      isChangeOrderHorizontal={false}
-      marginTop={0}
-      noDelete={false}
-    >
-      <div className={cn(styles.container, { [styles.edit]: isEdit })}>
-        {titleData ? (
-          <ShowTitle
-            titleData={titleData}
-            isEdit={isEdit}
-            staticTexts={staticTexts}
-            lang={lang}
-            isExpanded={isExpanded}
-            setIsExpanded={setIsExpanded}
-          />
-        ) : null}
+  const isGroupItemEdit = editMode === "groupItems";
 
-        {isExpanded || isEdit
-          ? filters.map((filter) => {
+  const getEditButtons = () => {
+    return (
+      <div className={styles.buttons}>
+        {
+          <AddTextDescriptionButton
+            featureId={featureFilerGroupId}
+            textType={FILTER}
+            buttonText={staticTexts.addNewFilter ?? ""}
+            price={null}
+          />
+        }
+      </div>
+    );
+  };
+
+  return (
+    <div
+      className={cn(styles.container, {
+        [styles.edit]: editMode === "groupItems",
+      })}
+    >
+      {titleData ? (
+        <ShowTitle
+          titleData={titleData}
+          isEdit={isGroupItemEdit}
+          staticTexts={staticTexts}
+          lang={lang}
+          isExpanded={isExpanded}
+          setIsExpanded={setIsExpanded}
+        />
+      ) : null}
+
+      {isExpanded || isGroupItemEdit ? (
+        <div
+          className={cn(styles.base, {
+            [styles.edit]: editMode === "groupItems",
+            [styles.group]: editMode === "groupItems",
+          })}
+        >
+          <ItemGroupContainerCommon
+            showGroupButtons={editMode === "groupItems"}
+            getEditButtons={getEditButtons}
+            marginTop={0}
+            heightValue="100%"
+          >
+            {filters.map((filter, index) => {
               const textDescriptionId = filter.text_description_id;
               const inputValue =
                 !!selectedFilterTextDescriptionIds?.includes(textDescriptionId);
@@ -77,16 +105,18 @@ export const FilterGroup = ({
                 <ShowFilter
                   key={filter.text_description_id}
                   filter={filter}
-                  isEdit={isEdit}
+                  isEdit={isGroupItemEdit}
                   staticTexts={staticTexts}
                   lang={lang}
                   inputValue={inputValue}
                   onFilterSelectionChanged={onFilterSelectionChanged}
+                  countIndex={{ count: filters.length, index }}
                 />
               );
-            })
-          : null}
-      </div>
-    </ItemContainerAddTextDescriptionDeleteFeature>
+            })}
+          </ItemGroupContainerCommon>
+        </div>
+      ) : null}
+    </div>
   );
 };

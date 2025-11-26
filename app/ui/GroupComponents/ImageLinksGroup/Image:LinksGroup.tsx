@@ -36,7 +36,7 @@ export const ImageLinksGroup = ({ groupData, params }: Props) => {
       noDelete={noDelete}
     >
       <div className={cn(styles.container)}>
-        {groupDataMain.map((item) => (
+        {groupDataMain.map((item, index) => (
           <div className={styles.itemContainer} key={item.text_description_id}>
             <ImageLinkGroupItem
               groupData={groupData}
@@ -46,6 +46,7 @@ export const ImageLinksGroup = ({ groupData, params }: Props) => {
               item={item}
               changeModalState={changeModalState}
               isModalShown={isModalShown}
+              countIndex={{count: groupDataMain.length, index}}
             />
           </div>
         ))}

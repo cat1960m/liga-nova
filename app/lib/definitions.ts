@@ -221,3 +221,5 @@ export type GroupDefinition = {
   childFeatureSubtype: string | null;
   textTypes: string[];
 };
+
+export type FilterGroupEditMode = "no" | "groupItems" | "groupOnly";

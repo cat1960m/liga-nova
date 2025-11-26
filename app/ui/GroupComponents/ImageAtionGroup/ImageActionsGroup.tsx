@@ -37,7 +37,7 @@ export const ImageActionsGroup = ({ groupData, params }: Props) => {
       noDelete={noDelete}
     >
       <div className={cn(styles.container)}>
-        {groupDataMain.map((item) => (
+        {groupDataMain.map((item, index) => (
           <div
             className={cn(styles.itemContainer)}
             key={item.text_description_id}
@@ -50,6 +50,7 @@ export const ImageActionsGroup = ({ groupData, params }: Props) => {
               groupItemMain={item}
               isModalShown={isModalShown}
               changeModalState={changeModalState}
+              countIndex={{count: groupDataMain.length, index}}
             />
           </div>
         ))}

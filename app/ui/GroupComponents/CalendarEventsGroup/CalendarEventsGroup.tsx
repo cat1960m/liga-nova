@@ -46,7 +46,7 @@ export const CalendarEventsGroup = ({
   const firstData = groupData[0];
   const calendarFeatureId = firstData.id;
 
-  const [eventsData, eventsIds] = useMemo(() => {
+  const [eventsData, eventsIds]: [Record<string, FullData[]>, string[]] = useMemo(() => {
     if (!calendarFeatureId) {
       return [{}, []];
     }
@@ -88,6 +88,7 @@ export const CalendarEventsGroup = ({
           <DeleteFeatureChangeOrderButtons
             deleteText={staticTexts.deleteCalendar ?? "N/A"}
             featureData={groupData}
+            countIndex={null}
           />
         ) : null}
       </div>
@@ -96,7 +97,7 @@ export const CalendarEventsGroup = ({
 
   return (
     <ItemGroupContainerCommon
-      isEdit={isEdit}
+      showGroupButtons={isEdit && isCalendarShown}
       getEditButtons={getButtons}
       marginTop={20}
     >

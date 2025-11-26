@@ -28,6 +28,7 @@ export type Props = {
   lang: string;
   staticTexts: StaticTexts;
   pageName: string;
+  setEditingFilterGroupId?: (id: number | null) => void;
 };
 
 export const FilterGroups = ({
@@ -40,6 +41,7 @@ export const FilterGroups = ({
   lang,
   staticTexts,
   pageName,
+  setEditingFilterGroupId
 }: Props) => {
   const currentWidth = width ?? FILTER_GROUP_DEFAULT_WIDTH;
 
@@ -60,13 +62,13 @@ export const FilterGroups = ({
 
   return (
     <ItemGroupContainerCommon
-      isEdit={isEdit}
+      showGroupButtons={isEdit}
       getEditButtons={getEditButtons}
       marginTop={isEdit ? 20 : 0}
     >
       <div
         className={cn(styles.container, { [styles.edit]: isEdit })}
-        style={{ width: isEdit ? undefined : currentWidth }}
+        style={{ width: isEdit ? currentWidth : currentWidth }}
       >
         <FilterGroupsBody
           pageFullDataList={pageFullDataList}
@@ -77,6 +79,7 @@ export const FilterGroups = ({
           lang={lang}
           staticTexts={staticTexts}
           pageName={pageName}
+          setEditingFilterGroupId={setEditingFilterGroupId}
         />
       </div>
     </ItemGroupContainerCommon>

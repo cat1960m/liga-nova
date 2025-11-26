@@ -3,7 +3,7 @@
 import { FullData } from "@/app/lib/definitions";
 import { ImageLink } from "./ImageLink";
 import { ItemContainerUpdateDeleteTextDescription } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerUpdateDeleteTextDescription";
-import { StaticTexts } from "@/app/dictionaries/definitions";
+import { CountIndex, StaticTexts } from "@/app/dictionaries/definitions";
 
 export type Props = {
   groupData: FullData[];
@@ -14,6 +14,7 @@ export type Props = {
   item: FullData;
   changeModalState?: (state: boolean) => void;
   isModalShown: boolean;
+  countIndex: CountIndex;
 };
 // main page
 export const ImageLinkGroupItem = ({
@@ -24,6 +25,7 @@ export const ImageLinkGroupItem = ({
   item,
   changeModalState,
   isModalShown,
+  countIndex
 }: Props) => {
   return (
     <ItemContainerUpdateDeleteTextDescription
@@ -39,6 +41,7 @@ export const ImageLinkGroupItem = ({
       lang={lang}
       currentData={item}
       changeModalState={changeModalState}
+      countIndex={countIndex}
     >
       <ImageLink
         data={item}

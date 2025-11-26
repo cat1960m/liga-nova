@@ -1,17 +1,18 @@
 import { FullData } from "@/app/lib/definitions";
 import { DEFAULT_TEXT } from "@/app/lib/constants";
 import { ItemContainerUpdateDeleteTextDescription } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerUpdateDeleteTextDescription";
-import { StaticTexts } from "@/app/dictionaries/definitions";
+import { CountIndex, StaticTexts } from "@/app/dictionaries/definitions";
 
 export type Props = {
   item: FullData;
     isEdit: boolean;
     lang: string;
     staticTexts: StaticTexts;
+    countIndex: CountIndex | null;
   
 };
 
-export const ShowTextDescription = ({ item, isEdit, staticTexts, lang }: Props) => {
+export const ShowTextDescription = ({ item, isEdit, staticTexts, lang, countIndex }: Props) => {
   return (
     <ItemContainerUpdateDeleteTextDescription
       key={item.text_description_id}
@@ -21,6 +22,7 @@ export const ShowTextDescription = ({ item, isEdit, staticTexts, lang }: Props) 
       lang={lang}
       currentData={item}
       isChangeOrderHorizontal={false}
+      countIndex={countIndex}
     >
       <div
         dangerouslySetInnerHTML={{

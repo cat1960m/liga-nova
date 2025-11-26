@@ -1,16 +1,17 @@
+import { CountIndex } from "@/app/dictionaries/definitions";
 import styles from "./itemGroupContainerCommon.module.css";
 import cn from "clsx";
 
 export type Props = {
   children: React.ReactNode;
-  isEdit: boolean;
+  showGroupButtons: boolean;
   getEditButtons: () => React.ReactNode;
   marginTop: number;
   heightValue?: string;
 };
 
 export const ItemGroupContainerCommon = ({
-  isEdit,
+  showGroupButtons,
   children,
   getEditButtons,
   marginTop,
@@ -18,15 +19,15 @@ export const ItemGroupContainerCommon = ({
 }: Props) => {
   return (
     <div
-      className={cn(styles.container, { [styles.edit]: isEdit })}
+      className={cn(styles.container, { [styles.edit]: showGroupButtons })}
       style={{
-        marginTop: isEdit ? Math.max(marginTop, 30) : marginTop,
+        marginTop: showGroupButtons ? Math.max(marginTop, 30) : marginTop,
         height: heightValue,
       }}
     >
       {children}
 
-      {isEdit ? <div className={styles.buttons}>{getEditButtons()}</div> : null}
+      {showGroupButtons ? <div className={styles.buttons}>{getEditButtons()}</div> : null}
     </div>
   );
 };

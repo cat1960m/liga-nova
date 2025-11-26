@@ -36,6 +36,7 @@ export const DrawFeatureContainer = ({
   );
 
   const [data, keys] = containerFullData;
+  console.log("---keys", keys, data);
   const { pageName, staticTexts } = params;
   const { isDeepMode } = getIsEditNoDelete(params);
   const isAdd = isOneChildren ? isDeepMode && !keys.length : isDeepMode;

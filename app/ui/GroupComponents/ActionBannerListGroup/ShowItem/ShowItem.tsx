@@ -75,6 +75,7 @@ export const ShowItem = ({
       isChangeOrderHorizontal
       marginTop={0}
       noDelete={false}
+      countIndex={null}
     >
       <div className={styles.main}>
         <div className={styles.container}>
@@ -101,6 +102,7 @@ export const ShowItem = ({
                   lang={lang}
                   title={share}
                   color={color}
+                  countIndex={null}
                 />
               ) : null}
 
@@ -111,6 +113,7 @@ export const ShowItem = ({
                   lang={lang}
                   title={ticket}
                   color={color}
+                  countIndex={null}
                 />
               ) : null}
             </div>

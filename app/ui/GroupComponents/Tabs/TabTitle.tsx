@@ -1,5 +1,6 @@
 "use client";
 
+import { CountIndex } from "@/app/dictionaries/definitions";
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { getIsEditNoDelete } from "@/app/lib/utils";
 import { CommonButton } from "@/app/ui/CommonComponents/_buttons/CommonButton";
@@ -10,6 +11,7 @@ export type Props = {
   selectedTabFeatureId: number | null;
   onSelectedTabFeatureIdChanged: (num: number) => void;
   params: MainParams;
+  countIndex: CountIndex;
 };
 
 export const TabTitle = ({
@@ -17,6 +19,7 @@ export const TabTitle = ({
   selectedTabFeatureId,
   onSelectedTabFeatureIdChanged,
   params,
+  countIndex,
 }: Props) => {
   const isTabSelected = selectedTabFeatureId === tabTitle.id;
 
@@ -42,6 +45,7 @@ export const TabTitle = ({
       isChangeOrderHorizontal
       noDelete={isTabSelected || noDelete}
       marginTop={0}
+      countIndex={countIndex}
     >
       <CommonButton
         text={tabTitle.text_content ?? "N/A"}

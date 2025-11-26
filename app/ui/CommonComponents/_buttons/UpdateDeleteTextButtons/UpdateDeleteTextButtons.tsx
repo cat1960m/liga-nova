@@ -7,12 +7,12 @@ import { useEditContext } from "../../../PageComponents/EditContextProvider";
 import { revalidate } from "@/app/lib/actions_fitness";
 import { usePathname } from "next/navigation";
 import { UseItems } from "../../_upadeModal/UpdateTextDescriptionDataModalContent/UpdateTextDescriptionDataModalContent";
-import { StaticTexts } from "@/app/dictionaries/definitions";
+import { CountIndex, StaticTexts } from "@/app/dictionaries/definitions";
 
 import styles from "./updateDeleteTextButtons.module.css";
 import { useMemo } from "react";
 import { updateTextDescriptionsOrderData } from "@/app/lib/actionsContainer";
-import { CONTENT_TYPE_MAIN, CONTENT_TYPE_TOOLTIP } from "@/app/lib/constants";
+import {  CONTENT_TYPE_TOOLTIP } from "@/app/lib/constants";
 export type Props = {
   currentData?: FullData;
   isChangeOrder?: boolean;
@@ -24,6 +24,7 @@ export type Props = {
 
   changeModalState?: (state: boolean) => void;
   onDeleteFinished?: () => void;
+  countIndex: CountIndex | null;
 };
 
 export const UpdateDeleteTextButtons = ({
@@ -36,6 +37,7 @@ export const UpdateDeleteTextButtons = ({
   staticTexts,
   changeModalState,
   onDeleteFinished,
+  countIndex
 }: Props) => {
   const { changeIsEditButtonDisabled, pageFullDataList } = useEditContext();
   const pathName = usePathname();
@@ -123,6 +125,7 @@ export const UpdateDeleteTextButtons = ({
         <ChangeOrderButtons
           isChangeOrderHorizontal={isChangeOrderHorizontal}
           changeOrder={changeOrder}
+          countIndex={countIndex}
         />
       ) : null}
     </div>

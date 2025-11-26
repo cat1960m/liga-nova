@@ -19,4 +19,24 @@
     align-items: center;
 }
 
+.base{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.buttons {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.group {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
 

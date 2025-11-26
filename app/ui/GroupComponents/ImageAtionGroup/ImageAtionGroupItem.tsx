@@ -4,7 +4,7 @@ import { FullData } from "@/app/lib/definitions";
 import { ImageAction } from "./ImageAction";
 import { ActionButton } from "@/app/ui/CommonComponents/_buttons/ActionButton/ActionButton";
 import { ItemContainerUpdateDeleteTextDescription } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerUpdateDeleteTextDescription";
-import { StaticTexts } from "@/app/dictionaries/definitions";
+import { CountIndex, StaticTexts } from "@/app/dictionaries/definitions";
 
 export type Props = {
   groupData: FullData[];
@@ -14,6 +14,7 @@ export type Props = {
   groupItemMain: FullData;
   isModalShown: boolean;
   changeModalState?: (state: boolean) => void;
+  countIndex: CountIndex;
 };
 
 export const ImageActionGroupItem = ({
@@ -24,6 +25,7 @@ export const ImageActionGroupItem = ({
   groupItemMain,
   isModalShown,
   changeModalState,
+  countIndex
 }: Props) => {
   return (
     <ItemContainerUpdateDeleteTextDescription
@@ -37,6 +39,7 @@ export const ImageActionGroupItem = ({
       lang={lang}
       currentData={groupItemMain}
       changeModalState={changeModalState}
+      countIndex={countIndex}
     >
       <>
         <ImageAction

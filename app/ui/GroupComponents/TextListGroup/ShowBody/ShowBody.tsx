@@ -27,6 +27,7 @@ export const ShowBody = ({
       staticTexts={staticTexts}
       lang={lang}
       isChangeOrder={false}
+      countIndex={null}
     >
       <div className={styles.mainName}>
         {isMain ? <div className={styles.start}>{`"`}</div> : null}

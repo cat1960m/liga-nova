@@ -14,6 +14,7 @@ import styles from "./editListItemFilter.module.css";
 import { useEditContext } from "@/app/ui/PageComponents/EditContextProvider";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { updateFeatureSubtypeFilterIdsData } from "@/app/lib/actionsContainer";
+import { EditTitleCancel } from "@/app/ui/CommonComponents/EditTitleCancel/EditTitleCancel";
 
 export type Props = {
   pageFullDataList: FullData[];
@@ -89,10 +90,7 @@ export const EditListItemFilter = ({
 
   return (
     <div className={styles.container}>
-      <div className={styles.header}>
-        <div className={styles.title}>{editListItemText}</div>
-        <CommonButton text="Cancel" onClick={onCancel} />
-      </div>
+      <EditTitleCancel title={editListItemText} onCancel={onCancel} staticTexts={staticTexts}/>
       <div className={styles.body}>
         <div className={styles.edit_list_item_container}>
           <EditListItem
@@ -119,7 +117,7 @@ export const EditListItemFilter = ({
             onFilterSelectionChanged={handleFilterSelectionChanged}
             selectedFilterTextDescriptionIds={selectedFilterTextDescriptionIds}
             parentFeatureId={parentFeatureId}
-            width={commonWidth}
+           // width={commonWidth}
             isEdit={false} // no edit
             lang={lang}
             staticTexts={staticTexts}

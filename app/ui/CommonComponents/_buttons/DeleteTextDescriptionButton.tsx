@@ -1,12 +1,10 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { CommonButton } from "./CommonButton";
 import axios from "axios";
 import { useEditContext } from "../../PageComponents/EditContextProvider";
-import { TrashIcon } from "@heroicons/react/24/outline";
-import { ICON_BUTTON_WIDTH, ICON_IN_BUTTON_WIDTH } from "@/app/lib/constants";
 import { removeTextDescriptionData } from "@/app/lib/actionsContainer";
+import { DeleteButton } from "./DeleteButton/DeleteButton";
 
 export const DeleteTextDescriptionButton = ({
   textDescriptionId,
@@ -25,7 +23,10 @@ export const DeleteTextDescriptionButton = ({
 
   const handleDelete = async () => {
     changeIsEditButtonDisabled(true);
-    await removeTextDescriptionData({ id: textDescriptionId, pathName: pathName });
+    await removeTextDescriptionData({
+      id: textDescriptionId,
+      pathName: pathName,
+    });
     changeIsEditButtonDisabled(false);
 
     if (s3Key) {
@@ -37,16 +38,10 @@ export const DeleteTextDescriptionButton = ({
   };
 
   return (
-    <CommonButton
+    <DeleteButton
+      title={deleteText}
       onClick={handleDelete}
       isDisabled={isEditButtonsDisabled}
-      width={ICON_BUTTON_WIDTH}
-    >
-      <TrashIcon
-        color="black"
-        width={ICON_IN_BUTTON_WIDTH}
-        title={deleteText}
-      />
-    </CommonButton>
+    />
   );
 };

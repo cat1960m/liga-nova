@@ -62,6 +62,7 @@ export const ItemContainerAddTextDescriptionDeleteFeature = ({
                 isChangeOrderHorizontal={isChangeOrderHorizontal}
                 onDeleteFinished={onDeleteFinished}
                 noDelete={noDelete}
+                countIndex={null}
               />
           ) : null}
         </>
@@ -70,7 +71,7 @@ export const ItemContainerAddTextDescriptionDeleteFeature = ({
   };
   return (
     <ItemGroupContainerCommon
-      isEdit={isEdit}
+      showGroupButtons={isEdit}
       getEditButtons={getEditButtons}
       marginTop={marginTop}
       heightValue={heightValue}

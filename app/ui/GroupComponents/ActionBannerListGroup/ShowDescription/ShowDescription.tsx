@@ -22,6 +22,7 @@ export const ShowDescription = ({ staticTexts, isEdit, lang, description, color 
       staticTexts={staticTexts}
       lang={lang}
       isChangeOrder={false}
+      countIndex={null}
     >
       <div className={cn(styles.group, { [styles.edit]: isEdit })}>
         <div className={styles.description_container}>

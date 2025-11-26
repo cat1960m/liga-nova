@@ -31,6 +31,7 @@ export const ShowItem = ({
         staticTexts={staticTexts}
         lang={lang}
         currentData={imageData}
+        countIndex={null}
       >
         <ShowItemBody widthItem={widthItem} imageData={imageData} />
       </ItemContainerUpdateDeleteTextDescription>

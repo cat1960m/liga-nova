@@ -48,6 +48,7 @@ export const ActionBannerGroup = ({ groupData, params }: Props) => {
       isChangeOrderHorizontal={false}
       marginTop={100}
       noDelete={noDelete}
+      countIndex={null}
     >
       <div className={styles.container}>
         {titleImageData?.value ? (

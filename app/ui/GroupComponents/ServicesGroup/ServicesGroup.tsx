@@ -63,6 +63,7 @@ export const ServicesGroup = ({ groupData, params }: Props) => {
                     }}
                     lang={lang}
                     staticTexts={staticTexts}
+                    countIndex={{count: texts.length, index}}
                   />
                 ) : (
                   <div className={styles.register}>{staticTexts.register}</div>
