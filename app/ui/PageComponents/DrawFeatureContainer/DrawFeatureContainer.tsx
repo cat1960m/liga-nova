@@ -1,12 +1,11 @@
-
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { DrawChildFeature } from "../DrawChildFeatures";
 import { AddChildFeatureToContainer } from "../../CommonComponents/AddChildFeatureToContainer/AddChildFeatureToContainer";
-import { getContainerData, getIsEditNoDelete } from "@/app/lib/utils";
-import { useMemo } from "react";
+import { getIsEditNoDelete } from "@/app/lib/utils";
 
 import styles from "./drawFeatureContainer.module.css";
 import cn from "clsx";
+import { useContainerData } from "../../hooks/useContainerData";
 
 export type Props = {
   featureId: number;
@@ -25,21 +24,17 @@ export const DrawFeatureContainer = ({
   pageId,
   isOneChildren,
 }: Props) => {
-  const containerFullData = useMemo(
-    () =>
-      getContainerData({
-        pageName: params.pageName,
-        pageFullData: pageFullDataList,
-        parentFeatureId: featureId,
-      }),
-    [params.pageName, pageFullDataList, featureId]
-  );
-
-  const [data, keys] = containerFullData;
-  console.log("---keys", keys, data);
+  const structuredData = useContainerData({
+    pageName: params.pageName,
+    pageFullData: pageFullDataList,
+    parentFeatureId: featureId,
+  });
+  //console.log("---keys", keys, pageData);
   const { pageName, staticTexts } = params;
   const { isDeepMode } = getIsEditNoDelete(params);
-  const isAdd = isOneChildren ? isDeepMode && !keys.length : isDeepMode;
+  const isAdd = isOneChildren
+    ? isDeepMode && !structuredData.sortedChildFeaFeatureIds.length
+    : isDeepMode;
 
   return (
     <div
@@ -52,9 +47,11 @@ export const DrawFeatureContainer = ({
           [styles.oneItem]: isOneChildren,
         })}
       >
-        {keys.map((id) => (
+        {structuredData.sortedChildFeaFeatureIds.map((id) => (
           <DrawChildFeature
-            childFeatureDataList={data[id]}
+            childFeatureDataList={
+              structuredData.childFeatureIdToFullDataList[id]
+            }
             pageFullDataList={pageFullDataList}
             params={params}
             key={id}

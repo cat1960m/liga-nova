@@ -63,7 +63,7 @@ export const Tabs = ({ pageFullDataList, tabsData, params, pageId }: Props) => {
                     handleSelectedTabFeatureIdChanged
                   }
                   params={params}
-                  q={{ count: tabTitles.length, index }}
+                  countIndex={{ count: tabTitles.length, index }}
                 />
               </div>
             );

@@ -3,13 +3,14 @@
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { AdditionalPageDataGroupEdit } from "./AdditionalPageDataGroupEdit/AdditionalPageDataGroupEdit";
 import { AdditionalPageDataGroupShow } from "./AdditionalPageDataGroupShow/AdditionalPageDataGroupShow";
-import { PAGE_NAMES_TO_LIST_ITEMS_DATA } from "@/app/lib/constants";
+import { FILTER_GROUP_SUBTYPE, GROUP, LIST_ITEM, PAGE_NAMES_TO_LIST_ITEMS_DATA } from "@/app/lib/constants";
 import Link from "next/link";
 
 import styles from "./additionalPageDataGroup.module.css";
 import { ItemContainerAddTextDescriptionDeleteFeature } from "../../CommonComponents/_itemGroupContainer/ItemContainerAddTextDescriptionDeleteFeature";
-import { getIsEditNoDelete } from "@/app/lib/utils";
+import { getFilterIds, getIsEditNoDelete } from "@/app/lib/utils";
 import { EditTitleCancel } from "../../CommonComponents/EditTitleCancel/EditTitleCancel";
+import { useContainerData } from "../../hooks/useContainerData";
 
 export type Props = {
   pageFullDataList: FullData[];
@@ -25,20 +26,36 @@ export const AdditionalPageDataGroup = ({
   groupData,
 }: Props) => {
   const currentData = groupData[0];
-
-  if (!currentData) {
-    return null;
-  }
-
   const pageData = pageFullDataList.find((data) => data.id === pageId);
   const additionalPageNames = (pageData?.additional_page_name ?? "").split(",");
   const additionalPageName =
     additionalPageNames.length === 1
       ? additionalPageNames[0]
-      : currentData.additional_page_name;
+      : currentData?.additional_page_name ?? "";
 
-  if (!additionalPageName) {
-    return;
+  const structuredFilterGroupsData = useContainerData({
+    pageName: additionalPageName,
+    pageFullData: pageFullDataList,
+    parentFeatureId: null,
+    type: GROUP,
+    subtype: FILTER_GROUP_SUBTYPE,
+  });
+
+  const filterTextDescriptionIds = getFilterIds(currentData?.filter_ids?? "");
+  const structuredListItemsData = useContainerData({
+    pageName: additionalPageName,
+    pageFullData: pageFullDataList,
+    parentFeatureId: null,
+    type: LIST_ITEM,
+    subtype: LIST_ITEM,
+    selectedFiltersData: {
+      selectedFilterTextDescriptionIds: filterTextDescriptionIds,
+      filterGroupsData: structuredFilterGroupsData,
+    },
+  });
+
+  if (!currentData || !additionalPageName) {
+    return null;
   }
 
   const linkText = PAGE_NAMES_TO_LIST_ITEMS_DATA[additionalPageName]?.linkText;
@@ -63,24 +80,23 @@ export const AdditionalPageDataGroup = ({
 
           <AdditionalPageDataGroupEdit
             currentData={currentData}
-            pageFullDataList={pageFullDataList}
-            additionalPageName={additionalPageName}
             staticTexts={staticTexts}
             lang={lang}
+            structuredFilterGroupsData={structuredFilterGroupsData}
           />
           <AdditionalPageDataGroupShow
-            currentData={currentData}
             pageFullDataList={pageFullDataList}
             pageName={additionalPageName}
             staticTexts={staticTexts}
+            structuredListItemsData={structuredListItemsData}
           />
         </div>
       ) : (
         <AdditionalPageDataGroupShow
-          currentData={currentData}
           pageFullDataList={pageFullDataList}
           pageName={additionalPageName}
           staticTexts={staticTexts}
+          structuredListItemsData={structuredListItemsData}
         />
       )}
       <div className={styles.link}>

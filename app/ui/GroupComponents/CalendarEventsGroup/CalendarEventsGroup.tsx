@@ -2,8 +2,8 @@
 
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { AddEditCalendarEvents } from "./AddEditCalendarEvents/AddEditCalendarEvents";
-import { getContainerData, getIsEditNoDelete } from "@/app/lib/utils";
-import { useMemo, useState } from "react";
+import { getIsEditNoDelete } from "@/app/lib/utils";
+import { useState } from "react";
 import { ShowEvents } from "./ShowEvents/ShowEvents";
 import { ICON_BUTTON_WIDTH, ICON_IN_BUTTON_WIDTH } from "@/app/lib/constants";
 import { CalendarHeader } from "./CalendarHeader/CalendarHeader";
@@ -13,6 +13,7 @@ import styles from "./calendarEventsGroup.module.css";
 import { CommonButton } from "../../CommonComponents/_buttons/CommonButton";
 import { DeleteFeatureChangeOrderButtons } from "../../CommonComponents/_buttons/DeleteFeatureChangeOrderButtons/DeleteFeatureChangeOrderButtons";
 import { ItemGroupContainerCommon } from "../../CommonComponents/_itemGroupContainer/ItemGroupContainerCommon/ItemGroupContainerCommon";
+import { useContainerData } from "../../hooks/useContainerData";
 
 export type Props = {
   groupData: FullData[];
@@ -45,18 +46,11 @@ export const CalendarEventsGroup = ({
 
   const firstData = groupData[0];
   const calendarFeatureId = firstData.id;
-
-  const [eventsData, eventsIds]: [Record<string, FullData[]>, string[]] = useMemo(() => {
-    if (!calendarFeatureId) {
-      return [{}, []];
-    }
-
-    return getContainerData({
-      pageName: params.pageName,
-      pageFullData,
-      parentFeatureId: calendarFeatureId,
-    });
-  }, [params.pageName, pageFullData, calendarFeatureId]);
+  const calendarData = useContainerData({
+    pageName: params.pageName,
+    pageFullData,
+    parentFeatureId: calendarFeatureId,
+  });
 
   if (!calendarFeatureId) {
     return null;
@@ -116,8 +110,7 @@ export const CalendarEventsGroup = ({
               getNowStartOfWeek={getNowStartOfWeek}
             />
             <ShowEvents
-              eventsIds={eventsIds}
-              eventsData={eventsData}
+              calendarData={calendarData}
               staticTexts={staticTexts}
               isEdit={isEdit}
               setEditEventId={setEditEventId}
@@ -132,7 +125,11 @@ export const CalendarEventsGroup = ({
           <AddEditCalendarEvents
             calendarFeatureId={calendarFeatureId}
             hideAddEvent={hideAddEvent}
-            eventFeatureData={editEventId ? eventsData[editEventId] : undefined}
+            eventFeatureData={
+              editEventId
+                ? calendarData.childFeatureIdToFullDataList[editEventId]
+                : undefined
+            }
             staticTexts={staticTexts}
             pageName={pageName}
           />

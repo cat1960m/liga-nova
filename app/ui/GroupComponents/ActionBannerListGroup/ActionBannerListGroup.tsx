@@ -9,49 +9,38 @@ import {
   ACTION_BANNER_LIST_TICKET,
 } from "@/app/lib/constants";
 import { FullData, MainParams } from "@/app/lib/definitions";
-import { useMemo, useRef, useState } from "react";
-import { getContainerData, getIsEditNoDelete } from "@/app/lib/utils";
+import { useRef, useState } from "react";
+import {getIsEditNoDelete } from "@/app/lib/utils";
 import { ShowItem } from "./ShowItem/ShowItem";
 import { ItemContainerAddChildFeatureDeleteFeature } from "../../CommonComponents/_itemGroupContainer/ItemContainerAddChildFeatureDeleteFeature";
 import { ScrollContainer } from "../../CommonComponents/ScrollContainer/ScrollContainer";
-import { StaticTexts } from "@/app/dictionaries/definitions";
+import { useContainerData } from "../../hooks/useContainerData";
 
 export type Props = {
   params: MainParams;
   pageFullDataList: FullData[];
 };
 //main page
-export const ActionBannerListGroup = ({
-  params,
-  pageFullDataList,
-}: Props) => {
+export const ActionBannerListGroup = ({ params, pageFullDataList }: Props) => {
   const [lastAddedId, setLastAddedId] = useState<number | null>(null);
   const ref = useRef<HTMLDivElement>(null);
 
   const groupData = pageFullDataList.filter(
-      (item) => item.subtype === ACTION_BANNER_LIST_GROUP_SUBTYPE
+    (item) => item.subtype === ACTION_BANNER_LIST_GROUP_SUBTYPE
   );
   const groupFeatureId = groupData[0]?.id;
 
-
-  const [actionBannerListItemsData, actionBannerListItemIds] = useMemo(() => {
-
-    if (!groupFeatureId) {
-      return [{}, []];
-    }
-    return getContainerData({
+  const {childFeatureIdToFullDataList, sortedChildFeaFeatureIds} = useContainerData(
+    {
       pageName: params.pageName,
       pageFullData: pageFullDataList,
       parentFeatureId: groupFeatureId,
-    });
-  }, [params.pageName,pageFullDataList, groupFeatureId]);
+    }
+  );
 
   if (!groupFeatureId) {
     return null;
   }
-
-
-  const ids = actionBannerListItemIds;
 
   const { staticTexts, pageName, lang } = params;
   const { isEdit, noDelete } = getIsEditNoDelete(params);
@@ -69,12 +58,12 @@ export const ActionBannerListGroup = ({
   }) => {
     return (
       <ShowItem
-        actionBannerListItemsData={actionBannerListItemsData}
+        actionBannerListItemsData={childFeatureIdToFullDataList}
         id={id}
         widthItem={widthItem}
         indexSelected={indexSelected}
         f={f}
-        ids={ids}
+        ids={sortedChildFeaFeatureIds}
         staticTexts={staticTexts}
         isEdit={isEdit}
         lang={lang}
@@ -111,7 +100,7 @@ export const ActionBannerListGroup = ({
     >
       <div ref={ref}>
         <ScrollContainer
-          ids={ids}
+          ids={sortedChildFeaFeatureIds}
           getItem={getItem}
           countVisibleItems={1}
           lastAddedId={lastAddedId}

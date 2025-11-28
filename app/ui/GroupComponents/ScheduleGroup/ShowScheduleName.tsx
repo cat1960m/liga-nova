@@ -34,6 +34,7 @@ export const ShowSCheduleName = ({
           }}
           staticTexts={staticTexts}
           lang={lang}
+          countIndex={null}
         />
       ) : null}
     </div>

@@ -1,4 +1,3 @@
-import { CountIndex } from "@/app/dictionaries/definitions";
 import styles from "./itemGroupContainerCommon.module.css";
 import cn from "clsx";
 

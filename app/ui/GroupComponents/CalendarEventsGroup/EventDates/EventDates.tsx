@@ -206,7 +206,7 @@ export const EventDates = ({
             checked={!byWeekDay}
             onChange={handleChange}
           />
-          {staticTexts.byMonthDay}
+          {staticTexts.byDate}
         </div>
       </div>
 
@@ -221,7 +221,7 @@ export const EventDates = ({
 
         {byWeekDay ? (
           <div className={styles.group}>
-            {`${staticTexts.month}:`}
+            {`${staticTexts.months}:`}
             <select multiple value={months} onChange={handleMonthsChange}>
               {[...monthOptions]}
             </select>

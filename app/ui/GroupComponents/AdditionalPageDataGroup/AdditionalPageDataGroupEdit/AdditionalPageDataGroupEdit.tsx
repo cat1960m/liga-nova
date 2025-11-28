@@ -1,10 +1,9 @@
 "use client";
 
-import { GROUP, FILTER_GROUP_SUBTYPE } from "@/app/lib/constants";
-import { FullData } from "@/app/lib/definitions";
-import { useMemo, useState } from "react";
+import { FullData, StructuredFeatureData } from "@/app/lib/definitions";
+import { useState } from "react";
 import { FilterGroup } from "../../FilterGroupsListItemsGroup/_filters/FilterGroup/FilterGroup";
-import { getContainerData, getFilterIds } from "@/app/lib/utils";
+import { getFilterIds } from "@/app/lib/utils";
 
 import styles from "./additionalPageDataGroupEdit.module.css";
 import { UpdateFeatureFilterIdsButton } from "@/app/ui/CommonComponents/_buttons/UpdateFeatureFilterIdsButton";
@@ -12,18 +11,16 @@ import { StaticTexts } from "@/app/dictionaries/definitions";
 
 export type Props = {
   currentData: FullData;
-  pageFullDataList: FullData[];
-  additionalPageName: string;
   staticTexts: StaticTexts;
   lang: string;
+  structuredFilterGroupsData: StructuredFeatureData;
 };
 //Персональні тренування ,Групові студії, Кріосауна, Солярій
 export const AdditionalPageDataGroupEdit = ({
   currentData,
-  pageFullDataList,
-  additionalPageName,
   staticTexts,
   lang,
+  structuredFilterGroupsData,
 }: Props) => {
   const filterTextDescriptionIds = getFilterIds(currentData.filter_ids);
 
@@ -34,23 +31,9 @@ export const AdditionalPageDataGroupEdit = ({
 
   const pageFeatureId = currentData.id;
 
-  const containerFullData = useMemo(
-    () =>
-      getContainerData({
-        pageName: additionalPageName,
-        pageFullData: pageFullDataList,
-        parentFeatureId: null,
-        type: GROUP,
-        subtype: FILTER_GROUP_SUBTYPE,
-      }),
-    [pageFullDataList, additionalPageName]
-  );
-
-  if (!containerFullData) {
+  if (!structuredFilterGroupsData.sortedChildFeaFeatureIds.length) {
     return null;
   }
-
-  const [data, filterGroupIds] = containerFullData;
 
   const handleFilterSelectionChanged = ({
     filter,
@@ -77,24 +60,29 @@ export const AdditionalPageDataGroupEdit = ({
   return (
     <>
       <div className={styles.filters}>
-        {filterGroupIds.map((filterGroupId) => {
-          const filterGroupData = data[filterGroupId];
-          return (
-            <div key={filterGroupId}>
-              <FilterGroup
-                filterGroupData={filterGroupData}
-                onFilterSelectionChanged={handleFilterSelectionChanged}
-                selectedFilterTextDescriptionIds={
-                  selectedFilterTextDescriptionIds
-                }
-                editMode="no"
-                lang={lang}
-                staticTexts={staticTexts}
-                startNotExpanded={true}
-              />
-            </div>
-          );
-        })}
+        {structuredFilterGroupsData.sortedChildFeaFeatureIds.map(
+          (filterGroupId) => {
+            const filterGroupData =
+              structuredFilterGroupsData.childFeatureIdToFullDataList[
+                filterGroupId
+              ];
+            return (
+              <div key={filterGroupId}>
+                <FilterGroup
+                  filterGroupData={filterGroupData}
+                  onFilterSelectionChanged={handleFilterSelectionChanged}
+                  selectedFilterTextDescriptionIds={
+                    selectedFilterTextDescriptionIds
+                  }
+                  editMode="no"
+                  lang={lang}
+                  staticTexts={staticTexts}
+                  startNotExpanded={true}
+                />
+              </div>
+            );
+          }
+        )}
       </div>
 
       <div className={styles.button}>

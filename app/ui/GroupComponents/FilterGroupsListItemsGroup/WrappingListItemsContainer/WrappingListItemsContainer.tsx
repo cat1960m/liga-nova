@@ -1,7 +1,10 @@
 import { ItemGroupContainerCommon } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemGroupContainerCommon/ItemGroupContainerCommon";
 import { WrappingListItems } from "../WrappingListItems/WrappingListItems";
 import { AddChildFeatureButton } from "@/app/ui/CommonComponents/_buttons/AddChildFeatureButton";
-import { FullData } from "@/app/lib/definitions";
+import {
+  FullData,
+  StructuredFeatureData,
+} from "@/app/lib/definitions";
 import { LIST_ITEM, PAGE_NAMES_TO_LIST_ITEMS_DATA } from "@/app/lib/constants";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import styles from "./wrappingListItemsContainer.module.css";
@@ -11,9 +14,9 @@ export type Props = {
   pageFullDataList: FullData[];
   staticTexts: StaticTexts;
   pageName: string;
-  selectedFilterTextDescriptionIds: number[];
   setEditingListItemFeatureId: (value: number | null) => void;
   parentFeatureId: number;
+  filteredListItemsData: StructuredFeatureData;
 };
 
 export const WrappingListItemsContainer = ({
@@ -21,9 +24,9 @@ export const WrappingListItemsContainer = ({
   pageFullDataList,
   staticTexts,
   pageName,
-  selectedFilterTextDescriptionIds,
   setEditingListItemFeatureId,
   parentFeatureId,
+  filteredListItemsData,
 }: Props) => {
   const addText = PAGE_NAMES_TO_LIST_ITEMS_DATA[pageName].addText;
   const addListItemText = staticTexts[addText]?.toString() ?? "N/A";
@@ -55,12 +58,11 @@ export const WrappingListItemsContainer = ({
       <WrappingListItems
         pageFullDataList={pageFullDataList}
         setEditingItemFeatureId={setEditingListItemFeatureId}
-        parentFeatureId={parentFeatureId}
-        selectedFilterTextDescriptionIds={selectedFilterTextDescriptionIds}
         editTextButton={editListItemText}
         isEdit={isEdit}
         staticTexts={staticTexts}
         pageName={pageName}
+        filteredListItemsData={filteredListItemsData}
       />
     </ItemGroupContainerCommon>
   );

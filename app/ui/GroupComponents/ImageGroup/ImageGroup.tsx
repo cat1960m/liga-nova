@@ -45,6 +45,7 @@ export const ShowImageGroup = ({
       marginTop={0}
       noDelete={noDelete}
       heightValue={isInLayout ? "100%" : undefined}
+      countIndex={null}
     >
       {imageData?.value ? (
         <div

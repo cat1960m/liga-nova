@@ -1,6 +1,6 @@
 "use client";
 
-import { FullData } from "@/app/lib/definitions";
+import { FullData, StructuredFeatureData } from "@/app/lib/definitions";
 import {
   FILTER,
   FILTER_GROUP_SUBTYPE,
@@ -16,7 +16,6 @@ import { StaticTexts } from "@/app/dictionaries/definitions";
 import { ItemGroupContainerCommon } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemGroupContainerCommon/ItemGroupContainerCommon";
 
 export type Props = {
-  pageFullDataList: FullData[];
   onFilterSelectionChanged: (data: {
     filter: FullData;
     value: boolean;
@@ -29,10 +28,10 @@ export type Props = {
   staticTexts: StaticTexts;
   pageName: string;
   setEditingFilterGroupId?: (id: number | null) => void;
+  structuredFilterGroupData: StructuredFeatureData;
 };
 
 export const FilterGroups = ({
-  pageFullDataList,
   onFilterSelectionChanged,
   selectedFilterTextDescriptionIds,
   parentFeatureId,
@@ -41,7 +40,8 @@ export const FilterGroups = ({
   lang,
   staticTexts,
   pageName,
-  setEditingFilterGroupId
+  setEditingFilterGroupId,
+  structuredFilterGroupData,
 }: Props) => {
   const currentWidth = width ?? FILTER_GROUP_DEFAULT_WIDTH;
 
@@ -71,15 +71,14 @@ export const FilterGroups = ({
         style={{ width: isEdit ? currentWidth : currentWidth }}
       >
         <FilterGroupsBody
-          pageFullDataList={pageFullDataList}
           onFilterSelectionChanged={onFilterSelectionChanged}
           selectedFilterTextDescriptionIds={selectedFilterTextDescriptionIds}
-          parentFeatureId={parentFeatureId}
           isEdit={isEdit}
           lang={lang}
           staticTexts={staticTexts}
           pageName={pageName}
           setEditingFilterGroupId={setEditingFilterGroupId}
+          structuredFilterGroupData={structuredFilterGroupData}
         />
       </div>
     </ItemGroupContainerCommon>

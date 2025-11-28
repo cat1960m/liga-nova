@@ -1,16 +1,12 @@
 "use client";
 
-import { FullData } from "@/app/lib/definitions";
-import { getContainerData } from "@/app/lib/utils";
+import { FullData, StructuredFeatureData } from "@/app/lib/definitions";
 import { FilterGroup } from "../FilterGroup/FilterGroup";
 import {
-  FILTER_GROUP_SUBTYPE,
-  GROUP,
   ICON_BUTTON_WIDTH,
   ICON_IN_BUTTON_WIDTH,
   PAGE_NAMES_TO_LIST_ITEMS_DATA,
 } from "@/app/lib/constants";
-import { useMemo } from "react";
 
 import styles from "./filterGroupsBody.module.css";
 import cn from "clsx";
@@ -21,51 +17,29 @@ import { PencilIcon } from "@heroicons/react/24/outline";
 import { DeleteFeatureChangeOrderButtons } from "@/app/ui/CommonComponents/_buttons/DeleteFeatureChangeOrderButtons/DeleteFeatureChangeOrderButtons";
 
 export type Props = {
-  pageFullDataList: FullData[];
   onFilterSelectionChanged: (data: {
     filter: FullData;
     value: boolean;
   }) => void;
   selectedFilterTextDescriptionIds: number[];
-  parentFeatureId: number;
   isEdit: boolean;
   lang: string;
   staticTexts: StaticTexts;
   pageName: string;
   setEditingFilterGroupId?: (id: number | null) => void;
+  structuredFilterGroupData: StructuredFeatureData;
 };
 
 export const FilterGroupsBody = ({
-  pageFullDataList,
   onFilterSelectionChanged,
   selectedFilterTextDescriptionIds,
-  parentFeatureId,
   isEdit,
   lang,
   staticTexts,
   pageName,
   setEditingFilterGroupId,
+  structuredFilterGroupData,
 }: Props) => {
-  const containerFullData = useMemo(
-    () =>
-      parentFeatureId
-        ? getContainerData({
-            pageName: pageName,
-            pageFullData: pageFullDataList,
-            parentFeatureId: parentFeatureId,
-            type: GROUP,
-            subtype: FILTER_GROUP_SUBTYPE,
-          })
-        : null,
-    [pageName, pageFullDataList, parentFeatureId]
-  );
-
-  if (!containerFullData) {
-    return null;
-  }
-
-  const [recordFilterGroupIdToFilerGroupData, filterGroupIds] = containerFullData;
-
   const editText = pageName
     ? PAGE_NAMES_TO_LIST_ITEMS_DATA[pageName].editText
     : null;
@@ -82,7 +56,7 @@ export const FilterGroupsBody = ({
   }) => {
     const id = filterGroupData[0]?.id ?? null;
     return (
-      <div className={styles.buttons} >
+      <div className={styles.buttons}>
         <CommonButton
           onClick={() => setEditingFilterGroupId?.(id)}
           width={ICON_BUTTON_WIDTH}
@@ -102,39 +76,51 @@ export const FilterGroupsBody = ({
 
   return (
     <>
-      {filterGroupIds.map((filterGroupId, index) => {
-        const filterGroupData = recordFilterGroupIdToFilerGroupData[filterGroupId];
-        return (
-          <div key={filterGroupId}>
-            {!!index ? (
-              <div className={cn(styles.divider, { [styles.edit]: isEdit })} />
-            ) : null}
+      {structuredFilterGroupData.sortedChildFeaFeatureIds.map(
+        (filterGroupId, index) => {
+          const filterGroupFullDataList =
+            structuredFilterGroupData.childFeatureIdToFullDataList[
+              filterGroupId
+            ];
+          return (
+            <div key={filterGroupId}>
+              {!!index ? (
+                <div
+                  className={cn(styles.divider, { [styles.edit]: isEdit })}
+                />
+              ) : null}
 
-            <ItemGroupContainerCommon
-              showGroupButtons={isEdit}
-              getEditButtons={() =>
-                getEditButtons({
-                  countIndex: { count: filterGroupIds.length, index },
-                  filterGroupData,
-                })
-              }
-              marginTop={0}
-              heightValue="100%"
-            >
-              <FilterGroup
-                filterGroupData={filterGroupData}
-                onFilterSelectionChanged={onFilterSelectionChanged}
-                selectedFilterTextDescriptionIds={
-                  selectedFilterTextDescriptionIds
+              <ItemGroupContainerCommon
+                showGroupButtons={isEdit}
+                getEditButtons={() =>
+                  getEditButtons({
+                    countIndex: {
+                      count:
+                        structuredFilterGroupData.sortedChildFeaFeatureIds
+                          .length,
+                      index,
+                    },
+                    filterGroupData: filterGroupFullDataList,
+                  })
                 }
-                editMode={isEdit ? "groupOnly" : "no"}
-                lang={lang}
-                staticTexts={staticTexts}
-              />
-            </ItemGroupContainerCommon>
-          </div>
-        );
-      })}
+                marginTop={0}
+                heightValue="100%"
+              >
+                <FilterGroup
+                  filterGroupData={filterGroupFullDataList}
+                  onFilterSelectionChanged={onFilterSelectionChanged}
+                  selectedFilterTextDescriptionIds={
+                    selectedFilterTextDescriptionIds
+                  }
+                  editMode={isEdit ? "groupOnly" : "no"}
+                  lang={lang}
+                  staticTexts={staticTexts}
+                />
+              </ItemGroupContainerCommon>
+            </div>
+          );
+        }
+      )}
     </>
   );
 };

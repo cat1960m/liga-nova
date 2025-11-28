@@ -66,6 +66,7 @@ export const useChangeEventData = () => {
     textType: string;
     tabs: TabType[];
     price?: number | null;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     promises: Promise<any>[];
   }) => {
     const newTextDescriptionId = await addTextDescriptionData({
@@ -117,30 +118,36 @@ export const useChangeEventData = () => {
       if (!calendarEventsGroupFeatureId) {
         return;
       }
-
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const promises: Promise<any>[] = [];
 
-      promises.push(saveTabs({
-        featureId: calendarEventsGroupFeatureId,
-        textType: CALENDAR_EVENTS_TITLE,
-        tabs: title ?? [],
-        price,
-        promises,
-      }));
+      promises.push(
+        saveTabs({
+          featureId: calendarEventsGroupFeatureId,
+          textType: CALENDAR_EVENTS_TITLE,
+          tabs: title ?? [],
+          price,
+          promises,
+        })
+      );
 
-      promises.push(saveTabs({
-        featureId: calendarEventsGroupFeatureId,
-        textType: CALENDAR_EVENTS_TRAINER,
-        tabs: trainer ?? [],
-        promises,
-      }));
+      promises.push(
+        saveTabs({
+          featureId: calendarEventsGroupFeatureId,
+          textType: CALENDAR_EVENTS_TRAINER,
+          tabs: trainer ?? [],
+          promises,
+        })
+      );
 
-      promises.push(saveTabs({
-        featureId: calendarEventsGroupFeatureId,
-        textType: CALENDAR_EVENTS_DESCRIPTION,
-        tabs: description ?? [],
-        promises,
-      }));
+      promises.push(
+        saveTabs({
+          featureId: calendarEventsGroupFeatureId,
+          textType: CALENDAR_EVENTS_DESCRIPTION,
+          tabs: description ?? [],
+          promises,
+        })
+      );
 
       promises.push(
         addTextDescriptionData({
@@ -186,6 +193,7 @@ export const useChangeEventData = () => {
     eventFeatureId,
   }: UpdateArgs) => {
     try {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const promises: Promise<any>[] = [];
 
       promises.push(
@@ -256,6 +264,7 @@ export const useChangeEventData = () => {
   }: {
     tabs: TabType[];
     textDescriptionId: number;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     promises: Promise<any>[];
   }) => {
     const textContents = await getTextContentsData({

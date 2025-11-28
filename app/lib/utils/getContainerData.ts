@@ -1,5 +1,5 @@
 import { DEFAULT_TEXT } from "../constants";
-import { FullData, TextContent } from "../definitions";
+import {  TextContent } from "../definitions";
 
 export const getLocalizedText = ({
   textContents,
@@ -15,7 +15,7 @@ export const getLocalizedText = ({
   return text;
 };
 
-export const getContainerData = ({
+/* export const getContainerData = ({
   pageFullData,
   pageName,
   parentFeatureId,
@@ -42,12 +42,12 @@ export const getContainerData = ({
     }
 
     const filterIdsList = filterIds.split(",").map((id) => parseInt(id));
-    /* const isBadFilterFound = filterIdsList.some((filterId) =>
-      !selectedFilterTextDescriptionIds.includes(filterId)
-    ); */
+    // const isBadFilterFound = filterIdsList.some(
+    //   (filterId) => !selectedFilterTextDescriptionIds.includes(filterId)
+    // ); 
 
-    const isBadFilterFound = selectedFilterTextDescriptionIds.some((filterId) =>
-      !filterIdsList.includes(filterId)
+    const isBadFilterFound = selectedFilterTextDescriptionIds.some(
+      (filterId) => !filterIdsList.includes(filterId)
     );
 
     return !isBadFilterFound;
@@ -81,3 +81,4 @@ export const getContainerData = ({
 
   return [data, itemIds];
 };
+ */

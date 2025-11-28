@@ -1,20 +1,21 @@
 "use client";
 
 import { FullData, MainParams } from "@/app/lib/definitions";
-import { useMemo, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { ScrollContainer } from "@/app/ui/CommonComponents/ScrollContainer/ScrollContainer";
 import {
   TEXT_LIST_BODY,
   TEXT_LIST_GROUP_ITEM,
   TEXT_LIST_NAME,
 } from "@/app/lib/constants";
-import { getContainerData, getIsEditNoDelete } from "@/app/lib/utils";
+import { getIsEditNoDelete } from "@/app/lib/utils";
 import { ShowBody } from "./ShowBody/ShowBody";
 import { ShowName } from "./ShowName/ShowName";
 import { ItemContainerAddChildFeatureDeleteFeature } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerAddChildFeatureDeleteFeature";
 import { ItemContainerDeleteFeature } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerDeleteFeature";
 
 import styles from "./textListGroup.module.css";
+import { useContainerData } from "../../hooks/useContainerData";
 
 export type Props = {
   groupData: FullData[];
@@ -35,24 +36,16 @@ export const TextListGroup = ({
   const { staticTexts, lang } = params;
   const { isEdit, noDelete } = getIsEditNoDelete(params);
 
-  const [textListItemsData, textListItemIds]: [
-    Record<string, FullData[]>,
-    string[]
-  ] = useMemo(() => {
-    if (!groupFeatureId) {
-      return [{}, []];
-    }
-    return getContainerData({
-      pageName: params.pageName,
-      pageFullData: pageFullDataList,
-      parentFeatureId: groupFeatureId,
-    });
-  }, [pageFullDataList, groupFeatureId, params.pageName]);
+  const structuredTextListItemsData = useContainerData({
+    pageName: params.pageName,
+    pageFullData: pageFullDataList,
+    parentFeatureId: groupFeatureId,
+  });
 
   if (!groupFeatureId) {
     return null;
   }
-  const ids = textListItemIds;
+  const ids = structuredTextListItemsData.sortedChildFeaFeatureIds;
 
   const getItem = ({
     id,
@@ -84,7 +77,8 @@ export const TextListGroup = ({
           : index === firstVisibleIndex;
     }
 
-    const childFeatureData = textListItemsData[id];
+    const childFeatureData =
+      structuredTextListItemsData.childFeatureIdToFullDataList[id];
     const textName = childFeatureData.find(
       (item) => item.text_type === TEXT_LIST_NAME
     );
@@ -106,7 +100,7 @@ export const TextListGroup = ({
           isChangeOrderHorizontal={true}
           onDeleteFinished={handleDeleteFinished}
           marginTop={0}
-          countIndex={{count: ids.length, index}}
+          countIndex={{ count: ids.length, index }}
         >
           <div className={styles.item}>
             {textName ? (

@@ -43,6 +43,7 @@
     "count": "Count",
     "year": "Year",
     "month": "Month",
+    "months": "Months",
     "weekDay": "Week day",
     "day": "Day",
     "sunday": "sunday",
@@ -111,7 +112,7 @@
     "freeTraining": "Free training",
     "byAgreement": "By agreement",
     "byWeekDay": "By week day",
-    "byMonthDay": "By month day",
+    "byDate": "By date",
     "saveNewEvent": "save as new event",
     "editFilterGroup": "Edit filter group",
     "selectSaveFilters":"Select and save filters to show new data on this page",
@@ -119,7 +120,8 @@
     "addCalendarEvent": "Add Calendar Event",
     "editCalendarEvent": "Edit Calendar Event",
     "wantDelete": "Do you want to delete this item ?",
-    "addNewFilter": "Add New Filter"
-
+    "addNewFilter": "Add New Filter",
+    "addChildFeatureToContainer": "Add child feature to container",
+    "select": "Select"
   }
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { FullData } from "@/app/lib/definitions";
+import { FullData, StructuredFeatureData } from "@/app/lib/definitions";
 import { ShowEvent } from "../ShowEvent/ShowEvent";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { useMemo } from "react";
@@ -11,8 +11,7 @@ import styles from "./showEvents.module.css";
 import cn from "clsx";
 
 export type Props = {
-  eventsIds: string[];
-  eventsData: Record<string, FullData[]>;
+  calendarData: StructuredFeatureData;
   staticTexts: StaticTexts;
   isEdit: boolean;
   setEditEventId: (id: number) => void;
@@ -22,8 +21,7 @@ export type Props = {
 };
 
 export const ShowEvents = ({
-  eventsIds,
-  eventsData,
+  calendarData,
   staticTexts,
   isEdit,
   setEditEventId,
@@ -70,6 +68,9 @@ export const ShowEvents = ({
 
     return getDates();
   }, [startDate, staticTexts, countDates]);
+
+  const eventsIds = calendarData.sortedChildFeaFeatureIds;
+  const eventsData = calendarData.childFeatureIdToFullDataList;
 
   return (
     <div className={styles.container}>

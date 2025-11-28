@@ -1,43 +1,37 @@
 "use client";
 
-import { FullData } from "@/app/lib/definitions";
+import { FullData, StructuredFeatureData } from "@/app/lib/definitions";
 import { useState } from "react";
 import { CommonButton } from "@/app/ui/CommonComponents/_buttons/CommonButton";
 import { AdjustmentsHorizontalIcon } from "@heroicons/react/24/solid";
 import { FilterGroupsBody } from "../FilterGroupsBody/FilterGroupsBody";
-import {
-  GRAY_BACKGROUND_COLOR,
-} from "@/app/lib/constants";
+import { GRAY_BACKGROUND_COLOR } from "@/app/lib/constants";
 
 import styles from "./filterGroupsMobile.module.css";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 
-export type Props = {
-  pageFullDataList: FullData[];
+export type FilterGroupsMobileProps = {
   onFilterSelectionChanged: (data: {
     filter: FullData;
     value: boolean;
   }) => void;
   selectedFilterTextDescriptionIds: number[];
-  parentFeatureId: number;
   isEdit: boolean;
   lang: string;
   staticTexts: StaticTexts;
   pageName: string;
-  setEditingFilterGroupId: (id: number | null) => void;
+  structuredFilterGroupData: StructuredFeatureData;
 };
 
 export const FilterGroupsMobile = ({
-  pageFullDataList,
   onFilterSelectionChanged,
   selectedFilterTextDescriptionIds,
-  parentFeatureId,
   isEdit,
   lang,
   staticTexts,
   pageName,
-  setEditingFilterGroupId
-}: Props) => {
+  structuredFilterGroupData,
+}: FilterGroupsMobileProps) => {
   const [isFiltersShown, setIsFiltersShown] = useState(false);
 
   const handleFiltersShownClick = () => {
@@ -75,15 +69,13 @@ export const FilterGroupsMobile = ({
           <div className={styles.title_container}>{filtersTitle}</div>
 
           <FilterGroupsBody
-            pageFullDataList={pageFullDataList}
             onFilterSelectionChanged={onFilterSelectionChanged}
             selectedFilterTextDescriptionIds={selectedFilterTextDescriptionIds}
-            parentFeatureId={parentFeatureId}
             isEdit={isEdit}
             lang={lang}
             staticTexts={staticTexts}
             pageName={pageName}
-            setEditingFilterGroupId={setEditingFilterGroupId}
+            structuredFilterGroupData={structuredFilterGroupData}
           />
 
           <div className={styles.button}>

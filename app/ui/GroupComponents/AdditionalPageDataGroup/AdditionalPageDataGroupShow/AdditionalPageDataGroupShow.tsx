@@ -1,56 +1,38 @@
-import { LIST_ITEM } from "@/app/lib/constants";
-import { FullData } from "@/app/lib/definitions";
-import { getContainerData, getFilterIds } from "@/app/lib/utils";
-import { useMemo, useRef } from "react";
+import { FILTER_GROUP_SUBTYPE, GROUP, LIST_ITEM } from "@/app/lib/constants";
+import { FullData, StructuredFeatureData } from "@/app/lib/definitions";
+import { getFilterIds } from "@/app/lib/utils";
+import { useRef } from "react";
 import { ListItem } from "../../FilterGroupsListItemsGroup/ListItem/ListItem";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 
 import styles from "./additionalPageDataGroupShow.module.css";
 import { ScrollContainer } from "@/app/ui/CommonComponents/ScrollContainer/ScrollContainer";
+import { useContainerData } from "@/app/ui/hooks/useContainerData";
 
 export type Props = {
-  currentData: FullData;
   pageFullDataList: FullData[];
   pageName: string;
   staticTexts: StaticTexts;
+  structuredListItemsData: StructuredFeatureData;
 };
 
 export const AdditionalPageDataGroupShow = ({
-  currentData,
   pageFullDataList,
   pageName,
   staticTexts,
+  structuredListItemsData
 }: Props) => {
   const ref = useRef<HTMLDivElement>(null);
-  const pageFeatureId = currentData.id;
-  const filterTextDescriptionIds = getFilterIds(currentData.filter_ids);
 
-  const containerFullData = useMemo(
-    () =>
-      pageFeatureId
-        ? getContainerData({
-            pageName,
-            pageFullData: pageFullDataList,
-            parentFeatureId: null,
-            type: LIST_ITEM,
-            subtype: LIST_ITEM,
-            selectedFilterTextDescriptionIds: filterTextDescriptionIds,
-          })
-        : null,
-    [pageFullDataList, pageFeatureId, filterTextDescriptionIds, pageName]
-  );
-
-  if (!containerFullData) {
+  if (!structuredListItemsData.sortedChildFeaFeatureIds.length) {
     return null;
   }
-
-  const [data] = containerFullData;
 
   const getItem = ({ id }: { id: string }) => {
     return (
       <div className={styles.item}>
         <ListItem
-          currentData={data[id]}
+          currentData={structuredListItemsData.childFeatureIdToFullDataList[id]}
           pageName={pageName}
           pageFullDataList={pageFullDataList}
           staticTexts={staticTexts}
@@ -62,7 +44,7 @@ export const AdditionalPageDataGroupShow = ({
   return (
     <div className={styles.container} ref={ref}>
       <ScrollContainer
-        ids={containerFullData[1]}
+        ids={structuredListItemsData.sortedChildFeaFeatureIds}
         getItem={getItem}
         refParent={ref}
       />

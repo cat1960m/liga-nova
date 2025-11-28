@@ -1,16 +1,10 @@
 "use client";
 
-import { FullData } from "@/app/lib/definitions";
+import { FullData, StructuredFeatureData } from "@/app/lib/definitions";
 import { CommonButton } from "@/app/ui/CommonComponents/_buttons/CommonButton";
-import { getContainerData } from "@/app/lib/utils";
-import { useMemo } from "react";
 import { DeleteFeatureChangeOrderButtons } from "@/app/ui/CommonComponents/_buttons/DeleteFeatureChangeOrderButtons/DeleteFeatureChangeOrderButtons";
 import { ListItem } from "../ListItem/ListItem";
-import {
-  ICON_BUTTON_WIDTH,
-  ICON_IN_BUTTON_WIDTH,
-  LIST_ITEM,
-} from "@/app/lib/constants";
+import { ICON_BUTTON_WIDTH, ICON_IN_BUTTON_WIDTH } from "@/app/lib/constants";
 
 import styles from "./wrappingListItems.module.css";
 import { PencilIcon } from "@heroicons/react/24/outline";
@@ -20,47 +14,25 @@ import { CountIndex, StaticTexts } from "@/app/dictionaries/definitions";
 export type Props = {
   pageFullDataList: FullData[];
   setEditingItemFeatureId: (id: number | null) => void;
-  parentFeatureId: number;
-  selectedFilterTextDescriptionIds: number[];
   editTextButton: string;
   isEdit: boolean;
   staticTexts: StaticTexts;
   pageName: string;
+  filteredListItemsData: StructuredFeatureData;
 };
 
 export const WrappingListItems = ({
   pageFullDataList,
   setEditingItemFeatureId,
-  parentFeatureId,
-  selectedFilterTextDescriptionIds,
   editTextButton,
   isEdit,
   staticTexts,
   pageName,
+  filteredListItemsData,
 }: Props) => {
-  const containerFullData = useMemo(
-    () =>
-      getContainerData({
-        pageName,
-        pageFullData: pageFullDataList,
-        parentFeatureId,
-        type: LIST_ITEM,
-        subtype: LIST_ITEM,
-        selectedFilterTextDescriptionIds,
-      }),
-    [
-      pageFullDataList,
-      parentFeatureId,
-      selectedFilterTextDescriptionIds,
-      pageName,
-    ]
-  );
-
-  if (!containerFullData) {
+  if (!filteredListItemsData.sortedChildFeaFeatureIds.length) {
     return null;
   }
-
-  const [data, itemIds] = containerFullData;
 
   const getEditButtons = ({
     currentData,
@@ -92,23 +64,26 @@ export const WrappingListItems = ({
   return (
     <div>
       <div className={styles.body}>
-        {itemIds.map((itemId, index) => {
-          const currentData = data[itemId];
+        {filteredListItemsData.sortedChildFeaFeatureIds.map((itemId, index) => {
+          const listItemData = filteredListItemsData.childFeatureIdToFullDataList[itemId];
           return (
             <div key={itemId} className={styles.listItem}>
               <ItemGroupContainerCommon
                 showGroupButtons={isEdit}
                 getEditButtons={() =>
                   getEditButtons({
-                    currentData,
-                    countIndex: { count: itemIds.length, index },
+                    currentData: listItemData,
+                    countIndex: {
+                      count: filteredListItemsData.sortedChildFeaFeatureIds.length,
+                      index,
+                    },
                   })
                 }
                 marginTop={0}
                 heightValue="100%"
               >
                 <ListItem
-                  currentData={currentData}
+                  currentData={listItemData}
                   pageName={pageName}
                   pageFullDataList={pageFullDataList}
                   staticTexts={staticTexts}

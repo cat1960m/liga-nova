@@ -1,7 +1,6 @@
 "use server";
 
 import { signIn } from "@/app/auth";
-import axios from "axios";
 import { AuthError } from "next-auth";
 
 
@@ -9,7 +8,7 @@ export async function authenticate(
   prevState: string | undefined,
   formData: FormData
 ) {
-  const type = process.env.DATABASE_MODE;
+  //const type = process.env.DATABASE_MODE;
   try {
     await signIn("credentials", formData);
   } catch (error) {

@@ -186,12 +186,11 @@ export type PageParams = {
   lang: string;
 };
 
-
 export type MainParams = {
   pageName: string;
   lang: string;
   staticTexts: StaticTexts;
-  editMode: string ;
+  editMode: string;
 };
 
 export type FullData = {
@@ -223,3 +222,13 @@ export type GroupDefinition = {
 };
 
 export type FilterGroupEditMode = "no" | "groupItems" | "groupOnly";
+
+export type StructuredFeatureData = {
+  childFeatureIdToFullDataList: Record<string,FullData[]>;
+  sortedChildFeaFeatureIds: string[];
+}
+
+export type SelectedFiltersData = {
+  selectedFilterTextDescriptionIds: number[];
+  filterGroupsData: StructuredFeatureData;
+};

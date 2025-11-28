@@ -71,7 +71,6 @@ import { SelectNewItem } from "../SelectNewItem/SelectNewItem";
 
 export const AddChildFeatureToContainer = ({
   parentFeatureId,
-  text,
   pageFullDataList,
   pageId,
   staticTexts,
@@ -143,10 +142,10 @@ export const AddChildFeatureToContainer = ({
     setOptionsAdditionalPagename([]);
   };
 
-  const handleChange: ChangeEventHandler<HTMLSelectElement> = async (event) => {
+ /*  const handleChange: ChangeEventHandler<HTMLSelectElement> = async (event) => {
     const newValue = event.target.value;
     selectData(newValue);
-  }
+  } */
   const selectData= async (newValue: string) => {
     setSelectedValue(newValue);
 

@@ -9,7 +9,6 @@ import styles from "./filterGroup.module.css";
 import cn from "clsx";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { ItemGroupContainerCommon } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemGroupContainerCommon/ItemGroupContainerCommon";
-import { AddChildFeatureButton } from "@/app/ui/CommonComponents/_buttons/AddChildFeatureButton";
 import { AddTextDescriptionButton } from "@/app/ui/CommonComponents/_buttons/AddTextDescriptionButton";
 
 export type Props = {

@@ -44,6 +44,8 @@ export type StaticTexts = {
   count?: string;
   year?: string;
   month?: string;
+  months?: string;
+
   weekDay?: string;
   day?: string;
   sunday?: string;
@@ -119,7 +121,7 @@ export type StaticTexts = {
   color?: string;
   byAgreement?: string;
   byWeekDay?: string;
-  byMonthDay?: string;
+  byDate?: string;
   saveNewEvent?: string;
   editFilterGroup?: string;
   selectSaveFilters?: string;
@@ -128,18 +130,20 @@ export type StaticTexts = {
   editCalendarEvent?: string;
   wantDelete?: string;
   addNewFilter?: string;
+  addChildFeatureToContainer?: string;
+  select?: string;
 };
 
 export type SearchParams = {
   editMode: string | undefined;
 };
 
-export type CountIndex= {
+export type CountIndex = {
   count: number;
   index: number;
-}
+};
 export type NameValueUrl = {
   name: string;
   value: string;
   url: string;
-}
+};

@@ -1,8 +1,7 @@
 "use client";
 
-import { FullData } from "@/app/lib/definitions";
+import { FullData, StructuredFeatureData } from "@/app/lib/definitions";
 import { useState } from "react";
-import { CommonButton } from "@/app/ui/CommonComponents/_buttons/CommonButton";
 import { LIST_ITEM, PAGE_NAMES_TO_LIST_ITEMS_DATA } from "@/app/lib/constants";
 import { getFilterIds } from "@/app/lib/utils/getFilterIds";
 import { FilterGroups } from "../_filters/FilterGroups";
@@ -25,6 +24,7 @@ export type Props = {
   staticTexts: StaticTexts;
   pageName: string;
   isEdit: boolean;
+  structuredFilterGroupData: StructuredFeatureData;
 };
 
 export const EditListItemFilter = ({
@@ -36,6 +36,7 @@ export const EditListItemFilter = ({
   staticTexts,
   pageName,
   isEdit,
+  structuredFilterGroupData,
 }: Props) => {
   const { changeIsEditButtonDisabled } = useEditContext();
 
@@ -83,14 +84,18 @@ export const EditListItemFilter = ({
   };
 
   const parentFeatureId = groupData[0]?.id;
-  const commonWidth = "32%";
+  //const commonWidth = "32%";
 
   const editText = PAGE_NAMES_TO_LIST_ITEMS_DATA[pageName].editText;
   const editListItemText = staticTexts[editText]?.toString() ?? "N/A";
 
   return (
     <div className={styles.container}>
-      <EditTitleCancel title={editListItemText} onCancel={onCancel} staticTexts={staticTexts}/>
+      <EditTitleCancel
+        title={editListItemText}
+        onCancel={onCancel}
+        staticTexts={staticTexts}
+      />
       <div className={styles.body}>
         <div className={styles.edit_list_item_container}>
           <EditListItem
@@ -113,15 +118,15 @@ export const EditListItemFilter = ({
 
         {parentFeatureId ? (
           <FilterGroups
-            pageFullDataList={pageFullDataList}
             onFilterSelectionChanged={handleFilterSelectionChanged}
             selectedFilterTextDescriptionIds={selectedFilterTextDescriptionIds}
             parentFeatureId={parentFeatureId}
-           // width={commonWidth}
+            // width={commonWidth}
             isEdit={false} // no edit
             lang={lang}
             staticTexts={staticTexts}
             pageName={pageName}
+            structuredFilterGroupData={structuredFilterGroupData}
           />
         ) : null}
       </div>

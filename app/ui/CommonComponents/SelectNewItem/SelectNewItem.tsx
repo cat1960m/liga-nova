@@ -30,7 +30,7 @@ export const SelectNewItem = ({ groupOptions, onSelect }: Props) => {
   return (
     <>
       <CommonButton onClick={handleClick}>
-        Add child feature to container
+       {staticTexts?.addChildFeatureToContainer ?? ""}
       </CommonButton>
 
       {isModalOpen ? (
@@ -45,7 +45,7 @@ export const SelectNewItem = ({ groupOptions, onSelect }: Props) => {
                   <div className={styles.action}>
                     <h3>{item.name}</h3>
                     <CommonButton onClick={() => handleSelect(item.value)}>
-                      Select
+                      {staticTexts?.select ?? ""}
                     </CommonButton>
                   </div>
                 </div>

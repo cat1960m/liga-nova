@@ -2,7 +2,6 @@
 
 import { revalidate } from "@/app/lib/actions_fitness";
 import { usePathname } from "next/navigation";
-import { CommonButton } from "../CommonButton";
 import axios from "axios";
 import { FullData } from "@/app/lib/definitions";
 import {
@@ -18,7 +17,7 @@ import {
   removeFeatureData,
   updateFeatureOrderData,
 } from "@/app/lib/actionsContainer";
-import { CountIndex, StaticTexts } from "@/app/dictionaries/definitions";
+import { CountIndex } from "@/app/dictionaries/definitions";
 import { DeleteButton } from "../DeleteButton/DeleteButton";
 
 type IdOrder = {

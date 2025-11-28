@@ -181,6 +181,7 @@ export const UpdateTextDescriptionDataModalContent = ({
     textContents,
   }: {
     tabs: TabType[];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     promises: Promise<any>[];
     contentType: string;
     textContents: TextContent[];
