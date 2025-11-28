@@ -1,13 +1,10 @@
-import { FILTER_GROUP_SUBTYPE, GROUP, LIST_ITEM } from "@/app/lib/constants";
 import { FullData, StructuredFeatureData } from "@/app/lib/definitions";
-import { getFilterIds } from "@/app/lib/utils";
 import { useRef } from "react";
 import { ListItem } from "../../FilterGroupsListItemsGroup/ListItem/ListItem";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 
 import styles from "./additionalPageDataGroupShow.module.css";
 import { ScrollContainer } from "@/app/ui/CommonComponents/ScrollContainer/ScrollContainer";
-import { useContainerData } from "@/app/ui/hooks/useContainerData";
 
 export type Props = {
   pageFullDataList: FullData[];

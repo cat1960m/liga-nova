@@ -1,6 +1,6 @@
 "use client";
 
-import { FullData, StructuredFeatureData } from "@/app/lib/definitions";
+import { StructuredFeatureData } from "@/app/lib/definitions";
 import { ShowEvent } from "../ShowEvent/ShowEvent";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { useMemo } from "react";
