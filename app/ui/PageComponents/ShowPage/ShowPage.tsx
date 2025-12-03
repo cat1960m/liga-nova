@@ -1,7 +1,7 @@
 import { DrawFeatureContainerEdit } from "../DrawFeatureContainerEdit";
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { getIsEditNoDelete } from "@/app/lib/utils";
-import { PAGE } from "@/app/lib/constants";
+import { ACTION_BANNER_LIST_GROUP_SUBTYPE, PAGE } from "@/app/lib/constants";
 import { notFound } from "next/navigation";
 
 import styles from "./showPage.module.css";
@@ -15,7 +15,7 @@ export type Props = {
   isMain?: boolean;
 };
 
-export const ShowPage = async ({ params, isAuthenticated, isMain }: Props) => {
+export const ShowPage = async ({ params, isAuthenticated }: Props) => {
   const { lang, pageName, staticTexts } = params;
   const { isEdit } = getIsEditNoDelete(params);
 
@@ -38,17 +38,30 @@ export const ShowPage = async ({ params, isAuthenticated, isMain }: Props) => {
 
   const pageId = currentPageData.id;
 
+  const groupsData = pageFullData.filter(
+    (item) => item.subtype === ACTION_BANNER_LIST_GROUP_SUBTYPE
+  );
+  const set = new Set<number>();
+  groupsData.forEach(item => {
+    set.add(item.id);
+  });
+
+  const groupFeatureIds = Array.from(set);
+  console.log("groupFeatureIds", groupFeatureIds)
+
 
   return (
     <div className={styles.container}>
-      {isMain ? (
-        <header>
+      {groupFeatureIds.map((groupFeatureId) => (
+        <header key={groupFeatureId}>
           <ActionBannerListGroup
             params={params}
             pageFullDataList={pageFullData}
+            groupFeatureId={groupFeatureId}
+            groupData={groupsData.filter(item => item.id === groupFeatureId)}
           />
         </header>
-      ) : null}
+      ))}
       <div className={styles.body}>
         {!isAuthenticated || !isEdit ? (
           <DrawFeatureContainer

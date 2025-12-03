@@ -1,40 +1,33 @@
 "use client";
 
-import { FullData } from "@/app/lib/definitions";
 import Image from "next/image";
 
 import styles from "./imageLinks.module.css";
-import { CONTENT_TYPE_TOOLTIP } from "@/app/lib/constants";
 import Link from "next/link";
 import { StaticTexts } from "@/app/dictionaries/definitions";
-import { usePathname } from "next/navigation";
 
 export type Props = {
-  data: FullData;
-  groupData: FullData[];
+  value?: string;
+  text?: string;
   isModalShown: boolean;
   staticTexts: StaticTexts;
+  tooltip: string;
+  link?: string;
 };
 // main page
 export const ImageLink = ({
-  data,
-  groupData,
+  value,
+  text,
   isModalShown,
   staticTexts,
+  tooltip, 
+  link
 }: Props) => {
-  const pathName = usePathname();
-  const tooltip = groupData.find(
-    (item) =>
-      item.text_description_id === data.text_description_id &&
-      item.content_type === CONTENT_TYPE_TOOLTIP
-  );
-
-  const link = `${pathName}/${data.link}`;
   return (
     <div className={styles.item}>
-      {data.value ? (
+      {value ? (
         <Image
-          src={data.value}
+          src={value}
           alt=""
           fill
           quality={100} // Optional, for higher quality
@@ -43,14 +36,16 @@ export const ImageLink = ({
         />
       ) : null}
       {isModalShown ? null : (
-        <div className={styles.text}>{data.text_content ?? ""}</div>
+        <div className={styles.text}>{text ?? ""}</div>
       )}
       <div className={styles.tooltip}>
-        <div
+        <div className={styles.text_tooltip}>
+        <div 
           dangerouslySetInnerHTML={{
-            __html: tooltip?.text_content ?? "",
+            __html: tooltip,
           }}
         />
+        </div>
         {link ? (
           <Link href={link} className={styles.link}>
             {`${staticTexts.details} >`}

@@ -1,26 +1,20 @@
-import { FullData } from "@/app/lib/definitions";
 
 import styles from "./imageActions.module.css";
-import { CONTENT_TYPE_TOOLTIP } from "@/app/lib/constants";
 import Image from "next/image";
 
 export type Props = {
-  data: FullData;
-  groupData: FullData[];
+  value: string;
+  text: string;
+  tooltipText: string;
   isModalShown: boolean;
 };
 
-export const ImageAction = ({ data, groupData, isModalShown }: Props) => {
-  const tooltip = groupData.find(
-    (item) =>
-      item.text_description_id === data.text_description_id &&
-      item.content_type === CONTENT_TYPE_TOOLTIP
-  );
+export const ImageAction = ({ value, text, tooltipText, isModalShown }: Props) => {
   return (
     <div className={styles.item}>
-      {data.value ? (
+      {value ? (
         <Image
-          src={data.value}
+          src={value}
           alt=""
           width={800}
           height={600}
@@ -30,12 +24,12 @@ export const ImageAction = ({ data, groupData, isModalShown }: Props) => {
         <div className={styles.noImage}>No image </div>
       )}
       {isModalShown ? null : (
-        <div className={styles.text}>{data.text_content ?? ""}</div>
+        <div className={styles.text}>{text}</div>
       )}
       <div
         className={styles.tooltip}
         dangerouslySetInnerHTML={{
-          __html: tooltip?.text_content ?? "",
+          __html: tooltipText,
         }}
       />
     </div>

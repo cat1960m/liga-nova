@@ -65,7 +65,14 @@
 
 }
 
+.text_tooltip {
+    max-height: calc(100% - 20px);
+    overflow: hidden;
+}
+
 .link {
+    position: absolute;
+    bottom: 5px;
     text-align: center;
     color: white
 }

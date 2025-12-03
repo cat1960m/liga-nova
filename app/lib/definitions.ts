@@ -224,11 +224,26 @@ export type GroupDefinition = {
 export type FilterGroupEditMode = "no" | "groupItems" | "groupOnly";
 
 export type StructuredFeatureData = {
-  childFeatureIdToFullDataList: Record<string,FullData[]>;
+  childFeatureIdToFullDataList: Record<string, FullData[]>;
   sortedChildFeaFeatureIds: string[];
-}
+};
 
 export type SelectedFiltersData = {
   selectedFilterTextDescriptionIds: number[];
   filterGroupsData: StructuredFeatureData;
+};
+
+export type TranslationTabsHandle = {
+  restore: () => void;
+};
+
+export type PreviewParams = {
+  data: FullData;
+  price: number;
+  value?: string;
+  link?: string;
+  text?: string;
+  tooltip?: string;
+  staticTexts: StaticTexts;
+  baseParams?: Record<string, string>;
 };

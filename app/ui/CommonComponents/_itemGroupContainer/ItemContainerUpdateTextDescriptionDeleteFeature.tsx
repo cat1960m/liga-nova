@@ -1,5 +1,5 @@
 import { UseItems } from "../_upadeModal/UpdateTextDescriptionDataModalContent/UpdateTextDescriptionDataModalContent";
-import { FullData } from "@/app/lib/definitions";
+import { FullData, PreviewParams } from "@/app/lib/definitions";
 import { ItemGroupContainerCommon } from "./ItemGroupContainerCommon/ItemGroupContainerCommon";
 import { CountIndex, StaticTexts } from "@/app/dictionaries/definitions";
 import { UpdateTextDescriptionData } from "../_upadeModal/UpdateTextDescriptionData";
@@ -19,6 +19,8 @@ export type Props = {
   marginTop: number;
   heightValue?: string;
   countIndex: CountIndex | null;
+  preview?: (data: PreviewParams) => React.ReactNode;
+  previewBaseParams?: Record<string,string>;
 };
 
 export const ItemContainerUpdateTextDescriptionDeleteFeature = ({
@@ -33,7 +35,9 @@ export const ItemContainerUpdateTextDescriptionDeleteFeature = ({
   noDelete,
   marginTop,
   heightValue,
-  countIndex
+  countIndex,
+  preview,
+  previewBaseParams
 }: Props) => {
   const getEditButtons = () => {
     return (
@@ -44,6 +48,8 @@ export const ItemContainerUpdateTextDescriptionDeleteFeature = ({
             useItems={useItems}
             staticTexts={staticTexts}
             lang={lang}
+            preview={preview}
+            previewBaseParams={previewBaseParams}
           />
         ) : null}
 

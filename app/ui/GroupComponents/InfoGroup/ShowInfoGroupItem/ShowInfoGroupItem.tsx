@@ -53,7 +53,7 @@ export const ShowInfoGroupItem = ({
           </p>
         ) : (
           <div
-            style={{ wordBreak: "break-word" }}
+            style={{ wordBreak: "break-word", width: "100%" }}
             dangerouslySetInnerHTML={{
               __html: data.text_content ?? "N/A",
             }}

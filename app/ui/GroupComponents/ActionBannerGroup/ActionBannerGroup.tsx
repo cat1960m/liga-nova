@@ -1,6 +1,6 @@
 "use client";
 
-import { FullData, MainParams } from "@/app/lib/definitions";
+import { FullData, MainParams, PreviewParams } from "@/app/lib/definitions";
 import Image from "next/image";
 import styles from "./actionBanner.module.css";
 import {
@@ -10,6 +10,7 @@ import {
 import { ItemContainerUpdateTextDescriptionDeleteFeature } from "../../CommonComponents/_itemGroupContainer/ItemContainerUpdateTextDescriptionDeleteFeature";
 import { CommonButton } from "../../CommonComponents/_buttons/CommonButton";
 import { getIsEditNoDelete } from "@/app/lib/utils";
+import { ReactNode } from "react";
 
 export type Props = {
   groupData: FullData[];
@@ -34,6 +35,33 @@ export const ActionBannerGroup = ({ groupData, params }: Props) => {
     //
   };
 
+  const preview = (data: PreviewParams): ReactNode => {
+    return (
+      <div className={styles.container}>
+        {data.value ? (
+          <Image src={data.value} alt="" fill className={styles.image} />
+        ) : null}
+        {/* changes for mobile needed */}
+        <div className={styles.info_big}>
+          {data.text ?? "N/A"}
+          <CommonButton
+            text={text ?? "N/A"}
+            isAction
+            onClick={() => {}}
+          />
+        </div>
+        <div className={styles.info_small}>
+          {data.text ?? "N/A"}
+          <CommonButton
+            text={text ?? "N/A"}
+            isAction
+            onClick={() => {}}
+          />
+        </div>
+      </div>
+    );
+  };
+
   return (
     <ItemContainerUpdateTextDescriptionDeleteFeature
       currentData={titleImageData}
@@ -49,6 +77,8 @@ export const ActionBannerGroup = ({ groupData, params }: Props) => {
       marginTop={100}
       noDelete={noDelete}
       countIndex={null}
+      preview={preview}
+      previewBaseParams={{ isFullWidth: "full" }}
     >
       <div className={styles.container}>
         {titleImageData?.value ? (

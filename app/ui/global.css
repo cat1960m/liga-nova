@@ -4,6 +4,7 @@
 
 :root {
   --gray-background-color:#f8f8f8;
+  --dark-gray-background-color:#d3d3d3;
   --action-button-background:#2575fc;
   --mobile-width: 768;
   --filter-group-default-width:  238px; 

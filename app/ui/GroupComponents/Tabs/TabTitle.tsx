@@ -1,7 +1,7 @@
 "use client";
 
 import { CountIndex } from "@/app/dictionaries/definitions";
-import { FullData, MainParams } from "@/app/lib/definitions";
+import { FullData, MainParams, PreviewParams } from "@/app/lib/definitions";
 import { getIsEditNoDelete } from "@/app/lib/utils";
 import { CommonButton } from "@/app/ui/CommonComponents/_buttons/CommonButton";
 import { ItemContainerUpdateTextDescriptionDeleteFeature } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerUpdateTextDescriptionDeleteFeature";
@@ -32,6 +32,21 @@ export const TabTitle = ({
   const { staticTexts, lang } = params;
   const { isEdit, noDelete } = getIsEditNoDelete(params);
 
+  const preview = ({text}: PreviewParams): React.ReactNode => {
+    return (
+      <CommonButton
+        text={text ?? "N/A"}
+        onClick={handleTabClick}
+        styleValue={{
+          borderRadius: 10,
+          minWidth: isEdit ? 200 : undefined,
+          color,
+          backgroundColor: backgroundColor,
+        }}
+      />
+    );
+  };
+
   return (
     <ItemContainerUpdateTextDescriptionDeleteFeature
       currentData={tabTitle}
@@ -46,6 +61,7 @@ export const TabTitle = ({
       noDelete={isTabSelected || noDelete}
       marginTop={0}
       countIndex={countIndex}
+      preview={preview}
     >
       <CommonButton
         text={tabTitle.text_content ?? "N/A"}

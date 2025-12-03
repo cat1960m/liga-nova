@@ -1,14 +1,14 @@
 {
   "common": {
-    "save": "зберегти",
+    "save": "Зберегти",
     "edit": "редагувати",
-    "cancel": "відміна",
+    "cancel": "Відміна",
     "updateTranslate": "Редагувати / перекласти ",
-    "translate": "перекласти",
-    "delete": "видалити",
-    "addColumnItem": "додати елемент в колонку",
-    "addGroupItem": "додати елемент в групу",
-    "addGroup": "додати групу",
+    "translate": "Перекласти",
+    "delete": "Видалити",
+    "addColumnItem": "Додати елемент в колонку",
+    "addGroupItem": "Додати елемент в групу",
+    "addGroup": "Додати групу",
     "addSubscription": "Додати абонемент",
     "editSubscription": "Редагувати абонемент",
     "addTrainer": "Додати тренера",
@@ -124,6 +124,7 @@
     "wantDelete": "Підтверджуєте видалення цього елемента ?",
     "addNewFilter": "Додати новий фільтр",
     "addChildFeatureToContainer": "Додати новий елемент у контайнер",
-    "select":"Вибрати"
+    "select":"Вибрати",
+    "restore": "Повернути значення"
   }
 }

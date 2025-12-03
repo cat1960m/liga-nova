@@ -9,7 +9,7 @@ export type Props = {
   direction: "left" | "right";
   isStaticPosition?: boolean;
   marginTop?: number;
-  onScrollItemClick: (direction: "left" | "right") => void;
+  onScrollItemClick?: (direction: "left" | "right") => void;
   color?: string;
 };
 
@@ -21,7 +21,7 @@ export const ScrollIcon = ({
   color = "black",
 }: Props) => {
   const onClick = () => {
-    onScrollItemClick(direction);
+    onScrollItemClick?.(direction);
   };
   const isRight = direction === "right";
 

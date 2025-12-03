@@ -1,10 +1,13 @@
 "use client";
 
-import { FullData } from "@/app/lib/definitions";
+import { FullData, PreviewParams } from "@/app/lib/definitions";
 import { ImageAction } from "./ImageAction";
 import { ActionButton } from "@/app/ui/CommonComponents/_buttons/ActionButton/ActionButton";
 import { ItemContainerUpdateDeleteTextDescription } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerUpdateDeleteTextDescription";
 import { CountIndex, StaticTexts } from "@/app/dictionaries/definitions";
+import { CONTENT_TYPE_TOOLTIP } from "@/app/lib/constants";
+import styles from "./imageActions.module.css";
+
 
 export type Props = {
   groupData: FullData[];
@@ -25,8 +28,32 @@ export const ImageActionGroupItem = ({
   groupItemMain,
   isModalShown,
   changeModalState,
-  countIndex
+  countIndex,
 }: Props) => {
+  const tooltip = groupData.find(
+    (item) =>
+      item.text_description_id === groupItemMain.text_description_id &&
+      item.content_type === CONTENT_TYPE_TOOLTIP
+  );
+  const tooltipText = tooltip?.text_content ?? "";
+
+  const preview = ({value, text, tooltip, staticTexts}: PreviewParams) => {
+    return (
+      <div className={styles.preview}>
+        <ImageAction
+          value={value ?? ""}
+          text={text ?? ""}
+          tooltipText={tooltip ?? "N/A"}
+          isModalShown={false}
+        />
+
+        <ActionButton
+          text={staticTexts.details?.toUpperCase()}
+          onClick={() => {}}
+        />
+      </div>
+    );
+  };
   return (
     <ItemContainerUpdateDeleteTextDescription
       useItems={{
@@ -40,11 +67,13 @@ export const ImageActionGroupItem = ({
       currentData={groupItemMain}
       changeModalState={changeModalState}
       countIndex={countIndex}
+      preview={preview}
     >
       <>
         <ImageAction
-          data={groupItemMain}
-          groupData={groupData}
+          value={groupItemMain.value ?? ""}
+          text={groupItemMain.text_content ?? ""}
+          tooltipText={tooltipText}
           isModalShown={isModalShown}
         />
 

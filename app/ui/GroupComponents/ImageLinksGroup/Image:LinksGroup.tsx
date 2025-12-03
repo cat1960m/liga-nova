@@ -44,6 +44,7 @@ export const ImageLinksGroup = ({ groupData, params }: Props) => {
               staticTexts={staticTexts}
               lang={lang}
               item={item}
+              pageName={params.pageName}
               changeModalState={changeModalState}
               isModalShown={isModalShown}
               countIndex={{count: groupDataMain.length, index}}

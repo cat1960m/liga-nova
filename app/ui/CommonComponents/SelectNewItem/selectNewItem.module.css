@@ -25,3 +25,10 @@
 .image {
     border: 1px solid lightgray;
 }
+
+.button_container {
+    display: flex;
+    justify-content:flex-end;
+    width: 100%;
+    padding: 30px 30px 0 30px;
+}

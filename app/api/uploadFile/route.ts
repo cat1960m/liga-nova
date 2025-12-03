@@ -17,7 +17,11 @@ const s3Client = new S3Client({
 });
 
 export async function POST(req: Request) {
-  const { fileName, fileType, s3Key } = await req.json();
+  const data =  await req.json();
+  console.log("---!! POST server - data", data);
+
+  const { fileName, fileType, s3Key } = data;
+  console.log("POST uploadFile------s3Key", s3Key);
 
   if (s3Key) {
     const params = {

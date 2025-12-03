@@ -3,18 +3,19 @@ import {
   ACTION_BANNER_LIST_SHARE,
   ACTION_BANNER_LIST_TICKET,
 } from "@/app/lib/constants";
-import { FullData } from "@/app/lib/definitions";
+import { FullData, PreviewParams } from "@/app/lib/definitions";
 import Image from "next/image";
 
 import cn from "clsx";
-import { ShowTitle } from "../ShowTitle/ShowTitle";
-import { ShowDescription } from "../ShowDescription/ShowDescription";
+import { WrappingShowTitle } from "../ShowTitle/WrappingShowTitle";
+import { WrappingShowDescription } from "../ShowDescription/WrappingShowDescription";
 
 import styles from "./showItem.module.css";
 import { CommonButton } from "@/app/ui/CommonComponents/_buttons/CommonButton";
 import { ScrollIcon } from "@/app/ui/CommonComponents/ScrollIcon/ScrollIcon";
 import { ItemContainerUpdateTextDescriptionDeleteFeature } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerUpdateTextDescriptionDeleteFeature";
 import { StaticTexts } from "@/app/dictionaries/definitions";
+import { Preview } from "./Preview";
 
 export type Props = {
   actionBannerListItemsData: Record<string, FullData[]>;
@@ -61,6 +62,9 @@ export const ShowItem = ({
 
   const color = image.price === 1 ? "white" : "black";
 
+  const preview = (params: PreviewParams) => (
+    <Preview {...params} />
+  );
   return (
     <ItemContainerUpdateTextDescriptionDeleteFeature
       currentData={image}
@@ -76,6 +80,15 @@ export const ShowItem = ({
       marginTop={0}
       noDelete={false}
       countIndex={null}
+      preview={preview}
+      previewBaseParams={{
+        isFullWidth: "full",
+        share: share?.text_content ?? "",
+        ticket: ticket?.text_content ?? "",
+        description: description?.text_content ?? "",
+        ids: ids.join(","),
+        id: id,
+      }}
     >
       <div className={styles.main}>
         <div className={styles.container}>
@@ -96,7 +109,7 @@ export const ShowItem = ({
           >
             <div className={styles.title_container}>
               {share ? (
-                <ShowTitle
+                <WrappingShowTitle
                   staticTexts={staticTexts}
                   isEdit={isEdit}
                   lang={lang}
@@ -107,7 +120,7 @@ export const ShowItem = ({
               ) : null}
 
               {ticket ? (
-                <ShowTitle
+                <WrappingShowTitle
                   staticTexts={staticTexts}
                   isEdit={isEdit}
                   lang={lang}
@@ -119,7 +132,7 @@ export const ShowItem = ({
             </div>
 
             {description ? (
-              <ShowDescription
+              <WrappingShowDescription
                 isEdit={isEdit}
                 lang={lang}
                 staticTexts={staticTexts}

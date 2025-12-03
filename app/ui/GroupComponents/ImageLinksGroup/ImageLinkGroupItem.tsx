@@ -1,9 +1,11 @@
 "use client";
 
-import { FullData } from "@/app/lib/definitions";
+import { FullData, PreviewParams } from "@/app/lib/definitions";
 import { ImageLink } from "./ImageLink";
 import { ItemContainerUpdateDeleteTextDescription } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerUpdateDeleteTextDescription";
 import { CountIndex, StaticTexts } from "@/app/dictionaries/definitions";
+import { usePathname } from "next/navigation";
+import { CONTENT_TYPE_TOOLTIP, HOME } from "@/app/lib/constants";
 
 export type Props = {
   groupData: FullData[];
@@ -15,6 +17,7 @@ export type Props = {
   changeModalState?: (state: boolean) => void;
   isModalShown: boolean;
   countIndex: CountIndex;
+  pageName: string;
 };
 // main page
 export const ImageLinkGroupItem = ({
@@ -25,8 +28,33 @@ export const ImageLinkGroupItem = ({
   item,
   changeModalState,
   isModalShown,
-  countIndex
+  countIndex,
+  pageName
 }: Props) => {
+  const fullPathName= usePathname();
+  const pathName = pageName !== HOME 
+  ? fullPathName.substring(0, fullPathName.length - pageName.length - (pageName.length ? 1: 0))
+  : fullPathName;
+  const tooltip = groupData.find(
+    (item) =>
+      item.text_description_id === item.text_description_id &&
+      item.content_type === CONTENT_TYPE_TOOLTIP
+  )?.text_content;
+
+  const link = `${pathName}/${item.link}`;
+
+  const preview = ({value, text, tooltip}: PreviewParams) => {
+    return (
+      <ImageLink
+        value={value}
+        text={text}
+        isModalShown={false}
+        staticTexts={staticTexts}
+        tooltip={tooltip ?? "N/A"}
+      />
+    );
+  };
+
   return (
     <ItemContainerUpdateDeleteTextDescription
       s3Key={item.value}
@@ -42,12 +70,15 @@ export const ImageLinkGroupItem = ({
       currentData={item}
       changeModalState={changeModalState}
       countIndex={countIndex}
+      preview={preview}
     >
       <ImageLink
-        data={item}
-        groupData={groupData}
+        value={item.value}
+        text={item.text_content}
         isModalShown={isModalShown}
         staticTexts={staticTexts}
+        tooltip={tooltip ?? ""}
+        link={link}
       />
     </ItemContainerUpdateDeleteTextDescription>
   );

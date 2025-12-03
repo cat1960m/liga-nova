@@ -36,69 +36,81 @@ export const LigaGroup = ({ groupData, params }: Props) => {
   const { isEdit, noDelete } = getIsEditNoDelete(params);
 
   return (
-    <ItemContainerAddTextDescriptionDeleteFeature
-      deleteButtonText={staticTexts.delete ?? "N/A"}
-      featureData={groupData}
-      addButtonText={staticTexts.addGroupItem ?? "N/A"}
-      textDescriptionType={LIGA_SERVICE}
-      isEdit={isEdit}
-      isChangeOrderHorizontal={false}
-      marginTop={20}
-      noDelete={noDelete}
-    >
-      <div className={styles.container}>
+    <div className={styles.container}>
+      <LigaGroupItem
+        isEdit={isEdit}
+        staticTexts={staticTexts}
+        lang={lang}
+        data={dataTitle}
+        countIndex={null}
+      />
+      <div className={styles.group}>
         <LigaGroupItem
           isEdit={isEdit}
           staticTexts={staticTexts}
           lang={lang}
-          data={dataTitle}
+          data={dataAddress}
           countIndex={null}
         />
-        <div className={styles.group}>
-          <LigaGroupItem
-            isEdit={isEdit}
-            staticTexts={staticTexts}
-            lang={lang}
-            data={dataAddress}
-            countIndex={null}
-          />
 
-          <LigaGroupItem
-            isEdit={isEdit}
-            staticTexts={staticTexts}
-            lang={lang}
-            data={dataTelephone}
-            countIndex={null}
-          />
-        </div>
+        <LigaGroupItem
+          isEdit={isEdit}
+          staticTexts={staticTexts}
+          lang={lang}
+          data={dataTelephone}
+          countIndex={null}
+        />
+      </div>
+      <ItemContainerAddTextDescriptionDeleteFeature
+        deleteButtonText={staticTexts.delete ?? "N/A"}
+        featureData={groupData}
+        addButtonText={staticTexts.addGroupItem ?? "N/A"}
+        textDescriptionType={LIGA_SERVICE}
+        isEdit={isEdit}
+        isChangeOrderHorizontal={false}
+        marginTop={20}
+        noDelete={noDelete}
+      >
+        <>
+          {isEdit
+            ? dataServiceList.map((item, index) => {
+                return (
+                  <div key={item.text_content_id ?? "" + "_" + index}>
+                    <LigaGroupItem
+                      isEdit={isEdit}
+                      staticTexts={staticTexts}
+                      lang={lang}
+                      data={item}
+                      countIndex={{ count: dataServiceList.length, index }}
+                    />
+                  </div>
+                );
+              })
+            : null}
 
-        {isEdit
-          ? dataServiceList.map((item, index) => {
-              return (
-                <div key={item.text_content_id ?? "" + "_" + index}>
-                  <LigaGroupItem
-                    isEdit={isEdit}
-                    staticTexts={staticTexts}
-                    lang={lang}
-                    data={item}
-                    countIndex={{count: dataServiceList.length, index}}
-                  />
-                </div>
-              );
-            })
-          : null}
-
-        {!isEdit ? (
-          <div className={styles.list}>
-            {dataServiceList.map((item, index) => {
-              const countIndex: CountIndex={count: dataServiceList.length, index}
-              return (
-                <div
-                  key={item.text_content_id ?? "" + "_" + index}
-                  className={styles.item}
-                >
-                  {item.link ? (
-                    <Link href={`/${params.lang}/${item.link}`}>
+          {!isEdit ? (
+            <div className={styles.list}>
+              {dataServiceList.map((item, index) => {
+                const countIndex: CountIndex = {
+                  count: dataServiceList.length,
+                  index,
+                };
+                return (
+                  <div
+                    key={item.text_content_id ?? "" + "_" + index}
+                    className={styles.item}
+                  >
+                    {item.link ? (
+                      <Link href={`/${params.lang}/${item.link}`}>
+                        <LigaGroupItem
+                          isEdit={isEdit}
+                          staticTexts={staticTexts}
+                          lang={lang}
+                          data={item}
+                          countIndex={countIndex}
+                        />
+                      </Link>
+                    ) : (
                       <LigaGroupItem
                         isEdit={isEdit}
                         staticTexts={staticTexts}
@@ -106,22 +118,14 @@ export const LigaGroup = ({ groupData, params }: Props) => {
                         data={item}
                         countIndex={countIndex}
                       />
-                    </Link>
-                  ) : (
-                    <LigaGroupItem
-                      isEdit={isEdit}
-                      staticTexts={staticTexts}
-                      lang={lang}
-                      data={item}
-                      countIndex={countIndex}
-                    />
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        ) : null}
-      </div>
-    </ItemContainerAddTextDescriptionDeleteFeature>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          ) : null}
+        </>
+      </ItemContainerAddTextDescriptionDeleteFeature>
+    </div>
   );
 };

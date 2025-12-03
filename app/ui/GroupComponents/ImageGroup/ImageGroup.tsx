@@ -1,6 +1,6 @@
 "use client";
 
-import { FullData, MainParams } from "@/app/lib/definitions";
+import { FullData, MainParams, PreviewParams } from "@/app/lib/definitions";
 import { IMAGE, LAYOUT_ITEM } from "@/app/lib/constants";
 import { ItemContainerUpdateTextDescriptionDeleteFeature } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerUpdateTextDescriptionDeleteFeature";
 import { getIsEditNoDelete } from "@/app/lib/utils";
@@ -31,6 +31,13 @@ export const ShowImageGroup = ({
   const { staticTexts, lang } = params;
   const { isEdit, noDelete } = getIsEditNoDelete(params);
 
+  const preview = ({value}: PreviewParams) => {
+    if (!value) {
+      return "No file";
+    }
+    return <Image src={value} alt="" width={300} height={200} />;
+  };
+
   return (
     <ItemContainerUpdateTextDescriptionDeleteFeature
       currentData={imageData}
@@ -46,6 +53,7 @@ export const ShowImageGroup = ({
       noDelete={noDelete}
       heightValue={isInLayout ? "100%" : undefined}
       countIndex={null}
+      preview={preview}
     >
       {imageData?.value ? (
         <div

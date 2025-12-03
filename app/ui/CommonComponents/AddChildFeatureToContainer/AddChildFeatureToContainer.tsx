@@ -101,7 +101,7 @@ export const AddChildFeatureToContainer = ({
       data.push({
         value: FILTER_GROUPS_LIST_ITEMS_SUBTYPE,
         name: "Trainers/ Tickets",
-        url: "/images/tickets.png"
+        url: "/images/tickets.png",
       });
     }
 
@@ -113,7 +113,7 @@ export const AddChildFeatureToContainer = ({
       data.push({
         value: ADDITIONAL_PAGE_DATA_GROUP_SUBTYPE,
         name: "Additional data",
-        url: "/images/trainers.png"
+        url: "/images/trainers.png",
       });
     }
 
@@ -142,11 +142,11 @@ export const AddChildFeatureToContainer = ({
     setOptionsAdditionalPagename([]);
   };
 
- /*  const handleChange: ChangeEventHandler<HTMLSelectElement> = async (event) => {
+  /*  const handleChange: ChangeEventHandler<HTMLSelectElement> = async (event) => {
     const newValue = event.target.value;
     selectData(newValue);
   } */
-  const selectData= async (newValue: string) => {
+  const selectData = async (newValue: string) => {
     setSelectedValue(newValue);
 
     if (!parentFeatureId) {
@@ -487,7 +487,7 @@ export const AddChildFeatureToContainer = ({
 
   return (
     <div className={styles.container}>
-     {/*  <select
+      {/*  <select
         value={selectedValue}
         onChange={handleChange}
         className={styles.select}
@@ -501,24 +501,24 @@ export const AddChildFeatureToContainer = ({
           </option>
         ))}
       </select> */}
-       <SelectNewItem groupOptions={groupOptions} onSelect={selectData}/>
+      <SelectNewItem groupOptions={groupOptions} onSelect={selectData} />
 
       {optionsAdditionalPagename.length ? (
         <>
-        <select
-          value={selectedValue}
-          onChange={handleChangeAdditionalPagename}
-          className={styles.select}
-        >
-          <option value="" disabled>
-            {staticTexts.selectPageName}
-          </option>
-          {optionsAdditionalPagename.map((option) => (
-            <option value={option} key={option}>
-              {option}
+          <select
+            value={selectedValue}
+            onChange={handleChangeAdditionalPagename}
+            className={styles.select}
+          >
+            <option value="" disabled>
+              {staticTexts.selectPageName}
             </option>
-          ))}
-        </select>
+            {optionsAdditionalPagename.map((option) => (
+              <option value={option} key={option}>
+                {option}
+              </option>
+            ))}
+          </select>
         </>
       ) : null}
     </div>

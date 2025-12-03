@@ -1,11 +1,20 @@
 "use client";
 
-import { useState, ChangeEventHandler, useEffect, useMemo } from "react";
+import {
+  useState,
+  ChangeEventHandler,
+  useEffect,
+  useMemo,
+  useCallback,
+  useRef,
+} from "react";
 import {
   FullData,
   PageData,
+  PreviewParams,
   TabType,
   TextContent,
+  TranslationTabsHandle,
 } from "@/app/lib/definitions";
 import { TranslationTabs } from "../../TranslationTabs/TranslationTabs";
 import { CommonButton } from "../../_buttons/CommonButton";
@@ -45,6 +54,9 @@ export type Props = {
   lang: string;
   staticTexts: StaticTexts;
   useItems: UseItems;
+  preview?: (params: PreviewParams
+  ) => React.ReactNode;
+  previewBaseParams?: Record<string, string>;
 };
 
 export const UpdateTextDescriptionDataModalContent = ({
@@ -53,6 +65,8 @@ export const UpdateTextDescriptionDataModalContent = ({
   staticTexts,
   lang,
   useItems,
+  preview,
+  previewBaseParams,
 }: Props) => {
   const [textContentsMain, setTextContentsMain] = useState<
     TextContent[] | null
@@ -63,6 +77,9 @@ export const UpdateTextDescriptionDataModalContent = ({
   const [tabsMain, setTabsMain] = useState<TabType[] | null>([]);
   const [tabsTooltip, setTabsTooltip] = useState<TabType[] | null>(null);
   const [isSaveDisabled, setIsSaveDisabled] = useState(true);
+  const [previewImageUrl, setPreviewImageUrl] = useState<string>("");
+  const translateTabsMainRef = useRef<TranslationTabsHandle>(null);
+  const translateTabsTooltipRef = useRef<TranslationTabsHandle>(null);
 
   const pathName = usePathname();
 
@@ -70,7 +87,7 @@ export const UpdateTextDescriptionDataModalContent = ({
 
   const [priceValue, setPriceValue] = useState<number>(currentData.price ?? 0);
   const [icons, setIcons] = useState<FullData[]>([]);
-  const [currentValue, setCurrentValue] = useState<string | undefined>(
+  const [updatedValue, setUpdatedValue] = useState<string | undefined>(
     currentData.value ?? ""
   );
   const [linkValue, setLinkValue] = useState<string>(
@@ -79,43 +96,43 @@ export const UpdateTextDescriptionDataModalContent = ({
   const [pages, setPages] = useState<PageData[] | null>(null);
   const [file, setFile] = useState<File | null>(null);
 
+  const getTextData = useCallback(async () => {
+    const allContents = await getTextContentsData({
+      text_description_id: textDescriptionId,
+    });
+
+    const contentsMain =
+      allContents?.filter(
+        (content) => content.content_type === CONTENT_TYPE_MAIN
+      ) ?? [];
+    setTextContentsMain(contentsMain);
+    setTabsMain(
+      TRANSLATE_LANGUAGES.map((language) => ({
+        langUpperCase: language,
+        value: getLanguageValue({
+          lang: language.toLocaleLowerCase(),
+          textContents: contentsMain,
+        }),
+      }))
+    );
+
+    const contentsTooltips =
+      allContents?.filter(
+        (content) => content.content_type === CONTENT_TYPE_TOOLTIP
+      ) ?? [];
+    setTextContentsTooltips(contentsTooltips);
+    setTabsTooltip(
+      TRANSLATE_LANGUAGES.map((language) => ({
+        langUpperCase: language,
+        value: getLanguageValue({
+          lang: language.toLocaleLowerCase(),
+          textContents: contentsTooltips,
+        }),
+      }))
+    );
+  }, [textDescriptionId]);
+
   useEffect(() => {
-    const getData = async () => {
-      const allContents = await getTextContentsData({
-        text_description_id: textDescriptionId,
-      });
-
-      const contentsMain =
-        allContents?.filter(
-          (content) => content.content_type === CONTENT_TYPE_MAIN
-        ) ?? [];
-      setTextContentsMain(contentsMain);
-      setTabsMain(
-        TRANSLATE_LANGUAGES.map((language) => ({
-          langUpperCase: language,
-          value: getLanguageValue({
-            lang: language.toLocaleLowerCase(),
-            textContents: contentsMain,
-          }),
-        }))
-      );
-
-      const contentsTooltips =
-        allContents?.filter(
-          (content) => content.content_type === CONTENT_TYPE_TOOLTIP
-        ) ?? [];
-      setTextContentsTooltips(contentsTooltips);
-      setTabsTooltip(
-        TRANSLATE_LANGUAGES.map((language) => ({
-          langUpperCase: language,
-          value: getLanguageValue({
-            lang: language.toLocaleLowerCase(),
-            textContents: contentsTooltips,
-          }),
-        }))
-      );
-    };
-
     const getIcons = async () => {
       const pageFullData: FullData[] | null = await getPageData({
         lang: "en",
@@ -131,7 +148,7 @@ export const UpdateTextDescriptionDataModalContent = ({
       setPages(pages1?.map((page) => page) ?? []);
     };
 
-    getData();
+    getTextData();
 
     if (useItems.value === "icons") {
       getIcons();
@@ -140,7 +157,7 @@ export const UpdateTextDescriptionDataModalContent = ({
     if (useItems.link) {
       getPages();
     }
-  }, [lang, textDescriptionId, useItems.value, useItems.link]);
+  }, [lang, textDescriptionId, useItems.value, useItems.link, getTextData]);
 
   const pagesOptions = useMemo(() => {
     const mainOptions =
@@ -159,6 +176,7 @@ export const UpdateTextDescriptionDataModalContent = ({
 
   const handleChange = () => {
     setIsSaveDisabled(false);
+    console.log("---handleChange")
   };
 
   const getLanguageValue = ({
@@ -213,6 +231,20 @@ export const UpdateTextDescriptionDataModalContent = ({
     });
   };
 
+  const handleRestore = async () => {
+     setIsSaveDisabled(true);
+     setFile(null);
+    setPriceValue(currentData.price ?? 0);
+    setUpdatedValue(currentData.value ?? "");
+    setLinkValue(useItems.link ? currentData.link ?? "" : "");
+    setPreviewImageUrl("");
+    await getTextData();
+    translateTabsMainRef.current?.restore();
+    translateTabsTooltipRef.current?.restore();
+    
+   
+  };
+
   const handleSave = async () => {
     setIsSaveDisabled(true);
 
@@ -223,7 +255,7 @@ export const UpdateTextDescriptionDataModalContent = ({
       const path = await UploadFile();
 
       if (useItems.price || useItems.value || useItems.link) {
-        const newValue = path ?? (useItems.value ? currentValue : undefined);
+        const newValue = path ?? (useItems.value ? updatedValue : undefined);
         const price = useItems.price !== undefined ? priceValue : undefined;
         const link = useItems.link ? linkValue : undefined;
 
@@ -272,12 +304,12 @@ export const UpdateTextDescriptionDataModalContent = ({
     setIsSaveDisabled(false);
 
     if (value && useItems.value === "price") {
-      setCurrentValue("");
+      setUpdatedValue("");
     }
   };
 
   const handleValueChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-    setCurrentValue(event.target.value);
+    setUpdatedValue(event.target.value);
     setIsSaveDisabled(false);
   };
 
@@ -294,19 +326,21 @@ export const UpdateTextDescriptionDataModalContent = ({
     if (file) {
       setFile(file);
       setIsSaveDisabled(false);
+      const url = URL.createObjectURL(file);
+      setPreviewImageUrl(url); // store in state
     }
   };
 
   const UploadFile = async () => {
     if (!file) return undefined;
 
-    console.log("%%%%%%%%%%--------$$$$$$ try delete image", currentValue);
+    console.log("%%%%%%%%%%--------$$$$$$ try delete image", updatedValue);
 
     const response = await axios.post("/api/uploadFile", {
       fileName: file.name,
       fileType: file.type,
       file,
-      s3Key: currentValue,
+      s3Key: updatedValue,
     });
 
     const signedUrl = response.data.signedUrl;
@@ -330,133 +364,170 @@ export const UpdateTextDescriptionDataModalContent = ({
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.title}>{staticTexts["updateTranslate"]}</div>
+    <div>
+      <div className={styles.main}>
+        <div className={styles.container} style={{ flexGrow: 2 }}>
+          <div className={styles.title}>{staticTexts["updateTranslate"]}</div>
 
-      {!!useItems.text ? (
-        <TranslationTabs
-          staticTexts={staticTexts}
-          onChange={handleChange}
-          tabs={tabsMain}
-          setTabs={setTabsMain}
-          title="Text"
-          isArea={useItems.text === "area"}
-          isQuill={useItems.text === "quill"}
-        />
-      ) : null}
-
-      {!!useItems.tooltip ? (
-        <TranslationTabs
-          staticTexts={staticTexts}
-          onChange={handleChange}
-          tabs={tabsTooltip}
-          setTabs={setTabsTooltip}
-          title="Tooltip"
-          isArea={useItems.tooltip === "area"}
-          isQuill={useItems.tooltip === "quill"}
-        />
-      ) : null}
-
-      {useItems.price === "price" ? (
-        <div className={styles.editItem}>
-          <div className={styles.editTitle}>{`${staticTexts.price}:`}</div>
-          <input
-            type="number"
-            value={priceValue}
-            onChange={handlePriceChange}
-          ></input>
-          грн
-        </div>
-      ) : null}
-
-      {useItems.price === "color" ? (
-        <div className={styles.colorItem}>
-          <div className={styles.editTitle}>{`${staticTexts.color}:`}</div>
-          <div>
-            {"Black "}
-            <input
-              type="radio"
-              value={"0"}
-              checked={priceValue === 0}
-              onChange={handleColorChange}
+          {!!useItems.text ? (
+            <TranslationTabs
+              staticTexts={staticTexts}
+              onChange={handleChange}
+              tabs={tabsMain}
+              setTabs={setTabsMain}
+              title="Text"
+              isArea={useItems.text === "area"}
+              isQuill={useItems.text === "quill"}
+              ref={translateTabsMainRef}
             />
-          </div>
-          <div>
-            {"White "}
-            <input
-              type="radio"
-              value={"1"}
-              checked={priceValue === 1}
-              onChange={handleColorChange}
+          ) : null}
+
+          {!!useItems.tooltip ? (
+            <TranslationTabs
+              staticTexts={staticTexts}
+              onChange={handleChange}
+              tabs={tabsTooltip}
+              setTabs={setTabsTooltip}
+              title="Tooltip"
+              isArea={useItems.tooltip === "area"}
+              isQuill={useItems.tooltip === "quill"}
+              ref={translateTabsTooltipRef}
             />
-          </div>
-        </div>
-      ) : null}
+          ) : null}
 
-      {useItems.link && !!pages ? (
-        <div className={styles.editItem}>
-          <div className={styles.editTitle}>{`${staticTexts.linkTo}`}</div>
+          {useItems.price === "price" ? (
+            <div className={styles.editItem}>
+              <div className={styles.editTitle}>{`${staticTexts.price}:`}</div>
+              <input
+                type="number"
+                value={priceValue}
+                onChange={handlePriceChange}
+              ></input>
+              грн
+            </div>
+          ) : null}
 
-          <select onChange={handlePageChange} value={linkValue}>
-            {[...pagesOptions]}
-          </select>
-        </div>
-      ) : null}
-
-      {useItems.value === "time" ? (
-        <div className={styles.editItem}>
-          <div className={styles.editTitle}>{`${staticTexts.time}:`}</div>
-          <input
-            type="text"
-            value={currentValue ?? ""}
-            onChange={handleValueChange}
-          />
-        </div>
-      ) : null}
-
-      {useItems.value === "price" ? (
-        <div className={styles.editItem}>
-          <div className={styles.editTitle}>{`${staticTexts.price}:`}</div>
-          <input
-            type="text"
-            value={currentValue ?? ""}
-            onChange={handleValueChange}
-          />
-        </div>
-      ) : null}
-
-      {useItems.value === "image" ? (
-        <div className={styles.editItem}>
-          <div className={styles.editTitle}>{`${"Image"}:`}</div>
-          <input type="file" onChange={handleFileChange} />
-        </div>
-      ) : null}
-
-      {useItems.value === "icons" ? (
-        <div className={styles.iconContainer}>
-          {icons.map((icon) => {
-            return (
-              <div className={styles.icon} key={icon.text_description_id}>
-                <Image
-                  src={icon.value ?? ""}
-                  alt="icon"
-                  width={ICON_SIZE}
-                  height={ICON_SIZE}
-                />
+          {useItems.price === "color" ? (
+            <div className={styles.colorItem}>
+              <div className={styles.editTitle}>{`${staticTexts.color}:`}</div>
+              <div>
+                {"Black "}
                 <input
-                  type="checkbox"
-                  checked={icon.value === currentValue}
-                  onChange={(e) => {
-                    setCurrentValue(e.target.checked ? icon.value : undefined);
-                    setIsSaveDisabled(false);
-                  }}
+                  type="radio"
+                  value={"0"}
+                  checked={priceValue === 0}
+                  onChange={handleColorChange}
                 />
               </div>
-            );
-          })}
-        </div>
-      ) : null}
+              <div>
+                {"White "}
+                <input
+                  type="radio"
+                  value={"1"}
+                  checked={priceValue === 1}
+                  onChange={handleColorChange}
+                />
+              </div>
+            </div>
+          ) : null}
 
+          {useItems.link && !!pages ? (
+            <div className={styles.editItem}>
+              <div className={styles.editTitle}>{`${staticTexts.linkTo}`}</div>
+
+              <select onChange={handlePageChange} value={linkValue}>
+                {[...pagesOptions]}
+              </select>
+            </div>
+          ) : null}
+
+          {useItems.value === "time" ? (
+            <div className={styles.editItem}>
+              <div className={styles.editTitle}>{`${staticTexts.time}:`}</div>
+              <input
+                type="text"
+                value={updatedValue ?? ""}
+                onChange={handleValueChange}
+              />
+            </div>
+          ) : null}
+
+          {useItems.value === "price" ? (
+            <div className={styles.editItem}>
+              <div className={styles.editTitle}>{`${staticTexts.price}:`}</div>
+              <input
+                type="text"
+                value={updatedValue ?? ""}
+                onChange={handleValueChange}
+              />
+            </div>
+          ) : null}
+
+          {useItems.value === "image" ? (
+            <div className={styles.editItem}>
+              <div className={styles.editTitle}>{`${"Image"}:`}</div>
+              <input type="file" onChange={handleFileChange} />
+            </div>
+          ) : null}
+
+          {useItems.value === "icons" ? (
+            <div className={styles.iconContainer}>
+              {icons.map((icon) => {
+                return (
+                  <div className={styles.icon} key={icon.text_description_id}>
+                    <Image
+                      src={icon.value ?? ""}
+                      alt="icon"
+                      width={ICON_SIZE}
+                      height={ICON_SIZE}
+                    />
+                    <input
+                      type="checkbox"
+                      checked={icon.value === updatedValue}
+                      onChange={(e) => {
+                        setUpdatedValue(
+                          e.target.checked ? icon.value : undefined
+                        );
+                        setIsSaveDisabled(false);
+                      }}
+                    />
+                  </div>
+                );
+              })}
+            </div>
+          ) : null}
+        </div>
+        {preview ? (
+          <div
+            className={
+              previewBaseParams?.["isFullWidth"]
+                ? styles.preview_full
+                : styles.preview
+            }
+          >
+            <div className={styles.editTitle}>{"Preview:"}</div>
+            {preview(
+              {
+                data: currentData,
+                price: priceValue,
+                value:
+                  useItems.value === "image"
+                    ? previewImageUrl || updatedValue
+                    : updatedValue,
+                link: linkValue,
+                text: tabsMain.find(
+                  (item) => item.langUpperCase === lang.toLocaleUpperCase()
+                )?.value,
+                tooltip: tabsTooltip.find(
+                  (item) => item.langUpperCase === lang.toLocaleUpperCase()
+                )?.value,
+                staticTexts,
+                baseParams: previewBaseParams
+              }
+            )}
+          </div>
+        ) : null}
+      </div>
       <div className={styles.buttons}>
         <CommonButton
           onClick={() => onClose()}
@@ -466,6 +537,12 @@ export const UpdateTextDescriptionDataModalContent = ({
           onClick={handleSave}
           isDisabled={isSaveDisabled}
           text={staticTexts.save ?? "N/A"}
+        />
+
+        <CommonButton
+          onClick={handleRestore}
+          isDisabled={isSaveDisabled}
+          text={staticTexts.restore ?? "N/A"}
         />
       </div>
     </div>

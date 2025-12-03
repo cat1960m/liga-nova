@@ -142,26 +142,6 @@ export const RemoveFeature = async ({
   }
 };
 
-/* export const RemoveFeatureBySubtype = async ({
-  subtype,
-  pathName,
-}: {
-  subtype: string;
-  pathName?: string;
-}) => {
-  try {
-    await sql`DELETE  FROM features
-               WHERE features.subtype = ${subtype}`;
-    if (pathName) {
-      revalidatePath(pathName);
-    }
-    return true;
-  } catch {
-    // If a database error occurs, return a more specific error.
-    return null;
-  }
-}; */
-
 export const RemoveTextDescription = async ({
   id,
   pathName,
@@ -346,25 +326,6 @@ export const getTextContents = async ({
   }
 };
 
-/* export const getTextDescriptions = async ({
-  featureId,
-  textType,
-}: {
-  featureId: number;
-  textType: string;
-}) => {
-  try {
-    return await sql<TextDescription[]>`SELECT
-               *
-               FROM text_descriptions b
-               WHERE b.feature_id = ${featureId} AND b.text_type =${textType}
-               ORDER BY b.text_description_order`;
-  } catch {
-    // If a database error occurs, return a more specific error.
-    return null;
-  }
-}; */
-
 export const getPageFullData = async ({
   lang,
   pageName,
@@ -400,63 +361,6 @@ export const getPageFullData = async ({
   }
 };
 
-/* export const addFilterTextDescriptionIdsToFeatureId = async ({
-  featureId,
-  textDescriptionIds,
-  pathName,
-}: {
-  featureId: number;
-  textDescriptionIds: number[];
-  pathName: string;
-}) => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const promises: Promise<any>[] = [];
-
-  textDescriptionIds.forEach((textDescriptionId) => {
-    promises.push(
-      sql`INSERT INTO filter_to_feature (text_description_id, feature_id) VALUES(${textDescriptionId}, ${featureId})`
-    );
-  });
-
-  await Promise.all(promises);
-
-  await revalidatePath(pathName);
-};
- */
-//////
-
-/* export const getAllFeatures = async () => {
-  try {
-    return await sql<Feature[]>`SELECT
-               *
-               FROM features  order by id`;
-  } catch {
-    // If a database error occurs, return a more specific error.
-    return null;
-  }
-}; */
-
-/* export const getAllTextDescription = async () => {
-  try {
-    return await sql<TextDescription[]>`SELECT
-               *
-               FROM text_descriptions  order by id`;
-  } catch {
-    // If a database error occurs, return a more specific error.
-    return null;
-  }
-};
-
-export const getAllTextContents = async () => {
-  try {
-    return await sql<TextContent[]>`SELECT
-               *
-               FROM text_contents  order by id`;
-  } catch {
-    // If a database error occurs, return a more specific error.
-    return null;
-  }
-}; */
 
 export const UpdateFeatureOrder = async ({
   id,

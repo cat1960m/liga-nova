@@ -1,6 +1,6 @@
 "use client";
 
-import { FullData } from "@/app/lib/definitions";
+import { FullData, PreviewParams } from "@/app/lib/definitions";
 import { useState } from "react";
 import { CreateModal } from "./CreateModal/CreateModal";
 import { CommonButton } from "../_buttons/CommonButton";
@@ -18,12 +18,16 @@ export const UpdateTextDescriptionData = ({
   staticTexts,
   lang,
   changeModalState,
+  preview,
+  previewBaseParams
 }: {
   currentData: FullData;
   useItems: UseItems;
   lang: string;
   staticTexts: StaticTexts;
   changeModalState?: (state: boolean) => void;
+  preview?: (data: PreviewParams) => React.ReactNode;
+  previewBaseParams?: Record<string,string>;
 }) => {
   const [isEditModalShown, setIsEditModalShown] = useState(false);
 
@@ -55,6 +59,8 @@ export const UpdateTextDescriptionData = ({
             useItems={useItems}
             staticTexts={staticTexts}
             lang={lang}
+            preview={preview}
+            previewBaseParams={previewBaseParams}
           />
         </CreateModal>
       ) : null}

@@ -1,4 +1,6 @@
-import { FullData } from "@/app/lib/definitions";
+"use client";
+
+import { FullData, PreviewParams } from "@/app/lib/definitions";
 import {
   ICON_SIZE,
   LIGA_ADDRESS,
@@ -12,6 +14,7 @@ import { ItemContainerUpdateDeleteTextDescription } from "@/app/ui/CommonCompone
 import styles from "./ligaGroupItem.module.css";
 import { CountIndex, StaticTexts } from "@/app/dictionaries/definitions";
 import Image from "next/image";
+import { Preview } from "./Preview";
 
 export type Props = {
   data?: FullData;
@@ -21,7 +24,13 @@ export type Props = {
   countIndex: CountIndex | null;
 };
 
-export const LigaGroupItem = ({ data, isEdit, staticTexts, lang, countIndex }: Props) => {
+export const LigaGroupItem = ({
+  data,
+  isEdit,
+  staticTexts,
+  lang,
+  countIndex,
+}: Props) => {
   if (!data) {
     return null;
   }
@@ -33,6 +42,10 @@ export const LigaGroupItem = ({ data, isEdit, staticTexts, lang, countIndex }: P
   const isAddress = data.text_type === LIGA_ADDRESS;
 
   const isService = data.text_type === LIGA_SERVICE;
+
+  const preview = (params: PreviewParams) => {
+    return <Preview {...params} />;
+  };
 
   return (
     <ItemContainerUpdateDeleteTextDescription
@@ -48,6 +61,7 @@ export const LigaGroupItem = ({ data, isEdit, staticTexts, lang, countIndex }: P
       lang={lang}
       isChangeOrderHorizontal={false}
       countIndex={countIndex}
+      preview={preview}
     >
       <div className={styles.container}>
         {isTitle ? <div className={styles.divider} /> : null}
@@ -72,7 +86,12 @@ export const LigaGroupItem = ({ data, isEdit, staticTexts, lang, countIndex }: P
               <div className={styles.service}>
                 <div className={styles.icon_text}>
                   {data.value ? (
-                    <Image src={data.value} alt="icon" width={ICON_SIZE} height={ICON_SIZE} />
+                    <Image
+                      src={data.value}
+                      alt="icon"
+                      width={ICON_SIZE}
+                      height={ICON_SIZE}
+                    />
                   ) : null}
                   <div className={styles.text_service}>
                     {data?.text_content ?? "N/A"}

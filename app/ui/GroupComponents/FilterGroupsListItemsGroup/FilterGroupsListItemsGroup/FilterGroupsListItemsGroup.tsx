@@ -40,8 +40,9 @@ export const FilterGroupsListItemsGroup = ({
   const editingListItemFeatureId =
     editingData?.type === "item" ? editingData.id : null;
 
-  const setEditingFilterGroupId = (id: number | null) =>
+  const setEditingFilterGroupId = (id: number | null) => {
     setEditingData(id ? { id, type: "filter" } : null);
+  }
   const editingFilterGroupId =
     editingData?.type === "filter" ? editingData.id : null;
 
@@ -162,6 +163,7 @@ export const FilterGroupsListItemsGroup = ({
               <FilterGroups
                 parentFeatureId={groupDataFeatureId}
                 {...filterGroupsMobileProps}
+                setEditingFilterGroupId={setEditingFilterGroupId}
               />
             </div>
 

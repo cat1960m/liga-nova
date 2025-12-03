@@ -30,12 +30,17 @@ export const SelectNewItem = ({ groupOptions, onSelect }: Props) => {
   return (
     <>
       <CommonButton onClick={handleClick}>
-       {staticTexts?.addChildFeatureToContainer ?? ""}
+        {staticTexts?.addChildFeatureToContainer ?? ""}
       </CommonButton>
 
       {isModalOpen ? (
         <CreateModal onClose={handleClose}>
           <div className={styles.main}>
+            <div className={styles.button_container}>
+              <CommonButton onClick={() => setIsModalOpen(false)}>
+                {staticTexts?.cancel}
+              </CommonButton>
+            </div>
             <div className={styles.container}>
               {groupOptions.map((item, index) => (
                 <div key={index} className={styles.item}>

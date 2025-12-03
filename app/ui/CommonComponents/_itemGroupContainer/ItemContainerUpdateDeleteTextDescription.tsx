@@ -1,6 +1,6 @@
 import { UpdateDeleteTextButtons } from "../_buttons/UpdateDeleteTextButtons/UpdateDeleteTextButtons";
 import { UseItems } from "../_upadeModal/UpdateTextDescriptionDataModalContent/UpdateTextDescriptionDataModalContent";
-import { FullData } from "@/app/lib/definitions";
+import { FullData, PreviewParams } from "@/app/lib/definitions";
 import { ItemGroupContainerCommon } from "./ItemGroupContainerCommon/ItemGroupContainerCommon";
 import { CountIndex, StaticTexts } from "@/app/dictionaries/definitions";
 
@@ -18,6 +18,8 @@ export type Props = {
   isChangeOrder?: boolean;
   isChangeOrderHorizontal?: boolean;
   countIndex: CountIndex | null;
+  preview?: (data: PreviewParams) => React.ReactNode;
+  previewBaseParams?: Record<string,string>;
 };
 
 export const ItemContainerUpdateDeleteTextDescription = ({
@@ -32,7 +34,9 @@ export const ItemContainerUpdateDeleteTextDescription = ({
   changeModalState,
   isChangeOrder = true,
   isChangeOrderHorizontal = true,
-  countIndex
+  countIndex,
+  preview,
+  previewBaseParams,
 }: Props) => {
   const getEditButtons = () => (
     <UpdateDeleteTextButtons
@@ -46,6 +50,8 @@ export const ItemContainerUpdateDeleteTextDescription = ({
       onDeleteFinished={onDeleteFinished}
       changeModalState={changeModalState}
       countIndex={countIndex}
+      preview={preview}
+      previewBaseParams={previewBaseParams}
     />
   );
   return (

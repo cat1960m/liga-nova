@@ -66,4 +66,19 @@ Password: Lika1987_!! (8may 2025)
 
 
 ========
+
 learning next.js : https://nextjs.org/learn/react-foundations
+
+====
+neon DB
+------
+https://console.neon.tech/app/projects/misty-snow-80122951/branches/br-shiny-river-a4e409cq/tables?database=neondb
+
+versel
+-------
+https://vercel.com/cat1960ms-projects/liga-nova-fitness/
+
+markdown editor
+---------------
+pnpm add @toast-ui/react-editor
+

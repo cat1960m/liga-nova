@@ -132,6 +132,7 @@ export type StaticTexts = {
   addNewFilter?: string;
   addChildFeatureToContainer?: string;
   select?: string;
+  restore?: string;
 };
 
 export type SearchParams = {

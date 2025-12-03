@@ -1,5 +1,7 @@
+"use client";
+
 import { SERVICE_ITEM, CONTENT_TYPE_TOOLTIP } from "@/app/lib/constants";
-import { FullData, MainParams } from "@/app/lib/definitions";
+import { FullData, MainParams, PreviewParams } from "@/app/lib/definitions";
 import { ServicesText } from "./ServicesText/ServicesText";
 import { UpdateDeleteTextButtons } from "@/app/ui/CommonComponents/_buttons/UpdateDeleteTextButtons/UpdateDeleteTextButtons";
 import { ItemContainerAddTextDescriptionDeleteFeature } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerAddTextDescriptionDeleteFeature";
@@ -14,9 +16,25 @@ export type Props = {
 };
 
 export const ServicesGroup = ({ groupData, params }: Props) => {
-  const texts = groupData.filter((data) => data.content_type !== CONTENT_TYPE_TOOLTIP);
+  const texts = groupData.filter(
+    (data) => data.content_type !== CONTENT_TYPE_TOOLTIP
+  );
   const { staticTexts, lang } = params;
   const { isEdit, noDelete } = getIsEditNoDelete(params);
+  const preview = ({text, tooltip, value}: PreviewParams) => {
+    return (
+      <div className={styles.text_container}>
+        <div className={styles.preview}>
+          <ServicesText
+            staticTexts={staticTexts}
+            text={text ?? "N/A"}
+            title={tooltip ?? ""}
+            price={value ?? ""}
+          />
+        </div>
+      </div>
+    );
+  };
 
   return (
     <ItemContainerAddTextDescriptionDeleteFeature
@@ -63,7 +81,9 @@ export const ServicesGroup = ({ groupData, params }: Props) => {
                     }}
                     lang={lang}
                     staticTexts={staticTexts}
-                    countIndex={{count: texts.length, index}}
+                    countIndex={{ count: texts.length, index }}
+                    preview={preview}
+                    previewBaseParams={{ isFullWidth: "full" }}
                   />
                 ) : (
                   <div className={styles.register}>{staticTexts.register}</div>

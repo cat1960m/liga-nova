@@ -108,6 +108,7 @@ export const EditListItemFilter = ({
         </div>
 
         <div className={styles.list_item_container}>
+          <div className={styles.title}>Preview: </div>
           <ListItem
             currentData={addEditItemFeatureIdData}
             pageName={pageName}
@@ -117,17 +118,22 @@ export const EditListItemFilter = ({
         </div>
 
         {parentFeatureId ? (
-          <FilterGroups
-            onFilterSelectionChanged={handleFilterSelectionChanged}
-            selectedFilterTextDescriptionIds={selectedFilterTextDescriptionIds}
-            parentFeatureId={parentFeatureId}
-            // width={commonWidth}
-            isEdit={false} // no edit
-            lang={lang}
-            staticTexts={staticTexts}
-            pageName={pageName}
-            structuredFilterGroupData={structuredFilterGroupData}
-          />
+          <div className={styles.filters_container}>
+            <div className={styles.title}>Filters:</div>
+            <FilterGroups
+              onFilterSelectionChanged={handleFilterSelectionChanged}
+              selectedFilterTextDescriptionIds={
+                selectedFilterTextDescriptionIds
+              }
+              parentFeatureId={parentFeatureId}
+              // width={commonWidth}
+              isEdit={false} // no edit
+              lang={lang}
+              staticTexts={staticTexts}
+              pageName={pageName}
+              structuredFilterGroupData={structuredFilterGroupData}
+            />
+          </div>
         ) : null}
       </div>
     </div>

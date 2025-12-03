@@ -1,5 +1,5 @@
 "use client";
-import { FullData } from "@/app/lib/definitions";
+import { FullData, PreviewParams } from "@/app/lib/definitions";
 import { DeleteTextDescriptionButton } from "../DeleteTextDescriptionButton";
 import { UpdateTextDescriptionData } from "../../_upadeModal/UpdateTextDescriptionData";
 import { ChangeOrderButtons } from "../ChangeOrderButtons/ChangeOrderButtons";
@@ -25,6 +25,8 @@ export type Props = {
   changeModalState?: (state: boolean) => void;
   onDeleteFinished?: () => void;
   countIndex: CountIndex | null;
+  preview?: (data: PreviewParams) => React.ReactNode;
+  previewBaseParams?: Record<string,string>;
 };
 
 export const UpdateDeleteTextButtons = ({
@@ -37,7 +39,9 @@ export const UpdateDeleteTextButtons = ({
   staticTexts,
   changeModalState,
   onDeleteFinished,
-  countIndex
+  countIndex,
+  preview,
+  previewBaseParams
 }: Props) => {
   const { changeIsEditButtonDisabled, pageFullDataList } = useEditContext();
   const pathName = usePathname();
@@ -108,6 +112,8 @@ export const UpdateDeleteTextButtons = ({
         lang={lang}
         staticTexts={staticTexts}
         changeModalState={changeModalState}
+        preview={preview}
+        previewBaseParams={previewBaseParams}
       />
       {canDelete ? (
         <DeleteTextDescriptionButton

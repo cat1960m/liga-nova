@@ -1,4 +1,6 @@
-import { FullData } from "@/app/lib/definitions";
+"use client";
+
+import { FullData, PreviewParams } from "@/app/lib/definitions";
 import { SCHEDULE_ITEM } from "@/app/lib/constants";
 import { UpdateDeleteTextButtons } from "@/app/ui/CommonComponents/_buttons/UpdateDeleteTextButtons/UpdateDeleteTextButtons";
 
@@ -18,17 +20,28 @@ export const ShowSCheduleGroupItem = ({
   staticTexts,
   lang,
   isEdit,
-  countIndex
+  countIndex,
 }: Props) => {
   if (!data) {
     return null;
   }
 
+  const preview = ({value, text}: PreviewParams) => {
+    return (
+      <div className={styles.preview}>
+          <div className={styles.item}>
+            <div className={styles.days}>{text ?? "N/A"}</div>
+            <div className={styles.time}>{value ?? "N/A"}</div>
+          </div>
+      </div>
+    ); 
+  };
+
   return (
     <div className={styles.groupItem}>
       <div className={styles.item}>
-        <div className={styles.days}>{data?.text_content ?? "N/A"}</div>
-        <div className={styles.time}>{data?.value ?? "N/A"}</div>
+        <div className={styles.days}>{data.text_content ?? "N/A"}</div>
+        <div className={styles.time}>{data.value ?? "N/A"}</div>
       </div>
       {isEdit ? (
         <div className={styles.itemEdit}>
@@ -42,6 +55,7 @@ export const ShowSCheduleGroupItem = ({
             staticTexts={staticTexts}
             lang={lang}
             countIndex={countIndex}
+            preview={preview}
           />
         </div>
       ) : null}

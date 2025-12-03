@@ -1,8 +1,14 @@
 "use client";
 
-import { TabType } from "@/app/lib/definitions";
+import { TabType, TranslationTabsHandle } from "@/app/lib/definitions";
 import { useParams } from "next/navigation";
-import { ChangeEventHandler, useState } from "react";
+import {
+  ChangeEventHandler,
+  forwardRef,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
 import axios from "axios";
 import { CommonButton } from "../_buttons/CommonButton";
 import { StaticTexts } from "@/app/dictionaries/definitions";
@@ -13,15 +19,7 @@ const QuillEditor = dynamic(() => import("../QuillEditor/QuillEditor"), {
   ssr: false,
 });
 
-export const TranslationTabs = ({
-  staticTexts,
-  onChange,
-  tabs,
-  setTabs,
-  title,
-  isArea,
-  isQuill,
-}: {
+type Props = {
   tabs: TabType[];
   setTabs: (tabs: TabType[]) => void;
   staticTexts: StaticTexts;
@@ -29,22 +27,42 @@ export const TranslationTabs = ({
   title: string;
   isArea?: boolean;
   isQuill?: boolean;
-}) => {
+};
+
+const TranslationTabsInner = (
+  props: Props,
+  ref: React.Ref<TranslationTabsHandle>
+) => {
+  const { staticTexts, onChange, tabs, setTabs, title, isArea, isQuill } =
+    props;
   const params = useParams<{ lang: string; pageName: string }>();
   const { lang } = params;
 
-  const startText = tabs.find(
-    (tab) => tab.langUpperCase === lang.toUpperCase()
-  )?.value;
+  const startText = useRef<string>(
+    tabs.find((tab) => tab.langUpperCase === lang.toUpperCase())?.value ?? ""
+  );
 
   const [selectedTab, setSelectedTab] = useState(lang.toUpperCase());
 
-  const [isTranslateDisabled, setIsTranslateDisabled] = useState(!startText);
+  const [isTranslateDisabled, setIsTranslateDisabled] = useState(
+    !startText.current
+  );
 
-  const [inputValue, setInputValue] = useState(startText);
+  const [inputValue, setInputValue] = useState(startText.current);
 
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [error, setError] = useState("");
+
+  const restore = () => {
+    setSelectedTab(lang.toUpperCase());
+    setIsTranslateDisabled(!startText.current);
+    setInputValue(startText.current);
+  };
+
+  // Expose methods to parent
+  useImperativeHandle(ref, () => ({
+    restore,
+  }));
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     handleTextChange(event.target.value);
@@ -52,6 +70,7 @@ export const TranslationTabs = ({
 
   const handleTextChange = (value: string) => {
     setInputValue(value);
+    console.log("---===handleTextChange");
 
     const index = tabs.findIndex((tab) => tab.langUpperCase === selectedTab);
     if (index >= 0) {
@@ -186,3 +205,6 @@ export const TranslationTabs = ({
     </div>
   );
 };
+
+export const TranslationTabs = forwardRef(TranslationTabsInner);
+//TranslationTabs.displayName = "TranslationTabs";

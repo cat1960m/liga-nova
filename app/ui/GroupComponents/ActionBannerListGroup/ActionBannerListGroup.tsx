@@ -3,7 +3,6 @@
 import {
   ACTION_BANNER_LIST_DESCRIPTION,
   ACTION_BANNER_LIST_GROUP_ITEM,
-  ACTION_BANNER_LIST_GROUP_SUBTYPE,
   ACTION_BANNER_LIST_IMAGE,
   ACTION_BANNER_LIST_SHARE,
   ACTION_BANNER_LIST_TICKET,
@@ -19,16 +18,14 @@ import { useContainerData } from "../../hooks/useContainerData";
 export type Props = {
   params: MainParams;
   pageFullDataList: FullData[];
+  groupData: FullData[];
+  groupFeatureId: number;
 };
 //main page
-export const ActionBannerListGroup = ({ params, pageFullDataList }: Props) => {
+export const ActionBannerListGroup = ({ params, pageFullDataList, groupFeatureId , groupData}: Props) => {
   const [lastAddedId, setLastAddedId] = useState<number | null>(null);
   const ref = useRef<HTMLDivElement>(null);
 
-  const groupData = pageFullDataList.filter(
-    (item) => item.subtype === ACTION_BANNER_LIST_GROUP_SUBTYPE
-  );
-  const groupFeatureId = groupData[0]?.id;
 
   const {childFeatureIdToFullDataList, sortedChildFeaFeatureIds} = useContainerData(
     {

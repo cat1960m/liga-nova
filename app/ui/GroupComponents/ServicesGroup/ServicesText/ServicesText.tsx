@@ -1,3 +1,5 @@
+"use client";
+
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import styles from "./servicesText.module.css";
 

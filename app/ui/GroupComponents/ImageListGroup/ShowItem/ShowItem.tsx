@@ -1,6 +1,6 @@
 import { ItemContainerUpdateDeleteTextDescription } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerUpdateDeleteTextDescription";
 import { ShowItemBody } from "../ShowItemBody/ShowItemBody";
-import { FullData } from "@/app/lib/definitions";
+import { FullData, PreviewParams } from "@/app/lib/definitions";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import styles from "./showItem.module.css";
 
@@ -21,6 +21,9 @@ export const ShowItem = ({
   isEdit,
   lang,
 }: Props) => {
+  const preview = (params: PreviewParams): React.ReactNode => {
+    return  <ShowItemBody widthItem={parseInt(params.baseParams?.["widthItem"] ?? "100")} imageData={imageData} />
+  }
   return (
     <div className={styles.container}>
       <ItemContainerUpdateDeleteTextDescription
@@ -32,6 +35,8 @@ export const ShowItem = ({
         lang={lang}
         currentData={imageData}
         countIndex={null}
+        preview={preview}
+        previewBaseParams={{widthItem: widthItem?.toString() ?? "", isFullWidth: "full"}}
       >
         <ShowItemBody widthItem={widthItem} imageData={imageData} />
       </ItemContainerUpdateDeleteTextDescription>
