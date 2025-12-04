@@ -93,14 +93,16 @@ export type InvoiceForm = {
 //table in db features
 export type Feature = {
   id: number;
-  parent_feature_id: number;
-  type: string;
-  subtype: string;
+  parent_feature_id?: number;
+  type?: string;
+  subtype?: string;
   name: string;
-  updated_by: number;
+  updated_by?: number;
   last_edit: Date;
+  feature_order?: number;
+  filter_ids?: string;
   additional_page_name?: string;
-  feature_order: number;
+  weekDays?:string;
 };
 
 //table in db text_descriptions

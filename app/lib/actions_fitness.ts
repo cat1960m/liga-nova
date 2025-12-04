@@ -1,12 +1,12 @@
 "use server";
 
 import postgres from "postgres";
-import { PageData, TextContent, FullData } from "./definitions";
+import { PageData, TextContent, FullData, Feature } from "./definitions";
 import { revalidatePath } from "next/cache";
-import { CAN_NOT_DELETE, ICON, SERVICE_ITEM } from "./constants";
+import { CAN_NOT_DELETE, ICON, PAGE, SERVICE_ITEM } from "./constants";
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: "require" });
-
+//get
 export const getPageTitles = async (lang: string) => {
   try {
     return await sql<PageData[]>`SELECT a.id, c.text_content, a.subtype, a.name
@@ -21,6 +21,59 @@ export const getPageTitles = async (lang: string) => {
     return null;
   }
 };
+
+export const getPageFullData = async ({
+  lang,
+  pageName,
+}: {
+  lang: string;
+  pageName: string;
+}) => {
+  type StrAdd = {
+    additional_page_name: string | null;
+  };
+  try {
+    const additionalPageNames = await sql<
+      StrAdd[]
+    >`SELECT additional_page_name FROM features WHERE name=${pageName} AND type='page'`;
+    const names: string[] =
+      additionalPageNames[0]?.additional_page_name?.split(",") ?? [];
+
+    return await sql<FullData[]>`SELECT features.id, 
+        parent_feature_id, type, subtype, name, feature_order, filter_ids, additional_page_name,
+        text_descriptions.id as text_description_id, text_type, price, can_delete, value, link,text_description_order,
+        language, text_content, content_type
+        FROM features 
+        LEFT JOIN text_descriptions 
+        ON features.id = text_descriptions.feature_id 
+        LEFT JOIN text_contents 
+        ON text_descriptions.id = text_contents.text_description_id 
+        WHERE  (name = ${pageName} OR name = ANY (${sql.array(names)})) 
+        AND (language = ${lang} or language is null)
+        ORDER BY feature_order, text_description_order`;
+  } catch {
+    // If a database error occurs, return a more specific error.
+    return null;
+  }
+};
+
+export const getTextContents = async ({
+  text_description_id,
+}: {
+  text_description_id: number;
+}) => {
+  try {
+    return await sql<TextContent[]>`SELECT
+               *
+               FROM text_contents c
+               WHERE c.text_description_id = ${text_description_id}`;
+  } catch {
+    // If a database error occurs, return a more specific error.
+    return null;
+  }
+};
+
+//update
 
 export const updateFeatureSubtypeFilterIds = async ({
   id,
@@ -75,7 +128,6 @@ export const updatePriceValueLink = async ({
   }
 };
 
-
 export const updateTextDescriptionValue = async ({
   value,
   textDescriptionId,
@@ -98,6 +150,65 @@ export const updateTextDescriptionValue = async ({
   }
 };
 
+export const updateText = async ({
+  id,
+  text,
+  pathName,
+}: {
+  id: number;
+  text: string | null;
+  pathName?: string;
+  contentType?: string;
+}) => {
+  try {
+    await sql`Update  text_contents
+               SET  text_content = ${text}
+               WHERE id = ${id}`;
+    if (pathName) {
+      revalidatePath(pathName);
+    }
+    return;
+  } catch {
+    // If a database error occurs, return a more specific error.
+    return null;
+  }
+};
+
+export const UpdateFeatureOrder = async ({
+  id,
+  order,
+}: {
+  id: number;
+  order: number;
+}) => {
+  try {
+    await sql`Update  features
+               SET  feature_order = ${order}
+               WHERE id = ${id}`;
+  } catch {
+    // If a database error occurs, return a more specific error.
+    return null;
+  }
+};
+
+export const UpdateTextDescriptionsOrder = async ({
+  id,
+  order,
+}: {
+  id: number;
+  order: number;
+}) => {
+  try {
+    await sql`Update  text_descriptions
+               SET  text_description_order = ${order}
+               WHERE id = ${id}`;
+  } catch {
+    // If a database error occurs, return a more specific error.
+    return null;
+  }
+};
+
+//remove
 export const RemoveFeature = async ({
   id,
   pathName,
@@ -160,7 +271,7 @@ export const RemoveTextDescription = async ({
   }
 };
 
-
+//add
 export const addText = async ({
   lang,
   textDescriptionId,
@@ -183,31 +294,6 @@ export const addText = async ({
       revalidatePath(pathName);
     }
     return newTextContent;
-  } catch {
-    // If a database error occurs, return a more specific error.
-    return null;
-  }
-};
-
-
-export const updateText = async ({
-  id,
-  text,
-  pathName,
-}: {
-  id: number;
-  text: string | null;
-  pathName?: string;
-  contentType?: string;
-}) => {
-  try {
-    await sql`Update  text_contents
-               SET  text_content = ${text}
-               WHERE id = ${id}`;
-    if (pathName) {
-      revalidatePath(pathName);
-    }
-    return;
   } catch {
     // If a database error occurs, return a more specific error.
     return null;
@@ -274,7 +360,6 @@ export const addChildFeature = async ({
   return null;
 };
 
-
 export const addTextDescription = async ({
   featureId,
   textType,
@@ -308,96 +393,6 @@ export const addTextDescription = async ({
   } catch {
     return null;
   }
-};
-
-export const getTextContents = async ({
-  text_description_id,
-}: {
-  text_description_id: number;
-}) => {
-  try {
-    return await sql<TextContent[]>`SELECT
-               *
-               FROM text_contents c
-               WHERE c.text_description_id = ${text_description_id}`;
-  } catch {
-    // If a database error occurs, return a more specific error.
-    return null;
-  }
-};
-
-export const getPageFullData = async ({
-  lang,
-  pageName,
-}: {
-  lang: string;
-  pageName: string;
-}) => {
-  type StrAdd = {
-    additional_page_name: string | null;
-  };
-  try {
-    const additionalPageNames = await sql<
-      StrAdd[]
-    >`SELECT additional_page_name FROM features WHERE name=${pageName} AND type='page'`;
-    const names: string[] =
-      additionalPageNames[0]?.additional_page_name?.split(",") ?? [];
-
-    return await sql<FullData[]>`SELECT features.id, 
-        parent_feature_id, type, subtype, name, feature_order, filter_ids, additional_page_name,
-        text_descriptions.id as text_description_id, text_type, price, can_delete, value, link,text_description_order,
-        language, text_content, content_type
-        FROM features 
-        LEFT JOIN text_descriptions 
-        ON features.id = text_descriptions.feature_id 
-        LEFT JOIN text_contents 
-        ON text_descriptions.id = text_contents.text_description_id 
-        WHERE  (name = ${pageName} OR name = ANY (${sql.array(names)})) 
-        AND (language = ${lang} or language is null)
-        ORDER BY feature_order, text_description_order`;
-  } catch {
-    // If a database error occurs, return a more specific error.
-    return null;
-  }
-};
-
-
-export const UpdateFeatureOrder = async ({
-  id,
-  order,
-}: {
-  id: number;
-  order: number;
-}) => {
-  try {
-    await sql`Update  features
-               SET  feature_order = ${order}
-               WHERE id = ${id}`;
-  } catch {
-    // If a database error occurs, return a more specific error.
-    return null;
-  }
-};
-
-export const UpdateTextDescriptionsOrder = async ({
-  id,
-  order,
-}: {
-  id: number;
-  order: number;
-}) => {
-  try {
-    await sql`Update  text_descriptions
-               SET  text_description_order = ${order}
-               WHERE id = ${id}`;
-  } catch {
-    // If a database error occurs, return a more specific error.
-    return null;
-  }
-};
-
-export const revalidate = async (path: string) => {
-  await revalidatePath(path);
 };
 
 export const addIcon = async ({
@@ -435,4 +430,44 @@ export const addIcon = async ({
     return null;
   }
   return null;
+};
+
+export const revalidate = async (path: string) => {
+  await revalidatePath(path);
+};
+
+// copy feature to  history
+
+export const copyFeature = async ({
+  featureId,
+  name,
+}: {
+  featureId?: number;
+  name?: string;
+}): Promise<Feature[] | null> => {
+  if (featureId) {
+    try {
+      const data: Feature[] = await sql<Feature[]>`SELECT
+               *
+               FROM features c
+               WHERE c.parent_feature_id = ${featureId}`;
+      return data;
+    } catch (error) {
+      console.log("error", error?.toString());
+      return null;
+    }
+  } else if (name) {
+    try {
+      const data: Feature[] = await sql<Feature[]>`SELECT
+               *
+               FROM features c
+               WHERE c.name = ${name} and c.type=${PAGE}`;
+      return data;
+    } catch (error) {
+       console.log("error", error?.toString());
+       return null;
+    }
+  } else {
+    return [];
+  }
 };

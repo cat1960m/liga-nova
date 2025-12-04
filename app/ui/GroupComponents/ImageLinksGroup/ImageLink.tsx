@@ -20,11 +20,11 @@ export const ImageLink = ({
   text,
   isModalShown,
   staticTexts,
-  tooltip, 
-  link
+  tooltip,
+  link,
 }: Props) => {
   return (
-    <div className={styles.item}>
+    <div className={styles.item} style={{ border: "4px solid green" }}>
       {value ? (
         <Image
           src={value}
@@ -35,16 +35,14 @@ export const ImageLink = ({
           className={styles.image}
         />
       ) : null}
-      {isModalShown ? null : (
-        <div className={styles.text}>{text ?? ""}</div>
-      )}
+      {isModalShown ? null : <div className={styles.text}>{text ?? ""}</div>}
       <div className={styles.tooltip}>
         <div className={styles.text_tooltip}>
-        <div 
-          dangerouslySetInnerHTML={{
-            __html: tooltip,
-          }}
-        />
+          <div
+            dangerouslySetInnerHTML={{
+              __html: tooltip,
+            }}
+          />
         </div>
         {link ? (
           <Link href={link} className={styles.link}>

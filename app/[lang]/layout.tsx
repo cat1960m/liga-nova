@@ -6,6 +6,7 @@ import { MobileMenu } from "../ui/LayoutComponents/MobileMenu/MobileMenu";
 import { BaseMenu } from "../ui/LayoutComponents/BaseMenu/BaseMenu";
 import { EditMode } from "../ui/LayoutComponents/EditMode/EditMode";
 import { getPageTitlesData } from "../lib/actionsContainer";
+import { Undo } from "../ui/LayoutComponents/Undo/Undo";
 
 
 export default async function Layout({
@@ -29,6 +30,7 @@ export default async function Layout({
   const mainPages = pages?.filter((page) => page.subtype === "header1");
   const basePages = pages?.filter((page) => page.subtype === "header2");
 
+
   return (
     <div>
       <div className={styles.header}>
@@ -46,6 +48,7 @@ export default async function Layout({
       </div>
 
       <div className={styles.panel}>
+        <Undo />
         {isAuthenticated ? <ManageIconsModal lang={lang} /> : null}
 
         <EditMode isAuthenticated={isAuthenticated} />

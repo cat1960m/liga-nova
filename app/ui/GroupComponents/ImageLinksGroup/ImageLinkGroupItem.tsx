@@ -36,9 +36,9 @@ export const ImageLinkGroupItem = ({
   ? fullPathName.substring(0, fullPathName.length - pageName.length - (pageName.length ? 1: 0))
   : fullPathName;
   const tooltip = groupData.find(
-    (item) =>
-      item.text_description_id === item.text_description_id &&
-      item.content_type === CONTENT_TYPE_TOOLTIP
+    (groupDataItem) =>
+      item.text_description_id === groupDataItem.text_description_id &&
+      groupDataItem.content_type === CONTENT_TYPE_TOOLTIP
   )?.text_content;
 
   const link = `${pathName}/${item.link}`;
