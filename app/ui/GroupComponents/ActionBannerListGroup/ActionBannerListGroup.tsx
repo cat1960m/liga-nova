@@ -9,7 +9,7 @@ import {
 } from "@/app/lib/constants";
 import { FullData, MainParams } from "@/app/lib/definitions";
 import { useRef, useState } from "react";
-import {getIsEditNoDelete } from "@/app/lib/utils";
+import { getIsEditNoDelete } from "@/app/lib/utils";
 import { ShowItem } from "./ShowItem/ShowItem";
 import { ItemContainerAddChildFeatureDeleteFeature } from "../../CommonComponents/_itemGroupContainer/ItemContainerAddChildFeatureDeleteFeature";
 import { ScrollContainer } from "../../CommonComponents/ScrollContainer/ScrollContainer";
@@ -22,24 +22,27 @@ export type Props = {
   groupFeatureId: number;
 };
 //main page
-export const ActionBannerListGroup = ({ params, pageFullDataList, groupFeatureId , groupData}: Props) => {
+export const ActionBannerListGroup = ({
+  params,
+  pageFullDataList,
+  groupFeatureId,
+  groupData,
+}: Props) => {
   const [lastAddedId, setLastAddedId] = useState<number | null>(null);
   const ref = useRef<HTMLDivElement>(null);
 
-
-  const {childFeatureIdToFullDataList, sortedChildFeaFeatureIds} = useContainerData(
-    {
+  const { childFeatureIdToFullDataList, sortedChildFeaFeatureIds } =
+    useContainerData({
       pageName: params.pageName,
       pageFullData: pageFullDataList,
       parentFeatureId: groupFeatureId,
-    }
-  );
+    });
 
   if (!groupFeatureId) {
     return null;
   }
 
-  const { staticTexts, pageName, lang } = params;
+  const { staticTexts, lang } = params;
   const { isEdit, noDelete } = getIsEditNoDelete(params);
 
   const getItem = ({
@@ -78,7 +81,6 @@ export const ActionBannerListGroup = ({ params, pageFullDataList, groupFeatureId
   return (
     <ItemContainerAddChildFeatureDeleteFeature
       addButtonText={staticTexts.addImage ?? "N/A"}
-      pageName={pageName}
       isEdit={isEdit}
       textTypes={[
         ACTION_BANNER_LIST_SHARE,
@@ -94,6 +96,8 @@ export const ActionBannerListGroup = ({ params, pageFullDataList, groupFeatureId
       onDeleteFinished={handleDeleteFinished}
       marginTop={20}
       noDelete={noDelete}
+      noChangeOrder={true}
+      countIndex={null}
     >
       <div ref={ref}>
         <ScrollContainer

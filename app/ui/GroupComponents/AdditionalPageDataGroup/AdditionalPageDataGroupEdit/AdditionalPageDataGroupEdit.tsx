@@ -1,13 +1,12 @@
 "use client";
 
 import { FullData, StructuredFeatureData } from "@/app/lib/definitions";
-import { useState } from "react";
 import { FilterGroup } from "../../FilterGroupsListItemsGroup/_filters/FilterGroup/FilterGroup";
-import { getFilterIds } from "@/app/lib/utils";
 
 import styles from "./additionalPageDataGroupEdit.module.css";
 import { UpdateFeatureFilterIdsButton } from "@/app/ui/CommonComponents/_buttons/UpdateFeatureFilterIdsButton";
 import { StaticTexts } from "@/app/dictionaries/definitions";
+import { useSelectedFilters } from "@/app/ui/hooks/useSelectedFilters";
 
 export type Props = {
   currentData: FullData;
@@ -22,40 +21,14 @@ export const AdditionalPageDataGroupEdit = ({
   lang,
   structuredFilterGroupsData,
 }: Props) => {
-  const filterTextDescriptionIds = getFilterIds(currentData.filter_ids);
-
-  const [
-    selectedFilterTextDescriptionIds,
-    setSelectedFilterTextDescriptionIds,
-  ] = useState<number[]>(filterTextDescriptionIds);
+  const { selectedFilterTextDescriptionIds, onFilterSelectionChanged } =
+    useSelectedFilters({ fullData: currentData });
 
   const pageFeatureId = currentData.id;
 
   if (!structuredFilterGroupsData.sortedChildFeaFeatureIds.length) {
     return null;
   }
-
-  const handleFilterSelectionChanged = ({
-    filter,
-    value,
-  }: {
-    filter: FullData;
-    value: boolean;
-  }) => {
-    if (value) {
-      const newSelectedFilterTextDescriptionIds = [
-        ...selectedFilterTextDescriptionIds,
-      ];
-      newSelectedFilterTextDescriptionIds.push(filter.text_description_id);
-      setSelectedFilterTextDescriptionIds(newSelectedFilterTextDescriptionIds);
-    } else {
-      const newSelectedFilterTextDescriptionIds =
-        selectedFilterTextDescriptionIds.filter(
-          (item) => item !== filter.text_description_id
-        );
-      setSelectedFilterTextDescriptionIds(newSelectedFilterTextDescriptionIds);
-    }
-  };
 
   return (
     <>
@@ -70,7 +43,7 @@ export const AdditionalPageDataGroupEdit = ({
               <div key={filterGroupId}>
                 <FilterGroup
                   filterGroupData={filterGroupData}
-                  onFilterSelectionChanged={handleFilterSelectionChanged}
+                  onFilterSelectionChanged={onFilterSelectionChanged}
                   selectedFilterTextDescriptionIds={
                     selectedFilterTextDescriptionIds
                   }
@@ -91,6 +64,7 @@ export const AdditionalPageDataGroupEdit = ({
           subtype={currentData.subtype}
           filterIds={selectedFilterTextDescriptionIds.join(",")}
           buttonText={staticTexts.saveFilters ?? "N/A"}
+          pageName={currentData.name}
         />
       </div>
     </>

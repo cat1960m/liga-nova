@@ -21,7 +21,6 @@ export const MobileMenu = (props: Props) => {
 
   useEffect(() => {
     setIsMenuOpen(false);
-    console.log("close");
 
     return () => {
       setIsMenuOpen(false);

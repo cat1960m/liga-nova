@@ -1,7 +1,6 @@
 "use client";
 
 import { ACTION_BUTTON_BACKGROUND } from "@/app/lib/constants";
-import { usePathname } from "next/navigation";
 import { CSSProperties, ReactNode } from "react";
 import clsx from "clsx";
 
@@ -15,14 +14,13 @@ export const CommonButton = ({
   styleValue,
 }: {
   text?: string;
-  onClick?: (pathName: string) => void;
+  onClick?: () => void;
   isDisabled?: boolean;
   children?: ReactNode;
   width?: string;
   isAction?: boolean;
   styleValue?: CSSProperties;
 }) => {
-  const pathName = usePathname();
   const bgColor = isAction
     ? ACTION_BUTTON_BACKGROUND
     : styleValue?.backgroundColor;
@@ -31,7 +29,7 @@ export const CommonButton = ({
   return (
     <button
       disabled={isDisabled}
-      onClick={() => onClick?.(pathName)}
+      onClick={onClick}
       style={{
         ...styleValue,
         color: isDisabled ? "black" : colorValue,

@@ -1,7 +1,6 @@
 "use client";
 
 import { NameValueUrl, StaticTexts } from "@/app/dictionaries/definitions";
-import { addFeatureData } from "@/app/lib/actionsContainer";
 import {
   FILTER,
   FILTER_GROUP_SUBTYPE,
@@ -64,10 +63,10 @@ import {
   DIVIDER,
 } from "@/app/lib/constants";
 import { FullData } from "@/app/lib/definitions";
-import { usePathname } from "next/navigation";
 import { ChangeEventHandler, useMemo, useState } from "react";
 import styles from "./addChildFeatureToContainer.module.css";
 import { SelectNewItem } from "../SelectNewItem/SelectNewItem";
+import { useAddFeature } from "../../hooks/useAddFeature";
 
 export const AddChildFeatureToContainer = ({
   parentFeatureId,
@@ -83,8 +82,8 @@ export const AddChildFeatureToContainer = ({
   staticTexts: StaticTexts;
   pageName: string;
 }) => {
-  const pathName = usePathname();
   const [selectedValue, setSelectedValue] = useState<string>("");
+  const { addFeature } = useAddFeature();
 
   const [optionsAdditionalPagename, setOptionsAdditionalPagename] = useState<
     string[]
@@ -129,17 +128,38 @@ export const AddChildFeatureToContainer = ({
       return;
     }
 
-    await addFeatureData({
+    await commonAddFeatureData({
       parentId: parentFeatureId,
       type: GROUP,
       subtype: ADDITIONAL_PAGE_DATA_GROUP_SUBTYPE,
-      name: pageName,
       text_types: [],
-      pathName,
       additionalPageName: newValue,
     });
 
     setOptionsAdditionalPagename([]);
+  };
+
+  const commonAddFeatureData = async (props: {
+    parentId: number;
+    type: string;
+    subtype: string;
+    text_types: string[];
+    additionalPageName?: string | null;
+  }) => {
+    const { parentId, type, subtype, text_types, additionalPageName } = props;
+    //can not be added to history first child that is added automatically
+    const isWithoutHistory = ![GROUP, LAYOUT_PARENT, TABS].includes(props.type);
+
+    const result = await addFeature({
+      type,
+      parentId,
+      subtype,
+      text_types,
+      additionalPageName,
+      isWithoutHistory,
+    });
+
+    return result;
   };
 
   /*  const handleChange: ChangeEventHandler<HTMLSelectElement> = async (event) => {
@@ -168,13 +188,11 @@ export const AddChildFeatureToContainer = ({
       }
 
       if (additionalPageNames.length === 1) {
-        await addFeatureData({
+        await commonAddFeatureData({
           parentId: parentFeatureId,
           type: GROUP,
           subtype: newValue,
-          name: pageName,
           text_types: [],
-          pathName,
           additionalPageName: additionalPageNames[0],
         });
       }
@@ -185,299 +203,245 @@ export const AddChildFeatureToContainer = ({
         newValue
       )
     ) {
-      await addFeatureData({
+      await commonAddFeatureData({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: newValue,
-        name: pageName,
         text_types: [ACTION_BANNER_TITLE_IMAGE],
-        pathName,
       });
     }
 
     if (newValue === ACTION_BANNER_LIST_GROUP_SUBTYPE) {
-      const actionBannerListGroupId = await addFeatureData({
+      const actionBannerListGroupId = await commonAddFeatureData({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: newValue,
-        name: pageName,
         text_types: [],
-        pathName,
       });
 
       if (actionBannerListGroupId) {
-        await addFeatureData({
+        await commonAddFeatureData({
           parentId: actionBannerListGroupId,
           type: ACTION_BANNER_LIST_GROUP_ITEM,
           subtype: ACTION_BANNER_LIST_GROUP_ITEM,
-          name: pageName,
           text_types: [
             ACTION_BANNER_LIST_SHARE,
             ACTION_BANNER_LIST_TICKET,
             ACTION_BANNER_LIST_DESCRIPTION,
             ACTION_BANNER_LIST_IMAGE,
           ],
-          pathName,
         });
       }
     }
 
     if (newValue === TEXT_LIST_GROUP_SUBTYPE) {
-      const textListGroupFeatureId = await addFeatureData({
+      const textListGroupFeatureId = await commonAddFeatureData({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: newValue,
-        name: pageName,
         text_types: [],
-        pathName,
       });
 
       if (textListGroupFeatureId) {
-        await addFeatureData({
+        await commonAddFeatureData({
           parentId: textListGroupFeatureId,
           type: TEXT_LIST_GROUP_ITEM,
           subtype: TEXT_LIST_GROUP_ITEM,
-          name: pageName,
           text_types: [TEXT_LIST_NAME, TEXT_LIST_BODY],
-          pathName,
         });
       }
     }
 
     if (newValue === TEXT_HEADER_GROUP_SUBTYPE) {
-      await addFeatureData({
+      await commonAddFeatureData({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: newValue,
-        name: pageName,
         text_types: [SIMPLE_GROUP_ITEM],
-        pathName,
       });
     }
 
     if (TEXT_GROUP_SUBTYPES.includes(newValue)) {
-      await addFeatureData({
+      await commonAddFeatureData({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: newValue,
-        name: pageName,
         text_types: [SIMPLE_GROUP_ITEM],
-        pathName,
       });
     }
 
     if (newValue === IMAGE_GROUP_SUBTYPE) {
-      await addFeatureData({
+      await commonAddFeatureData({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: newValue,
-        name: pageName,
         text_types: [IMAGE],
-        pathName,
       });
     }
 
     if (newValue === LIGA_GROUP_SUBTYPE) {
-      await addFeatureData({
+      await commonAddFeatureData({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: newValue,
-        name: pageName,
         text_types: [LIGA_TITLE, LIGA_TELEPHONE, LIGA_ADDRESS],
-        pathName,
       });
     }
 
     if (newValue === IMAGE_LIST_GROUP_SUBTYPE) {
-      await addFeatureData({
+      await commonAddFeatureData({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: newValue,
-        name: pageName,
         text_types: [],
-        pathName,
       });
     }
 
     if (IMAGE_LINKS_GROUP_SUBTYPE === newValue) {
-      await addFeatureData({
+      await commonAddFeatureData({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: newValue,
-        name: pageName,
         text_types: [IMAGE_LINKS_ITEM],
-        pathName,
       });
     }
 
     if (IMAGE_ACTIONS_GROUP_SUBTYPE === newValue) {
-      await addFeatureData({
+      await commonAddFeatureData({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: newValue,
-        name: pageName,
         text_types: [IMAGE_ACTIONS_ITEM],
-        pathName,
       });
     }
 
     if (newValue === PHOTO_GALLERY_GROUP_SUBTYPE) {
-      await addFeatureData({
+      await commonAddFeatureData({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: newValue,
-        name: pageName,
         text_types: [],
-        pathName,
       });
     }
 
     if (newValue === INFO_CHECK_GROUP_SUBTYPE) {
-      await addFeatureData({
+      await commonAddFeatureData({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: newValue,
-        name: pageName,
         text_types: [INFO_CHECK_HEADER, INFO_CHECK_ITEM],
-        pathName,
       });
     }
     if (newValue === INFO_SUBTYPE) {
-      await addFeatureData({
+      await commonAddFeatureData({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: newValue,
-        name: pageName,
         text_types: [INFO_TITLE, INFO_BODY, INFO_TELEPHONE, INFO_ADDRESS],
-        pathName,
       });
     }
     if (INFO_ACTION_SUBTYPES.includes(newValue)) {
-      await addFeatureData({
+      await commonAddFeatureData({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: newValue,
-        name: pageName,
         text_types: [INFO_TITLE, INFO_BODY],
-        pathName,
       });
     }
 
     if (newValue === SERVICES_GROUP_SUBTYPE) {
-      await addFeatureData({
+      await commonAddFeatureData({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: newValue,
-        name: pageName,
         text_types: [SERVICE_ITEM],
-        pathName,
       });
     }
 
     if (newValue === SCHEDULE_GROUP_SUBTYPE) {
-      await addFeatureData({
+      await commonAddFeatureData({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: newValue,
-        name: pageName,
         text_types: [SCHEDULE_NAME, SCHEDULE_ITEM],
-        pathName,
       });
     }
 
     if (newValue === FILTER_GROUPS_LIST_ITEMS_SUBTYPE) {
-      const filterGroupsListItemsId = await addFeatureData({
+      const filterGroupsListItemsId = await commonAddFeatureData({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: newValue,
-        name: pageName,
         text_types: [],
-        pathName,
       });
 
       if (filterGroupsListItemsId) {
-        await addFeatureData({
+        await commonAddFeatureData({
           parentId: filterGroupsListItemsId,
           type: GROUP,
           subtype: FILTER_GROUP_SUBTYPE,
-          name: pageName,
           text_types: [FILTER_GROUP_TITLE, FILTER],
-          pathName,
         });
       }
     }
 
     if (newValue === CALENDAR_EVENTS_GROUP_SUBTYPE) {
-      await addFeatureData({
+      await commonAddFeatureData({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: CALENDAR_EVENTS_GROUP_SUBTYPE,
-        name: pageName,
         text_types: [],
-        pathName,
       });
     }
 
     if (newValue === DIVIDER) {
-      await addFeatureData({
+      await commonAddFeatureData({
         parentId: parentFeatureId,
         type: GROUP,
         subtype: DIVIDER,
-        name: pageName,
         text_types: [],
-        pathName,
       });
     }
 
     if (newValue === TABS) {
-      const tabsFeatureId = await addFeatureData({
+      const tabsFeatureId = await commonAddFeatureData({
         parentId: parentFeatureId,
         type: TABS,
         subtype: TABS,
-        name: pageName,
         text_types: [],
-        pathName,
       });
 
       if (tabsFeatureId) {
-        await addFeatureData({
+        await commonAddFeatureData({
           parentId: tabsFeatureId,
           type: TAB,
           subtype: "1",
-          name: pageName,
           text_types: [TAB_TITLE],
-          pathName,
         });
       }
     }
 
     if (newValue === LAYOUT_PARENT) {
-      const layoutFeatureId = await addFeatureData({
+      const layoutFeatureId = await commonAddFeatureData({
         parentId: parentFeatureId,
         type: LAYOUT_PARENT,
         subtype: LAYOUT_PARENT,
-        name: pageName,
         text_types: [],
-        pathName,
       });
 
       if (layoutFeatureId) {
-        await addFeatureData({
+        await commonAddFeatureData({
           parentId: layoutFeatureId,
           type: LAYOUT_ITEM,
           subtype: LAYOUT_ITEM_LEFT,
-          name: pageName,
           text_types: [],
-          pathName,
         });
 
-        await addFeatureData({
+        await commonAddFeatureData({
           parentId: layoutFeatureId,
           type: LAYOUT_ITEM,
           subtype: LAYOUT_ITEM_RIGHT,
-          name: pageName,
           text_types: [],
-          pathName,
         });
       }
     }

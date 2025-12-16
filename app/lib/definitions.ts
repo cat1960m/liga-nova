@@ -108,23 +108,25 @@ export type Feature = {
 //table in db text_descriptions
 export type TextDescription = {
   id: number;
-  feature_id: number;
+  feature_id?: number;
   text_type: string;
   price?: number;
   can_delete?: boolean;
-  text_description_order: number;
+  text_description_order?: number;
+  value?: string;
+  link?: string;
 };
 
 //table in db text_contents
 export type TextContent = {
   id: number;
-  text_description_id: number;
-  language: string;
+  text_description_id?: number;
+  language?: string;
   text_content: string;
-  updated_by: number;
-  last_edit: Date;
+  updated_by?: number;
+  last_edit_date: Date;
   content_type?: string;
-  value?: string;
+  // value?: string;
 };
 
 export type TextDescriptionContent = TextContent & {
@@ -237,6 +239,8 @@ export type SelectedFiltersData = {
 
 export type TranslationTabsHandle = {
   restore: () => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  saveTabs: (props:{promises: Promise<any>[];}) => void;
 };
 
 export type PreviewParams = {
@@ -249,3 +253,20 @@ export type PreviewParams = {
   staticTexts: StaticTexts;
   baseParams?: Record<string, string>;
 };
+
+export type HistoryTableName = "features" | "text_descriptions";
+export type HistoryActionType = "add" | "delete" | "update";
+
+export type History = {
+  id: number;
+  table_name: HistoryTableName;
+  table_id?: number;
+  table_parent_id?: number;
+  action_type: HistoryActionType;
+  history_table_id?: number;
+  updated_by?: number;
+  last_edit_date: Date;
+  history_table_deleted_parent_id?: number; // instead of table_parent_id in table
+  history_table_deleted_id?: number; //instead of table_id in table
+}
+

@@ -3,6 +3,7 @@ import { ItemGroupContainerCommon } from "./ItemGroupContainerCommon/ItemGroupCo
 import { AddTextDescriptionButton } from "../_buttons/AddTextDescriptionButton";
 import { DeleteFeatureChangeOrderButtons } from "../_buttons/DeleteFeatureChangeOrderButtons/DeleteFeatureChangeOrderButtons";
 import { Buttons } from "./Buttons/Buttons";
+import { CountIndex } from "@/app/dictionaries/definitions";
 
 export type Props = {
   children: React.ReactNode;
@@ -13,12 +14,12 @@ export type Props = {
   deleteButtonText: string;
   addButtonText: string;
   textDescriptionType: string;
-  isNoAddButton?: boolean;
   price?: number;
   onTextDescriptionAdded?: (newId: number) => void;
   marginTop: number;
   noDelete: boolean;
   heightValue?: string;
+  countIndex: CountIndex | null;
 };
 
 export const ItemContainerAddTextDescriptionDeleteFeature = ({
@@ -30,17 +31,17 @@ export const ItemContainerAddTextDescriptionDeleteFeature = ({
   deleteButtonText,
   addButtonText,
   textDescriptionType,
-  isNoAddButton,
   price,
   onTextDescriptionAdded,
   marginTop,
   noDelete,
   heightValue,
+  countIndex,
 }: Props) => {
   const getEditButtons = () => {
     const featureFirst = featureData.length ? featureData[0] : undefined;
     const featureId = featureFirst?.id;
-    const isAddShown = !!featureId && !isNoAddButton;
+    const isAddShown = !!featureId;
 
     return (
       <Buttons>
@@ -56,14 +57,15 @@ export const ItemContainerAddTextDescriptionDeleteFeature = ({
           ) : null}
 
           {!noDelete ? (
-              <DeleteFeatureChangeOrderButtons
-                deleteText={deleteButtonText}
-                featureData={featureData}
-                isChangeOrderHorizontal={isChangeOrderHorizontal}
-                onDeleteFinished={onDeleteFinished}
-                noDelete={noDelete}
-                countIndex={null}
-              />
+            <DeleteFeatureChangeOrderButtons
+              deleteText={deleteButtonText}
+              featureData={featureData}
+              isChangeOrderHorizontal={isChangeOrderHorizontal}
+              onDeleteFinished={onDeleteFinished}
+              noDelete={noDelete}
+              countIndex={countIndex}
+              noChangeOrder={false}
+            />
           ) : null}
         </>
       </Buttons>

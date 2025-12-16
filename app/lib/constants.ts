@@ -313,7 +313,9 @@ export const PAGE_NAMES_TO_LIST_ITEMS_DATA: Record<
   },
 };
 
-export const S3_TYPES = [IMAGE, ICON];
+export const START_AWS_S3="https://fitness"
+
+export const S3_TYPES = [IMAGE, ICON, ACTION_BANNER_LIST_DESCRIPTION, IMAGE_LINKS_ITEM];
 
 export const MAX_PAGE_WIDTH = 1075;
 
@@ -334,3 +336,9 @@ export const WORK_SCHEDULE2 = "нд 09:00-21:00";
 export const PHONE = "(073) 33 77 565";
 export const EDIT_MODE = "editMode";
 export const ICON_SIZE = 44;
+
+export const TEXT_DESCRIPTIONS ="text_descriptions";
+export const FEATURES="features";
+export const ADD ="add";
+export const DELETE="delete";
+export const UPDATE="update";

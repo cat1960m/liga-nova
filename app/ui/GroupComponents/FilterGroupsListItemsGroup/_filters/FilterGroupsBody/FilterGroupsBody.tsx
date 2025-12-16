@@ -51,7 +51,7 @@ export const FilterGroupsBody = ({
     countIndex,
     filterGroupData,
   }: {
-    countIndex: CountIndex | null;
+    countIndex: CountIndex;
     filterGroupData: FullData[];
   }) => {
     const id = filterGroupData[0]?.id ?? null;
@@ -69,6 +69,7 @@ export const FilterGroupsBody = ({
           featureData={filterGroupData}
           isChangeOrderHorizontal={false}
           countIndex={countIndex}
+          noChangeOrder={false}
         />
       </div>
     );

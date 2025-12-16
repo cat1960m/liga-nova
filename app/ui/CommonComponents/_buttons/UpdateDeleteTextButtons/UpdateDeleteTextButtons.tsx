@@ -12,7 +12,7 @@ import { CountIndex, StaticTexts } from "@/app/dictionaries/definitions";
 import styles from "./updateDeleteTextButtons.module.css";
 import { useMemo } from "react";
 import { updateTextDescriptionsOrderData } from "@/app/lib/actionsContainer";
-import {  CONTENT_TYPE_TOOLTIP } from "@/app/lib/constants";
+import { CONTENT_TYPE_TOOLTIP } from "@/app/lib/constants";
 export type Props = {
   currentData?: FullData;
   isChangeOrder?: boolean;
@@ -26,7 +26,7 @@ export type Props = {
   onDeleteFinished?: () => void;
   countIndex: CountIndex | null;
   preview?: (data: PreviewParams) => React.ReactNode;
-  previewBaseParams?: Record<string,string>;
+  previewBaseParams?: Record<string, string>;
 };
 
 export const UpdateDeleteTextButtons = ({
@@ -41,7 +41,7 @@ export const UpdateDeleteTextButtons = ({
   onDeleteFinished,
   countIndex,
   preview,
-  previewBaseParams
+  previewBaseParams,
 }: Props) => {
   const { changeIsEditButtonDisabled, pageFullDataList } = useEditContext();
   const pathName = usePathname();
@@ -117,7 +117,7 @@ export const UpdateDeleteTextButtons = ({
       />
       {canDelete ? (
         <DeleteTextDescriptionButton
-          textDescriptionId={currentData.text_description_id}
+          currentData={currentData}
           deleteText={staticTexts.delete ?? "N/A"}
           s3Key={
             s3Key ||

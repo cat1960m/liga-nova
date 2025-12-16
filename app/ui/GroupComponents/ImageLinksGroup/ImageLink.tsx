@@ -24,7 +24,7 @@ export const ImageLink = ({
   link,
 }: Props) => {
   return (
-    <div className={styles.item} style={{ border: "4px solid green" }}>
+    <div className={styles.item}>
       {value ? (
         <Image
           src={value}

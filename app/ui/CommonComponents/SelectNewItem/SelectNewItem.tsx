@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import styles from "./selectNewItem.module.css";
 import { useEditContext } from "@/app/ui/PageComponents/EditContextProvider";
@@ -38,7 +40,7 @@ export const SelectNewItem = ({ groupOptions, onSelect }: Props) => {
           <div className={styles.main}>
             <div className={styles.button_container}>
               <CommonButton onClick={() => setIsModalOpen(false)}>
-                {staticTexts?.cancel}
+                {staticTexts?.close}
               </CommonButton>
             </div>
             <div className={styles.container}>

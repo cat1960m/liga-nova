@@ -62,9 +62,7 @@ export const ShowItem = ({
 
   const color = image.price === 1 ? "white" : "black";
 
-  const preview = (params: PreviewParams) => (
-    <Preview {...params} />
-  );
+  const preview = (params: PreviewParams) => <Preview {...params} />;
   return (
     <ItemContainerUpdateTextDescriptionDeleteFeature
       currentData={image}

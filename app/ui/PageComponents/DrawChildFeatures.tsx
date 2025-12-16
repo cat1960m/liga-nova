@@ -3,6 +3,7 @@ import { FullData, MainParams } from "@/app/lib/definitions";
 import { ShowFeatureGroup } from "./ShowFeatureGroup/ShowFeatureGroup";
 import { Tabs } from "../GroupComponents/Tabs/Tabs";
 import { LayoutParent } from "../GroupComponents/LayoutParent/LayoutParent";
+import { CountIndex } from "@/app/dictionaries/definitions";
 
 export type Props = {
   childFeatureDataList: FullData[];
@@ -10,6 +11,7 @@ export type Props = {
   pageFullDataList: FullData[];
   parentFeatureId: number;
   pageId: number;
+  countIndex: CountIndex;
 };
 
 export const DrawChildFeature = ({
@@ -17,6 +19,7 @@ export const DrawChildFeature = ({
   params,
   pageFullDataList,
   pageId,
+  countIndex
 }: Props) => {
   const childFeatureFirstItem = childFeatureDataList[0];
 
@@ -31,6 +34,7 @@ export const DrawChildFeature = ({
         pageFullDataList={pageFullDataList}
         params={params}
         pageId={pageId}
+        countIndex={countIndex}
       />
     );
   }
@@ -42,6 +46,7 @@ export const DrawChildFeature = ({
         pageFullDataList={pageFullDataList}
         params={params}
         pageId={pageId}
+        countIndex={countIndex}
       />
     );
   }
@@ -53,6 +58,7 @@ export const DrawChildFeature = ({
         pageFullDataList={pageFullDataList}
         params={params}
         pageId={pageId}
+        countIndex={countIndex}
       />
     );
   }

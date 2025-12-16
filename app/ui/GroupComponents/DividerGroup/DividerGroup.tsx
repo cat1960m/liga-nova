@@ -1,30 +1,31 @@
-import { ItemContainerAddTextDescriptionDeleteFeature } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerAddTextDescriptionDeleteFeature";
 import { FullData, MainParams } from "@/app/lib/definitions";
 import styles from "./dividerGroup.module.css";
 import { getIsEditNoDelete } from "@/app/lib/utils";
+import { ItemContainerDeleteFeature } from "../../CommonComponents/_itemGroupContainer/ItemContainerDeleteFeature";
+import { CountIndex } from "@/app/dictionaries/definitions";
 
 export type Props = {
   featureData: FullData[];
   params: MainParams;
+  countIndex: CountIndex;
 };
 
-export const DividerGroup = ({ params, featureData }: Props) => {
+export const DividerGroup = ({ params, featureData, countIndex }: Props) => {
   const { staticTexts } = params;
   const { isEdit, noDelete } = getIsEditNoDelete(params);
 
   return (
-    <ItemContainerAddTextDescriptionDeleteFeature
-      isNoAddButton
-      deleteButtonText={staticTexts.delete ?? "N/A"}
+    <ItemContainerDeleteFeature
+      deleteText={staticTexts.delete ?? "N/A"}
       featureData={featureData}
       isEdit={isEdit}
-      addButtonText=""
-      textDescriptionType=""
       isChangeOrderHorizontal={false}
       marginTop={10}
       noDelete={noDelete}
+      countIndex={countIndex}
+      noChangeOrder={false}
     >
       <div className={styles.divider} />
-    </ItemContainerAddTextDescriptionDeleteFeature>
+    </ItemContainerDeleteFeature>
   );
 };

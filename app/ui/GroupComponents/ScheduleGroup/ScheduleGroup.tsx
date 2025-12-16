@@ -6,13 +6,15 @@ import styles from "./showScheduleGroup.module.css";
 import { ShowSCheduleName } from "./ShowScheduleName";
 import { ItemContainerAddTextDescriptionDeleteFeature } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerAddTextDescriptionDeleteFeature";
 import { getIsEditNoDelete } from "@/app/lib/utils";
+import { CountIndex } from "@/app/dictionaries/definitions";
 
 export type Props = {
   groupData: FullData[];
   params: MainParams;
+  countIndex: CountIndex;
 };
 
-export const ShowScheduleGroup = ({ groupData, params }: Props) => {
+export const ShowScheduleGroup = ({ groupData, params, countIndex }: Props) => {
   const name = groupData.find((item) => item.text_type === SCHEDULE_NAME);
   const items = groupData.filter((item) => item.text_type === SCHEDULE_ITEM);
   const { staticTexts, lang } = params;
@@ -28,6 +30,7 @@ export const ShowScheduleGroup = ({ groupData, params }: Props) => {
       isChangeOrderHorizontal={false}
       marginTop={20}
       noDelete={noDelete}
+      countIndex={countIndex}
     >
       <div className={styles.container}>
         <ShowSCheduleName
@@ -45,7 +48,7 @@ export const ShowScheduleGroup = ({ groupData, params }: Props) => {
                 staticTexts={staticTexts}
                 lang={lang}
                 isEdit={isEdit}
-                countIndex={{count: items.length, index}}
+                countIndex={{ count: items.length, index }}
               />
             );
           })}

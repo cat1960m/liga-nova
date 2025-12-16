@@ -21,8 +21,9 @@ export async function POST(req: Request) {
 
     try {
       const command = new DeleteObjectCommand(params);
-      await s3Client.send(command);
-      console.log("-------------deleted " + s3Key);
+      //vremenno - for undo
+      //await s3Client.send(command);
+      console.log("-------------deleted " + s3Key, s3Client, command);
       return NextResponse.json({ result: "OK" });
     } catch (error) {
       return NextResponse.json({ status: 500, error });

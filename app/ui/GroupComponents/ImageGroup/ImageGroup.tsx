@@ -8,17 +8,20 @@ import { getIsEditNoDelete } from "@/app/lib/utils";
 import styles from "./imageGroup.module.css";
 import cn from "clsx";
 import Image from "next/image";
+import { CountIndex } from "@/app/dictionaries/definitions";
 
 export type Props = {
   groupData: FullData[];
   params: MainParams;
   pageFullDataList: FullData[];
+  countIndex: CountIndex;
 };
 
 export const ShowImageGroup = ({
   groupData,
   params,
   pageFullDataList,
+  countIndex,
 }: Props) => {
   const imageData = groupData.find((item) => item.text_type === IMAGE);
   if (!imageData) {
@@ -31,7 +34,7 @@ export const ShowImageGroup = ({
   const { staticTexts, lang } = params;
   const { isEdit, noDelete } = getIsEditNoDelete(params);
 
-  const preview = ({value}: PreviewParams) => {
+  const preview = ({ value }: PreviewParams) => {
     if (!value) {
       return "No file";
     }
@@ -52,7 +55,7 @@ export const ShowImageGroup = ({
       marginTop={0}
       noDelete={noDelete}
       heightValue={isInLayout ? "100%" : undefined}
-      countIndex={null}
+      countIndex={countIndex}
       preview={preview}
     >
       {imageData?.value ? (

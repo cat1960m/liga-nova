@@ -9,13 +9,15 @@ import { useState } from "react";
 import { ImageActionGroupItem } from "./ImageAtionGroupItem";
 import { ItemContainerAddTextDescriptionDeleteFeature } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerAddTextDescriptionDeleteFeature";
 import { getIsEditNoDelete } from "@/app/lib/utils";
+import { CountIndex } from "@/app/dictionaries/definitions";
 
 export type Props = {
   groupData: FullData[];
   params: MainParams;
+  countIndex: CountIndex;
 };
 //shares page
-export const ImageActionsGroup = ({ groupData, params }: Props) => {
+export const ImageActionsGroup = ({ groupData, params, countIndex }: Props) => {
   const [isModalShown, setIsModalShown] = useState<boolean>(false);
   const groupDataMain = groupData.filter(
     (item) => item.content_type !== CONTENT_TYPE_TOOLTIP
@@ -35,6 +37,7 @@ export const ImageActionsGroup = ({ groupData, params }: Props) => {
       isChangeOrderHorizontal={false}
       marginTop={20}
       noDelete={noDelete}
+      countIndex={countIndex}
     >
       <div className={cn(styles.container)}>
         {groupDataMain.map((item, index) => (
@@ -50,7 +53,7 @@ export const ImageActionsGroup = ({ groupData, params }: Props) => {
               groupItemMain={item}
               isModalShown={isModalShown}
               changeModalState={changeModalState}
-              countIndex={{count: groupDataMain.length, index}}
+              countIndex={{ count: groupDataMain.length, index }}
             />
           </div>
         ))}

@@ -1,39 +1,31 @@
 "use client";
 
-import { usePathname } from "next/navigation";
-import axios from "axios";
 import { useEditContext } from "../../PageComponents/EditContextProvider";
-import { removeTextDescriptionData } from "@/app/lib/actionsContainer";
 import { DeleteButton } from "./DeleteButton/DeleteButton";
+import { FullData } from "@/app/lib/definitions";
+import { useRemoveTextDescription } from "../../hooks/useRemoveTextDescription";
 
 export const DeleteTextDescriptionButton = ({
-  textDescriptionId,
   deleteText,
   s3Key,
   onDeleteFinished,
+  currentData,
 }: {
-  textDescriptionId: number;
   deleteText: string;
   s3Key?: string;
   onDeleteFinished?: () => void;
+  currentData: FullData;
 }) => {
-  const pathName = usePathname();
   const { isEditButtonsDisabled, changeIsEditButtonDisabled } =
     useEditContext();
+  const { removeTextDescription } = useRemoveTextDescription();
 
   const handleDelete = async () => {
     changeIsEditButtonDisabled(true);
-    await removeTextDescriptionData({
-      id: textDescriptionId,
-      pathName: pathName,
-    });
-    changeIsEditButtonDisabled(false);
 
-    if (s3Key) {
-      axios.post("/api/removeFile", {
-        s3Key,
-      });
-    }
+    await removeTextDescription({ fullData: currentData, s3Key });
+
+    changeIsEditButtonDisabled(false);
     onDeleteFinished?.();
   };
 

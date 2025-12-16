@@ -10,16 +10,18 @@ import {
 import { LigaGroupItem } from "./LigaGroupItem/LigaGroupItem";
 import Link from "next/link";
 import styles from "./ligaGroup.module.css";
-import { ItemContainerAddTextDescriptionDeleteFeature } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerAddTextDescriptionDeleteFeature";
 import { getIsEditNoDelete } from "@/app/lib/utils";
 import { CountIndex } from "@/app/dictionaries/definitions";
+import { ItemContainerAddTextDescription } from "../../CommonComponents/_itemGroupContainer/ItemContainerAddTextDescription";
+import { ItemContainerDeleteFeature } from "../../CommonComponents/_itemGroupContainer/ItemContainerDeleteFeature";
 
 export type Props = {
   groupData: FullData[];
   params: MainParams;
+  countIndex: CountIndex;
 };
 
-export const LigaGroup = ({ groupData, params }: Props) => {
+export const LigaGroup = ({ groupData, params, countIndex }: Props) => {
   const dataTitle = groupData.find((item) => item.text_type === LIGA_TITLE);
 
   const dataTelephone = groupData.find(
@@ -36,96 +38,104 @@ export const LigaGroup = ({ groupData, params }: Props) => {
   const { isEdit, noDelete } = getIsEditNoDelete(params);
 
   return (
-    <div className={styles.container}>
-      <LigaGroupItem
-        isEdit={isEdit}
-        staticTexts={staticTexts}
-        lang={lang}
-        data={dataTitle}
-        countIndex={null}
-      />
-      <div className={styles.group}>
+    <ItemContainerDeleteFeature
+      deleteText={staticTexts.delete ?? "N/A"}
+      featureData={groupData}
+      isEdit={isEdit}
+      isChangeOrderHorizontal={false}
+      marginTop={20}
+      noDelete={noDelete}
+      countIndex={countIndex}
+      noChangeOrder={false}
+    >
+      <div className={styles.container}>
         <LigaGroupItem
           isEdit={isEdit}
           staticTexts={staticTexts}
           lang={lang}
-          data={dataAddress}
+          data={dataTitle}
           countIndex={null}
         />
+        <div className={styles.group}>
+          <LigaGroupItem
+            isEdit={isEdit}
+            staticTexts={staticTexts}
+            lang={lang}
+            data={dataAddress}
+            countIndex={null}
+          />
 
-        <LigaGroupItem
+          <LigaGroupItem
+            isEdit={isEdit}
+            staticTexts={staticTexts}
+            lang={lang}
+            data={dataTelephone}
+            countIndex={null}
+          />
+        </div>
+        <ItemContainerAddTextDescription
+          featureData={groupData}
+          addButtonText={staticTexts.addGroupItem ?? "N/A"}
+          textDescriptionType={LIGA_SERVICE}
           isEdit={isEdit}
-          staticTexts={staticTexts}
-          lang={lang}
-          data={dataTelephone}
-          countIndex={null}
-        />
-      </div>
-      <ItemContainerAddTextDescriptionDeleteFeature
-        deleteButtonText={staticTexts.delete ?? "N/A"}
-        featureData={groupData}
-        addButtonText={staticTexts.addGroupItem ?? "N/A"}
-        textDescriptionType={LIGA_SERVICE}
-        isEdit={isEdit}
-        isChangeOrderHorizontal={false}
-        marginTop={20}
-        noDelete={noDelete}
-      >
-        <>
-          {isEdit
-            ? dataServiceList.map((item, index) => {
-                return (
-                  <div key={item.text_content_id ?? "" + "_" + index}>
-                    <LigaGroupItem
-                      isEdit={isEdit}
-                      staticTexts={staticTexts}
-                      lang={lang}
-                      data={item}
-                      countIndex={{ count: dataServiceList.length, index }}
-                    />
-                  </div>
-                );
-              })
-            : null}
-
-          {!isEdit ? (
-            <div className={styles.list}>
-              {dataServiceList.map((item, index) => {
-                const countIndex: CountIndex = {
-                  count: dataServiceList.length,
-                  index,
-                };
-                return (
-                  <div
-                    key={item.text_content_id ?? "" + "_" + index}
-                    className={styles.item}
-                  >
-                    {item.link ? (
-                      <Link href={`/${params.lang}/${item.link}`}>
-                        <LigaGroupItem
-                          isEdit={isEdit}
-                          staticTexts={staticTexts}
-                          lang={lang}
-                          data={item}
-                          countIndex={countIndex}
-                        />
-                      </Link>
-                    ) : (
+          marginTop={20}
+        >
+          <>
+            {isEdit
+              ? dataServiceList.map((item, index) => {
+                  return (
+                    <div key={item.text_content_id ?? "" + "_" + index}>
                       <LigaGroupItem
                         isEdit={isEdit}
                         staticTexts={staticTexts}
                         lang={lang}
                         data={item}
-                        countIndex={countIndex}
+                        countIndex={{ count: dataServiceList.length, index }}
                       />
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          ) : null}
-        </>
-      </ItemContainerAddTextDescriptionDeleteFeature>
-    </div>
+                    </div>
+                  );
+                })
+              : null}
+
+            {!isEdit ? (
+              <div className={styles.list}>
+                {dataServiceList.map((item, index) => {
+                  const countIndexInner: CountIndex = {
+                    count: dataServiceList.length,
+                    index,
+                  };
+                  return (
+                    <div
+                      key={item.text_content_id ?? "" + "_" + index}
+                      className={styles.item}
+                    >
+                      {item.link ? (
+                        <Link href={`/${params.lang}/${item.link}`}>
+                          <LigaGroupItem
+                            isEdit={isEdit}
+                            staticTexts={staticTexts}
+                            lang={lang}
+                            data={item}
+                            countIndex={countIndexInner}
+                          />
+                        </Link>
+                      ) : (
+                        <LigaGroupItem
+                          isEdit={isEdit}
+                          staticTexts={staticTexts}
+                          lang={lang}
+                          data={item}
+                          countIndex={countIndexInner}
+                        />
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            ) : null}
+          </>
+        </ItemContainerAddTextDescription>
+      </div>
+    </ItemContainerDeleteFeature>
   );
 };

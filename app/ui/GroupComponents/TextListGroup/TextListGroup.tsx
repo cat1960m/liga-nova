@@ -16,17 +16,20 @@ import { ItemContainerDeleteFeature } from "@/app/ui/CommonComponents/_itemGroup
 
 import styles from "./textListGroup.module.css";
 import { useContainerData } from "../../hooks/useContainerData";
+import { CountIndex } from "@/app/dictionaries/definitions";
 
 export type Props = {
   groupData: FullData[];
   params: MainParams;
   pageFullDataList: FullData[];
+  countIndex: CountIndex;
 };
 
 export const TextListGroup = ({
   groupData,
   params,
   pageFullDataList,
+  countIndex,
 }: Props) => {
   const [lastAddedId, setLastAddedId] = useState<number | null>(null);
   const ref = useRef<HTMLDivElement>(null);
@@ -101,6 +104,7 @@ export const TextListGroup = ({
           onDeleteFinished={handleDeleteFinished}
           marginTop={0}
           countIndex={{ count: ids.length, index }}
+          noChangeOrder={false}
         >
           <div className={styles.item}>
             {textName ? (
@@ -140,7 +144,6 @@ export const TextListGroup = ({
     <ItemContainerAddChildFeatureDeleteFeature
       groupData={groupData}
       isEdit={isEdit}
-      pageName={params.pageName}
       onChildFeatureAdded={handleChildFeatureAdded}
       addButtonText={staticTexts.addGroupItem ?? "N/A"}
       deleteButtonText={staticTexts.delete ?? "N/A"}
@@ -149,6 +152,8 @@ export const TextListGroup = ({
       featureSubtype={TEXT_LIST_GROUP_ITEM}
       marginTop={20}
       noDelete={noDelete}
+      countIndex={countIndex}
+      noChangeOrder={false}
     >
       <div ref={ref}>
         <ScrollContainer

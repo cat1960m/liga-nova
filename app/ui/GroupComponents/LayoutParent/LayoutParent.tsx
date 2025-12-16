@@ -5,14 +5,16 @@ import { DrawFeatureContainer } from "../../PageComponents/DrawFeatureContainer/
 import { LAYOUT_ITEM_LEFT, LAYOUT_ITEM_RIGHT } from "@/app/lib/constants";
 import styles from "./layoutParent.module.css";
 import cn from "clsx";
-import { ItemContainerAddTextDescriptionDeleteFeature } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerAddTextDescriptionDeleteFeature";
 import { getIsEditNoDelete } from "@/app/lib/utils";
+import { ItemContainerDeleteFeature } from "../../CommonComponents/_itemGroupContainer/ItemContainerDeleteFeature";
+import { CountIndex } from "@/app/dictionaries/definitions";
 
 export type Props = {
   tabsData: FullData;
   pageFullDataList: FullData[];
   params: MainParams;
   pageId: number;
+  countIndex: CountIndex;
 };
 
 export const LayoutParent = ({
@@ -20,6 +22,7 @@ export const LayoutParent = ({
   tabsData,
   params,
   pageId,
+  countIndex,
 }: Props) => {
   const layoutItems = pageFullDataList.filter(
     (item) => item.parent_feature_id === tabsData.id
@@ -44,16 +47,15 @@ export const LayoutParent = ({
   const { isDeepMode } = getIsEditNoDelete(params);
 
   return (
-    <ItemContainerAddTextDescriptionDeleteFeature
+    <ItemContainerDeleteFeature
       isEdit={isDeepMode}
-      deleteButtonText={staticTexts.delete ?? "N/A"}
+      deleteText={staticTexts.delete ?? "N/A"}
       featureData={[tabsData]}
-      isNoAddButton
-      addButtonText=""
-      textDescriptionType=""
       isChangeOrderHorizontal={false}
       marginTop={20}
       noDelete={!isDeepMode}
+      countIndex={countIndex}
+      noChangeOrder={false}
     >
       <div className={styles.container}>
         <div
@@ -86,6 +88,6 @@ export const LayoutParent = ({
           />
         </div>
       </div>
-    </ItemContainerAddTextDescriptionDeleteFeature>
+    </ItemContainerDeleteFeature>
   );
 };

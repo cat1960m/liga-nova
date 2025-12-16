@@ -1,9 +1,10 @@
 "use client";
 
 import { CommonButton } from "./CommonButton";
-import { usePathname } from "next/navigation";
 import { useEditContext } from "../../PageComponents/EditContextProvider";
+import { useUpdateFeature } from "../../hooks/useUpdateFeature";
 import { updateFeatureSubtypeFilterIdsData } from "@/app/lib/actionsContainer";
+import { usePathname } from "next/navigation";
 
 export type Props = {
   featureId: number;
@@ -12,6 +13,7 @@ export type Props = {
   buttonText: string;
   isDisabled?: boolean;
   onSaved?: () => void;
+  pageName: string;
 };
 
 export const UpdateFeatureFilterIdsButton = ({
@@ -21,18 +23,25 @@ export const UpdateFeatureFilterIdsButton = ({
   buttonText,
   isDisabled,
   onSaved,
+  pageName
 }: Props) => {
-  const pathName = usePathname();
   const { isEditButtonsDisabled, changeIsEditButtonDisabled } =
     useEditContext();
+  const {addFeatureToHistoryOnUpdate } = useUpdateFeature();
+  const pathName = usePathname();
 
   const handleSave = async () => {
+    await addFeatureToHistoryOnUpdate({
+      featureId,
+      page: pageName,
+    })
+    
     changeIsEditButtonDisabled(true);
     await updateFeatureSubtypeFilterIdsData({
       id: featureId,
-      pathName,
       subtype,
       filterIds,
+      pathName
     });
     changeIsEditButtonDisabled(false);
     onSaved?.();

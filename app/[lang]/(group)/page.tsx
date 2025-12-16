@@ -24,8 +24,6 @@ export default async function Page({
 
   const dict = await getDictionary(lang as "en" | "ua");
 
-  console.log("----group");
-
   const pars: MainParams = {
     pageName: HOME,
     lang,

@@ -1,3 +1,5 @@
+"use client";
+
 import { TrashIcon } from "@heroicons/react/24/outline";
 import { CommonButton } from "../CommonButton";
 import { ICON_BUTTON_WIDTH, ICON_IN_BUTTON_WIDTH } from "@/app/lib/constants";
@@ -10,9 +12,10 @@ export type Props = {
   title: string;
   onClick: () => void;
   isDisabled: boolean;
+  text?: string;
 };
 
-export const DeleteButton = ({ title, onClick, isDisabled }: Props) => {
+export const DeleteButton = ({ title, onClick, isDisabled,text }: Props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { staticTexts } = useEditContext();
 
@@ -32,15 +35,16 @@ export const DeleteButton = ({ title, onClick, isDisabled }: Props) => {
       <CommonButton
         onClick={handleClick}
         isDisabled={isDisabled}
-        width={ICON_BUTTON_WIDTH}
+        width={!text ?ICON_BUTTON_WIDTH : undefined}
       >
-        <TrashIcon color="black" width={ICON_IN_BUTTON_WIDTH} title={title} />
+        {text ?? ""}
+        {!text ?<TrashIcon color="black" width={ICON_IN_BUTTON_WIDTH} title={title} />: null}
       </CommonButton>
 
       {isModalOpen ? (
-        <CreateModal onClose={handleClose} left={"25%"} width={"50%"}>
+        <CreateModal onClose={handleClose} width={"50%"}>
           <div className={styles.container}>
-            <div className={styles.title}>{staticTexts?.wantDelete ?? ""}</div>
+            <div className={styles.title}>{text? title : staticTexts?.wantDelete ?? ""}</div>
             <div className={styles.buttons}>
               <CommonButton onClick={onYes} text="Yes" />
               <CommonButton onClick={handleClose} text="No" />

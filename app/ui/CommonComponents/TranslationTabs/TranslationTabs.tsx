@@ -62,6 +62,7 @@ const TranslationTabsInner = (
   // Expose methods to parent
   useImperativeHandle(ref, () => ({
     restore,
+    saveTabs: () => {}
   }));
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
@@ -70,7 +71,6 @@ const TranslationTabsInner = (
 
   const handleTextChange = (value: string) => {
     setInputValue(value);
-    console.log("---===handleTextChange");
 
     const index = tabs.findIndex((tab) => tab.langUpperCase === selectedTab);
     if (index >= 0) {
@@ -151,7 +151,15 @@ const TranslationTabsInner = (
 
   return (
     <div className={styles.container}>
-      <div className={styles.title}>{title}:</div>
+      <div className={styles.title_container}>
+        <div className={styles.title}>{title}:</div>
+        <CommonButton
+          onClick={handleTranslate}
+          isDisabled={isDisabled}
+          text={staticTexts.translate ?? "N/A"}
+        />
+      </div>
+
       <div className={styles.tabs}>
         {tabs.map((tab) => (
           <div
@@ -193,13 +201,6 @@ const TranslationTabsInner = (
             <QuillEditor text={inputValue ?? ""} onChange={handleTextChange} />
           </div>
         ) : null}
-      </div>
-      <div className={styles.translate_container}>
-        <CommonButton
-          onClick={handleTranslate}
-          isDisabled={isDisabled}
-          text={staticTexts.translate ?? "N/A"}
-        />
       </div>
       {error ? <div className={styles.red}>{error} </div> : null}
     </div>

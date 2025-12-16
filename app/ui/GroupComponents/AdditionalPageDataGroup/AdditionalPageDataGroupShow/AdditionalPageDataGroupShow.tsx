@@ -5,21 +5,26 @@ import { StaticTexts } from "@/app/dictionaries/definitions";
 
 import styles from "./additionalPageDataGroupShow.module.css";
 import { ScrollContainer } from "@/app/ui/CommonComponents/ScrollContainer/ScrollContainer";
+import { useIcons } from "@/app/ui/hooks/useIcons";
+import { TRAINERS_PAGE_NAME } from "@/app/lib/constants";
 
 export type Props = {
   pageFullDataList: FullData[];
   pageName: string;
   staticTexts: StaticTexts;
   structuredListItemsData: StructuredFeatureData;
+  lang: string;
 };
 
 export const AdditionalPageDataGroupShow = ({
   pageFullDataList,
   pageName,
   staticTexts,
-  structuredListItemsData
+  structuredListItemsData,
+  lang
 }: Props) => {
   const ref = useRef<HTMLDivElement>(null);
+  const {premiumIcon} = useIcons({lang, isNoUseIcon: pageName !== TRAINERS_PAGE_NAME})
 
   if (!structuredListItemsData.sortedChildFeaFeatureIds.length) {
     return null;
@@ -33,6 +38,7 @@ export const AdditionalPageDataGroupShow = ({
           pageName={pageName}
           pageFullDataList={pageFullDataList}
           staticTexts={staticTexts}
+          srcPremiumIcon={premiumIcon?.value ?? ""}
         />
       </div>
     );

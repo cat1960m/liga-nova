@@ -9,13 +9,15 @@ import { useState } from "react";
 import { ImageLinkGroupItem } from "./ImageLinkGroupItem";
 import { ItemContainerAddTextDescriptionDeleteFeature } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerAddTextDescriptionDeleteFeature";
 import { getIsEditNoDelete } from "@/app/lib/utils";
+import { CountIndex } from "@/app/dictionaries/definitions";
 
 export type Props = {
   groupData: FullData[];
   params: MainParams;
+  countIndex: CountIndex;
 };
 // main page
-export const ImageLinksGroup = ({ groupData, params }: Props) => {
+export const ImageLinksGroup = ({ groupData, params, countIndex }: Props) => {
   const [isModalShown, setIsModalShown] = useState<boolean>(false);
   const groupDataMain = groupData.filter(
     (item) => item.content_type !== CONTENT_TYPE_TOOLTIP
@@ -34,6 +36,7 @@ export const ImageLinksGroup = ({ groupData, params }: Props) => {
       marginTop={20}
       isChangeOrderHorizontal={false}
       noDelete={noDelete}
+      countIndex={countIndex}
     >
       <div className={cn(styles.container)}>
         {groupDataMain.map((item, index) => (
@@ -47,7 +50,7 @@ export const ImageLinksGroup = ({ groupData, params }: Props) => {
               pageName={params.pageName}
               changeModalState={changeModalState}
               isModalShown={isModalShown}
-              countIndex={{count: groupDataMain.length, index}}
+              countIndex={{ count: groupDataMain.length, index }}
             />
           </div>
         ))}

@@ -16,7 +16,7 @@ export type Props = {
     filter: FullData;
     value: boolean;
   }) => void;
-  countIndex: CountIndex | null;
+  countIndex: CountIndex;
 };
 
 export const ShowFilter = ({
@@ -26,7 +26,7 @@ export const ShowFilter = ({
   isEdit,
   inputValue,
   onFilterSelectionChanged,
-  countIndex
+  countIndex,
 }: Props) => {
   return (
     <ItemContainerUpdateDeleteTextDescription

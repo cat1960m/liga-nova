@@ -6,7 +6,7 @@ import { MobileMenu } from "../ui/LayoutComponents/MobileMenu/MobileMenu";
 import { BaseMenu } from "../ui/LayoutComponents/BaseMenu/BaseMenu";
 import { EditMode } from "../ui/LayoutComponents/EditMode/EditMode";
 import { getPageTitlesData } from "../lib/actionsContainer";
-import { Undo } from "../ui/LayoutComponents/Undo/Undo";
+import { getDictionary } from "../lib/dictionaries";
 
 
 export default async function Layout({
@@ -22,6 +22,8 @@ export default async function Layout({
   const pages = await getPageTitlesData(lang);
   const res = await auth();
   const isAuthenticated = !!res?.user;
+  const dict = await getDictionary(lang as "en" | "ua");
+
 
   if (!pages) {
     return;
@@ -48,8 +50,7 @@ export default async function Layout({
       </div>
 
       <div className={styles.panel}>
-        <Undo />
-        {isAuthenticated ? <ManageIconsModal lang={lang} /> : null}
+        {isAuthenticated ? <ManageIconsModal lang={lang} staticTexts={dict.common}/> : null}
 
         <EditMode isAuthenticated={isAuthenticated} />
       </div>

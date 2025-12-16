@@ -3,11 +3,11 @@ import { ItemGroupContainerCommon } from "./ItemGroupContainerCommon/ItemGroupCo
 import { DeleteFeatureChangeOrderButtons } from "../_buttons/DeleteFeatureChangeOrderButtons/DeleteFeatureChangeOrderButtons";
 import { AddChildFeatureButton } from "../_buttons/AddChildFeatureButton";
 import { Buttons } from "./Buttons/Buttons";
+import { CountIndex } from "@/app/dictionaries/definitions";
 
 export type Props = {
   children: React.ReactNode;
   groupData: FullData[];
-  pageName: string;
   isEdit: boolean;
   onDeleteFinished?: () => void;
   onChildFeatureAdded?: (id: number) => void;
@@ -18,13 +18,14 @@ export type Props = {
   featureSubtype: string;
   marginTop: number;
   noDelete: boolean;
+  noChangeOrder: boolean;
   noAdd?: boolean;
+  countIndex: CountIndex | null;
 };
 
 export const ItemContainerAddChildFeatureDeleteFeature = ({
   children,
   groupData,
-  pageName,
   isEdit,
   onDeleteFinished,
   onChildFeatureAdded,
@@ -35,7 +36,9 @@ export const ItemContainerAddChildFeatureDeleteFeature = ({
   featureSubtype,
   marginTop,
   noDelete,
+  noChangeOrder,
   noAdd,
+  countIndex,
 }: Props) => {
   const getEditButtons = () => {
     const groupFeatureId = groupData[0]?.id;
@@ -51,7 +54,6 @@ export const ItemContainerAddChildFeatureDeleteFeature = ({
             <AddChildFeatureButton
               parentFeatureId={groupFeatureId}
               text={addButtonText}
-              pageName={pageName}
               textTypes={textTypes}
               type={featureType}
               subtype={featureSubtype}
@@ -60,18 +62,19 @@ export const ItemContainerAddChildFeatureDeleteFeature = ({
           ) : null}
 
           {!noDelete ? (
-              <DeleteFeatureChangeOrderButtons
-                deleteText={deleteButtonText}
-                featureData={groupData}
-                onDeleteFinished={onDeleteFinished}
-                countIndex={null}
-              />
+            <DeleteFeatureChangeOrderButtons
+              deleteText={deleteButtonText}
+              featureData={groupData}
+              onDeleteFinished={onDeleteFinished}
+              countIndex={countIndex}
+              noChangeOrder={noChangeOrder}
+            />
           ) : null}
         </>
       </Buttons>
     );
   };
-  
+
   return (
     <ItemGroupContainerCommon
       showGroupButtons={isEdit}

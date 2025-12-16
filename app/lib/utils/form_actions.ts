@@ -74,9 +74,6 @@ export const registerFormAction = async (
 
   const { firstName, lastName, phone, email, date, time } =
     validatedFields.data;
-  console.log("formData", firstName, lastName, phone, email, date, time);
-  console.log("id", id);
-  console.log("type", type);
 
   try {
     await sql`

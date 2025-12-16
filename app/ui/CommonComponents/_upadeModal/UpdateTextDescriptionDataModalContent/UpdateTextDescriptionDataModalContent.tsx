@@ -5,40 +5,28 @@ import {
   ChangeEventHandler,
   useEffect,
   useMemo,
-  useCallback,
   useRef,
 } from "react";
 import {
   FullData,
   PageData,
   PreviewParams,
-  TabType,
-  TextContent,
   TranslationTabsHandle,
 } from "@/app/lib/definitions";
 import { TranslationTabs } from "../../TranslationTabs/TranslationTabs";
 import { CommonButton } from "../../_buttons/CommonButton";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { usePathname } from "next/navigation";
-import {
-  ICON_SIZE,
-  CONTENT_TYPE_TOOLTIP,
-  TRANSLATE_LANGUAGES,
-  CONTENT_TYPE_MAIN,
-} from "@/app/lib/constants";
+import { ICON_SIZE } from "@/app/lib/constants";
 
 import styles from "./updateTextDescriptionDataModalContent.module.css";
-import axios from "axios";
 import Image from "next/image";
-import {
-  addTextData,
-  getPageData,
-  getPageTitlesData,
-  getTextContentsData,
-  updatePriceValueLinkData,
-  updateTextData,
-} from "@/app/lib/actionsContainer";
+import { getPageTitlesData } from "@/app/lib/actionsContainer";
 import { revalidate } from "@/app/lib/actions_fitness";
+import { useUpdateTextDescription } from "@/app/ui/hooks/useUpdateTextDescription";
+import { useTranslationTabs } from "../../TranslationTabs/useTranslationTabs";
+import { useIcons } from "@/app/ui/hooks/useIcons";
+import { useFileImage } from "@/app/ui/hooks/useFileImage";
 
 export type UseItems = {
   text?: "simple" | "area" | "quill";
@@ -54,8 +42,7 @@ export type Props = {
   lang: string;
   staticTexts: StaticTexts;
   useItems: UseItems;
-  preview?: (params: PreviewParams
-  ) => React.ReactNode;
+  preview?: (params: PreviewParams) => React.ReactNode;
   previewBaseParams?: Record<string, string>;
 };
 
@@ -68,25 +55,27 @@ export const UpdateTextDescriptionDataModalContent = ({
   preview,
   previewBaseParams,
 }: Props) => {
-  const [textContentsMain, setTextContentsMain] = useState<
-    TextContent[] | null
-  >(null);
-  const [textContentsTooltips, setTextContentsTooltips] = useState<
-    TextContent[] | null
-  >(null);
-  const [tabsMain, setTabsMain] = useState<TabType[] | null>([]);
-  const [tabsTooltip, setTabsTooltip] = useState<TabType[] | null>(null);
+  const textDescriptionId = currentData.text_description_id;
+  console.log("textDescriptionId", textDescriptionId, currentData);
+
+  const {
+    tabsMain,
+    setTabsMain,
+    tabsTooltip,
+    setTabsTooltip,
+    saveTabsMain,
+    saveTabsTooltip,
+  } = useTranslationTabs(textDescriptionId);
+
   const [isSaveDisabled, setIsSaveDisabled] = useState(true);
-  const [previewImageUrl, setPreviewImageUrl] = useState<string>("");
   const translateTabsMainRef = useRef<TranslationTabsHandle>(null);
   const translateTabsTooltipRef = useRef<TranslationTabsHandle>(null);
 
   const pathName = usePathname();
-
-  const textDescriptionId = currentData.text_description_id;
+  const { updatePriceValueLink, addTextDescriptionToHistoryOnUpdate } =
+    useUpdateTextDescription();
 
   const [priceValue, setPriceValue] = useState<number>(currentData.price ?? 0);
-  const [icons, setIcons] = useState<FullData[]>([]);
   const [updatedValue, setUpdatedValue] = useState<string | undefined>(
     currentData.value ?? ""
   );
@@ -94,70 +83,21 @@ export const UpdateTextDescriptionDataModalContent = ({
     useItems.link ? currentData.link ?? "" : ""
   );
   const [pages, setPages] = useState<PageData[] | null>(null);
-  const [file, setFile] = useState<File | null>(null);
-
-  const getTextData = useCallback(async () => {
-    const allContents = await getTextContentsData({
-      text_description_id: textDescriptionId,
-    });
-
-    const contentsMain =
-      allContents?.filter(
-        (content) => content.content_type === CONTENT_TYPE_MAIN
-      ) ?? [];
-    setTextContentsMain(contentsMain);
-    setTabsMain(
-      TRANSLATE_LANGUAGES.map((language) => ({
-        langUpperCase: language,
-        value: getLanguageValue({
-          lang: language.toLocaleLowerCase(),
-          textContents: contentsMain,
-        }),
-      }))
-    );
-
-    const contentsTooltips =
-      allContents?.filter(
-        (content) => content.content_type === CONTENT_TYPE_TOOLTIP
-      ) ?? [];
-    setTextContentsTooltips(contentsTooltips);
-    setTabsTooltip(
-      TRANSLATE_LANGUAGES.map((language) => ({
-        langUpperCase: language,
-        value: getLanguageValue({
-          lang: language.toLocaleLowerCase(),
-          textContents: contentsTooltips,
-        }),
-      }))
-    );
-  }, [textDescriptionId]);
+  const { icons } = useIcons({ lang, isNoUseIcon: useItems.value !== "icons" });
+  const { previewImageUrl, onFileChange, uploadFile, clearPreviewImage } =
+    useFileImage({ setIsSaveDisabled, s3Key: updatedValue });
 
   useEffect(() => {
-    const getIcons = async () => {
-      const pageFullData: FullData[] | null = await getPageData({
-        lang: "en",
-        pageName: "icon",
-      });
-
-      setIcons(pageFullData ?? []);
-    };
-
     const getPages = async () => {
       const pages1 = await getPageTitlesData(lang);
 
       setPages(pages1?.map((page) => page) ?? []);
     };
 
-    getTextData();
-
-    if (useItems.value === "icons") {
-      getIcons();
-    }
-
     if (useItems.link) {
       getPages();
     }
-  }, [lang, textDescriptionId, useItems.value, useItems.link, getTextData]);
+  }, [lang, textDescriptionId, useItems.value, useItems.link]);
 
   const pagesOptions = useMemo(() => {
     const mainOptions =
@@ -176,83 +116,30 @@ export const UpdateTextDescriptionDataModalContent = ({
 
   const handleChange = () => {
     setIsSaveDisabled(false);
-    console.log("---handleChange")
-  };
-
-  const getLanguageValue = ({
-    lang,
-    textContents,
-  }: {
-    lang: string;
-    textContents: TextContent[];
-  }) =>
-    textContents?.find((item) => item.language === lang)?.text_content ?? "";
-
-  if (!textContentsMain || !textContentsTooltips || !tabsMain || !tabsTooltip) {
-    return null;
-  }
-
-  const saveTabs = ({
-    tabs,
-    promises,
-    contentType,
-    textContents,
-  }: {
-    tabs: TabType[];
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    promises: Promise<any>[];
-    contentType: string;
-    textContents: TextContent[];
-  }) => {
-    tabs.forEach((tab) => {
-      const tabLang = tab.langUpperCase.toLocaleLowerCase();
-      const textContent = textContents.find(
-        ({ language }) => language === tabLang
-      );
-
-      if (textContent?.id) {
-        promises.push(
-          updateTextData({
-            id: textContent?.id,
-            text: tab.value,
-            contentType,
-          })
-        );
-      } else {
-        promises.push(
-          addTextData({
-            textDescriptionId,
-            lang: tabLang,
-            text: tab.value,
-            contentType,
-          })
-        );
-      }
-    });
   };
 
   const handleRestore = async () => {
-     setIsSaveDisabled(true);
-     setFile(null);
+    setIsSaveDisabled(true);
     setPriceValue(currentData.price ?? 0);
     setUpdatedValue(currentData.value ?? "");
     setLinkValue(useItems.link ? currentData.link ?? "" : "");
-    setPreviewImageUrl("");
-    await getTextData();
+    clearPreviewImage();
     translateTabsMainRef.current?.restore();
     translateTabsTooltipRef.current?.restore();
-    
-   
   };
 
   const handleSave = async () => {
-    setIsSaveDisabled(true);
+    await addTextDescriptionToHistoryOnUpdate({
+      textDescriptionId,
+      pageName: currentData.name,
+    });
 
+    setIsSaveDisabled(true);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const promises: Promise<any>[] = [];
 
     try {
-      const path = await UploadFile();
+      const path = await uploadFile();
 
       if (useItems.price || useItems.value || useItems.link) {
         const newValue = path ?? (useItems.value ? updatedValue : undefined);
@@ -260,10 +147,9 @@ export const UpdateTextDescriptionDataModalContent = ({
         const link = useItems.link ? linkValue : undefined;
 
         promises.push(
-          updatePriceValueLinkData({
+          updatePriceValueLink({
             price,
             textDescriptionId,
-            pathName,
             value: newValue,
             link,
           })
@@ -271,21 +157,11 @@ export const UpdateTextDescriptionDataModalContent = ({
       }
 
       if (useItems.text || useItems.tooltip) {
-        saveTabs({
-          tabs: tabsMain,
-          contentType: CONTENT_TYPE_MAIN,
-          promises,
-          textContents: textContentsMain,
-        });
+        saveTabsMain(promises);
       }
 
       if (useItems.tooltip) {
-        saveTabs({
-          tabs: tabsTooltip,
-          contentType: CONTENT_TYPE_TOOLTIP,
-          promises,
-          textContents: textContentsTooltips,
-        });
+        saveTabsTooltip(promises);
       }
 
       await Promise.all(promises);
@@ -320,44 +196,6 @@ export const UpdateTextDescriptionDataModalContent = ({
     setIsSaveDisabled(false);
   };
 
-  const handleFileChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-    const file = event.target.files?.[0];
-
-    if (file) {
-      setFile(file);
-      setIsSaveDisabled(false);
-      const url = URL.createObjectURL(file);
-      setPreviewImageUrl(url); // store in state
-    }
-  };
-
-  const UploadFile = async () => {
-    if (!file) return undefined;
-
-    console.log("%%%%%%%%%%--------$$$$$$ try delete image", updatedValue);
-
-    const response = await axios.post("/api/uploadFile", {
-      fileName: file.name,
-      fileType: file.type,
-      file,
-      s3Key: updatedValue,
-    });
-
-    const signedUrl = response.data.signedUrl;
-
-    await fetch(signedUrl, {
-      method: "PUT",
-      body: file,
-      headers: { "Content-Type": file.type },
-    });
-
-    const path = signedUrl.split("?")[0];
-
-    //onUploaded?.(path);
-    setFile(null);
-    return path;
-  };
-
   const handleColorChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     setPriceValue(parseInt(event.target.value));
     setIsSaveDisabled(false);
@@ -369,7 +207,7 @@ export const UpdateTextDescriptionDataModalContent = ({
         <div className={styles.container} style={{ flexGrow: 2 }}>
           <div className={styles.title}>{staticTexts["updateTranslate"]}</div>
 
-          {!!useItems.text ? (
+          {!!useItems.text && tabsMain ? (
             <TranslationTabs
               staticTexts={staticTexts}
               onChange={handleChange}
@@ -382,7 +220,7 @@ export const UpdateTextDescriptionDataModalContent = ({
             />
           ) : null}
 
-          {!!useItems.tooltip ? (
+          {!!useItems.tooltip && tabsTooltip ? (
             <TranslationTabs
               staticTexts={staticTexts}
               onChange={handleChange}
@@ -466,7 +304,7 @@ export const UpdateTextDescriptionDataModalContent = ({
           {useItems.value === "image" ? (
             <div className={styles.editItem}>
               <div className={styles.editTitle}>{`${"Image"}:`}</div>
-              <input type="file" onChange={handleFileChange} />
+              <input type="file" onChange={onFileChange} />
             </div>
           ) : null}
 
@@ -497,7 +335,7 @@ export const UpdateTextDescriptionDataModalContent = ({
             </div>
           ) : null}
         </div>
-        {preview ? (
+        {preview && tabsMain && tabsTooltip ? (
           <div
             className={
               previewBaseParams?.["isFullWidth"]
@@ -505,9 +343,9 @@ export const UpdateTextDescriptionDataModalContent = ({
                 : styles.preview
             }
           >
-            <div className={styles.editTitle}>{"Preview:"}</div>
-            {preview(
-              {
+            <div className={styles.preview_text}>{"Preview:"}</div>
+            <div className= {styles.preview_container}>
+              {preview({
                 data: currentData,
                 price: priceValue,
                 value:
@@ -522,16 +360,16 @@ export const UpdateTextDescriptionDataModalContent = ({
                   (item) => item.langUpperCase === lang.toLocaleUpperCase()
                 )?.value,
                 staticTexts,
-                baseParams: previewBaseParams
-              }
-            )}
+                baseParams: previewBaseParams,
+              })}
+            </div>
           </div>
         ) : null}
       </div>
       <div className={styles.buttons}>
         <CommonButton
           onClick={() => onClose()}
-          text={staticTexts.cancel ?? "N/A"}
+          text={staticTexts.close ?? "N/A"}
         />
         <CommonButton
           onClick={handleSave}

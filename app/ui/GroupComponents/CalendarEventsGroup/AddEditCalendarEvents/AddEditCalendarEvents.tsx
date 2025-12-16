@@ -145,7 +145,7 @@ export const AddEditCalendarEvents = ({
 
   const handleUpdate = async () => {
     if (
-      !eventFeatureData?.[0].id ||
+      !eventFeatureData?.[0] ||
       !titleInit ||
       !countInit ||
       !timeInit ||
@@ -168,7 +168,8 @@ export const AddEditCalendarEvents = ({
       timeInit,
       trainerInit,
       descriptionInit,
-      eventFeatureId: eventFeatureData?.[0].id,
+      eventFeatureId: eventFeatureData[0].id,
+      pageName: eventFeatureData[0].name,
     });
     hideAddEvent();
   };
@@ -277,7 +278,7 @@ export const AddEditCalendarEvents = ({
       />
 
       <div className={styles.buttons}>
-        <CommonButton text={staticTexts.cancel} onClick={hideAddEvent} />
+        <CommonButton text={staticTexts.close} onClick={hideAddEvent} />
         <CommonButton
           text={staticTexts.saveNewEvent}
           onClick={handleSave}

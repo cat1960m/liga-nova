@@ -51,7 +51,6 @@ export const FilterGroups = ({
         <AddChildFeatureButton
           parentFeatureId={parentFeatureId}
           text={staticTexts.addGroup ?? "N/A"}
-          pageName={pageName}
           textTypes={[FILTER_GROUP_TITLE, FILTER]}
           type={GROUP}
           subtype={FILTER_GROUP_SUBTYPE}

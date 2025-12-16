@@ -21,6 +21,7 @@
     justify-content: center;
     font-weight: 600;
     font-size: x-large;
+    color: magenta;
 }
 
 .editItem {
@@ -73,6 +74,12 @@
     margin-bottom: 5px;
 }
 
+.preview_text {
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: magenta;
+}
+
 .color {
     font-weight: 600;
     display: flex;
@@ -92,4 +99,8 @@
     width: 100%; 
     border: 1px dotted lightgray;
     padding: 10px;
+}
+.preview_container{
+    width: 100%; 
+    overflow: auto;
 }

@@ -40,12 +40,14 @@ import { DividerGroup } from "../../GroupComponents/DividerGroup/DividerGroup";
 import { TextHeaderGroup } from "../../GroupComponents/TextHeaderGroup/TextHeaderGroup";
 
 import styles from "./showFeatureGroup.module.css";
+import { CountIndex } from "@/app/dictionaries/definitions";
 
 export type Props = {
   groupData: FullData[];
   pageFullDataList: FullData[];
   params: MainParams;
   pageId: number;
+  countIndex: CountIndex;
 };
 
 export const ShowFeatureGroup = ({
@@ -53,6 +55,7 @@ export const ShowFeatureGroup = ({
   pageFullDataList,
   params,
   pageId,
+  countIndex,
 }: Props) => {
   const firstData = groupData[0];
 
@@ -98,25 +101,48 @@ export const ShowFeatureGroup = ({
   return (
     <div className={styles.container}>
       {isDivider ? (
-        <DividerGroup featureData={groupData} params={params} />
+        <DividerGroup
+          featureData={groupData}
+          params={params}
+          countIndex={countIndex}
+        />
       ) : null}
 
       {isTextHeaderGroup ? (
-        <TextHeaderGroup data={groupData} params={params} />
+        <TextHeaderGroup
+          data={groupData}
+          params={params}
+          countIndex={countIndex}
+        />
       ) : null}
 
       {isInfoCheckGroup ? ( // школа тренера
-        <InfoCheckGroup groupData={groupData} params={params} />
+        <InfoCheckGroup
+          groupData={groupData}
+          params={params}
+          countIndex={countIndex}
+        />
       ) : null}
 
-      {isTextGroup ? <TextGroup data={groupData} params={params} /> : null}
-
+      {isTextGroup ? (
+        <TextGroup data={groupData} params={params} countIndex={countIndex} />
+      ) : null}
 
       {/* косметолог */}
-      {isInfoGroup ? <InfoGroup groupData={groupData} params={params} /> : null} 
+      {isInfoGroup ? (
+        <InfoGroup
+          groupData={groupData}
+          params={params}
+          countIndex={countIndex}
+        />
+      ) : null}
 
       {isServices ? ( // manicure, massage
-        <ServicesGroup groupData={groupData} params={params} />
+        <ServicesGroup
+          groupData={groupData}
+          params={params}
+          countIndex={countIndex}
+        />
       ) : null}
 
       {isImageGroup ? (
@@ -124,33 +150,57 @@ export const ShowFeatureGroup = ({
           groupData={groupData}
           params={params}
           pageFullDataList={pageFullDataList}
+          countIndex={countIndex}
         />
       ) : null}
 
-      {isLigaGroup ? <LigaGroup groupData={groupData} params={params} /> : null}
+      {isLigaGroup ? (
+        <LigaGroup
+          groupData={groupData}
+          params={params}
+          countIndex={countIndex}
+        />
+      ) : null}
 
       {isImageListGroup || isPhotoGalleryGroup ? (
         <ShowImageListGroup
           groupData={groupData}
           params={params}
           countVisibleItems={isPhotoGalleryGroup ? 1 : undefined}
+          countIndex={countIndex}
         />
       ) : null}
 
       {isImageLinksGroup ? (
-        <ImageLinksGroup groupData={groupData} params={params} />
+        <ImageLinksGroup
+          groupData={groupData}
+          params={params}
+          countIndex={countIndex}
+        />
       ) : null}
 
       {isImageActionsGroup ? (
-        <ImageActionsGroup groupData={groupData} params={params} />
+        <ImageActionsGroup
+          groupData={groupData}
+          params={params}
+          countIndex={countIndex}
+        />
       ) : null}
 
       {isActionBannerGroup ? (
-        <ActionBannerGroup groupData={groupData} params={params} />
+        <ActionBannerGroup
+          groupData={groupData}
+          params={params}
+          countIndex={countIndex}
+        />
       ) : null}
 
       {isScheduleGroup ? (
-        <ShowScheduleGroup groupData={groupData} params={params} />
+        <ShowScheduleGroup
+          groupData={groupData}
+          params={params}
+          countIndex={countIndex}
+        />
       ) : null}
 
       {isTextListGroup ? (
@@ -158,6 +208,7 @@ export const ShowFeatureGroup = ({
           groupData={groupData}
           params={params}
           pageFullDataList={pageFullDataList}
+          countIndex={countIndex}
         />
       ) : null}
 
@@ -167,6 +218,7 @@ export const ShowFeatureGroup = ({
           pageId={pageId}
           params={params}
           groupData={groupData}
+          countIndex={countIndex}
         />
       ) : null}
 
@@ -175,6 +227,7 @@ export const ShowFeatureGroup = ({
           groupData={groupData}
           pageFullDataList={pageFullDataList}
           params={params}
+          countIndex={countIndex}
         />
       ) : null}
 
@@ -183,6 +236,7 @@ export const ShowFeatureGroup = ({
           groupData={groupData}
           params={params}
           pageFullData={pageFullDataList}
+          countIndex={countIndex}
         />
       ) : null}
     </div>

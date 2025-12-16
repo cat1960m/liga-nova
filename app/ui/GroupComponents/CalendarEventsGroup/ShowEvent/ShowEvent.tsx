@@ -129,7 +129,7 @@ export const ShowEvent = ({
             <DeleteFeatureChangeOrderButtons
               deleteText={staticTexts.delete ?? "N/A"}
               featureData={eventData}
-              noChangeOrder
+              noChangeOrder={true}
               countIndex={null}
             />
           </div>

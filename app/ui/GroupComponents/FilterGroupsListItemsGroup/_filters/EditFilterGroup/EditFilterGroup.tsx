@@ -9,7 +9,7 @@ export type Props = {
   lang: string;
   staticTexts: StaticTexts;
   setEditingFilterGroupId: (id: number | null) => void;
-  editingFilterGroupData: FullData[],
+  editingFilterGroupData: FullData[];
 };
 
 export const EditFilterGroup = ({
@@ -22,7 +22,11 @@ export const EditFilterGroup = ({
   const onCancel = () => setEditingFilterGroupId(null);
   return (
     <div className={styles.container}>
-      <EditTitleCancel title={staticTexts.editFilterGroup?? ""} onCancel={onCancel} staticTexts={staticTexts}/>
+      <EditTitleCancel
+        title={staticTexts.editFilterGroup ?? ""}
+        onCancel={onCancel}
+        staticTexts={staticTexts}
+      />
       <div className={styles.group}>
         <FilterGroup
           filterGroupData={editingFilterGroupData}

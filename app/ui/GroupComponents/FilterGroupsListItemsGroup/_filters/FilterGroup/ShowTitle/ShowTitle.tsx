@@ -5,7 +5,7 @@ import { ICON_IN_BUTTON_WIDTH } from "@/app/lib/constants";
 
 import styles from "./showTitle.module.css";
 
-import { StaticTexts } from "@/app/dictionaries/definitions";
+import { CountIndex, StaticTexts } from "@/app/dictionaries/definitions";
 export type Props = {
   titleData: FullData;
   isEdit: boolean;
@@ -13,6 +13,7 @@ export type Props = {
   staticTexts: StaticTexts;
   isExpanded: boolean;
   setIsExpanded: (value: boolean) => void;
+  countIndex: CountIndex | null;
 };
 
 export const ShowTitle = ({
@@ -22,6 +23,7 @@ export const ShowTitle = ({
   lang,
   isExpanded,
   setIsExpanded,
+  countIndex
 }: Props) => {
   return (
     <ItemContainerUpdateDeleteTextDescription
@@ -31,7 +33,7 @@ export const ShowTitle = ({
       isEdit={isEdit}
       staticTexts={staticTexts}
       lang={lang}
-      countIndex={null}
+      countIndex={countIndex}
     >
       <div className={styles.title}>
         {titleData.text_content ?? "N/A"}

@@ -10,13 +10,15 @@ import { ShowTextDescription } from "./ShowTextDescription";
 import { HiddenText } from "./HiddenText/HiddenText";
 import styles from "./textGroup.module.css";
 import { getIsEditNoDelete } from "@/app/lib/utils";
+import { CountIndex } from "@/app/dictionaries/definitions";
 
 export type Props = {
   data: FullData[];
   params: MainParams;
+  countIndex: CountIndex;
 };
 
-export const TextGroup = ({ data, params }: Props) => {
+export const TextGroup = ({ data, params, countIndex }: Props) => {
   const firstItem = data[0];
   const isExpanded = firstItem.subtype === TEXT_GROUP_EXPANDED_SUBTYPE;
   const isHidden = firstItem.subtype === TEXT_GROUP_HIDDEN_SUBTYPE;
@@ -31,7 +33,7 @@ export const TextGroup = ({ data, params }: Props) => {
   const isCommon = !isTextExpandedShown && !isTextHiddenShown;
 
   return (
-    <div className={styles.container} >
+    <div className={styles.container}>
       {isTextExpandedShown ? (
         <ExpandedText
           staticTexts={staticTexts}
@@ -56,6 +58,7 @@ export const TextGroup = ({ data, params }: Props) => {
           isChangeOrderHorizontal={false}
           marginTop={0}
           noDelete={noDelete}
+          countIndex={countIndex}
         >
           {textDescriptions.map((item, index) => {
             return (
@@ -65,7 +68,7 @@ export const TextGroup = ({ data, params }: Props) => {
                 isEdit={isEdit}
                 staticTexts={staticTexts}
                 lang={lang}
-                countIndex={{count: textDescriptions.length, index}}
+                countIndex={{ count: textDescriptions.length, index }}
               />
             );
           })}

@@ -2,18 +2,26 @@
 
 import { createPortal } from "react-dom";
 import styles from "./createModal.module.css";
+import { useEditContext } from "@/app/ui/PageComponents/EditContextProvider";
+import { useEffect } from "react";
 
 export const CreateModal = ({
   onClose,
   children,
-  left,
-  width
+  width,
 }: {
   onClose: () => void;
   children: React.ReactNode;
-  left?: string;
   width?: string;
 }) => {
+    const { changeIsUndoDisabled } = useEditContext();
+  
+    useEffect(() => {
+      changeIsUndoDisabled(true);
+      return () => changeIsUndoDisabled(false);
+    }, [changeIsUndoDisabled]);
+  
+  
   const parent = document.getElementById("parentModal");
   if (!parent) {
     onClose();
@@ -21,7 +29,6 @@ export const CreateModal = ({
   }
 
   const rect = parent.getBoundingClientRect();
-  const scrollPositionY = window.scrollY;
 
   return (
     <div>
@@ -33,14 +40,30 @@ export const CreateModal = ({
           }}
         >
           <div
-            className={styles.body}
             style={{
-              top: `${scrollPositionY + 20}px`,
-              left,
-              width,
+              position: "fixed",
+              top: 0,
+              left: 0,
+              right: 0, 
+              bottom: 0,
+              display: "flex",
+              backgroundColor: "transparent",
+              alignItems: "center",
+              justifyContent: "center"
             }}
           >
-            {children}
+            <div
+              className={styles.body}
+              style={{
+                overflow: "auto",
+                width,
+                maxHeight: window.innerHeight - 40,
+                maxWidth: 1070,
+                minHeight: 100
+              }}
+            >
+                {children}
+            </div>
           </div>
         </div>,
         parent

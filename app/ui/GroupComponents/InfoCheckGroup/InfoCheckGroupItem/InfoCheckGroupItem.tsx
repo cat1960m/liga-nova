@@ -17,7 +17,7 @@ export const InfoCheckGroupItem = ({
   isEdit,
   staticTexts,
   lang,
-  countIndex
+  countIndex,
 }: Props) => {
   const isHeader = currentData.text_type === INFO_CHECK_HEADER;
   const text = currentData.text_content ?? "N/A";

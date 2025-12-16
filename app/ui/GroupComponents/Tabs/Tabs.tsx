@@ -9,15 +9,23 @@ import { ItemContainerAddChildFeatureDeleteFeature } from "@/app/ui/CommonCompon
 
 import styles from "./tabs.module.css";
 import { getIsEditNoDelete } from "@/app/lib/utils";
+import { CountIndex } from "@/app/dictionaries/definitions";
 
 export type Props = {
   tabsData: FullData;
   pageFullDataList: FullData[];
   params: MainParams;
   pageId: number;
+  countIndex: CountIndex;
 };
 
-export const Tabs = ({ pageFullDataList, tabsData, params, pageId }: Props) => {
+export const Tabs = ({
+  pageFullDataList,
+  tabsData,
+  params,
+  pageId,
+  countIndex,
+}: Props) => {
   const tabTitles = pageFullDataList.filter(
     (item) => item.parent_feature_id === tabsData.id
   );
@@ -28,20 +36,21 @@ export const Tabs = ({ pageFullDataList, tabsData, params, pageId }: Props) => {
 
   const [selectedTabFeatureId, setSelectedTabFeatureId] = useState<
     number | null
-  >(tabTitles?.[0].id ?? null);
+  >(tabTitles?.[0]?.id ?? null);
 
   const handleSelectedTabFeatureIdChanged = (featureId: number) => {
     setSelectedTabFeatureId(featureId);
   };
 
-  const { staticTexts, pageName } = params;
+  const { staticTexts } = params;
   const { isDeepMode, isEdit } = getIsEditNoDelete(params);
-  const selectedTab = tabTitles.find(item => item.id === selectedTabFeatureId);
+  const selectedTab = tabTitles.find(
+    (item) => item.id === selectedTabFeatureId
+  );
 
   return (
     <ItemContainerAddChildFeatureDeleteFeature
       addButtonText={staticTexts.addTab ?? "N/A"}
-      pageName={pageName}
       isEdit={isDeepMode}
       textTypes={[TAB_TITLE]}
       featureType={TAB}
@@ -50,6 +59,8 @@ export const Tabs = ({ pageFullDataList, tabsData, params, pageId }: Props) => {
       groupData={[tabsData]}
       marginTop={20}
       noDelete={!isDeepMode}
+      countIndex={countIndex}
+      noChangeOrder={false}
     >
       <div className={styles.container}>
         <div className={styles.tab_titles}>
@@ -92,7 +103,7 @@ export const Tabs = ({ pageFullDataList, tabsData, params, pageId }: Props) => {
                   padding: "5px",
                   borderRadius: "5px",
                   color: "blue",
-                  fontSize: "14px"
+                  fontSize: "14px",
                 }}
               >
                 tab: {selectedTab?.text_content}

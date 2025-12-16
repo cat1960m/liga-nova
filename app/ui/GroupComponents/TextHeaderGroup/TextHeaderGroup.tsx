@@ -4,12 +4,14 @@ import { ItemContainerUpdateTextDescriptionDeleteFeature } from "@/app/ui/Common
 
 import styles from "./textHeaderGroup.module.css";
 import { getIsEditNoDelete } from "@/app/lib/utils";
+import { CountIndex } from "@/app/dictionaries/definitions";
 export type Props = {
   data: FullData[];
   params: MainParams;
+  countIndex: CountIndex;
 };
 
-export const TextHeaderGroup = ({ data, params }: Props) => {
+export const TextHeaderGroup = ({ data, params, countIndex }: Props) => {
   const firstItem = data[0];
   const textDescriptions = data.filter((item) => !!item.text_description_id);
 
@@ -31,7 +33,7 @@ export const TextHeaderGroup = ({ data, params }: Props) => {
       lang={lang}
       isEdit={isEdit}
       noDelete={noDelete}
-      countIndex={null}
+      countIndex={countIndex}
     >
       <div className={styles.container}>
         <div className={styles.divider} />

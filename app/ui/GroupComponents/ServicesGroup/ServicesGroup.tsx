@@ -9,19 +9,21 @@ import { ItemContainerAddTextDescriptionDeleteFeature } from "@/app/ui/CommonCom
 import styles from "./servicesGroup.module.css";
 import cn from "clsx";
 import { getIsEditNoDelete } from "@/app/lib/utils";
+import { CountIndex } from "@/app/dictionaries/definitions";
 
 export type Props = {
   groupData: FullData[];
   params: MainParams;
+  countIndex: CountIndex;
 };
 
-export const ServicesGroup = ({ groupData, params }: Props) => {
+export const ServicesGroup = ({ groupData, params, countIndex }: Props) => {
   const texts = groupData.filter(
     (data) => data.content_type !== CONTENT_TYPE_TOOLTIP
   );
   const { staticTexts, lang } = params;
   const { isEdit, noDelete } = getIsEditNoDelete(params);
-  const preview = ({text, tooltip, value}: PreviewParams) => {
+  const preview = ({ text, tooltip, value }: PreviewParams) => {
     return (
       <div className={styles.text_container}>
         <div className={styles.preview}>
@@ -47,6 +49,7 @@ export const ServicesGroup = ({ groupData, params }: Props) => {
       isChangeOrderHorizontal={false}
       marginTop={20}
       noDelete={noDelete}
+      countIndex={countIndex}
     >
       <div className={styles.container}>
         <div className={styles.body}>

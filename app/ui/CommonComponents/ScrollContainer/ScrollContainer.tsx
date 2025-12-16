@@ -56,7 +56,6 @@ export const ScrollContainer = ({
   const start = useRef<number | null>(null);
   const [dataType, setDataType] = useState<DataType | null>(null);
 
-
   const getData = () => {
     if (!refParent?.current) {
       return;
@@ -150,7 +149,7 @@ export const ScrollContainer = ({
     return newScrollPosition;
   };
 
-  if (!ids.length || !dataType /* || !countVisibleItems */) {
+  if (!ids.length || !dataType  || !Number.isFinite(dataType.itemWidth)/* || !countVisibleItems */) {
     return null;
   }
 
@@ -182,8 +181,6 @@ export const ScrollContainer = ({
   const indexSelected = (index: number) => {
     setScrollPosition(checkPosition(-index * dataType.itemWidth));
   };
-  console.log("-----!!!!!left:", dataType, -dataType.itemWidth * ids.length + scrollPosition);
-  console.log("-----!!!!!left:", dataType, scrollPosition, -dataType.itemWidth * ids.length + scrollPosition);
 
   return (
     <div className={styles.container}>

@@ -2,12 +2,9 @@
 
 import { revalidate } from "@/app/lib/actions_fitness";
 import {
-  addFeatureData,
   addTextData,
-  addTextDescriptionData,
   getTextContentsData,
   updateFeatureSubtypeFilterIdsData,
-  updatePriceValueLinkData,
   updateTextData,
 } from "@/app/lib/actionsContainer";
 import {
@@ -20,6 +17,10 @@ import {
   CONTENT_TYPE_MAIN,
 } from "@/app/lib/constants";
 import { FullData, TabType } from "@/app/lib/definitions";
+import { useAddFeature } from "@/app/ui/hooks/useAddFeature";
+import { useAddTextDescription } from "@/app/ui/hooks/useAddTextDescription";
+import { useUpdateFeature } from "@/app/ui/hooks/useUpdateFeature";
+import { useUpdateTextDescription } from "@/app/ui/hooks/useUpdateTextDescription";
 import { usePathname } from "next/navigation";
 
 export type SaveArgs = {
@@ -50,10 +51,15 @@ export type UpdateArgs = {
   timeInit: FullData;
   trainerInit: FullData;
   descriptionInit: FullData;
+  pageName: string;
 };
 
 export const useChangeEventData = () => {
   const pathName = usePathname();
+  const { addTextDescription } = useAddTextDescription();
+  const { addFeature } = useAddFeature();
+  const { addFeatureToHistoryOnUpdate } = useUpdateFeature();
+  const { updatePriceValueLink } = useUpdateTextDescription();
 
   const saveTabs = async ({
     featureId,
@@ -69,10 +75,9 @@ export const useChangeEventData = () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     promises: Promise<any>[];
   }) => {
-    const newTextDescriptionId = await addTextDescriptionData({
+    const newTextDescriptionId = await addTextDescription({
       featureId,
       textType,
-      pathName,
       canDelete: false,
       price,
     });
@@ -106,13 +111,13 @@ export const useChangeEventData = () => {
     calendarFeatureId,
   }: SaveArgs) => {
     try {
-      const calendarEventsGroupFeatureId = await addFeatureData({
+      const calendarEventsGroupFeatureId = await addFeature({
         parentId: calendarFeatureId,
         type: CALENDAR_EVENTS_TYPE,
         subtype: type,
-        name: pageName,
         text_types: [],
         filter_ids: confirmedDates.join(","),
+        isWithoutHistory: false,
       });
 
       if (!calendarEventsGroupFeatureId) {
@@ -150,7 +155,7 @@ export const useChangeEventData = () => {
       );
 
       promises.push(
-        addTextDescriptionData({
+        addTextDescription({
           featureId: calendarEventsGroupFeatureId,
           textType: CALENDAR_EVENTS_COUNT,
           canDelete: false,
@@ -160,7 +165,7 @@ export const useChangeEventData = () => {
       );
 
       promises.push(
-        addTextDescriptionData({
+        addTextDescription({
           featureId: calendarEventsGroupFeatureId,
           textType: CALENDAR_EVENTS_TIME,
           canDelete: false,
@@ -191,8 +196,14 @@ export const useChangeEventData = () => {
     trainerInit,
     descriptionInit,
     eventFeatureId,
+    pageName,
   }: UpdateArgs) => {
     try {
+      await addFeatureToHistoryOnUpdate({
+        featureId:eventFeatureId,
+        page: pageName,
+      })
+
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const promises: Promise<any>[] = [];
 
@@ -205,21 +216,21 @@ export const useChangeEventData = () => {
       );
 
       promises.push(
-        updatePriceValueLinkData({
+        updatePriceValueLink({
           price,
           textDescriptionId: titleInit.text_description_id,
         })
       );
 
       promises.push(
-        updatePriceValueLinkData({
+        updatePriceValueLink({
           value: count.toString(),
           textDescriptionId: countInit.text_description_id,
         })
       );
 
       promises.push(
-        updatePriceValueLinkData({
+        updatePriceValueLink({
           value: time,
           textDescriptionId: timeInit.text_description_id,
         })

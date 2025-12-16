@@ -11,13 +11,15 @@ import { ItemContainerUpdateTextDescriptionDeleteFeature } from "../../CommonCom
 import { CommonButton } from "../../CommonComponents/_buttons/CommonButton";
 import { getIsEditNoDelete } from "@/app/lib/utils";
 import { ReactNode } from "react";
+import { CountIndex } from "@/app/dictionaries/definitions";
 
 export type Props = {
   groupData: FullData[];
   params: MainParams;
+  countIndex: CountIndex;
 };
 
-export const ActionBannerGroup = ({ groupData, params }: Props) => {
+export const ActionBannerGroup = ({ groupData, params, countIndex }: Props) => {
   const titleImageData = groupData.find(
     (item) => item.text_type === ACTION_BANNER_TITLE_IMAGE
   );
@@ -44,19 +46,11 @@ export const ActionBannerGroup = ({ groupData, params }: Props) => {
         {/* changes for mobile needed */}
         <div className={styles.info_big}>
           {data.text ?? "N/A"}
-          <CommonButton
-            text={text ?? "N/A"}
-            isAction
-            onClick={() => {}}
-          />
+          <CommonButton text={text ?? "N/A"} isAction onClick={() => {}} />
         </div>
         <div className={styles.info_small}>
           {data.text ?? "N/A"}
-          <CommonButton
-            text={text ?? "N/A"}
-            isAction
-            onClick={() => {}}
-          />
+          <CommonButton text={text ?? "N/A"} isAction onClick={() => {}} />
         </div>
       </div>
     );
@@ -76,7 +70,7 @@ export const ActionBannerGroup = ({ groupData, params }: Props) => {
       isChangeOrderHorizontal={false}
       marginTop={100}
       noDelete={noDelete}
-      countIndex={null}
+      countIndex={countIndex}
       preview={preview}
       previewBaseParams={{ isFullWidth: "full" }}
     >

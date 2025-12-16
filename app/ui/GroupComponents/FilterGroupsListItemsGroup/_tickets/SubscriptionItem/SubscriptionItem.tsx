@@ -1,13 +1,3 @@
-import { FullData } from "@/app/lib/definitions";
-import {
-  SUBSCRIPTION_ITEM_CAN_POSTPONE,
-  SUBSCRIPTION_ITEM_DESCRIPTION,
-  SUBSCRIPTION_ITEM_NAME,
-  SUBSCRIPTION_ITEM_OLD_PRICE,
-  SUBSCRIPTION_ITEM_PRICE,
-  SUBSCRIPTION_ITEM_SHARE,
-  YES,
-} from "@/app/lib/constants";
 import { CommonButton } from "@/app/ui/CommonComponents/_buttons/CommonButton";
 import { StaticTexts } from "@/app/dictionaries/definitions";
 import { ActionButton } from "@/app/ui/CommonComponents/_buttons/ActionButton/ActionButton";
@@ -15,60 +5,52 @@ import { ActionButton } from "@/app/ui/CommonComponents/_buttons/ActionButton/Ac
 import styles from "./subscriptionItem.module.css";
 
 export type Props = {
-  currentData: FullData[];
   staticTexts: StaticTexts;
+  share?: string;
+  name?: string;
+  price?: string;
+  oldPrice?: string;
+  description?: string;
+  isPostpone?: boolean;
 };
 
-export const SubscriptionItem = ({ currentData, staticTexts }: Props) => {
-  const name = currentData.find(
-    (item) => item.text_type === SUBSCRIPTION_ITEM_NAME
-  );
-  const share = currentData.find(
-    (item) => item.text_type === SUBSCRIPTION_ITEM_SHARE
-  );
-  const price = currentData.find(
-    (item) => item.text_type === SUBSCRIPTION_ITEM_PRICE
-  );
-  const oldPrice = currentData.find(
-    (item) => item.text_type === SUBSCRIPTION_ITEM_OLD_PRICE
-  );
-  const description = currentData.find(
-    (item) => item.text_type === SUBSCRIPTION_ITEM_DESCRIPTION
-  );
-
-  const isPostpone = currentData.find(
-    (item) => item.text_type === SUBSCRIPTION_ITEM_CAN_POSTPONE
-  );
-
-  if (!name || !price) {
-    return null;
-  }
+export const SubscriptionItem = ({
+  share,
+  name,
+  price,
+  oldPrice,
+  description,
+  staticTexts,
+  isPostpone,
+}: Props) => {
+  const priceValue = parseInt(price ?? "");
+  const priceStr = Number.isNaN(priceValue)
+    ? price ?? ""
+    : price ? price.replace(priceValue.toString(), "") : "";
 
   return (
     <div className={styles.container}>
-      {share?.text_content ? (
-        <div className={styles.share}>{share.text_content}</div>
-      ) : null}
+      {share ? <div className={styles.share}>{share}</div> : null}
 
-      <div className={styles.name}>{name.text_content ?? "N/A"}</div>
+      <div className={styles.name}>{name ?? "N/A"}</div>
 
-      <div className={styles.price}>{price.price}</div>
-      <div className={styles.price_text}>{price.text_content}</div>
-      {oldPrice?.text_content ? (
-        <div className={styles.old_price}>{oldPrice?.text_content}</div>
-      ) : null}
+      <div className={styles.price}>
+        {Number.isNaN(priceValue) ? "" : priceValue}
+      </div>
+      <div className={styles.price_text}>{priceStr}</div>
+      {oldPrice ? <div className={styles.old_price}>{oldPrice}</div> : null}
 
       <div className={styles.divider} />
 
       <div className={styles.description}>
         <div
           dangerouslySetInnerHTML={{
-            __html: description?.text_content ?? "N/A",
+            __html: description ?? "N/A",
           }}
         />
       </div>
 
-      {isPostpone?.value === YES ? (
+      {isPostpone ? (
         <div className={styles.postponement}>
           <CommonButton
             text={staticTexts.postponement?.toUpperCase() ?? ""}

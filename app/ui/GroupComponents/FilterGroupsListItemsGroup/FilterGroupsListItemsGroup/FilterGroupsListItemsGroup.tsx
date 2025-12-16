@@ -14,21 +14,38 @@ import { WrappingListItemsContainer } from "../WrappingListItemsContainer/Wrappi
 import { ItemContainerDeleteFeature } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerDeleteFeature";
 import cn from "clsx";
 import { EditFilterGroup } from "../_filters/EditFilterGroup/EditFilterGroup";
-import { FILTER_GROUP_SUBTYPE, GROUP, LIST_ITEM } from "@/app/lib/constants";
+import {
+  FILTER_GROUP_SUBTYPE,
+  GROUP,
+  LIST_ITEM,
+  TRAINERS_PAGE_NAME,
+} from "@/app/lib/constants";
 import { useContainerData } from "@/app/ui/hooks/useContainerData";
+import { CreateModal } from "@/app/ui/CommonComponents/_upadeModal/CreateModal/CreateModal";
+import { revalidate } from "@/app/lib/actions_fitness";
+import { usePathname } from "next/navigation";
+import { useIcons } from "@/app/ui/hooks/useIcons";
+import { CountIndex } from "@/app/dictionaries/definitions";
 
 export type Props = {
   groupData: FullData[];
   pageFullDataList: FullData[];
   params: MainParams;
+  countIndex: CountIndex;
 };
 
 export const FilterGroupsListItemsGroup = ({
   groupData,
   pageFullDataList,
   params,
+  countIndex
 }: Props) => {
   const groupDataFeatureId = groupData[0]?.id;
+  const pathName = usePathname();
+  const { premiumIcon } = useIcons({
+    lang: params.lang,
+    isNoUseIcon: params.pageName !== TRAINERS_PAGE_NAME,
+  });
 
   const [editingData, setEditingData] = useState<{
     id: number;
@@ -42,7 +59,7 @@ export const FilterGroupsListItemsGroup = ({
 
   const setEditingFilterGroupId = (id: number | null) => {
     setEditingData(id ? { id, type: "filter" } : null);
-  }
+  };
   const editingFilterGroupId =
     editingData?.type === "filter" ? editingData.id : null;
 
@@ -100,8 +117,9 @@ export const FilterGroupsListItemsGroup = ({
     }
   };
 
-  const handleAddEditCancel = async () => {
+  const handleClose = async () => {
     setEditingData(null);
+    await revalidate(pathName);
   };
 
   const filterGroupsMobileProps: FilterGroupsMobileProps = {
@@ -115,45 +133,17 @@ export const FilterGroupsListItemsGroup = ({
   };
 
   return (
-    <ItemContainerDeleteFeature
-      isEdit={isEdit}
-      deleteText={staticTexts.delete ?? "N/A"}
-      featureData={groupData}
-      marginTop={0}
-      noDelete={noDelete}
-      noChangeOrder={noDelete}
-      countIndex={null}
-    >
-      <div className={styles.container}>
-        {editingListItemFeatureId ? (
-          <EditListItemFilter
-            pageFullDataList={pageFullDataList}
-            groupData={groupData}
-            onCancel={handleAddEditCancel}
-            editItemFeatureId={editingListItemFeatureId}
-            lang={lang}
-            staticTexts={staticTexts}
-            pageName={pageName}
-            isEdit={isEdit}
-            structuredFilterGroupData={structuredFilterGroupData}
-          />
-        ) : null}
-
-        {editingFilterGroupId ? (
-          <EditFilterGroup
-            selectedFilterTextDescriptionIds={selectedFilterTextDescriptionIds}
-            lang={lang}
-            staticTexts={staticTexts}
-            setEditingFilterGroupId={setEditingFilterGroupId}
-            editingFilterGroupData={
-              structuredFilterGroupData.childFeatureIdToFullDataList[
-                editingFilterGroupId
-              ]
-            }
-          />
-        ) : null}
-
-        {!editingData ? (
+    <>
+      <ItemContainerDeleteFeature
+        isEdit={isEdit}
+        deleteText={staticTexts.delete ?? "N/A"}
+        featureData={groupData}
+        marginTop={0}
+        noDelete={noDelete}
+        noChangeOrder={false}
+        countIndex={countIndex}
+      >
+        <div className={styles.container}>
           <div
             className={cn(styles.filterPanel, {
               [styles.edit]: isEdit,
@@ -173,9 +163,6 @@ export const FilterGroupsListItemsGroup = ({
               </div>
             ) : null}
           </div>
-        ) : null}
-
-        {!editingData ? (
           <div className={styles.main}>
             <WrappingListItemsContainer
               isEdit={isEdit}
@@ -185,10 +172,42 @@ export const FilterGroupsListItemsGroup = ({
               setEditingListItemFeatureId={setEditingListItemFeatureId}
               parentFeatureId={groupDataFeatureId}
               filteredListItemsData={filteredListItemsData}
+              srcPremiumIcon={premiumIcon?.value ?? ""}
             />
           </div>
-        ) : null}
-      </div>
-    </ItemContainerDeleteFeature>
+        </div>
+      </ItemContainerDeleteFeature>
+
+      {editingFilterGroupId ? (
+        <CreateModal onClose={() => setEditingFilterGroupId(null)} width="96%">
+          <EditFilterGroup
+            selectedFilterTextDescriptionIds={selectedFilterTextDescriptionIds}
+            lang={lang}
+            staticTexts={staticTexts}
+            setEditingFilterGroupId={setEditingFilterGroupId}
+            editingFilterGroupData={
+              structuredFilterGroupData.childFeatureIdToFullDataList[
+                editingFilterGroupId
+              ]
+            }
+          />
+        </CreateModal>
+      ) : null}
+
+      {editingListItemFeatureId ? (
+        <CreateModal onClose={handleClose} width="96%">
+          <EditListItemFilter
+            pageFullDataList={pageFullDataList}
+            groupData={groupData}
+            onClose={handleClose}
+            editItemFeatureId={editingListItemFeatureId}
+            lang={lang}
+            staticTexts={staticTexts}
+            pageName={pageName}
+            structuredFilterGroupData={structuredFilterGroupData}
+          />
+        </CreateModal>
+      ) : null}
+    </>
   );
 };

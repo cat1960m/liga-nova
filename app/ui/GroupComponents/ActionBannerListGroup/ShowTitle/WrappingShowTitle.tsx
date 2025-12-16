@@ -13,8 +13,14 @@ export type Props = {
   countIndex: CountIndex | null;
 };
 
-export const WrappingShowTitle = ({ isEdit, title, color, staticTexts, lang, countIndex }: Props) => {
-
+export const WrappingShowTitle = ({
+  isEdit,
+  title,
+  color,
+  staticTexts,
+  lang,
+  countIndex,
+}: Props) => {
   return (
     <ItemContainerUpdateDeleteTextDescription
       currentData={title}
@@ -24,9 +30,12 @@ export const WrappingShowTitle = ({ isEdit, title, color, staticTexts, lang, cou
       isChangeOrder={false}
       lang={lang}
       countIndex={countIndex}
-
     >
-      <ShowTitle isEdit={isEdit} title={title?.text_content ?? "N/A"} color={color}/>
+      <ShowTitle
+        isEdit={isEdit}
+        title={title?.text_content ?? "N/A"}
+        color={color}
+      />
     </ItemContainerUpdateDeleteTextDescription>
   );
 };

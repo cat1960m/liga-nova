@@ -79,6 +79,7 @@ export const FilterGroup = ({
           lang={lang}
           isExpanded={isExpanded}
           setIsExpanded={setIsExpanded}
+          countIndex={null}
         />
       ) : null}
 

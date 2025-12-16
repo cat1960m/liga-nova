@@ -5,14 +5,19 @@ import { CountIndex, StaticTexts } from "@/app/dictionaries/definitions";
 
 export type Props = {
   item: FullData;
-    isEdit: boolean;
-    lang: string;
-    staticTexts: StaticTexts;
-    countIndex: CountIndex | null;
-  
+  isEdit: boolean;
+  lang: string;
+  staticTexts: StaticTexts;
+  countIndex: CountIndex;
 };
 
-export const ShowTextDescription = ({ item, isEdit, staticTexts, lang, countIndex }: Props) => {
+export const ShowTextDescription = ({
+  item,
+  isEdit,
+  staticTexts,
+  lang,
+  countIndex,
+}: Props) => {
   return (
     <ItemContainerUpdateDeleteTextDescription
       key={item.text_description_id}

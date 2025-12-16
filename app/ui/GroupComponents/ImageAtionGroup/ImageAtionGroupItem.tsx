@@ -8,7 +8,6 @@ import { CountIndex, StaticTexts } from "@/app/dictionaries/definitions";
 import { CONTENT_TYPE_TOOLTIP } from "@/app/lib/constants";
 import styles from "./imageActions.module.css";
 
-
 export type Props = {
   groupData: FullData[];
   isEdit: boolean;
@@ -37,7 +36,7 @@ export const ImageActionGroupItem = ({
   );
   const tooltipText = tooltip?.text_content ?? "";
 
-  const preview = ({value, text, tooltip, staticTexts}: PreviewParams) => {
+  const preview = ({ value, text, tooltip, staticTexts }: PreviewParams) => {
     return (
       <div className={styles.preview}>
         <ImageAction

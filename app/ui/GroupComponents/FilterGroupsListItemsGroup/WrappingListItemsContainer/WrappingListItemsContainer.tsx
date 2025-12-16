@@ -17,6 +17,7 @@ export type Props = {
   setEditingListItemFeatureId: (value: number | null) => void;
   parentFeatureId: number;
   filteredListItemsData: StructuredFeatureData;
+  srcPremiumIcon: string;
 };
 
 export const WrappingListItemsContainer = ({
@@ -27,6 +28,7 @@ export const WrappingListItemsContainer = ({
   setEditingListItemFeatureId,
   parentFeatureId,
   filteredListItemsData,
+  srcPremiumIcon
 }: Props) => {
   const addText = PAGE_NAMES_TO_LIST_ITEMS_DATA[pageName].addText;
   const addListItemText = staticTexts[addText]?.toString() ?? "N/A";
@@ -41,7 +43,6 @@ export const WrappingListItemsContainer = ({
       <AddChildFeatureButton
         parentFeatureId={parentFeatureId}
         text={addListItemText}
-        pageName={pageName}
         textTypes={textTypes}
         type={LIST_ITEM}
         subtype={LIST_ITEM}
@@ -63,6 +64,7 @@ export const WrappingListItemsContainer = ({
         staticTexts={staticTexts}
         pageName={pageName}
         filteredListItemsData={filteredListItemsData}
+        srcPremiumIcon={srcPremiumIcon}
       />
     </ItemGroupContainerCommon>
   );

@@ -1,11 +1,10 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import { CommonButton } from "./CommonButton";
 import { useEditContext } from "../../PageComponents/EditContextProvider";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import { ICON_BUTTON_WIDTH, ICON_IN_BUTTON_WIDTH } from "@/app/lib/constants";
-import { addTextDescriptionData } from "@/app/lib/actionsContainer";
+import { useAddTextDescription } from "../../hooks/useAddTextDescription";
 
 export type Props = {
   featureId: number;
@@ -19,14 +18,18 @@ export const AddTextDescriptionButton = (props: Props) => {
   const { isEditButtonsDisabled, changeIsEditButtonDisabled } =
     useEditContext();
 
-  const pathName = usePathname();
+  const { addTextDescription } = useAddTextDescription();
+  const { featureId, textType, price } = props;
+
   const handleAddColumnItem = async () => {
     changeIsEditButtonDisabled(true);
-    const newTextDescriptionId = await addTextDescriptionData({
-      ...props,
-      pathName,
+    const newTextDescriptionId = await addTextDescription({
+      featureId,
+      textType,
+      price,
       canDelete: true,
     });
+
     changeIsEditButtonDisabled(false);
 
     if (newTextDescriptionId) {

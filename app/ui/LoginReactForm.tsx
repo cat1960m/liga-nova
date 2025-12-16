@@ -29,7 +29,6 @@ export const LoginReactForm = () => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault(); // Prevent default page reload
-    console.log("Submitted Data:", formData);
 
     const result = await axios.post("http://localhost:3001/login", formData);
 

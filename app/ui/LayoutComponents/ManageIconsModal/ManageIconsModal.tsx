@@ -1,48 +1,44 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 import { CommonButton } from "../../CommonComponents/_buttons/CommonButton";
-import { FullData } from "@/app/lib/definitions";
 import { usePathname, useSearchParams } from "next/navigation";
 import { ManageImages } from "./ManageImages/ManageImages";
 import { CreateModal } from "../../CommonComponents/_upadeModal/CreateModal/CreateModal";
 
 import styles from "./manageIconsModal.module.css";
 import { EDIT_MODE } from "@/app/lib/constants";
-import { addIconData, getPageData } from "@/app/lib/actionsContainer";
+import { addIconData } from "@/app/lib/actionsContainer";
+import { EditContextProvider } from "../../PageComponents/EditContextProvider";
+import { StaticTexts } from "@/app/dictionaries/definitions";
+import { useIcons } from "../../hooks/useIcons";
 
-export const ManageIconsModal = ({ lang }: { lang: string }) => {
+export const ManageIconsModal = ({
+  lang,
+  staticTexts,
+}: {
+  lang: string;
+  staticTexts: StaticTexts;
+}) => {
   const [isModalShown, setIsModalShown] = useState(false);
-  const [iconsData, setIconsData] = useState<FullData[]>([]);
   const pathName = usePathname();
   const searchParams = useSearchParams();
   const editMode = searchParams.get(EDIT_MODE);
   const isEdit = editMode === "1" || editMode === "2";
+  const { icons: iconsData, reloadIcons } = useIcons({ lang });
 
   const handleClick = () => {
     setIsModalShown(true);
   };
 
-  const getIcons = useCallback(async () => {
-    const pageFullData: FullData[] | null = await getPageData({
-      lang,
-      pageName: "icon",
-    });
-
-    setIconsData(pageFullData ?? []);
-  }, [lang]);
-
-  useEffect(() => {
-    getIcons();
-  }, [getIcons]);
 
   const handleIconUploaded = async (value: string) => {
     await addIconData({ value, pathName });
-    getIcons();
+    await reloadIcons()
   };
 
-  const handleDeleteFinished = () => {
-    getIcons();
+  const handleDeleteFinished = async() => {
+    await reloadIcons()
   };
 
   const handleClose = () => {
@@ -50,7 +46,11 @@ export const ManageIconsModal = ({ lang }: { lang: string }) => {
   };
 
   return (
-    <>
+    <EditContextProvider
+      pageFullDataList={[]}
+      staticTexts={staticTexts}
+      pageName={""}
+    >
       {isEdit ? (
         <CommonButton
           text="Manage icons"
@@ -77,6 +77,6 @@ export const ManageIconsModal = ({ lang }: { lang: string }) => {
           </div>
         </CreateModal>
       ) : null}
-    </>
+    </EditContextProvider>
   );
 };

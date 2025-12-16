@@ -29,7 +29,6 @@ export const DrawFeatureContainer = ({
     pageFullData: pageFullDataList,
     parentFeatureId: featureId,
   });
-  //console.log("---keys", keys, pageData);
   const { pageName, staticTexts } = params;
   const { isDeepMode } = getIsEditNoDelete(params);
   const isAdd = isOneChildren
@@ -47,7 +46,7 @@ export const DrawFeatureContainer = ({
           [styles.oneItem]: isOneChildren,
         })}
       >
-        {structuredData.sortedChildFeaFeatureIds.map((id) => (
+        {structuredData.sortedChildFeaFeatureIds.map((id, index) => (
           <DrawChildFeature
             childFeatureDataList={
               structuredData.childFeatureIdToFullDataList[id]
@@ -57,6 +56,7 @@ export const DrawFeatureContainer = ({
             key={id}
             parentFeatureId={featureId}
             pageId={pageId}
+            countIndex={{count: structuredData.sortedChildFeaFeatureIds.length, index}}
           />
         ))}
 

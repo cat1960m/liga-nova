@@ -21,7 +21,7 @@ export const ShowInfoGroupItem = ({
   isEdit,
   staticTexts,
   lang,
-  countIndex
+  countIndex,
 }: Props) => {
   if (!data) {
     return null;

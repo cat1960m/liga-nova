@@ -2,23 +2,17 @@
 
 import { revalidate } from "@/app/lib/actions_fitness";
 import { usePathname } from "next/navigation";
-import axios from "axios";
 import { FullData } from "@/app/lib/definitions";
-import {
-  CONTAINER_TYPES,
-  S3_TYPES,
-} from "@/app/lib/constants";
+import { CONTAINER_TYPES } from "@/app/lib/constants";
 import { useEditContext } from "../../../PageComponents/EditContextProvider";
 import { ChangeOrderButtons } from "../ChangeOrderButtons/ChangeOrderButtons";
 
 import styles from "./deleteFeatureChangeOrderButtons.module.css";
 import { useMemo } from "react";
-import {
-  removeFeatureData,
-  updateFeatureOrderData,
-} from "@/app/lib/actionsContainer";
+import { updateFeatureOrderData } from "@/app/lib/actionsContainer";
 import { CountIndex } from "@/app/dictionaries/definitions";
 import { DeleteButton } from "../DeleteButton/DeleteButton";
+import { useRemoveFeature } from "@/app/ui/hooks/useRemoveFeature";
 
 type IdOrder = {
   id: number;
@@ -33,14 +27,16 @@ export const DeleteFeatureChangeOrderButtons = ({
   noChangeOrder,
   noDelete,
   countIndex,
+  isWithoutHistory,
 }: {
   deleteText: string;
   onDeleteFinished?: () => void;
   featureData: FullData[];
   isChangeOrderHorizontal?: boolean;
-  noChangeOrder?: boolean;
+  noChangeOrder: boolean;
   noDelete?: boolean;
   countIndex: CountIndex | null;
+  isWithoutHistory?: boolean;
 }) => {
   const pathName = usePathname();
   const {
@@ -48,6 +44,7 @@ export const DeleteFeatureChangeOrderButtons = ({
     changeIsEditButtonDisabled,
     pageFullDataList,
   } = useEditContext();
+  const { removeFeature } = useRemoveFeature();
 
   const featureFirst = featureData.length ? featureData[0] : undefined;
   const featureId = featureFirst?.id;
@@ -101,29 +98,12 @@ export const DeleteFeatureChangeOrderButtons = ({
   const handleDelete = async () => {
     changeIsEditButtonDisabled(true);
 
-    await removeFeatureData({ id: featureId, pathName: pathName });
-
-    const imageData = featureData.filter(
-      (data) => S3_TYPES.includes(data.text_type) && !!data.value
-    );
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const promises: Promise<any>[] = [];
-
-    if (imageData.length) {
-      imageData.forEach((data) => {
-        promises.push(
-          axios.post("/api/removeFile", {
-            s3Key: data.value,
-          })
-        );
-      });
-
-      await Promise.all(promises);
-    }
+    await removeFeature({
+      feature: featureFirst,
+      isWithoutHistory: !!isWithoutHistory,
+    });
 
     changeIsEditButtonDisabled(false);
-
     onDeleteFinished?.();
   };
 

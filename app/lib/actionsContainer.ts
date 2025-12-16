@@ -125,16 +125,15 @@ export const addFeatureData = async (props: {
   return null;
 };
 
-export const removeFeatureData = async (props: {
+export const removeFeatureData = async ({id, pathName}: {
   id: number;
   pathName?: string;
 }) => {
   if (process.env.DATABASE_MODE === "postgres") {
-    await RemoveFeature(props);
+    await RemoveFeature({id, pathName});
   }
 
   if (process.env.DATABASE_MODE === "mysql") {
-    const { pathName, id } = props;
     await axios.delete(`http://localhost:3001/removeFeature/${id}`);
 
     if (pathName) {
@@ -152,6 +151,7 @@ export const addTextDescriptionData = async (props: {
   canDelete: boolean;
   price: number | null;
   value?: string | null;
+
 }) => {
   if (process.env.DATABASE_MODE === "postgres") {
     const iconId = await addTextDescription(props);
@@ -176,16 +176,15 @@ export const addTextDescriptionData = async (props: {
   return null;
 };
 
-export const removeTextDescriptionData = async (props: {
+export const removeTextDescriptionData = async ({id, pathName}: {
   id: number;
   pathName: string;
 }) => {
   if (process.env.DATABASE_MODE === "postgres") {
-    await RemoveTextDescription(props);
+    await RemoveTextDescription({id, pathName});
   }
 
   if (process.env.DATABASE_MODE === "mysql") {
-    const { pathName, id } = props;
     await axios.delete(`http://localhost:3001/removeTextDescription/${id}`);
 
     revalidatePath(pathName);
@@ -334,7 +333,6 @@ export const updateFeatureOrderData = async (props: {
   if (process.env.DATABASE_MODE === "mysql") {
     await axios.put(`http://localhost:3001/updateFeatureOrder`, props);
 
-    console.log("=========text updateFeatureOrder", props);
   }
 };
 
@@ -349,6 +347,5 @@ export const updateTextDescriptionsOrderData = async (props: {
   if (process.env.DATABASE_MODE === "mysql") {
     await axios.put(`http://localhost:3001/updateTextDescriptionsOrder`, props);
 
-    console.log("=========updateTextDescriptionsOrder", props);
   }
 };

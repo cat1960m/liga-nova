@@ -19,7 +19,7 @@ export const UpdateTextDescriptionData = ({
   lang,
   changeModalState,
   preview,
-  previewBaseParams
+  previewBaseParams,
 }: {
   currentData: FullData;
   useItems: UseItems;
@@ -27,7 +27,7 @@ export const UpdateTextDescriptionData = ({
   staticTexts: StaticTexts;
   changeModalState?: (state: boolean) => void;
   preview?: (data: PreviewParams) => React.ReactNode;
-  previewBaseParams?: Record<string,string>;
+  previewBaseParams?: Record<string, string>;
 }) => {
   const [isEditModalShown, setIsEditModalShown] = useState(false);
 

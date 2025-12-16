@@ -20,7 +20,7 @@ export type Props = {
   heightValue?: string;
   countIndex: CountIndex | null;
   preview?: (data: PreviewParams) => React.ReactNode;
-  previewBaseParams?: Record<string,string>;
+  previewBaseParams?: Record<string, string>;
 };
 
 export const ItemContainerUpdateTextDescriptionDeleteFeature = ({
@@ -37,7 +37,7 @@ export const ItemContainerUpdateTextDescriptionDeleteFeature = ({
   heightValue,
   countIndex,
   preview,
-  previewBaseParams
+  previewBaseParams,
 }: Props) => {
   const getEditButtons = () => {
     return (
@@ -54,13 +54,14 @@ export const ItemContainerUpdateTextDescriptionDeleteFeature = ({
         ) : null}
 
         {!noDelete ? (
-            <DeleteFeatureChangeOrderButtons
-              deleteText={staticTexts.delete ?? "N/A"}
-              featureData={featureData}
-              isChangeOrderHorizontal={isChangeOrderHorizontal}
-              noDelete={noDelete}
-              countIndex={countIndex}
-            />
+          <DeleteFeatureChangeOrderButtons
+            deleteText={staticTexts.delete ?? "N/A"}
+            featureData={featureData}
+            isChangeOrderHorizontal={isChangeOrderHorizontal}
+            noDelete={noDelete}
+            countIndex={countIndex}
+            noChangeOrder={false}
+          />
         ) : null}
       </Buttons>
     );

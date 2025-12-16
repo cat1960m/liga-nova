@@ -10,10 +10,11 @@ export type Props = {
   onDeleteFinished?: () => void;
   featureData: FullData[];
   isChangeOrderHorizontal?: boolean;
-  noChangeOrder?: boolean;
+  noChangeOrder: boolean;
   noDelete?: boolean;
   marginTop: number;
   countIndex: CountIndex | null;
+  isWithoutHistory?: boolean;
 };
 
 export const ItemContainerDeleteFeature = ({
@@ -26,18 +27,24 @@ export const ItemContainerDeleteFeature = ({
   noChangeOrder,
   noDelete,
   marginTop,
-  countIndex
+  countIndex,
+  isWithoutHistory,
 }: Props) => {
   const getEditButtons = () => (
-      <DeleteFeatureChangeOrderButtons
-        deleteText={deleteText}
-        onDeleteFinished={onDeleteFinished}
-        featureData={featureData}
-        isChangeOrderHorizontal={isChangeOrderHorizontal}
-        noChangeOrder={noChangeOrder}
-        noDelete={noDelete}
-        countIndex={countIndex}
-      />
+    <>
+      {!noDelete ? (
+        <DeleteFeatureChangeOrderButtons
+          deleteText={deleteText}
+          onDeleteFinished={onDeleteFinished}
+          featureData={featureData}
+          isChangeOrderHorizontal={isChangeOrderHorizontal}
+          noChangeOrder={noChangeOrder}
+          noDelete={noDelete}
+          countIndex={countIndex}
+          isWithoutHistory={isWithoutHistory}
+        />
+      ) : null}
+    </>
   );
   return (
     <ItemGroupContainerCommon

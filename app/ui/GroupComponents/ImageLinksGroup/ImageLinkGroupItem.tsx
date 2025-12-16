@@ -29,12 +29,16 @@ export const ImageLinkGroupItem = ({
   changeModalState,
   isModalShown,
   countIndex,
-  pageName
+  pageName,
 }: Props) => {
-  const fullPathName= usePathname();
-  const pathName = pageName !== HOME 
-  ? fullPathName.substring(0, fullPathName.length - pageName.length - (pageName.length ? 1: 0))
-  : fullPathName;
+  const fullPathName = usePathname();
+  const pathName =
+    pageName !== HOME
+      ? fullPathName.substring(
+          0,
+          fullPathName.length - pageName.length - (pageName.length ? 1 : 0)
+        )
+      : fullPathName;
   const tooltip = groupData.find(
     (groupDataItem) =>
       item.text_description_id === groupDataItem.text_description_id &&
@@ -43,7 +47,7 @@ export const ImageLinkGroupItem = ({
 
   const link = `${pathName}/${item.link}`;
 
-  const preview = ({value, text, tooltip}: PreviewParams) => {
+  const preview = ({ value, text, tooltip }: PreviewParams) => {
     return (
       <ImageLink
         value={value}

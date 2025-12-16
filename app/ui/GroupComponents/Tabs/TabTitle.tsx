@@ -32,7 +32,7 @@ export const TabTitle = ({
   const { staticTexts, lang } = params;
   const { isEdit, noDelete } = getIsEditNoDelete(params);
 
-  const preview = ({text}: PreviewParams): React.ReactNode => {
+  const preview = ({ text }: PreviewParams): React.ReactNode => {
     return (
       <CommonButton
         text={text ?? "N/A"}

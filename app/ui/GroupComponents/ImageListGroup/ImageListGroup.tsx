@@ -7,17 +7,20 @@ import { useRef, useState } from "react";
 import { ItemContainerAddTextDescriptionDeleteFeature } from "@/app/ui/CommonComponents/_itemGroupContainer/ItemContainerAddTextDescriptionDeleteFeature";
 import { getIsEditNoDelete } from "@/app/lib/utils";
 import { ShowItem } from "./ShowItem/ShowItem";
+import { CountIndex } from "@/app/dictionaries/definitions";
 
 export type Props = {
   groupData: FullData[];
   countVisibleItems?: number;
   params: MainParams;
+  countIndex: CountIndex;
 };
 // school of trainers and other
 export const ShowImageListGroup = ({
   groupData,
   countVisibleItems,
   params,
+  countIndex,
 }: Props) => {
   const ref = useRef<HTMLDivElement>(null);
   const [lastAddedId, setLastAddedId] = useState<number | null>(null);
@@ -69,6 +72,7 @@ export const ShowImageListGroup = ({
       isChangeOrderHorizontal={false}
       marginTop={20}
       noDelete={noDelete}
+      countIndex={countIndex}
     >
       <div ref={ref}>
         {ids.length ? (

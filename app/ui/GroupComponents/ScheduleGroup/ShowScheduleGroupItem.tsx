@@ -26,15 +26,15 @@ export const ShowSCheduleGroupItem = ({
     return null;
   }
 
-  const preview = ({value, text}: PreviewParams) => {
+  const preview = ({ value, text }: PreviewParams) => {
     return (
       <div className={styles.preview}>
-          <div className={styles.item}>
-            <div className={styles.days}>{text ?? "N/A"}</div>
-            <div className={styles.time}>{value ?? "N/A"}</div>
-          </div>
+        <div className={styles.item}>
+          <div className={styles.days}>{text ?? "N/A"}</div>
+          <div className={styles.time}>{value ?? "N/A"}</div>
+        </div>
       </div>
-    ); 
+    );
   };
 
   return (

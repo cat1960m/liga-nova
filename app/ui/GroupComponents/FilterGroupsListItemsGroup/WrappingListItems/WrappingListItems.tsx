@@ -19,6 +19,7 @@ export type Props = {
   staticTexts: StaticTexts;
   pageName: string;
   filteredListItemsData: StructuredFeatureData;
+  srcPremiumIcon: string;
 };
 
 export const WrappingListItems = ({
@@ -29,6 +30,7 @@ export const WrappingListItems = ({
   staticTexts,
   pageName,
   filteredListItemsData,
+  srcPremiumIcon,
 }: Props) => {
   if (!filteredListItemsData.sortedChildFeaFeatureIds.length) {
     return null;
@@ -56,6 +58,7 @@ export const WrappingListItems = ({
           featureData={currentData}
           isChangeOrderHorizontal
           countIndex={countIndex}
+          noChangeOrder={false}
         />
       </div>
     );
@@ -65,7 +68,8 @@ export const WrappingListItems = ({
     <div>
       <div className={styles.body}>
         {filteredListItemsData.sortedChildFeaFeatureIds.map((itemId, index) => {
-          const listItemData = filteredListItemsData.childFeatureIdToFullDataList[itemId];
+          const listItemData =
+            filteredListItemsData.childFeatureIdToFullDataList[itemId];
           return (
             <div key={itemId} className={styles.listItem}>
               <ItemGroupContainerCommon
@@ -74,7 +78,8 @@ export const WrappingListItems = ({
                   getEditButtons({
                     currentData: listItemData,
                     countIndex: {
-                      count: filteredListItemsData.sortedChildFeaFeatureIds.length,
+                      count:
+                        filteredListItemsData.sortedChildFeaFeatureIds.length,
                       index,
                     },
                   })
@@ -87,6 +92,7 @@ export const WrappingListItems = ({
                   pageName={pageName}
                   pageFullDataList={pageFullDataList}
                   staticTexts={staticTexts}
+                  srcPremiumIcon={srcPremiumIcon}
                 />
               </ItemGroupContainerCommon>
             </div>

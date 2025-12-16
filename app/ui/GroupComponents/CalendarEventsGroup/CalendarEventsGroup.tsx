@@ -14,17 +14,21 @@ import { CommonButton } from "../../CommonComponents/_buttons/CommonButton";
 import { DeleteFeatureChangeOrderButtons } from "../../CommonComponents/_buttons/DeleteFeatureChangeOrderButtons/DeleteFeatureChangeOrderButtons";
 import { ItemGroupContainerCommon } from "../../CommonComponents/_itemGroupContainer/ItemGroupContainerCommon/ItemGroupContainerCommon";
 import { useContainerData } from "../../hooks/useContainerData";
+import { CreateModal } from "../../CommonComponents/_upadeModal/CreateModal/CreateModal";
+import { CountIndex } from "@/app/dictionaries/definitions";
 
 export type Props = {
   groupData: FullData[];
   params: MainParams;
   pageFullData: FullData[];
+  countIndex: CountIndex;
 };
 
 export const CalendarEventsGroup = ({
   groupData,
   params,
   pageFullData,
+  countIndex
 }: Props) => {
   const getDateToday = () => {
     const today = new Date();
@@ -62,7 +66,7 @@ export const CalendarEventsGroup = ({
     setEditEventId(null);
   };
 
-  const isCalendarShown = !isAddShown && !editEventId;
+  const isModalShown = isAddShown || editEventId;
   const { staticTexts, pageName } = params;
   const { isEdit, noDelete } = getIsEditNoDelete(params);
 
@@ -82,7 +86,9 @@ export const CalendarEventsGroup = ({
           <DeleteFeatureChangeOrderButtons
             deleteText={staticTexts.deleteCalendar ?? "N/A"}
             featureData={groupData}
-            countIndex={null}
+            countIndex={countIndex}
+            noChangeOrder={false}
+            noDelete={noDelete}
           />
         ) : null}
       </div>
@@ -90,38 +96,37 @@ export const CalendarEventsGroup = ({
   };
 
   return (
-    <ItemGroupContainerCommon
-      showGroupButtons={isEdit && isCalendarShown}
-      getEditButtons={getButtons}
-      marginTop={20}
-    >
-      <>
-        {isCalendarShown ? (
-          <div className={styles.calendar}>
-            <CalendarHeader
-              staticTexts={staticTexts}
-              isWeek={isWeek}
-              setIsWeek={setIsWeek}
-              startOfWeek={startOfWeek}
-              setStartOfWeek={setStartOfWeek}
-              currentDate={currentDate}
-              setCurrentDate={setCurrentDate}
-              getDateToday={getDateToday}
-              getNowStartOfWeek={getNowStartOfWeek}
-            />
-            <ShowEvents
-              calendarData={calendarData}
-              staticTexts={staticTexts}
-              isEdit={isEdit}
-              setEditEventId={setEditEventId}
-              startDate={isWeek ? startOfWeek : currentDate}
-              countDates={isWeek ? 7 : 1}
-              parentFeatureId={calendarFeatureId}
-            />
-          </div>
-        ) : null}
-
-        {!isCalendarShown ? (
+    <>
+      <ItemGroupContainerCommon
+        showGroupButtons={isEdit && !isModalShown}
+        getEditButtons={getButtons}
+        marginTop={20}
+      >
+        <div className={styles.calendar}>
+          <CalendarHeader
+            staticTexts={staticTexts}
+            isWeek={isWeek}
+            setIsWeek={setIsWeek}
+            startOfWeek={startOfWeek}
+            setStartOfWeek={setStartOfWeek}
+            currentDate={currentDate}
+            setCurrentDate={setCurrentDate}
+            getDateToday={getDateToday}
+            getNowStartOfWeek={getNowStartOfWeek}
+          />
+          <ShowEvents
+            calendarData={calendarData}
+            staticTexts={staticTexts}
+            isEdit={isEdit}
+            setEditEventId={setEditEventId}
+            startDate={isWeek ? startOfWeek : currentDate}
+            countDates={isWeek ? 7 : 1}
+            parentFeatureId={calendarFeatureId}
+          />
+        </div>
+      </ItemGroupContainerCommon>
+      {isModalShown ? (
+        <CreateModal onClose={hideAddEvent}>
           <AddEditCalendarEvents
             calendarFeatureId={calendarFeatureId}
             hideAddEvent={hideAddEvent}
@@ -133,8 +138,8 @@ export const CalendarEventsGroup = ({
             staticTexts={staticTexts}
             pageName={pageName}
           />
-        ) : null}
-      </>
-    </ItemGroupContainerCommon>
+        </CreateModal>
+      ) : null}
+    </>
   );
 };

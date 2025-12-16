@@ -1,15 +1,14 @@
 "use client";
 
-import { addFeatureData } from "@/app/lib/actionsContainer";
 import { CommonButton } from "./CommonButton";
 import { useEditContext } from "../../PageComponents/EditContextProvider";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import { ICON_BUTTON_WIDTH, ICON_IN_BUTTON_WIDTH } from "@/app/lib/constants";
+import { useAddFeature } from "../../hooks/useAddFeature";
 
 export type Props = {
   parentFeatureId: number;
   text: string;
-  pageName: string;
   textTypes: string[];
   type: string;
   subtype: string;
@@ -19,7 +18,6 @@ export type Props = {
 export const AddChildFeatureButton = ({
   parentFeatureId,
   text,
-  pageName,
   textTypes,
   type,
   subtype,
@@ -27,16 +25,16 @@ export const AddChildFeatureButton = ({
 }: Props) => {
   const { isEditButtonsDisabled, changeIsEditButtonDisabled } =
     useEditContext();
+  const { addFeature } = useAddFeature();
 
-  const handleAddFeature = async (pathName: string) => {
+  const handleAddFeature = async () => {
     changeIsEditButtonDisabled(true);
-    const newFeatureId = await addFeatureData({
+    const newFeatureId = await addFeature({
       parentId: parentFeatureId,
       type,
       subtype,
-      name: pageName,
       text_types: textTypes,
-      pathName,
+      isWithoutHistory: false,
     });
     changeIsEditButtonDisabled(false);
     if (newFeatureId) {

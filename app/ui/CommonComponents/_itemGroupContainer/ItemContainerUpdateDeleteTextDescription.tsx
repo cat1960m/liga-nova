@@ -19,7 +19,7 @@ export type Props = {
   isChangeOrderHorizontal?: boolean;
   countIndex: CountIndex | null;
   preview?: (data: PreviewParams) => React.ReactNode;
-  previewBaseParams?: Record<string,string>;
+  previewBaseParams?: Record<string, string>;
 };
 
 export const ItemContainerUpdateDeleteTextDescription = ({
