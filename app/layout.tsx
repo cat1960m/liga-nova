@@ -11,13 +11,13 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({
   children,
-  params,
-}: {
+}: // params,
+{
   children: React.ReactNode;
-  params: Promise<{ lang: "en" | "ua" }>;
+  params: Promise<{}>;
 }) {
-  const pars = await params;
-  const language = pars?.lang;
+  //const pars = await params;
+  const language = "en"; //pars?.lang;
 
   return (
     <html lang={language ?? "en"}>

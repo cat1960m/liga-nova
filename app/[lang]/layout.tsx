@@ -8,22 +8,21 @@ import { EditMode } from "../ui/LayoutComponents/EditMode/EditMode";
 import { getPageTitlesData } from "../lib/actionsContainer";
 import { getDictionary } from "../lib/dictionaries";
 
-
 export default async function Layout({
   children,
   params,
 }: {
   children: React.ReactNode;
-  params: Promise<{ lang: "en" | "ua"; pageName: string }>;
+  params: Promise<{ lang: string }>;
 }) {
   const paramsData = await params;
 
-  const lang = paramsData.lang ?? "ua";
+  const lang: "en" | "ua" = paramsData.lang === "en" ? "en" : "ua";
+
   const pages = await getPageTitlesData(lang);
   const res = await auth();
   const isAuthenticated = !!res?.user;
-  const dict = await getDictionary(lang as "en" | "ua");
-
+  const dict = await getDictionary(lang);
 
   if (!pages) {
     return;
@@ -31,7 +30,6 @@ export default async function Layout({
 
   const mainPages = pages?.filter((page) => page.subtype === "header1");
   const basePages = pages?.filter((page) => page.subtype === "header2");
-
 
   return (
     <div>
@@ -50,7 +48,9 @@ export default async function Layout({
       </div>
 
       <div className={styles.panel}>
-        {isAuthenticated ? <ManageIconsModal lang={lang} staticTexts={dict.common}/> : null}
+        {isAuthenticated ? (
+          <ManageIconsModal lang={lang} staticTexts={dict.common} />
+        ) : null}
 
         <EditMode isAuthenticated={isAuthenticated} />
       </div>

@@ -9,7 +9,7 @@ export default async function Page({
   params,
   searchParams,
 }: {
-  params: Promise<{ lang: "en" | "ua" }>;
+  params: Promise<{ lang: string }>;
   searchParams: Promise<SearchParams>;
 }) {
   const res = await auth();
@@ -17,10 +17,10 @@ export default async function Page({
 
   const urlParams = await searchParams;
 
-  const lang = (await params).lang;
-  if (!lang) {
+  const lang: "en" | "ua" = (await params).lang === "en" ? "en" : "ua";
+ /*  if (!lang) {
     return null;
-  }
+  } */
 
   const dict = await getDictionary(lang as "en" | "ua");
 
